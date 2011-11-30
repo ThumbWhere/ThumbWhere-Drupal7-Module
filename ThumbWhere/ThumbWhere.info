@@ -1,0 +1,8 @@
+name = ThumbWhere Core
+description = This is an example module that displays Hello World
+package = ThumbWhere
+core = 7.x
+files[] = ThumbWhere.module
+
+;dependencies[] = autoload
+;php = 5.2
