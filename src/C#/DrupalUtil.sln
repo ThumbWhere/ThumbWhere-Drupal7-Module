@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrupalUtil", "Tools\DrupalUtil\DrupalUtil.csproj", "{79B8E2FB-FE6C-4B8B-BA65-38100A7B0913}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SevenZipLib", "Dependencies\SevenZipLib\SevenZipLib.csproj", "{B05D17BC-8A2B-482A-85BD-FF4B757E41BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79B8E2FB-FE6C-4B8B-BA65-38100A7B0913}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{79B8E2FB-FE6C-4B8B-BA65-38100A7B0913}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{79B8E2FB-FE6C-4B8B-BA65-38100A7B0913}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{79B8E2FB-FE6C-4B8B-BA65-38100A7B0913}.Debug|x86.ActiveCfg = Debug|x86
+		{79B8E2FB-FE6C-4B8B-BA65-38100A7B0913}.Debug|x86.Build.0 = Debug|x86
+		{79B8E2FB-FE6C-4B8B-BA65-38100A7B0913}.Release|Any CPU.ActiveCfg = Release|x86
+		{79B8E2FB-FE6C-4B8B-BA65-38100A7B0913}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{79B8E2FB-FE6C-4B8B-BA65-38100A7B0913}.Release|Mixed Platforms.Build.0 = Release|x86
+		{79B8E2FB-FE6C-4B8B-BA65-38100A7B0913}.Release|x86.ActiveCfg = Release|x86
+		{79B8E2FB-FE6C-4B8B-BA65-38100A7B0913}.Release|x86.Build.0 = Release|x86
+		{B05D17BC-8A2B-482A-85BD-FF4B757E41BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B05D17BC-8A2B-482A-85BD-FF4B757E41BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B05D17BC-8A2B-482A-85BD-FF4B757E41BC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B05D17BC-8A2B-482A-85BD-FF4B757E41BC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B05D17BC-8A2B-482A-85BD-FF4B757E41BC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B05D17BC-8A2B-482A-85BD-FF4B757E41BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B05D17BC-8A2B-482A-85BD-FF4B757E41BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B05D17BC-8A2B-482A-85BD-FF4B757E41BC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B05D17BC-8A2B-482A-85BD-FF4B757E41BC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B05D17BC-8A2B-482A-85BD-FF4B757E41BC}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
