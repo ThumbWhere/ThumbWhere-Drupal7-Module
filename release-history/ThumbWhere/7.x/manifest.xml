@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns:dc="http://purl.org/dc/elements/1.1/">
+<title>Content Templates (Contemplate)</title>
+<short_name>contemplate</short_name>
+<dc:creator>jrglasgow</dc:creator>
+<api_version>6.x</api_version>
+<recommended_major>1</recommended_major>
+<supported_majors>1</supported_majors>
+<default_major>1</default_major>
+<project_status>published</project_status>
+<link>http://drupal.org/project/contemplate</link>
+  <terms>
+   <term><name>Projects</name><value>Modules</value></term>
+   <term><name>Development status</name><value>Under active development</value></term>
+   <term><name>Maintenance status</name><value>Actively maintained</value></term>
+  </terms>
+<releases>
+ <release>
+  <name>contemplate 6.x-1.2</name>
+  <version>6.x-1.2</version>
+  <tag>6.x-1.2</tag>
+  <version_major>1</version_major>
+  <version_patch>2</version_patch>
+  <status>published</status>
+  <release_link>http://drupal.org/node/860062</release_link>
+  <download_link>http://ftp.drupal.org/files/projects/contemplate-6.x-1.2.tar.gz</download_link>
+  <date>1279686006</date>
+  <mdhash>9c883639908993973bb6361a04c68290</mdhash>
+  <filesize>30952</filesize>
+  <files>
+   <file>
+    <url>http://ftp.drupal.org/files/projects/contemplate-6.x-1.2.tar.gz</url>
+    <archive_type>tar.gz</archive_type>
+    <md5>9c883639908993973bb6361a04c68290</md5>
+    <size>30952</size>
+    <filedate>1279686006</filedate>
+   </file>
+   <file>
+    <url>http://ftp.drupal.org/files/projects/contemplate-6.x-1.2.zip</url>
+    <archive_type>zip</archive_type>
+    <md5>935031db10321cf34d211124844dcaea</md5>
+    <size>45116</size>
+    <filedate>1293230386</filedate>
+   </file>
+  </files>
+  <terms>
+   <term><name>Release type</name><value>Bug fixes</value></term>
+  </terms>
+ </release>
+</releases>
+</project>
