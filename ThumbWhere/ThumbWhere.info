@@ -1,8 +1,12 @@
-name = ThumbWhere Core
-description = This is an example module that displays Hello World
-package = ThumbWhere
-core = 7.x
+name = "ThumbWhere Core"
+description = "This is an example module that displays Hello World"
+package = "ThumbWhere"
+core = "7.x"
+dependencies[] = autoload
 files[] = ThumbWhere.module
 
-;dependencies[] = autoload
-;php = 5.2
+; This information is purely for module updates
+project status url = "http://drupalmodules.thumbwhere.com"
+version = "7.x-0.1-beta0"
+project = "ThumbWhere"
+datestamp = "1319825735"
