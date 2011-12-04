@@ -16,27 +16,27 @@
   </terms>
 <releases>
  <release>
-  <name>ThumbWhere 7.x-0.0</name>
-  <version>7.x-0.0</version>
-  <tag>7.x-0.0</tag>
-  <version_major>1</version_major>
-  <version_patch>2</version_patch>
+  <name>ThumbWhere 7.x-0.1</name>
+  <version>7.x-0.1</version>
+  <tag>7.x-0.1</tag>
+  <version_major>0</version_major>
+  <version_patch>1</version_patch>
   <status>published</status>
   <release_link>http://drupalmodules.thumbwhere.com</release_link>
-  <download_link>http://drupalmodules.thumbwhere.com/release-info/ThumbWhere/ThumbWhere-7.x-0.0.tar.gz</download_link>
+  <download_link>http://drupalmodules.thumbwhere.com/release-info/ThumbWhere/ThumbWhere-7.x-0.1.tar.gz</download_link>
   <date>1279686006</date>
   <mdhash>9c883639908993973bb6361a04c68290</mdhash>
   <filesize>30952</filesize>
   <files>
    <file>
-    <url>http://drupalmodules.thumbwhere.com/release-info/ThumbWhere/ThumbWhere-7.x-0.0.tar.gz</url>
+    <url>http://drupalmodules.thumbwhere.com/release-info/ThumbWhere/ThumbWhere-7.x-0.1.tar.gz</url>
     <archive_type>tar.gz</archive_type>
     <md5>9c883639908993973bb6361a04c68290</md5>
     <size>30952</size>
     <filedate>1279686006</filedate>
    </file>
    <file>
-    <url>http://drupalmodules.thumbwhere.com/release-info/ThumbWhere/ThumbWhere-7.x-0.0.tar.zip</url>
+    <url>http://drupalmodules.thumbwhere.com/release-info/ThumbWhere/ThumbWhere-7.x-0.1.tar.zip</url>
     <archive_type>zip</archive_type>
     <md5>935031db10321cf34d211124844dcaea</md5>
     <size>45116</size>
