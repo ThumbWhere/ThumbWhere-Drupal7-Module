@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrupalUtil", "Tools\DrupalUtil\DrupalUtil.csproj", "{79B8E2FB-FE6C-4B8B-BA65-38100A7B0913}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer", "Installer\Installer.vdproj", "{425100DC-5AFE-4D53-AB11-E32F52A130AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,18 @@ Global
 		{79B8E2FB-FE6C-4B8B-BA65-38100A7B0913}.Release|Mixed Platforms.Build.0 = Release|x86
 		{79B8E2FB-FE6C-4B8B-BA65-38100A7B0913}.Release|x86.ActiveCfg = Release|x86
 		{79B8E2FB-FE6C-4B8B-BA65-38100A7B0913}.Release|x86.Build.0 = Release|x86
+		{425100DC-5AFE-4D53-AB11-E32F52A130AD}.Debug|Any CPU.ActiveCfg = Debug
+		{425100DC-5AFE-4D53-AB11-E32F52A130AD}.Debug|Any CPU.Build.0 = Debug
+		{425100DC-5AFE-4D53-AB11-E32F52A130AD}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{425100DC-5AFE-4D53-AB11-E32F52A130AD}.Debug|Mixed Platforms.Build.0 = Debug
+		{425100DC-5AFE-4D53-AB11-E32F52A130AD}.Debug|x86.ActiveCfg = Debug
+		{425100DC-5AFE-4D53-AB11-E32F52A130AD}.Debug|x86.Build.0 = Debug
+		{425100DC-5AFE-4D53-AB11-E32F52A130AD}.Release|Any CPU.ActiveCfg = Release
+		{425100DC-5AFE-4D53-AB11-E32F52A130AD}.Release|Any CPU.Build.0 = Release
+		{425100DC-5AFE-4D53-AB11-E32F52A130AD}.Release|Mixed Platforms.ActiveCfg = Release
+		{425100DC-5AFE-4D53-AB11-E32F52A130AD}.Release|Mixed Platforms.Build.0 = Release
+		{425100DC-5AFE-4D53-AB11-E32F52A130AD}.Release|x86.ActiveCfg = Release
+		{425100DC-5AFE-4D53-AB11-E32F52A130AD}.Release|x86.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

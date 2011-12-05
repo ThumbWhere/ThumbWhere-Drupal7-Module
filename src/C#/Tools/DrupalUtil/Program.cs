@@ -246,6 +246,67 @@
         }
 
 
+        /// <summary>
+        /// Load  text file
+        /// </summary>
+        /// <param name="p_file_path"></param>
+        /// <returns></returns>
+        static public string LoadFile(string p_file_path)
+        { 
+            // Load the file
+ 
+            string l_file_contents;
+            StreamReader l_file = File.OpenText(p_file_path);
+            l_file_contents = l_file.ReadToEnd();
+            l_file.Close();
+
+            return l_file_contents;
+        }
+
+
+        /// <summary>
+        /// Writes the passed string to the passed file.
+        /// SaveFile writes a log entry if it fails
+        /// </summary>
+        /// <param name="p_file_path">The full path of the file</param>
+        /// <param name="p_string">The string to pass in the file</param>
+        static public void SaveFile(string p_file_path, string p_string)
+        {
+            StreamWriter l_filestream = null;
+
+            try
+            {
+                // make the master file
+                using (l_filestream = File.CreateText(p_file_path))
+                {
+
+                    // write the file
+                    l_filestream.Write(p_string);
+
+                    // close the file
+                    l_filestream.Close();
+                }
+
+                // Set the attributes so that we can delete it in the future
+                File.SetAttributes(p_file_path, FileAttributes.Normal);
+            }
+
+            catch (Exception l_e)
+            {
+                
+
+
+                if (l_filestream != null)
+                {
+                    l_filestream.Close();
+                }
+
+                throw;
+            }
+        }
+
+
+
 
         /// <summary>
         /// Our arguments
@@ -643,100 +704,137 @@
 
                             releaseElement.SelectSingleNode("date").InnerText = dateStamp;
 
-
-                            string rootFilePath = name + "/" + api + "/" + name + "-" + version;
-
-
                             //
-                            // Generate Tar.gz
+                            // Process the .info file
                             //
 
-                            string tarFilePath = rootFilePath + ".tar.gz";
 
-                            Console.WriteLine("Generating {0}", tarFilePath);
+                            string infoFilePath = folder + "\\" + name + ".info";
+                            string infoFileBackup = LoadFile(infoFilePath);
+                            string infoFile = infoFileBackup;
 
-                            CreateTar(tarFilePath, folder);
-
-                            string tarMD5 = MD5FileHash(tarFilePath).ToLower();
-
-                            Console.WriteLine("MD5 of {0} is {1}", tarFilePath, tarMD5);
-
-
-                            XmlElement tarFileNode = (XmlElement)releaseElement["files"].ChildNodes[0];
-
-                            tarFileNode["url"].InnerText = url + "/" + api + "/" + name + "-" + version + ".tar.gz";
-                            tarFileNode["archive_type"].InnerText = "tar.gz";
-                            tarFileNode["md5"].InnerText = tarMD5;
-                            tarFileNode["size"].InnerText = (new FileInfo(tarFilePath)).Length.ToString();
-                            tarFileNode["filedate"].InnerText = dateStamp;
-
-                            //
-                            // This is also the default version
-                            //
-
-                            releaseElement.SelectSingleNode("download_link").InnerText = url + "/" + api + "/" + name + "-" + version + ".tar.gz";
-                            releaseElement.SelectSingleNode("date").InnerText = dateStamp;
-                            releaseElement.SelectSingleNode("mdhash").InnerText = tarMD5;
-                            releaseElement.SelectSingleNode("filesize").InnerText = (new FileInfo(tarFilePath)).Length.ToString(); ;
-
-
-                            //
-                            // Generate Zip
-                            //
-
-                            string zipFilePath = rootFilePath + ".zip";
-
-                            Console.WriteLine("Generating {0}", zipFilePath);
-
-                            CreateZip(zipFilePath, folder);
-
-                            string zipMD5 = MD5FileHash(zipFilePath).ToLower();
-
-                            Console.WriteLine("MD5 of {0} is {1}", zipFilePath, zipMD5);
-
-                            XmlElement zipFileNode = (XmlElement)releaseElement["files"].ChildNodes[1];
-
-                            // First file
-                            zipFileNode["url"].InnerText = url + "/" + api + "/" + name + "-" + version + ".zip";
-                            zipFileNode["archive_type"].InnerText = "zip";
-                            zipFileNode["md5"].InnerText = zipMD5;
-                            zipFileNode["size"].InnerText = (new FileInfo(zipFilePath)).Length.ToString();
-                            zipFileNode["filedate"].InnerText = dateStamp;
-
-
-                            //
-                            // Now process all out options
-                            //
-
-                            if (Recommended)
+                            try
                             {
-                                Console.WriteLine("Setting major version {0} as the recommended version.", majorVersion);
 
-                                project["recommended_major"].InnerText = majorVersion.ToString();
+                                //
+                                // Append the important odule information
+                                //
+                                infoFile += Environment.NewLine;
+                                infoFile += Environment.NewLine;
+                                infoFile += "; This information is purely for module updates" + Environment.NewLine;
+                                infoFile += "project status url = \"" + url + "\"" + Environment.NewLine;
+                                infoFile += "version = \"" + version + "\"" + Environment.NewLine;
+                                infoFile += "project = \"" + name + "\"" + Environment.NewLine;
+                                infoFile += "datestamp = \"" + dateStamp + "\"" + Environment.NewLine;
+                                SaveFile(infoFilePath, infoFile);
+
+                                string rootFilePath = Directory.GetCurrentDirectory() + "\\" + name + "\\" + api + "\\" + name + "-" + version;
+
+                                string currentDirectoryBackup = Directory.GetCurrentDirectory();
+
+                                //
+                                // Generate Tar.gz
+                                //
+
+                                string tarFilePath = rootFilePath + ".tar.gz";
+
+                                Console.WriteLine("Generating {0}", tarFilePath);
+
+                                Directory.SetCurrentDirectory(folder);
+
+                                CreateTar(tarFilePath, ".");
+                                Directory.SetCurrentDirectory(currentDirectoryBackup);
+
+                                string tarMD5 = MD5FileHash(tarFilePath).ToLower();
+
+                                Console.WriteLine("MD5 of {0} is {1}", tarFilePath, tarMD5);
+
+                                XmlElement tarFileNode = (XmlElement)releaseElement["files"].ChildNodes[0];
+
+                                tarFileNode["url"].InnerText = url + "/" + api + "/" + name + "-" + version + ".tar.gz";
+                                tarFileNode["archive_type"].InnerText = "tar.gz";
+                                tarFileNode["md5"].InnerText = tarMD5;
+                                tarFileNode["size"].InnerText = (new FileInfo(tarFilePath)).Length.ToString();
+                                tarFileNode["filedate"].InnerText = dateStamp;
+
+                                //
+                                // This is also the default version
+                                //
+
+                                releaseElement.SelectSingleNode("download_link").InnerText = url + "/" + api + "/" + name + "-" + version + ".tar.gz";
+                                releaseElement.SelectSingleNode("date").InnerText = dateStamp;
+                                releaseElement.SelectSingleNode("mdhash").InnerText = tarMD5;
+                                releaseElement.SelectSingleNode("filesize").InnerText = (new FileInfo(tarFilePath)).Length.ToString(); ;
+
+                                //
+                                // Generate Zip
+                                //
+
+                                string zipFilePath = rootFilePath + ".zip";
+
+                                Console.WriteLine("Generating {0}", zipFilePath);
+
+                                Directory.SetCurrentDirectory(folder);
+                                CreateZip(zipFilePath, ".");
+                                Directory.SetCurrentDirectory(currentDirectoryBackup);
+
+                                string zipMD5 = MD5FileHash(zipFilePath).ToLower();
+
+                                Console.WriteLine("MD5 of {0} is {1}", zipFilePath, zipMD5);
+
+                                XmlElement zipFileNode = (XmlElement)releaseElement["files"].ChildNodes[1];
+
+                                // First file
+                                zipFileNode["url"].InnerText = url + "/" + api + "/" + name + "-" + version + ".zip";
+                                zipFileNode["archive_type"].InnerText = "zip";
+                                zipFileNode["md5"].InnerText = zipMD5;
+                                zipFileNode["size"].InnerText = (new FileInfo(zipFilePath)).Length.ToString();
+                                zipFileNode["filedate"].InnerText = dateStamp;
+
+
+                                //
+                                // Now process all out options
+                                //
+
+                                if (Recommended)
+                                {
+                                    Console.WriteLine("Setting major version {0} as the recommended version.", majorVersion);
+
+                                    project["recommended_major"].InnerText = majorVersion.ToString();
+                                }
+
+                                if (Supported)
+                                {
+                                    Console.WriteLine("Setting major version {0} as the supported version.", majorVersion);
+
+                                    project["supported_majors"].InnerText = majorVersion.ToString();
+                                }
+
+                                if (Default)
+                                {
+                                    Console.WriteLine("Setting major version {0} as the default version.", majorVersion);
+
+                                    project["default_major"].InnerText = majorVersion.ToString();
+                                }
+
+
+                                // Set the type
+                                releaseElement["terms"]["term"]["value"].InnerText = type;
+
+                                Console.WriteLine("Saving modified XML to '{0}'", xmlPath);
+
+                                // Save the old XML back                    
+                                xml.Save(xmlPath);
                             }
-
-                            if (Supported)
+                            catch
                             {
-                                Console.WriteLine("Setting major version {0} as the supported version.", majorVersion);
-
-                                project["supported_majors"].InnerText = majorVersion.ToString();
+                                throw;
                             }
-
-                            if (Default)
+                            finally
                             {
-                                Console.WriteLine("Setting major version {0} as the default version.", majorVersion);
-
-                                project["default_major"].InnerText = majorVersion.ToString();
+                                // Put the old info file back
+                                SaveFile(infoFilePath, infoFileBackup);
                             }
-
-
-                            // Set the type
-                            releaseElement["terms"]["term"]["value"].InnerText = type;
-
-                            Console.WriteLine("Saving modified XML to '{0}'", xmlPath);
-
-                            // Save the old XML back                    
-                            xml.Save(xmlPath);
 
                         }
                         break;
