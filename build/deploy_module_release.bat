@@ -6,10 +6,11 @@ PUSHD ..\..\ThumbWhere-Drupal7-Module-Releases\release-history\
 ..\..\ThumbWhere-Drupal7-Module\tools\DrupalUtil.exe add ..\..\ThumbWhere-Drupal7-Module\ThumbWhere ThumbWhere 7.x patch "Bug Fixes" dev %1 --recommended --supported --default
 
 @REM Copy changes to our local copy of the repository
-xcopy /ERVY . E:\checkout\ThumbWhere-Drupal7-Module\release-history\
+xcopy /ERVY . E:\checkout\ThumbWhere-Drupal7-Module-Releases\release-history\
 POPD
 
 @REM Commit them
-PUSHD E:\checkout\ThumbWhere-Drupal7-Module
+PUSHD E:\checkout\ThumbWhere-Drupal7-Module-Releases
 git commit -a -m "New changes"
+git push
 POPD
