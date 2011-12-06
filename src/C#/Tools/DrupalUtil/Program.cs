@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Text;
     using System.Xml;
+    using System.Xml.Xsl;
+    using System.Xml.XPath;
     using System.IO;
     using System.Security.Cryptography;
     using ICSharpCode.SharpZipLib;
@@ -295,10 +297,8 @@
                 File.SetAttributes(p_file_path, FileAttributes.Normal);
             }
 
-            catch (Exception l_e)
+            catch (Exception)
             {
-                
-
 
                 if (l_filestream != null)
                 {
@@ -541,6 +541,7 @@
                             xmlTemplate.SelectSingleNode("project/short_name").InnerText = name;
                             xmlTemplate.SelectSingleNode("project/dc:creator", xmlnsManager).InnerText = maintainer;
                             xmlTemplate.SelectSingleNode("project/link").InnerText = url + "/" + name + "/";
+                            xmlTemplate.SelectSingleNode("project/api_version").InnerText = api;
 
                             // Clear our any release information
                             xmlTemplate.SelectSingleNode("project/releases").RemoveAll();
@@ -749,6 +750,7 @@
                                 infoFile += "datestamp = \"" + dateStamp + "\"" + Environment.NewLine;
                                 SaveFile(infoFilePath, infoFile);
 
+
                                 string rootFilePath = Directory.GetCurrentDirectory() + "\\" + name + "\\" + api + "\\" + name + "-" + version;
 
                                 string currentDirectoryBackup = Directory.GetCurrentDirectory();
@@ -846,6 +848,30 @@
 
                                 // Save the old XML back                    
                                 xml.Save(xmlPath);
+
+
+                                //
+                                // Generate the HTML Release notes
+                                //
+
+                                XPathDocument myXPathDoc = new XPathDocument(xmlPath);
+                                XslCompiledTransform myXslTrans = new XslCompiledTransform();
+
+                                SaveFile("manifest_temp.xsl", Resources.manifest);
+
+                                myXslTrans.Load("manifest_temp.xsl");
+
+                                using (XmlTextWriter myWriter = new XmlTextWriter(rootFilePath + ".html", null))
+                                {
+                                    myXslTrans.Transform(myXPathDoc, null, myWriter);
+                                }
+
+
+                                File.Delete("manifest_temp.xsl");
+
+                                Console.WriteLine("Release notes saved to {0}", rootFilePath + ".html");
+
+                                
                             }
                             catch
                             {

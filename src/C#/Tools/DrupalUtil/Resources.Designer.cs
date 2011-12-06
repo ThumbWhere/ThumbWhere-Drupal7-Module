@@ -61,19 +61,45 @@ namespace DrupalUtil {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+        ///&lt;xsl:stylesheet version=&quot;1.0&quot; xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;  &gt;	
+        ///
+        ///	
+        ///	&lt;xsl:template match=&quot;/&quot;&gt;
+        ///		
+        ///		&lt;html&gt;
+        ///			&lt;head&gt;
+        ///				&lt;title&gt;&lt;xsl:value-of select=&quot;/project/title&quot; /&gt; - Drupal &lt;xsl:value-of select=&quot;/project/api_version&quot; /&gt; Module&lt;/title&gt;
+        ///			&lt;/head&gt;
+        ///			&lt;body&gt;
+        ///				
+        ///				&lt;div class=&quot;wrap&quot; id=&quot;mainWrap&quot;&gt;
+        ///					&lt;h1&gt;Module Summary&lt;/h1&gt;	 					
+        ///					&lt;ul&gt;Short Name: &lt;xsl:value-of select=&quot;/project/short_name&quot; /&gt;&lt;/ul&gt;
+        ///					&lt;ul&gt;Latest Version: &lt;xsl:value-of s [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string manifest {
+            get {
+                return ResourceManager.GetString("manifest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;manifest.xsl&quot; ?&gt;
         ///&lt;project xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot;&gt;
-        ///&lt;title&gt;ThumbWhere (Core)&lt;/title&gt;
-        ///&lt;short_name&gt;ThubWhere&lt;/short_name&gt;
-        ///&lt;dc:creator&gt;ThumbWhere&lt;/dc:creator&gt;
-        ///&lt;api_version&gt;7.x&lt;/api_version&gt;
+        ///&lt;title&gt;&lt;/title&gt;
+        ///&lt;short_name&gt;&lt;/short_name&gt;
+        ///&lt;dc:creator&gt;&lt;/dc:creator&gt;
+        ///&lt;api_version&gt;&lt;/api_version&gt;
         ///&lt;recommended_major&gt;0&lt;/recommended_major&gt;
         ///&lt;supported_majors&gt;0&lt;/supported_majors&gt;
         ///&lt;default_major&gt;0&lt;/default_major&gt;
         ///&lt;project_status&gt;published&lt;/project_status&gt;
-        ///&lt;link&gt;http://drupalmodules.thumbwhere.com/release-info/ThumbWhere/&lt;/link&gt;
+        ///&lt;link&gt;&lt;/link&gt;
         ///  &lt;terms&gt;
-        ///   &lt;term&gt;&lt;name&gt;Projects&lt;/name&gt;&lt;v [rest of string was truncated]&quot;;.
+        ///   &lt;term&gt;&lt;name&gt;Projects&lt;/name&gt;&lt;value&gt;Modules&lt;/value&gt;&lt;/term&gt;
+        ///   &lt;term&gt;&lt;nam [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string manifest_template {
             get {

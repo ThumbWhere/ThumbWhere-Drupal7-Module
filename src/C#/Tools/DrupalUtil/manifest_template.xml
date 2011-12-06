@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="manifest.xsl" ?>
 <project xmlns:dc="http://purl.org/dc/elements/1.1/">
 <title></title>
 <short_name></short_name>
