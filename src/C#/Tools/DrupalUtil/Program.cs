@@ -44,7 +44,7 @@
         static void KnownOptions()
         {
             Console.WriteLine("");
-            Console.WriteLine("Known options: --recommended --supported --default");
+            Console.WriteLine("Known options: --recommended --supported --default --exitcleanonerror");
             Console.WriteLine("");
 
         }
@@ -343,6 +343,12 @@
         /// </summary>
         static bool Force = false;
 
+
+        /// <summary>
+        /// Pretend that all is good, even if we get an error.
+        /// </summary>
+        static bool ExitCleanOnError = false;
+
         /// <summary>
         /// Filter the input
         /// </summary>
@@ -412,27 +418,38 @@
 
                     switch (o)
                     {
+                        // Set the recommended version
                         case "--recommended":
                             {
                                 Recommended = true;
                             }
                             break;
 
+                        // Set the supported version
                         case "--supported":
                             {
                                 Supported = true;
                             }
                             break;
 
+                        // Set the default version
+                        case "--default":
+                            {
+                                Default = true;
+                            }
+                            break;
+
+                        // Force something through, damn the horses.
                         case "--force":
                             {
                                 Force = true;
                             }
                             break;
 
-                        case "--default":
+                        // Force something through, damn the horses.
+                        case "--exitcleanonerror":
                             {
-                                Default = true;
+                                Force = true;
                             }
                             break;
 
@@ -861,8 +878,17 @@
                 Console.WriteLine("------------------------------------------------");
                 Console.WriteLine("Error {0}", e.Message);
 
-                // Bad exit
-                Environment.Exit(1);
+                if (ExitCleanOnError)
+                {
+                    // Pretend the exit is good
+                    Environment.Exit(0);
+                }
+                else
+                {
+                    // Bad exit
+                    Environment.Exit(1);
+
+                }
                 return;
             }
 
