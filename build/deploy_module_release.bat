@@ -16,8 +16,17 @@ POPD
 @REM Commit them
 
 PUSHD E:\checkout\ThumbWhere-Drupal7-Module-Releases
+ß
+REM Maks sure we are up to date
+git pull
+
+REM Add the new changes
+git add .
+
+REM Add the new changes
+git commit -m "Automatic commit by build %1."
 
 REM Push the new changes
-git commit -a -m "Automatic commit by build %1."
+git push
 
 POPD
