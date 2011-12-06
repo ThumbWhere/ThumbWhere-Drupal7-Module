@@ -11,6 +11,8 @@ POPD
 
 @REM Commit them
 PUSHD E:\checkout\ThumbWhere-Drupal7-Module-Releases
+REM Push the new changes
 git commit -a -m "New changes"
+REM Push them to the server
 git push
 POPD
