@@ -12,10 +12,4 @@ files[] = ThumbWhere.module
 ;project = "ThumbWhere"
 ;datestamp = "1270000000"
 ;
-            
 
-; This information is purely for module updates
-project status url = "http://drupalmodules.thumbwhere.com/release-history/ThumbWhere"
-version = "7.x-0.8"
-project = "ThumbWhere"
-datestamp = "1323091852"

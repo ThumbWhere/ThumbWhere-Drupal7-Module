@@ -62,6 +62,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
         "Release"
@@ -106,6 +119,48 @@
     {
         "CustomAction"
         {
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_7EB19E3A6D2C4483BA79A45D2492152F"
+            {
+            "Name" = "8:Primary output from DrupalUtil (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_8C9243216AAE407C9DD776F50C39691F"
+            "FileType" = "3:2"
+            "InstallAction" = "3:4"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_877A11D1_24BB_4DE7_B940_C5711F4699EB"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_E73E547A20F44F65A8445E5B7A0E8FBA"
+            {
+            "Name" = "8:Primary output from DrupalUtil (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_8C9243216AAE407C9DD776F50C39691F"
+            "FileType" = "3:2"
+            "InstallAction" = "3:3"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_F643F0AC_5DFC_4025_998B_4F4568562252"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_E984D7AD1DE04CAFA8893A946EA54E29"
+            {
+            "Name" = "8:Primary output from DrupalUtil (Active)"
+            "Condition" = "8:"
+            "Object" = "8:_8C9243216AAE407C9DD776F50C39691F"
+            "FileType" = "3:2"
+            "InstallAction" = "3:1"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_D8D9783B_610A_405E_9279_497C1552BDA3"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:"
+            }
         }
         "DefaultFeature"
         {
@@ -217,17 +272,17 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DrupalUtil"
         "ProductCode" = "8:{E7782B74-0710-45D9-AED4-014B7052E9C0}"
-        "PackageCode" = "8:{A609438B-33E6-4C62-96A0-8A39F4201367}"
+        "PackageCode" = "8:{F5D9C410-DB83-4D73-9D33-98DB3B7767A1}"
         "UpgradeCode" = "8:{6F9CAA12-516A-48FF-AAEE-4AC794DE1353}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
         "Manufacturer" = "8:ThumbWhere"
         "ARPHELPTELEPHONE" = "8:"
-        "ARPHELPLINK" = "8:"
+        "ARPHELPLINK" = "8:http://sdk.thumbwhere.com/drupal/"
         "Title" = "8:DrupalUtil"
         "Subject" = "8:"
         "ARPCONTACT" = "8:ThumbWhere"
@@ -327,11 +382,11 @@
                                                         {
                                                             "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_833BD65ABDA348099DE3AD7D2E2DFF9E"
                                                             {
-                                                            "Name" = "8:Path"
+                                                            "Name" = "8:ExePath"
                                                             "Condition" = "8:"
                                                             "Transitive" = "11:FALSE"
                                                             "ValueTypes" = "3:1"
-                                                            "Value" = "8:[%Path];[TARGETDIR]"
+                                                            "Value" = "8:[TARGETDIR]"
                                                             }
                                                         }
                                                     }
