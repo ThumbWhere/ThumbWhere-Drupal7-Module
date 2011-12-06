@@ -17,6 +17,9 @@ POPD
 
 PUSHD E:\checkout\ThumbWhere-Drupal7-Module-Releases
 
+REM Set the path to home where we have the config
+SET HOME=\home
+
 REM Make sure we are up to date
 "C:\Program Files\Git\bin\git.exe" pull
 
