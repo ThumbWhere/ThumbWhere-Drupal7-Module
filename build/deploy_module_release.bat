@@ -17,16 +17,16 @@ POPD
 
 PUSHD E:\checkout\ThumbWhere-Drupal7-Module-Releases
 
-REM Maks sure we are up to date
-git pull
+REM Make sure we are up to date
+"C:\Program Files\Git\bin\git.exe" pull
 
 REM Add the new changes
-git add .
+"C:\Program Files\Git\bin\git.exe" add .
 
 REM Add the new changes
-git commit -m "Automatic commit by build %1."
+"C:\Program Files\Git\bin\git.exe" commit -m "Automatic commit by build %1."
 
 REM Push the new changes
-git push
+"C:\Program Files\Git\bin\git.exe" push
 
 POPD
