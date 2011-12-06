@@ -5,8 +5,11 @@ PUSHD ..\..\ThumbWhere-Drupal7-Module-Releases\release-history\
 @REM Update the release
 ..\..\ThumbWhere-Drupal7-Module\tools\DrupalUtil.exe add ..\..\ThumbWhere-Drupal7-Module\ThumbWhere ThumbWhere 7.x patch "Bug Fixes" dev %1 --recommended --supported --default
 POPD
+
 @REM Copy changes to our local copy of the repository
+PUSHD ..
 xcopy /ERVY release-history E:\checkout\ThumbWhere-Drupal7-Module\release-history\
+POPD
 
 @REM Commit them
 PUSHD E:\checkout\ThumbWhere-Drupal7-Module
