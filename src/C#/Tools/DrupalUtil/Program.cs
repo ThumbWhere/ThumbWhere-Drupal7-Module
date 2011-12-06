@@ -75,14 +75,14 @@
                     {
                         Console.WriteLine("add - Adds a release to the manifest.");
                         Console.WriteLine("");
-                        Console.WriteLine("add folder name api increment");
+                        Console.WriteLine("add folder name api increment [type] [stream] [build]");
                         Console.WriteLine("");
                         Console.WriteLine("increment must be 'major' or 'patch'");
                         Console.WriteLine("  'major' will increment the major version. eg. 2.3 -> 3.0");
                         Console.WriteLine("  'patch' will increment the major version. eg  2.3 -> 3.4");
                         Console.WriteLine("");
                         Console.WriteLine(@"eg: add C:\work\hard\ guitar 7.x major");
-                        Console.WriteLine(@"eg: add C:\work\easy\ guitar 7.x patch");
+                        Console.WriteLine(@"eg: add C:\work\easy\ guitar 7.x patch \'Bug fixes\' dev 456");
                     }
                     break;
 
@@ -609,11 +609,25 @@
                             string increment = Args[4].Trim();
 
                             string type = "Bug fixes";
+                            string stream = "release";
+                            string build = "";
 
                             if (Args.Length > 5)
                             {
                                 type = Args[5].Trim();
                             }
+
+                            if (Args.Length > 6)
+                            {
+                                stream = Args[6].Trim();
+                            }
+
+                            if (Args.Length > 7)
+                            {
+                                build = Args[7].Trim();
+                            }
+
+
 
                             Console.WriteLine("");
                             Console.WriteLine("folder    = '{0}'", folder);
@@ -712,8 +726,14 @@
 
 
                             // Calculate the version
-                            string version = api + "-" + majorVersion + "." + patchVersion;
+                            string version = api + "-" + majorVersion + "." + patchVersion + "-" + stream;
 
+                            if (build != "")
+                            {
+                                version += "-build" + build;
+                            }
+
+                            Console.WriteLine("This version is known as '{0}'",version);
 
                             releaseElement.SelectSingleNode("name").InnerText = name + " " + version;
                             releaseElement.SelectSingleNode("version").InnerText = version;
