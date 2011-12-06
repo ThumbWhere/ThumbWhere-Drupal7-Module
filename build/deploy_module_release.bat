@@ -18,7 +18,7 @@ POPD
 PUSHD E:\checkout\ThumbWhere-Drupal7-Module-Releases
 
 REM Push the new changes
-git commit -a -m "New changes"
+git commit -a -m "Automatic commit by build %1."
 
 REM Push them to the server
 git push
