@@ -926,6 +926,7 @@
 
                 if (ExitCleanOnError)
                 {
+                    Console.WriteLine("Because you specified --exitcleanonerror we will exit with a 0 to avoid arousing any unwanted attention.");
                     // Pretend the exit is good
                     Environment.Exit(0);
                 }
