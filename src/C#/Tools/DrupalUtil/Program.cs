@@ -393,7 +393,7 @@
                     Console.WriteLine("");
                     KnownCommands();
                     KnownOptions();
-                    throw new ArgumentException("Called without arguments", "arguments");                    
+                    throw new ArgumentException("Called without arguments", "arguments");
                 }
 
 
@@ -439,7 +439,7 @@
 
                         default:
                             {
-                                throw new ArgumentException("Invalid option '" + o + "'","options");
+                                throw new ArgumentException("Invalid option '" + o + "'", "options");
                             }
                     }
                 }
@@ -456,7 +456,7 @@
                             if (Args.Length < 1)
                             {
                                 NotEnoughArguments(command);
-                                Environment.Exit(-2);
+                                Environment.Exit(2);
                                 return;
                             }
 
@@ -480,7 +480,7 @@
                             if (Args.Length < 5)
                             {
                                 NotEnoughArguments(command);
-                                Environment.Exit(-2);
+                                Environment.Exit(2);
                                 return;
                             }
 
@@ -496,7 +496,7 @@
                             string api = Args[3].Trim();
                             string url = Args[4].Trim();
 
-                            if (url.EndsWith("/")) url = url.Substring(0,url.Length-1);
+                            if (url.EndsWith("/")) url = url.Substring(0, url.Length - 1);
 
 
                             Console.WriteLine("");
@@ -520,7 +520,7 @@
                             xmlnsManager.AddNamespace("dc", "http://purl.org/dc/elements/1.1/");
 
 
-                            xmlTemplate.SelectSingleNode("project/title").InnerText = name;                            
+                            xmlTemplate.SelectSingleNode("project/title").InnerText = name;
                             xmlTemplate.SelectSingleNode("project/short_name").InnerText = name;
                             xmlTemplate.SelectSingleNode("project/dc:creator", xmlnsManager).InnerText = maintainer;
                             xmlTemplate.SelectSingleNode("project/link").InnerText = url + "/" + name + "/";
@@ -574,7 +574,7 @@
                             if (Args.Length < 5)
                             {
                                 NotEnoughArguments(command);
-                                Environment.Exit(-2);
+                                Environment.Exit(2);
                                 return;
                             }
 
@@ -631,7 +631,7 @@
 
                             // Get the base url
                             url = xml.SelectSingleNode("project/link").InnerText;
-                            if (url.EndsWith("/")) url = url.Substring(0,url.Length - 1);
+                            if (url.EndsWith("/")) url = url.Substring(0, url.Length - 1);
 
 
                             // If we have no children, then just add it
@@ -856,12 +856,19 @@
                         break;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine("------------------------------------------------");
-                Console.WriteLine("Error {0}",e.Message);
-                Environment.Exit(-1);
+                Console.WriteLine("Error {0}", e.Message);
+
+                // Bad exit
+                Environment.Exit(1);
+                return;
             }
+
+            // Good exit
+            Environment.Exit(0);
+            return;
 
         }
     }
