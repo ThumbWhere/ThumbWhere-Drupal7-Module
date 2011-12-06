@@ -449,7 +449,7 @@
                         // Force something through, damn the horses.
                         case "--exitcleanonerror":
                             {
-                                Force = true;
+                                ExitCleanOnError = true;
                             }
                             break;
 
