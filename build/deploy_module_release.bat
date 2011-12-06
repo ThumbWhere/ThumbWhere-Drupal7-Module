@@ -16,7 +16,7 @@ POPD
 @REM Commit them
 
 PUSHD E:\checkout\ThumbWhere-Drupal7-Module-Releases
-ß
+
 REM Maks sure we are up to date
 git pull
 
