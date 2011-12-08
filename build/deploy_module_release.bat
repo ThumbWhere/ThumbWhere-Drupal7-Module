@@ -13,7 +13,7 @@ PUSHD ..\..\ThumbWhere-Drupal7-Module-Releases\release-history\
 ..\..\ThumbWhere-Drupal7-Module\tools\DrupalUtil.exe new ThumbWhere ThumbWhere 7.x http://drupalmodules.thumbwhere.com/release-history/ --exitcleanonerror
 
 @REM Update the release
-..\..\ThumbWhere-Drupal7-Module\tools\DrupalUtil.exe add ..\..\ThumbWhere-Drupal7-Module\ThumbWhere ThumbWhere 7.x patch "%MESSAGE%" %STREAM% %BUILD% %4 %5 %6
+..\..\ThumbWhere-Drupal7-Module\tools\DrupalUtil.exe add ..\..\ThumbWhere-Drupal7-Module\ThumbWhere ThumbWhere 7.x patch %MESSAGE% %STREAM% %BUILD% %4 %5 %6
 
 @REM Copy changes to our local copy of the repository
 xcopy /ERVY . E:\checkout\ThumbWhere-Drupal7-Module-Releases\release-history\
