@@ -9,14 +9,12 @@
     using System.Xml.XPath;
     using System.IO;
     using System.Security.Cryptography;
+    using System.Threading;
     using ICSharpCode.SharpZipLib;
     using ICSharpCode.SharpZipLib.Tar;
     using ICSharpCode.SharpZipLib.Zip;
     using ICSharpCode.SharpZipLib.GZip;
-
-
-
-
+    using Tamir.SharpSsh;
 
 
     /// <summary>
@@ -31,12 +29,13 @@
         static void KnownCommands()
         {
             Console.WriteLine("");
-            Console.WriteLine("Known commands: add.help,new");
+            Console.WriteLine("Known commands: add.help,new,ssh");
             Console.WriteLine("");
 
             Usage("add");
             Usage("help");
             Usage("new");
+            Usage("ssh");
 
         }
 
@@ -69,7 +68,17 @@
                         Console.WriteLine("");
                         Console.WriteLine("eg: new guitar memyselfandi 7.x http://example.com/release-history/");
                     }
-                    break;
+                break;
+
+                case "ssh":
+                    {
+                        Console.WriteLine("ssh - Starts a remote ssh session and runs the supplied commands");
+                        Console.WriteLine("");
+                        Console.WriteLine("ssh user commands");
+                        Console.WriteLine("");
+                        Console.WriteLine("ssh user:password@example.com \"cd src\" \"git pull\" \"tar cvPpzf release56.tar.gz build\"");                        
+                    }
+                break;
 
                 case "add":
                     {
@@ -343,11 +352,15 @@
         /// </summary>
         static bool Force = false;
 
-
         /// <summary>
         /// Pretend that all is good, even if we get an error.
         /// </summary>
         static bool ExitCleanOnError = false;
+
+        /// <summary>
+        /// Log the entire conversation between all systems to the console.
+        /// </summary>
+        static bool LogConversation = false;
 
         /// <summary>
         /// Filter the input
@@ -386,9 +399,6 @@
 
             try
             {
-
-
-
                 FilterInput(args);
 
                 if (Args.Length == 0)
@@ -902,6 +912,145 @@
                                 // Put the old info file back
                                 SaveFile(infoFilePath, infoFileBackup);
                             }
+
+                        }
+                        break;
+
+
+
+                    case "ssh":
+                        {
+                            // Let's shell out to an external system and run some commands.
+
+                            if (Args.Length < 2)
+                            {
+                                NotEnoughArguments(command);
+                                Environment.Exit(2);
+                                return;
+                            }
+
+                            Console.WriteLine("");
+                            Console.WriteLine("SSH ...");
+
+                            //
+                            // Parse the arguments
+                            //
+
+                            string address = Args[1].Trim();                            
+                            string certificate = Args[2].Trim();
+
+                            List<string> commands = new List<string>();
+
+                            for (int i = 3; i < Args.Length; i++)
+                            {
+                                commands.Add(Args[i]);
+                            }
+
+                            //
+                            // Break up the address into the correct components
+                            //
+
+                            string userNamePassword = address.Split('@')[0];
+                            string host = address.Split('@')[1];
+
+                            string user = userNamePassword.Split(':')[0];
+                            string password = userNamePassword.Split(':')[1];
+
+                            string censored = "";
+                            foreach (char c in password)
+                            {
+                                censored += "*";
+                            }
+
+
+
+                            Console.WriteLine("Host      {0}",host);
+                            Console.WriteLine("User      {0}", user);
+                            Console.WriteLine("Password  {0}", censored);
+
+                            SshShell ssh = null;
+
+                            ssh = new SshShell(host, user, password);
+                            ssh.RemoveTerminalEmulationCharacters = true;
+                            ssh.Connect();
+
+                            StringBuilder log = new StringBuilder();
+
+
+                            // Sync with the other end
+                            string guida = Guid.NewGuid().ToString();
+                            string guidb = Guid.NewGuid().ToString();
+                            string echo = String.Format("stty -icanon -echo; echo '{0}' '{1}'", guida, guidb);
+                            ssh.WriteLine(echo);
+                            // The command will be echoed once                            
+                            // The result  will be echoed once
+                            log.Append(ssh.Expect(guida + " " + guidb));
+
+                            
+
+                            foreach (string c in commands)
+                            {
+                                Console.WriteLine("Sending '{0}'",c);
+                                
+                                // TSend the command
+                                //ssh.ExpectPattern = c;
+                                ssh.ExpectPattern = "";
+                                ssh.WriteLine(c);
+
+                                // The command will be echoed once
+                                //log.Append(ssh.Expect());
+                                
+
+                                //ssh.ExpectPattern = "";
+                                // Send a newline to kick off the command
+                                //ssh.WriteLine("");
+
+                                //Console.WriteLine("Sent new line");
+
+
+                                
+                                // New Guid
+                                guida = Guid.NewGuid().ToString();
+                                guidb = Guid.NewGuid().ToString();
+                                // Now we want to capure the rest
+                                //ssh.ExpectPattern = "echo " + guid;
+                                ssh.ExpectPattern =  guida + " " + guidb;
+                                echo = String.Format("echo '{0}' '{1}'", guida, guidb);
+                                ssh.WriteLine(echo);
+
+                                string result = ssh.Expect();
+                                log.Append(result);
+
+
+                                Console.WriteLine("");
+                                Console.WriteLine("--- command start ---");
+                                Console.WriteLine("{0}", c);
+                                Console.WriteLine("---  command end  ---");
+                                Console.WriteLine("--- result start ---");
+                                // Start result
+                                //result = result.Substring(1, result.Length - ("echo " + guid).Length - 1);
+                                string[] linesRaw = result.Split('\n');
+                                //Console.WriteLine("{0} lines", linesRaw.Length - 1);
+                                for (int i = 0; i < linesRaw.Length - 2; i++)
+                                {
+                                    Console.WriteLine("{0:0000} {1}", i, linesRaw[i]);
+                                }
+                                // end result
+                                Console.WriteLine("---  result end  ---");
+
+
+                            }
+
+                            if (LogConversation)
+                            {
+
+                                Console.WriteLine("");
+                                Console.WriteLine("");
+                                Console.WriteLine("----- log start ----");
+                                Console.WriteLine("{0}", log.ToString());
+                                Console.WriteLine("----- log end ----");
+                            }
+                            ssh.Close();
 
                         }
                         break;
