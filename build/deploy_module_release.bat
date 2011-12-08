@@ -40,7 +40,7 @@ REM Add the new changes
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Add the new changes
-"C:\Program Files\Git\bin\git.exe" commit -m "Automatic commit by %STREAM% build %1."
+"C:\Program Files\Git\bin\git.exe" commit -m "Automatic commit by %STREAM% build."
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Push the new changes
