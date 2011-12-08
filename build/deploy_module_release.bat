@@ -2,9 +2,9 @@ SET BUILD=0
 SET STREAM=dev
 SET MESSAGE=dev
 
-IF NOT ("%1")==("") SET MESSAGE=%1
-IF NOT ("%2")==("") SET BUILD=%2
-IF NOT ("%3")==("") SET STREAM=%3
+IF NOT (%1)==("") SET MESSAGE=%1
+IF NOT (%2)==("") SET BUILD=%2
+IF NOT (%3)==("") SET STREAM=%3
 
 @REM Change to the release folder
 PUSHD ..\..\ThumbWhere-Drupal7-Module-Releases\release-history\
