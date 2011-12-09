@@ -27,7 +27,7 @@ IF NOT ERRORLEVEL 0 GOTO ReportError
 IF NOT EXIST E:\checkout\%STREAM% mkdir E:\checkout\%STREAM%
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
-PUSHD E:\checkout\%STREAM%\ThumbWhere-Drupal7-Module-Releases
+PUSHD E:\checkout\%STREAM%\
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Checkout if we need to
