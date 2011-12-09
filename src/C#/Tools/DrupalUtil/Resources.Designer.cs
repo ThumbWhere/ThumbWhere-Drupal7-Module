@@ -62,21 +62,21 @@ namespace DrupalUtil {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
-        ///&lt;xsl:stylesheet version=&quot;1.0&quot; xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;  &gt;	
+        ///&lt;xsl:stylesheet version=&quot;1.0&quot; xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; &gt;	
         ///
         ///	
-        ///	&lt;xsl:template match=&quot;/&quot;&gt;
+        ///	&lt;xsl:template match=&quot;/project&quot;&gt;
         ///		
         ///		&lt;html&gt;
         ///			&lt;head&gt;
-        ///				&lt;title&gt;&lt;xsl:value-of select=&quot;/project/title&quot; /&gt; - Drupal &lt;xsl:value-of select=&quot;/project/api_version&quot; /&gt; Module&lt;/title&gt;
+        ///				&lt;title&gt;&lt;xsl:value-of select=&quot;/project/title&quot; /&gt; - Drupal &lt;xsl:value-of select=&quot;api_version&quot; /&gt; Module&lt;/title&gt;
         ///			&lt;/head&gt;
         ///			&lt;body&gt;
         ///				
         ///				&lt;div class=&quot;wrap&quot; id=&quot;mainWrap&quot;&gt;
-        ///					&lt;h1&gt;Module Summary&lt;/h1&gt;	 					
-        ///					&lt;ul&gt;Short Name: &lt;xsl:value-of select=&quot;/project/short_name&quot; /&gt;&lt;/ul&gt;
-        ///					&lt;ul&gt;Latest Version: &lt;xsl:value-of s [rest of string was truncated]&quot;;.
+        ///          &lt;h1&gt;Release Notes&lt;/h1&gt;
+        ///            
+        ///					&lt;h2&gt;&lt;xsl:value-of select=&quot;title&quot; /&gt; Module For Drupal &lt;x [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string manifest {
             get {
@@ -104,6 +104,22 @@ namespace DrupalUtil {
         internal static string manifest_template {
             get {
                 return ResourceManager.GetString("manifest_template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        ///&lt;package packagerversion=&quot;1.8.0&quot; version=&quot;2.0&quot; xmlns=&quot;http://pear.php.net/dtd/package-2.0&quot; xmlns:tasks=&quot;http://pear.php.net/dtd/tasks-1.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://pear.php.net/dtd/tasks-1.0
+        ///    http://pear.php.net/dtd/tasks-1.0.xsd
+        ///    http://pear.php.net/dtd/package-2.0
+        ///    http://pear.php.net/dtd/package-2.0.xsd&quot;&gt;
+        /// &lt;name&gt;Services_ThumbWhere&lt;/name&gt;
+        /// &lt;channel&gt;pear.thumbwhere.com&lt;/channel&gt;
+        /// &lt;summary&gt;PHP5 We [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string package {
+            get {
+                return ResourceManager.GetString("package", resourceCulture);
             }
         }
     }

@@ -124,4 +124,7 @@
   <data name="manifest_template" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>manifest_template.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="package" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>package.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

@@ -29,12 +29,13 @@
         static void KnownCommands()
         {
             Console.WriteLine("");
-            Console.WriteLine("Known commands: add.help,new,ssh");
+            Console.WriteLine("Known commands: add.help,new,pear,ssh");
             Console.WriteLine("");
 
             Usage("add");
             Usage("help");
             Usage("new");
+            Usage("pear");
             Usage("ssh");
 
         }
@@ -60,6 +61,18 @@
             Console.WriteLine("");
             switch (command.ToLower())
             {
+
+                case "pear":
+                    {
+                        Console.WriteLine("pear - Refreshes pear XML");
+                        Console.WriteLine("");
+                        Console.WriteLine("pear folder packagefile api increment [buildnumber]");
+                        Console.WriteLine("");
+                        Console.WriteLine("eg: pear myproject myproject/package.xml 1.1 patch 673");
+                        Console.WriteLine("eg: pear myproject myproject/package.xml 1.1 none");                        
+                    }
+                break;
+
                 case "new":
                     {
                         Console.WriteLine("new - Creates a new module");
@@ -363,6 +376,89 @@
         static bool LogConversation = false;
 
         /// <summary>
+        /// ConstructPearManifest
+        /// </summary>
+        /// <param name="directory"></param>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        static StringBuilder ConstructPearManifest(DirectoryInfo directory,string root)
+        {
+
+            if (directory.Name.StartsWith("."))
+            {
+                Console.WriteLine("Skipping {0} as it starts with a .", directory.Name);
+                return new StringBuilder();
+            }
+
+            if (directory == null)
+            {
+                throw new ArgumentNullException("Directory is null", "directory");
+            }
+
+            if (!directory.Exists)
+            {
+                throw new ArgumentNullException("Directory does not exist", "directory");
+            }
+
+            StringBuilder manifest = new StringBuilder();
+
+            manifest.Append(String.Format("<dir name=\"{0}\">",root));
+
+
+            FileInfo[] files = directory.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                if (file.Name == "package.xml")
+                {
+                    continue;
+                }
+
+                if (file.Name.StartsWith("."))
+                {
+                    Console.WriteLine("Skipping {0} as it starts with a .", file.Name);
+                    continue;
+                }
+
+
+
+                // http://pear.php.net/manual/en/guide.developers.package2.file.php#guide.developers.package2.file.roles
+                string role = "data";
+
+                if (file.Name.StartsWith("README"))
+                {
+                    role = "doc";
+                }
+
+                if (file.Name.StartsWith("LICENSE"))
+                {
+                    role = "doc";
+                }
+
+                if (file.Name.EndsWith(".php"))
+                {
+                    role = "php";
+                }
+
+
+
+
+                manifest.Append(String.Format("<file name=\"{0}\" role=\"{1}\" />", file.Name,role));
+
+                Console.WriteLine("Adding {0} as {1}", file.FullName,role);
+            }
+
+            DirectoryInfo[] directories = directory.GetDirectories();
+            foreach (DirectoryInfo dir in directories)
+            {                
+                manifest.Append(ConstructPearManifest(dir, dir.Name));
+            }
+
+            manifest.Append("</dir>");
+
+            return manifest;
+        }
+
+        /// <summary>
         /// Filter the input
         /// </summary>
         /// <param name="p_args"></param>
@@ -637,8 +733,6 @@
                                 build = Args[7].Trim();
                             }
 
-
-
                             Console.WriteLine("");
                             Console.WriteLine("folder    = '{0}'", folder);
                             Console.WriteLine("name      = '{0}'", name);
@@ -720,9 +814,15 @@
                                             }
                                             break;
 
+                                        case "none":
+                                            {
+                                                Console.WriteLine("Incrementing no version.");                                                
+                                            }
+                                            break;
+
                                         default:
                                             {
-                                                throw new ArgumentException(increment + " is not a valid increment. Valid increments are major,patch.", "increment");
+                                                throw new ArgumentException(increment + " is not a valid increment. Valid increments are major,patch,none.", "increment");
                                             }
 
                                     }
@@ -760,13 +860,22 @@
                             // Process the .info file
                             //
 
-
                             string infoFilePath = folder + "\\" + name + ".info";
                             string infoFileBackup = LoadFile(infoFilePath);
                             string infoFile = infoFileBackup;
 
                             try
                             {
+
+                                //
+                                // If we already have this -- comment it out
+                                //
+
+                                infoFile = infoFile.Replace("project status url =\"", ";project status url =\"");
+                                infoFile = infoFile.Replace("version = \"", ";version =\"");
+                                infoFile = infoFile.Replace("project = \"", ";project = \"");
+                                infoFile = infoFile.Replace("datestamp = \"", ";datestamp = \"");
+
 
                                 //
                                 // Append the important odule information
@@ -1055,6 +1164,192 @@
                         }
                         break;
 
+
+                    case "pear":
+                        {
+                            Console.WriteLine("Args.Length = {0}", Args.Length);
+
+                            if (Args.Length < 7)
+                            {
+                                NotEnoughArguments(command);
+                                Environment.Exit(2);
+                                return;
+                            }
+
+                            Console.WriteLine("");
+                            Console.WriteLine("Updating pear project file");
+
+                            //
+                            // Parse the arguments
+                            //
+
+                            string folder = Args[1].Trim();
+                            string file = Args[2].Trim();
+                            string api = Args[3].Trim();
+                            string increment = Args[4].Trim();
+                            string stream = Args[5].Trim();
+                            string apistream = Args[6].Trim();
+
+                            string build = null;
+
+                            if (Args.Length > 7)
+                            {
+                                build = Args[7].Trim();
+                            }
+
+
+
+                            Console.WriteLine("");
+                            Console.WriteLine("folder    = '{0}'", folder);
+                            Console.WriteLine("file      = '{0}'", file);
+                            Console.WriteLine("api       = '{0}'", api);
+                            Console.WriteLine("increment = '{0}'", increment);
+                            Console.WriteLine("stream    = '{0}'", stream);
+                            Console.WriteLine("apistream = '{0}'", apistream);
+                            Console.WriteLine("build     = '{0}'", build);                            
+                            Console.WriteLine("");
+
+                            if ("|stable|beta|alpha|devel|".IndexOf("|" + apistream + "|") == -1)
+                            {
+                                throw new ArgumentException("stream is not a valid stability (" + stream + "), must be one of stable, beta, alpha, devel","stream");
+                            }
+
+                            if ("|stable|beta|alpha|devel|snapshot|".IndexOf("|" + apistream + "|") == -1)
+                            {
+                                throw new ArgumentException("apistream is not a valid stability (" + stream + "), must be one of stable, beta, alpha, devel, snapshot", "apistream");
+                            }
+
+
+                            // 0000 Error: Stability type <api> is not a valid stability (dev), must be one of stable, beta, alpha, devel
+                            // 0001 Error: Stability type <release> is not a valid stability (dev), must be one of stable, beta, alpha, devel, snapshot
+                            // 
+
+                            XmlDocument packageXml = new XmlDocument();
+
+                            if (File.Exists(file))
+                            {
+                                packageXml.Load(file);
+                            }
+                            else
+                            {
+                                packageXml.LoadXml(Resources.package);
+                            }
+
+                            XmlNamespaceManager xmlnsManager = new System.Xml.XmlNamespaceManager(packageXml.NameTable);
+
+                            //Add the namespaces used in books.xml to the XmlNamespaceManager.
+                            xmlnsManager.AddNamespace("p2", "http://pear.php.net/dtd/package-2.0");
+
+                            
+                            XmlElement dateElement = (XmlElement)packageXml.SelectSingleNode("p2:package/p2:date", xmlnsManager);
+                            XmlElement timeElement = (XmlElement)packageXml.SelectSingleNode("p2:package/p2:time", xmlnsManager);
+                            XmlElement versionElement = (XmlElement)packageXml.SelectSingleNode("p2:package/p2:version/p2:release", xmlnsManager);
+                            XmlElement apiElement = (XmlElement)packageXml.SelectSingleNode("p2:package/p2:version/p2:api", xmlnsManager);
+
+                            XmlElement stabilityElement = (XmlElement)packageXml.SelectSingleNode("p2:package/p2:stability/p2:release", xmlnsManager);
+                            XmlElement apiStabilityElement = (XmlElement)packageXml.SelectSingleNode("p2:package/p2:stability/p2:api", xmlnsManager);
+
+                            //
+                            // Date of build..
+                            //
+
+                            DateTime now = DateTime.UtcNow;
+
+                            dateElement.InnerText = String.Format("{0:0000}-{1:00}-{2:00}", now.Date.Year, now.Date.Month, now.Date.Day);
+                            timeElement.InnerText = String.Format("{0:00}:{1:00}:{2:00}", now.Hour, now.Minute, now.Second);
+
+                            //
+                            // API/Versions
+                            //
+
+                            string[] versionStrings = versionElement.InnerText.Split('.');
+
+                            int[] versionInts = new int[3];
+
+                            versionInts[0] = int.Parse(versionStrings[0]);
+                            versionInts[1] = int.Parse(versionStrings[1]);
+                            versionInts[2] = int.Parse(versionStrings[2]);
+
+                            //
+                            // increment the build, or use the one we supplied..
+                            //
+                            if (String.IsNullOrEmpty(build))
+                            {
+                                versionInts[2]++;
+                            }
+                            else
+                            {
+                                versionInts[2] = int.Parse(build);
+                            }
+
+
+                            switch (increment)
+                            {
+                                case "major":
+                                    {
+
+                                        Console.WriteLine("Incrementing major version, setting patch back to 0.");
+
+                                        versionInts[0]++;
+                                        versionInts[1] = 0;
+
+                                    }
+                                    break;
+
+                                case "patch":
+                                    {
+                                        Console.WriteLine("Incrementing minor version.");                                            
+                                        versionInts[1]++;
+                                    }
+                                    break;
+
+                                case "none":
+                                    {
+                                        Console.WriteLine("Incrementing no version.");                                            
+                                    }
+                                    break;
+
+                                default:
+                                    {
+                                        throw new ArgumentException(increment + " is not a valid increment. Valid increments are major,patch,none.", "increment");
+                                    }
+
+                            }
+
+                            apiElement.InnerText = api;
+
+                            Console.WriteLine("Created new release (for api '{0}') as version {1}.{2}.{3}", api, versionInts[0], versionInts[1], versionInts[2]);
+
+                            versionElement.InnerText = String.Format("{0}.{1}.{2}", versionInts[0], versionInts[1], versionInts[2]);
+
+                            //
+                            // Stability
+                            //
+
+                            stabilityElement.InnerText = stream;
+                            apiStabilityElement.InnerText = apistream;
+
+                            //
+                            // Now add the files
+                            //
+
+                            // Clear out the existing filles
+                            XmlElement contentsElement = (XmlElement)packageXml.SelectSingleNode("p2:package/p2:contents", xmlnsManager);
+
+                            // Remove all attributes and children
+                            contentsElement.RemoveAll();
+
+                            // Generate the new manifest
+                            StringBuilder manifest = ConstructPearManifest(new DirectoryInfo(folder), "/");
+
+                            // Load the contents element ito the document.
+                            contentsElement.InnerXml = manifest.ToString();
+
+                            // Save the file back
+                            packageXml.Save(file);
+
+                        }
+                        break;
 
                     default:
                         {
