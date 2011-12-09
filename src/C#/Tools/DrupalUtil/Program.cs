@@ -1086,6 +1086,7 @@
                             StringBuilder log = new StringBuilder();
 
 
+                            /*
                             // Sync with the other end
                             string guida = Guid.NewGuid().ToString();
                             string guidb = Guid.NewGuid().ToString();
@@ -1094,17 +1095,27 @@
                             // The command will be echoed once                            
                             // The result  will be echoed once
                             log.Append(ssh.Expect(guida + " " + guidb));
-
+                            */
                             
 
                             foreach (string c in commands)
                             {
+
+                                string guida = Guid.NewGuid().ToString();
+                                string guidb = Guid.NewGuid().ToString();
+                                string echo = String.Format("stty -icanon -echo; echo '{0}' '{1}'", guida, guidb);
+                                ssh.WriteLine(echo);
+                                // The command will be echoed once                            
+                                // The result  will be echoed once
+                                log.Append(ssh.Expect(guida + " " + guidb));
+
+
                                 Console.WriteLine("Sending '{0}'",c);
                                 
                                 // TSend the command
                                 //ssh.ExpectPattern = c;
-                                ssh.ExpectPattern = "";
-                                ssh.WriteLine(c);
+                                //ssh.ExpectPattern = "";
+                                //ssh.WriteLine(c);
 
                                 // The command will be echoed once
                                 //log.Append(ssh.Expect());
@@ -1122,14 +1133,12 @@
                                 guida = Guid.NewGuid().ToString();
                                 guidb = Guid.NewGuid().ToString();
                                 // Now we want to capure the rest
-                                //ssh.ExpectPattern = "echo " + guid;
-                                ssh.ExpectPattern =  guida + " " + guidb;
+                                //ssh.ExpectPattern = "echo " + guid;                                
                                 echo = String.Format("echo '{0}' '{1}'", guida, guidb);
-                                ssh.WriteLine(echo);
+                                ssh.WriteLine(c + " ; "  + echo);
 
-                                string result = ssh.Expect();
+                                string result = ssh.Expect(guida + " " + guidb);
                                 log.Append(result);
-
 
                                 Console.WriteLine("");
                                 Console.WriteLine("--- command start ---");
@@ -1148,6 +1157,8 @@
                                 Console.WriteLine("---  result end  ---");
 
 
+                                // Any stragling stuff...
+                                //log.Append(ssh.Expect());
                             }
 
                             if (LogConversation)
