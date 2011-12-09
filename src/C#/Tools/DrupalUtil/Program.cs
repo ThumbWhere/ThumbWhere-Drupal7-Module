@@ -170,30 +170,37 @@
         /// <summary>
         /// Creates a GZipped Tar file from a source directory
         /// </summary>
+        /// <param name="root">The root directory we want everything to appear wrapped in.</param>
         /// <param name="outputTarFilename">Output .tar.gz file</param>
         /// <param name="sourceDirectory">Input directory containing files to be added to GZipped tar archive</param>
-        private static void CreateTar(string outputTarFilename, string sourceDirectory)
+        private static void CreateTar(string root,string outputTarFilename, string sourceDirectory)
         {
             using (FileStream fs = new FileStream(outputTarFilename, FileMode.Create, FileAccess.Write, FileShare.None))
             using (Stream gzipStream = new GZipOutputStream(fs))
             using (TarArchive tarArchive = TarArchive.CreateOutputTarArchive(gzipStream))
             {
-                AddDirectoryFilesToTar(tarArchive, sourceDirectory, true);
+                AddDirectoryFilesToTar(root,tarArchive, sourceDirectory, true);
             }
         }
 
         /// <summary>
         /// Creates a Zip file from a source directory
         /// </summary>
+        /// <param name="root">The root directory.</param>
         /// <param name="outputZipFilename">Output .zip file</param>
         /// <param name="sourceDirectory">Input directory containing files to be added to zip/</param>
-        private static void CreateZip(string outputZipFilename, string sourceDirectory)
+        private static void CreateZip(string root,string outputZipFilename, string sourceDirectory)
         {
 
             using (ZipFile zipArchive = ZipFile.Create(outputZipFilename))
             {
+
                 zipArchive.BeginUpdate();
-                AddDirectoryFilesToZip(zipArchive, sourceDirectory, true);
+
+                // Add the root directory
+                zipArchive.AddDirectory(root);
+
+                AddDirectoryFilesToZip(root,zipArchive, sourceDirectory, true);
                 zipArchive.CommitUpdate();
             }
         }
@@ -202,17 +209,18 @@
         /// <summary>
         /// Recursively adds folders and files to archive
         /// </summary>
+        // <param name="root"></param>
         /// <param name="tarArchive"></param>
         /// <param name="sourceDirectory"></param>
         /// <param name="recurse"></param>
-        private static void AddDirectoryFilesToTar(TarArchive tarArchive, string sourceDirectory, bool recurse)
+        private static void AddDirectoryFilesToTar(string root,TarArchive tarArchive, string sourceDirectory, bool recurse)
         {
             // Recursively add sub-folders
             if (recurse)
             {
                 string[] directories = Directory.GetDirectories(sourceDirectory);
                 foreach (string directory in directories)
-                    AddDirectoryFilesToTar(tarArchive, directory, recurse);
+                    AddDirectoryFilesToTar(root,tarArchive, directory, recurse);
             }
 
             // Add files
@@ -220,6 +228,11 @@
             foreach (string filename in filenames)
             {
                 TarEntry tarEntry = TarEntry.CreateEntryFromFile(filename);
+                //tarEntry.File = root + "/" + tarEntry; 
+                if (!String.IsNullOrEmpty(root))
+                {
+                    tarEntry.Name = root + "/" + tarEntry.Name;
+                }
                 tarArchive.WriteEntry(tarEntry, true);
             }
         }
@@ -228,13 +241,14 @@
         /// <summary>
         /// Recursively adds folders and files to archive
         /// </summary>
+        /// <param name="root">The root directory.</param>
         /// <param name="zipArchive"></param>
         /// <param name="sourceDirectory"></param>
         /// <param name="recurse"></param>
-        private static void AddDirectoryFilesToZip(ZipFile zipArchive, string sourceDirectory, bool recurse)
+        private static void AddDirectoryFilesToZip(string root,ZipFile zipArchive, string sourceDirectory, bool recurse)
         {
             // Add this directory
-            zipArchive.AddDirectory(sourceDirectory);
+            zipArchive.AddDirectory(root + "/" + sourceDirectory);
 
             // Recursively add sub-folders
             if (recurse)
@@ -242,7 +256,7 @@
                 string[] directories = Directory.GetDirectories(sourceDirectory);
                 foreach (string directory in directories)
                 {
-                    AddDirectoryFilesToZip(zipArchive, directory, recurse);
+                    AddDirectoryFilesToZip(root,zipArchive, directory, recurse);
                 }
             }
 
@@ -250,7 +264,7 @@
             string[] filenames = Directory.GetFiles(sourceDirectory);
             foreach (string filename in filenames)
             {
-                zipArchive.Add(filename);
+                zipArchive.Add(filename, root + "/" + filename);
             }
         }
 
@@ -904,7 +918,7 @@
 
                                 Directory.SetCurrentDirectory(folder);
 
-                                CreateTar(tarFilePath, ".");
+                                CreateTar(name,tarFilePath, ".");
                                 Directory.SetCurrentDirectory(currentDirectoryBackup);
 
                                 string tarMD5 = MD5FileHash(tarFilePath).ToLower();
@@ -937,7 +951,7 @@
                                 Console.WriteLine("Generating {0}", zipFilePath);
 
                                 Directory.SetCurrentDirectory(folder);
-                                CreateZip(zipFilePath, ".");
+                                CreateZip(name,zipFilePath, ".");
                                 Directory.SetCurrentDirectory(currentDirectoryBackup);
 
                                 string zipMD5 = MD5FileHash(zipFilePath).ToLower();
