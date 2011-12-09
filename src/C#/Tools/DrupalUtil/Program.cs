@@ -231,6 +231,13 @@
                 //tarEntry.File = root + "/" + tarEntry; 
                 if (!String.IsNullOrEmpty(root))
                 {
+                    string name = tarEntry.Name;
+
+                    if (name.StartsWith("./"))
+                    {
+                        name = name.Substring(2, name.Length-2);
+                    }
+
                     tarEntry.Name = root + "/" + tarEntry.Name;
                 }
                 tarArchive.WriteEntry(tarEntry, true);
@@ -264,7 +271,16 @@
             string[] filenames = Directory.GetFiles(sourceDirectory);
             foreach (string filename in filenames)
             {
-                zipArchive.Add(filename, root + "/" + filename);
+
+                string name = filename;
+
+                if (name.StartsWith("./"))
+                {
+                    name = name.Substring(2, name.Length - 2);
+                }
+
+
+                zipArchive.Add(filename, root + "/" + name);
             }
         }
 
