@@ -1,6 +1,9 @@
 REM Set the path to home where we have the config
 SET HOME=\home
 
+"C:\Program Files\Git\bin\git.exe" config --global user.name "Build Server"
+"C:\Program Files\Git\bin\git.exe" config --global user.email "build@thumbwhere.com"
+
 SET BUILD=0
 SET STREAM=dev
 SET MESSAGE=dev
