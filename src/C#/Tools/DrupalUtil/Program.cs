@@ -235,12 +235,12 @@
 
                     Console.WriteLine("name = " + name);
 
-                    if (name.StartsWith(@".\"))
+                    if (name.StartsWith("./"))
                     {
                         name = name.Substring(2, name.Length-2);
                     }
 
-                    tarEntry.Name = root + @"\" + tarEntry.Name;
+                    tarEntry.Name = root + "/" + name;
                 }
                 tarArchive.WriteEntry(tarEntry, true);
             }
