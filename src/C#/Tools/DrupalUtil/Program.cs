@@ -28,6 +28,7 @@
         /// </summary>
         static void KnownCommands()
         {
+            Console.WriteLine("-----------------------------------------------------");
             Console.WriteLine("");
             Console.WriteLine("Known commands: add.help,new,pear,ssh");
             Console.WriteLine("");
@@ -37,6 +38,7 @@
             Usage("new");
             Usage("pear");
             Usage("ssh");
+            Console.WriteLine("-----------------------------------------------------");
 
         }
 
@@ -136,15 +138,16 @@
         /// <param name="command"></param>
         static void NotEnoughArguments(string command)
         {
+            Console.WriteLine("-----------------------------------------------------");
             Console.WriteLine("");
             Console.WriteLine("Not enough arguments.");
             Console.WriteLine("");
             Console.WriteLine("Here is the correct usage of '{0}'", command);
             Console.WriteLine("");
-            Console.WriteLine("-----------------------------------------");
-            Console.WriteLine("");
-
+            Console.WriteLine("-----------------------------------------------------");
             Usage(command);
+            Console.WriteLine("-----------------------------------------------------");
+
         }
 
         /// <summary>
@@ -228,20 +231,23 @@
             foreach (string filename in filenames)
             {
                 TarEntry tarEntry = TarEntry.CreateEntryFromFile(filename);
-                //tarEntry.File = root + "/" + tarEntry; 
+                
+                string name = tarEntry.Name;
+
+                if (name.StartsWith("./"))
+                {
+                    name = name.Substring(2, name.Length-2);
+                }
+
                 if (!String.IsNullOrEmpty(root))
                 {
-                    string name = tarEntry.Name;
-
-                    Console.WriteLine("name = " + name);
-
-                    if (name.StartsWith("./"))
-                    {
-                        name = name.Substring(2, name.Length-2);
-                    }
-
-                    tarEntry.Name = root + "/" + name;
+                    name = root + "/" + name;
                 }
+
+                tarEntry.Name = name;
+
+                Console.WriteLine("{0} -> {1}", tarEntry.File, tarEntry.Name);
+
                 tarArchive.WriteEntry(tarEntry, true);
             }
         }
@@ -275,15 +281,21 @@
             {
                 string name = filename;
 
-                Console.WriteLine("name = " + name);
 
                 if (name.StartsWith(@".\"))
                 {
                     name = name.Substring(2, name.Length - 2);
                 }
 
+                if (!String.IsNullOrEmpty(root))
+                {
+                    name = root + @"\" + name;
+                }
 
-                zipArchive.Add(filename, root + @"\" + name);
+                Console.WriteLine("{0} -> {1}", filename, name);
+
+                zipArchive.Add(filename, name);
+
             }
         }
 

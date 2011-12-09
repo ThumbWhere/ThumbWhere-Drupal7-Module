@@ -1,5 +1,5 @@
 name = "ThumbWhere (Core)"
-description = "This is an example module that displays Hello World"
+description = "This is the Core ThumbWhere module which allows entires in ThumbWhere to be accessed and administered through Drupal."
 package = "ThumbWhere"
 core = "7.x"
 ;dependencies[] = autoload
