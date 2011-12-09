@@ -27,8 +27,14 @@ IF NOT ERRORLEVEL 0 GOTO ReportError
 IF NOT EXIST E:\checkout\%STREAM% mkdir E:\checkout\%STREAM%
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
+PUSHD E:\checkout\%STREAM%\ThumbWhere-Drupal7-Module-Releases
+IF NOT ERRORLEVEL 0 GOTO ReportError
+
 REM Checkout if we need to
 IF NOT EXIST ThumbWhere-Drupal7-Module-Releases "C:\Program Files\Git\bin\git.exe" clone git@github.com:ThumbWhere/ThumbWhere-Drupal7-Module-Releases.git
+IF NOT ERRORLEVEL 0 GOTO ReportError
+
+POPD
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 @REM Copy changes to our local copy of the repository
