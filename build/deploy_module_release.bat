@@ -1,3 +1,6 @@
+REM Set the path to home where we have the config
+SET HOME=\home
+
 SET BUILD=0
 SET STREAM=dev
 SET MESSAGE=dev
@@ -5,7 +8,6 @@ SET MESSAGE=dev
 IF NOT (%1)==("") SET MESSAGE=%1
 IF NOT (%2)==("") SET STREAM=%2
 IF NOT (%3)==("") SET BUILD=%3
-
 
 @REM Change to the release folder
 PUSHD ..\..\ThumbWhere-Drupal7-Module-Releases\release-history\
@@ -18,18 +20,26 @@ IF NOT ERRORLEVEL 0 GOTO ReportError
 ..\..\ThumbWhere-Drupal7-Module\tools\DrupalUtil.exe add ..\..\ThumbWhere-Drupal7-Module\ThumbWhere ThumbWhere 7.x patch %MESSAGE% %STREAM% %BUILD% %4 %5 %6
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
+REM Create Directories
+IF NOT EXIST E:\checkout mkdir E:\checkout
+IF NOT ERRORLEVEL 0 GOTO ReportError
+
+IF NOT EXIST E:\checkout\%STREAM% mkdir E:\checkout\%STREAM%
+IF NOT ERRORLEVEL 0 GOTO ReportError
+
+REM Checkout if we need to
+IF NOT EXIST ThumbWhere-Drupal7-Module-Releases "C:\Program Files\Git\bin\git.exe" clone git@github.com:ThumbWhere/ThumbWhere-Drupal7-Module-Releases.git
+IF NOT ERRORLEVEL 0 GOTO ReportError
+
 @REM Copy changes to our local copy of the repository
-xcopy /ERVY . E:\checkout\ThumbWhere-Drupal7-Module-Releases\release-history\
+xcopy /ERVY . E:\checkout\%STREAM%\ThumbWhere-Drupal7-Module-Releases\release-history\
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 POPD
+IF NOT ERRORLEVEL 0 GOTO ReportError
 
-@REM Commit them
-
-PUSHD E:\checkout\ThumbWhere-Drupal7-Module-Releases
-
-REM Set the path to home where we have the config
-SET HOME=\home
+PUSHD E:\checkout\%STREAM%\ThumbWhere-Drupal7-Module-Releases
+IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Make sure we are up to date
 "C:\Program Files\Git\bin\git.exe" pull
@@ -48,6 +58,7 @@ REM Push the new changes
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 POPD
+IF NOT ERRORLEVEL 0 GOTO ReportError
 
 @goto ReportOK
 :ReportError
