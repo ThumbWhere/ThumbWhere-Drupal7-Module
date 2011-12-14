@@ -1,9 +1,16 @@
-name = "ThumbWhere (Core)"
+name = "ThumbWhere"
 description = "This is the Core ThumbWhere module which allows entires in ThumbWhere to be accessed and administered through Drupal."
-package = "ThumbWhere"
+package = "thumbwhere"
 core = "7.x"
-;dependencies[] = autoload
-files[] = ThumbWhere.module
+configure = admin/config/thumbwhere
+dependencies[] = entityreference
+dependencies[] = devel
+dependencies[] = devel_debug_log
+dependencies[] = coder
+files[] = thumbwhere.module
+files[] = thumbwhere.install
+files[] = thumbwhere.admin.inc
+
 
 ;
 ; This information is purely for module updates
@@ -13,3 +20,4 @@ project = "ThumbWhere"
 datestamp = "1270000000"
 ;
 
+    
