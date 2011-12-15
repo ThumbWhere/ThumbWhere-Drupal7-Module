@@ -7,7 +7,6 @@
  */  
 
 
-
 /**
  * Implement hook_entity_info().
  *
@@ -17,7 +16,6 @@
  * choice.
  */
 function producer_entity_info() {
-  
   $return['producer'] = array(
     'label' => t('Producer'),
     // The entity class and controller class extend the classes provided by the
@@ -49,8 +47,6 @@ function producer_entity_info() {
       'menu wildcard' => '%producer',
     ),
   );
-  
-  
   // The entity that holds information about the entity types	  
   $return['producer_type'] = array(
     'label' => t('Producer Type'),
@@ -489,138 +485,5 @@ class ProducerTypeController extends EntityAPIControllerExportable {
     $producer_type = parent::create($values);
     return $producer_type;
   }
-}
 
-/**
-* UI controller.
-*/
-class ProducerTypeUIController extends EntityDefaultUIController {
-
-  /**
-   * Overrides hook_menu() defaults.
-   */
-  public function hook_menu() {
-    $items = parent::hook_menu();
-    $items[$this->path]['description'] = 'Manage producer entity types, including adding
-		and removing fields and the display of fields.';
-    return $items;
-  }
-}
-
-/**
- * UI controller.
- */
-class ProducerUIController extends EntityDefaultUIController {
-
-  /**
-   * Overrides hook_menu() defaults. Main reason for doing this is that
-   * parent class hook_menu() is optimized for entity type administration.
-   */
-  public function hook_menu() {
-    
-    $items = array();
-    $id_count = count(explode('/', $this->path));
-    $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
-
-    $items[$this->path] = array(
-      'title' => 'Producers',
-      'description' => 'Add edit and update producers.',
-      'page callback' => 'system_admin_menu_block_page',
-      'access arguments' => array('access administration pages'),
-      'file path' => drupal_get_path('module', 'system'),
-      'file' => 'system.admin.inc',
-    );
-    
-    // Change the overview menu type for the list of producers.
-    $items[$this->path]['type'] = MENU_LOCAL_TASK;
-    
-    // Change the add page menu to multiple types of entities
-    $items[$this->path . '/add'] = array(
-      'title' => 'Add a producer',
-      'description' => 'Add a new producer',
-      'page callback'  => 'producer_add_page',
-      'access callback'  => 'producer_access',
-      'access arguments' => array('edit'),
-      'type' => MENU_NORMAL_ITEM,
-      'weight' => 20,
-      'file' => 'producer.admin.inc',
-      'file path' => drupal_get_path('module', $this->entityInfo['module'])
-
-    );
-    
-    // Add menu items to add each different type of entity.
-    foreach (producer_get_types() as $type) {
-      $items[$this->path . '/add/' . $type->type] = array(
-        'title' => 'Add ' . $type->label,
-        'page callback' => 'producer_form_wrapper',
-        'page arguments' => array(producer_create(array('type' => $type->type))),
-        'access callback' => 'producer_access',
-        'access arguments' => array('edit', 'edit ' . $type->type),
-        'file' => 'producer.admin.inc',
-        'file path' => drupal_get_path('module', $this->entityInfo['module'])
-      );
-    }
-
-    // Loading and editing producer entities
-    $items[$this->path . '/producer/' . $wildcard] = array(
-      'page callback' => 'producer_form_wrapper',
-      'page arguments' => array($id_count + 1),
-      'access callback' => 'producer_access',
-      'access arguments' => array('edit', $id_count + 1),
-      'weight' => 0,
-      'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
-      'file' => 'producer.admin.inc',
-      'file path' => drupal_get_path('module', $this->entityInfo['module'])
-    );
-    $items[$this->path . '/producer/' . $wildcard . '/edit'] = array(
-      'title' => 'Edit',
-      'type' => MENU_DEFAULT_LOCAL_TASK,
-      'weight' => -10,
-      'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
-    );
-    
-    $items[$this->path . '/producer/' . $wildcard . '/delete'] = array(
-      'title' => 'Delete',
-      'page callback' => 'producer_delete_form_wrapper',
-      'page arguments' => array($id_count + 1),
-      'access callback' => 'producer_access',
-      'access arguments' => array('edit', $id_count + 1),
-      'type' => MENU_LOCAL_TASK,
-      'context' => MENU_CONTEXT_INLINE,
-      'weight' => 10,
-      'file' => 'producer.admin.inc',
-      'file path' => drupal_get_path('module', $this->entityInfo['module'])
-    );
-    
-    // Menu item for viewing producers
-    $items['producer/' . $wildcard] = array(
-      //'title' => 'Title',
-      'title callback' => 'producer_page_title',
-      'title arguments' => array(1),
-      'page callback' => 'producer_page_view',
-      'page arguments' => array(1),
-      'access callback' => 'producer_access',
-      'access arguments' => array('view', 1),
-      'type' => MENU_CALLBACK,
-    );
-    return $items;
-  }
-  
-  
-  /**
-   * Create the markup for the add Producer Entities page within the class
-   * so it can easily be extended/overriden.
-   */ 
-  public function addPage() {
-    $item = menu_get_item();
-    $content = system_admin_menu_block($item);
-
-    if (count($content) == 1) {
-      $item = array_shift($content);
-      drupal_goto($item['href']);
-    }    
-        
-    return theme('producer_add_list', array('content' => $content));
-  }
-  
 }
