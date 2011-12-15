@@ -1,0 +1,37 @@
+<?php
+/**
+ * @file
+ * Install for a member entity - need to create the base table for our entity.
+ * This table can have as many colums as you need to keep track of entity-specific
+ * data that will not be added via attached fields.
+ * The minimum information for the entity to work is an id and an entity name.
+ */
+
+/**
+ * Implements hook_schema()
+ */
+function member_schema() {
+  $schema = array();
+
+  $schema['member'] = array(
+    'description' => 'The base table for our member entity.',
+      'fields' => array(
+        'member_id' => array(
+          'description' => 'Primary Key: Identifier for a member entity.',
+          'type' => 'serial',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+        ),
+        'name' => array(
+          'description' => 'The name of our member entity.',
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+          'default' => '',
+        ),
+    ),
+    'primary key' => array('member_id'),
+  );
+
+  return $schema;
+}

@@ -1,23 +1,19 @@
-name = "ThumbWhere"
-description = "This is the Core ThumbWhere module which allows entires in ThumbWhere to be accessed and administered through Drupal."
+name = "ThumbWhere Member"
+description = "Exposes ThumbWhere Members and Entities in Drupal"
 package = "ThumbWhere"
 core = "7.x"
 configure = admin/config/thumbwhere
-
-; actual dependencies
-dependencies[] = menu
 dependencies[] = entity
+dependencies[] = menu
 ;dependencies[] = entityreference
-
-files[] = thumbwhere.module
-files[] = thumbwhere.install
-files[] = thumbwhere.admin.inc
+dependencies[] = thumbwhere
 
 ; And while we are developing
 dependencies[] = devel
 dependencies[] = devel_debug_log
 dependencies[] = coder
-
+files[] = member.module
+files[] = member.install
 
 ;
 ; This information is purely for module updates
@@ -26,5 +22,4 @@ version = "7.x-0.0-0"
 project = "ThumbWhere"
 datestamp = "1270000000"
 ;
-
     

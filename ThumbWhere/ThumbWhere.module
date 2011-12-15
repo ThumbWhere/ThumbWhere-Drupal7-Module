@@ -51,7 +51,7 @@ function thumbwhere_help($section) {
  */
 function thumbwhere_modules_installed($modules) {
   
-  ddl('thumbwhere_modules_installed(' + $modules + ')');
+  ddl('thumbwhere_modules_installed()');
   
   if (in_array('menu', $modules)) {
     $menu = array(
