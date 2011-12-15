@@ -1,0 +1,318 @@
+<?php
+
+/**
+ *@file
+ * Implementes the basic functionality required to create an entity and display it.
+ */
+
+
+/**
+ * Implements hook_entity_info()
+ *
+ * We let Drupal know about our entity via this functions - have a look at
+ * http://api.drupal.org/api/drupal/modules--system--system.api.php/function/hook_entity_info/7
+ * for all the information.
+ * Below we do the basic to get an entity with one bundle going.
+ */
+function entity_example_entity_info() {
+  $basic_info['basic'] = array(
+    // A human readable label to identify our entity.
+    'label' => t('Basic Entity'),
+    // The controller for our Entity - extends the Drupal core controller.
+    'controller class' => 'BasicController',
+    // The table defined in hook_schema()
+    'base table' => 'basic',
+    // Returns the uri elements of an entity
+    'uri callback' => 'basic_uri',
+    // Fieldable that we can attach fields to it - the core functionality will
+    // do the heavy lifting here.
+    'fieldable' => TRUE,
+    // The unique key of our base table.
+    'entity keys' => array(
+      'id' => 'basic_id',
+    ),
+    // FALSE disables caching -  caching functionality is handled by Drupal core
+    'static cache' => TRUE,
+    // Attach bundles - i.e. alternative configurations of fields associated with a main entity.
+    'bundles' => array(
+      'basic' => array(
+        'label' => 'Basic',
+        // Information below is used by the Field UI - they "attach" themselves here and lets us
+        // do the standard field management that all the core entities enjoy.
+        'admin' => array(
+          'path' => 'admin/structure/basic/manage',
+          'access arguments' => array('administer basic entities'),
+        ),
+      ),
+    ),
+    // View modes allow entities to be displayed differently based on context. We simply have one option
+    // here but an alternative would be to have a Full and Teaser mode akin to node.
+    'view modes' => array(
+      'full' => array(
+        'label' => t('Full'),
+        'custom settings' =>  FALSE,
+      ),
+    )
+  );
+
+  return $basic_info;
+}
+
+/**
+ * Fetch a basic object. Make sure that the wildcard you choose
+ * in the basic entity definition fits the function name here.
+ *
+ * @param $basic_id
+ *   Integer specifying the basic entity id.
+ * @param $reset
+ *   A boolean indicating that the internal cache should be reset.
+ * @return
+ *   A fully-loaded $basic object or FALSE if it cannot be loaded.
+ *
+ * @see basic_load_multiple()
+ */
+function basic_load($basic_id = NULL, $reset = FALSE) {
+  $basic_ids = (isset($basic_id) ? array($basic_id) : array());
+  $basic = basic_load_multiple($basic_ids, $reset);
+  return $basic ? reset($basic) : FALSE;
+}
+
+
+/**
+ * Loads nultiple basic entities based on certain conditions
+ */
+function basic_load_multiple($basic_ids = array(), $conditions = array(), $reset = FALSE) {
+  return entity_load('basic', $basic_ids, $conditions, $reset);
+}
+
+
+
+/**
+ * Implementing the uri callback defined
+ */
+function basic_uri($basic) {
+  return array(
+    'path' => 'basic/' . $basic->basic_id,
+  );
+}
+
+
+/**
+ * Implements hook_menu()
+ */
+function entity_example_menu() {
+  // This provides a place for Field API to hang its own
+  // interface and has to be the same as what was defined
+  // in basic_entity_info() above.
+  $items['admin/structure/basic/manage'] = array(
+    'title' => 'Basic Entity Admin',
+    'description' => 'Manage Basic Entities Structure',
+    'page callback' => 'basic_admin_page',
+    'access arguments' => array('administer basic entities'),
+  );
+
+  // The page to view our entities - needs to follow what
+  // is defined in basic_uri and will use load_basic to retrieve
+  // the necessary entity info.
+  $items['basic/%basic'] = array(
+    'title callback' => 'basic_page_title',
+    'title arguments' => array(1),
+    'page callback' => 'basic_page_view',
+    'page arguments' => array(1),
+    'access arguments' => array('view basic entities'),
+    'type' => MENU_CALLBACK,
+  );
+
+  // This defines a place for us to add basic entities
+  $items['basic/add'] = array(
+    'title' => 'Add a Basic Entity',
+    'page callback' => 'basic_add',
+    'access arguments' => array('create basic entities'),
+  );
+
+  return $items;
+}
+
+
+/**
+ * Implements hook_permission()
+ */
+function example_entity_permission() {
+    return array(
+    'administer basic entities' =>  array(
+      'title' => t('Administer basic entities'),
+      'restrict access' => TRUE,
+    ),
+    'view basic entities' => array(
+      'title' => t('View Basic Entities'),
+    ),
+    'create basic entities' => array(
+      'title' => t('Create Basic Entities'),
+    ),
+
+  );
+}
+
+
+/**
+ * Just provide some basic info for the entity administration page.
+ * This can be expanded to add more information / a list of all created entites, etc.
+ */
+function basic_admin_page() {
+  $output = 'Welcome to the administration page for your Basic Entities.<br/>';
+
+  $output .= '<a href="/basic/add">Add entity</a>';
+
+  dpm(basic_load_multiple());
+
+  return $output;
+}
+
+/**
+ * Callback for title
+ */
+function basic_page_title($basic) {
+  return $basic->name;
+}
+
+/**
+ * Callback for displaying the entity
+ */
+function basic_page_view($basic, $view_mode = 'full') {
+
+  $basic->content = array();
+
+  // Build fields content - this where the FieldAPI really comes in to play. The task
+  // is relatively trivial for us - it all gets taken care of by Drupal core.
+  field_attach_prepare_view('basic', array($basic->basic_id => $basic), $view_mode);
+  entity_prepare_view('basic', array($basic->basic_id => $basic));
+  $basic->content += field_attach_view('basic', $basic, $view_mode);
+  drupal_set_title($basic->name);
+  return $basic->content;
+}
+
+
+
+/**
+ * Implemnts hook_field_extra_fields()
+ *
+ * This exposes the other column of our entity (i.e. name) as a pseudo-field
+ * so that it gets handled by the Entity and Field core functionality.
+ * Node titles get treated in a similar manner.
+ */
+function basic_field_extra_fields() {
+  $return = array();
+  $return['basic']['name'] = array(
+    'form' => array(
+      'name' => array(
+        'label' => t('name'),
+        'description' => t('Basic Entity Name'),
+      ),
+    ),
+  );
+
+  return $return;
+}
+
+
+/**
+ * Creates a basic entity for us - simply intializing the main variables and
+ * sending us to a form to add in the rest.
+ */
+function basic_add() {
+  $basic = (object) array(
+    'basic_id' => '',
+    'type' => 'basic',
+    'name' => '',
+  );
+
+  return drupal_get_form('basic_add_form', $basic);
+}
+
+
+/**
+ * Form callback: allows us to create a basic entity.
+ *
+ * As you can see below the pattern followed is:
+ * 1. Set up the form for the data that is specific to your
+ * entity - typically the columns of your bas table.
+ * 2. Call on the Field API to pull in the form elements
+ * for fields attached to the entity.
+ */
+function basic_add_form($form, &$form_state, $basic) {
+  $form['name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Name'),
+    '#required' => TRUE,
+  );
+
+  field_attach_form('basic', $basic, $form, $form_state);
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save'),
+    '#weight' => 100,
+  );
+
+  return $form;
+}
+
+
+/**
+ * Form callback: Validates basic_add_form form.
+ * We pass things straight through to the Field API to handle validation
+ * of the attached fields.
+ */
+function basic_add_form_validate($form, &$form_state) {
+  $basic_submission = (object) $form_state['values'];
+  field_attach_form_validate('basic', $basic_submission, $form, $form_state);
+}
+
+
+/**
+ * Form callback: submits basic_add_form information
+ */
+function basic_add_form_submit($form, &$form_state) {
+  $basic_submission = (object) $form_state['values'];
+  field_attach_submit('basic', $basic_submission, $form, $form_state);
+  $basic = basic_save($basic_submission);
+  $form_state['redirect'] = 'basic/' . $basic->basic_id;
+}
+
+
+/**
+ * We save the basic entity by calling the controller.
+ */
+function basic_save(&$basic) {
+  return entity_get_controller('basic')->save($basic);
+}
+
+
+/**
+ * BasicController extends the DrupalDefaultEntityController by adding
+ * an extra function to handle saving of entities.
+ */
+class BasicController extends DrupalDefaultEntityController{
+
+ /**
+  * Saves the basic entity mathching custom fields via drupal_write_record()
+  */
+ public function save($basic) {
+    drupal_write_record('basic', $basic);
+    field_attach_insert('basic', $basic);
+    module_invoke_all('entity_insert', 'basic', $basic);
+    return $basic;
+  }
+}
+
+
+
+/**
+ * Implements hook_help().
+ */
+function entity_example_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#entity_example':
+      return "<p>" . t('Once you have activated the module you can configure your entity bundle by visiting "admin/structure/basic/manage"') . "</p>";
+  }
+}

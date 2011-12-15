@@ -1,0 +1,37 @@
+<?php
+/**
+ * @file
+ * Install for a basic entity - need to create the base table for our entity.
+ * This table can have as many colums as you need to keep track of entity-specific
+ * data that will not be added via attached fields.
+ * The minimum information for the entity to work is an id and an entity name.
+ */
+
+/**
+ * Implements hook_schema()
+ */
+function entity_example_schema() {
+  $schema = array();
+
+  $schema['basic'] = array(
+    'description' => 'The base table for our basic entity.',
+      'fields' => array(
+        'basic_id' => array(
+          'description' => 'Primary Key: Identifier for a basic entity.',
+          'type' => 'serial',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+        ),
+        'name' => array(
+          'description' => 'The name of our basic entity.',
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+          'default' => '',
+        ),
+    ),
+    'primary key' => array('basic_id'),
+  );
+
+  return $schema;
+}
