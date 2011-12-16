@@ -1,6 +1,11 @@
 <?php
 
 /**
+* @file
+* Provides list of operations that are possible in the producer editing view
+*/
+
+/**
  * This field handler aggregates operations that can be done on a producer
  * under a single field providing a more flexible way to present them in a view
  */

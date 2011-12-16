@@ -21,9 +21,9 @@ ddl('thumbwhere.module');
 */
 function thumbwhere_feature_xyz($date_string) {
   if (empty($date_string) || $date_string == '0000-00-00' || $date_string == '0000-00-00 00:00:00') {
-    return true;
+    return TRUE;
   }
-  return false;
+  return FALSE;
 }
 
 

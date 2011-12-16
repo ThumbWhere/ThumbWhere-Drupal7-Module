@@ -246,7 +246,7 @@ function producer_edit_form_submit(&$form, &$form_state) {
   // Save the producer and go back to the list of producers
   
   // Add in created and changed times.
-  if ($producer->is_new = isset($producer->is_new) ? $producer->is_new : 0){
+  if ($producer->is_new = isset($producer->is_new) ? $producer->is_new : 0) {
     $producer->created = time();
   }
 

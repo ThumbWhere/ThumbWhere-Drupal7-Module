@@ -200,7 +200,7 @@ function producer_views_default_views() {
     t('Items per page'),
     t('- All -'),
     t('Offset'),
-    t('Empty '),
+    t('Empty'),
     t('No producers have been created yet'),
     t('Producer ID'),
     t('.'),

@@ -130,7 +130,7 @@ function member_edit_form_submit(&$form, &$form_state) {
   // Save the member and go back to the list of members
   
   // Add in created and changed times.
-  if ($member->is_new = isset($member->is_new) ? $member->is_new : 0){
+  if ($member->is_new = isset($member->is_new) ? $member->is_new : 0) {
     $member->created = time();
   }
 
