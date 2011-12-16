@@ -9,9 +9,10 @@ dependencies[] = menu
 dependencies[] = entity
 ;dependencies[] = entityreference
 
-files[] = thumbwhere.module
 files[] = thumbwhere.install
+files[] = thumbwhere.module
 files[] = thumbwhere.admin.inc
+files[] = thumbwhere.test
 
 ; And while we are developing
 dependencies[] = devel

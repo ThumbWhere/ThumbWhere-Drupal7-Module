@@ -15,6 +15,20 @@
 ddl('thumbwhere.module');
 
 /**
+* A simple self-contained function used to demonstrate unit tests.
+*
+* @see SimpletestUnitTestExampleTestCase
+*/
+function thumbwhere_feature_xyz($date_string) {
+  if (empty($date_string) || $date_string == '0000-00-00' || $date_string == '0000-00-00 00:00:00') {
+    return true;
+  }
+  return false;
+}
+
+
+
+/**
  * Implementation of hook_help().
  */
 function thumbwhere_help($section) {
