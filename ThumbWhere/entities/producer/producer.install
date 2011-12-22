@@ -113,13 +113,6 @@ function producer_schema() {
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
-      'type' => array(
-        'description' => 'The {producer_type}.type of this producer.',
-        'type' => 'varchar',
-        'length' => 255,
-        'not null' => TRUE,
-        'default' => '',
-      ),
       'language' => array(
         'description' => 'The language of the producer.',
         'type' => 'varchar',
@@ -156,7 +149,7 @@ function producer_schema() {
     ),
     'primary key' => array('producer_id'),
     'indexes' => array(
-      'type' => array('type'),
+      //'type' => array('type'),
     ),
   );
 

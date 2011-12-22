@@ -339,8 +339,11 @@ function producer_add_page() {
  * @ingroup themeable
  */
 function theme_producer_add_list($variables) {
-  $content = $variables['content'];
+  
+  
+  //$content = $variables['content'];  
   $output = '';
+  /*
   if ($content) {
     $output = '<dl class="producer-type-list">';
     foreach ($content as $item) {
@@ -357,7 +360,7 @@ function theme_producer_add_list($variables) {
       $output = '<p>' . t('No producer types have been created yet for you to use.') . '</p>';
     }
   }
-
+	*/
   return $output;
 }
 

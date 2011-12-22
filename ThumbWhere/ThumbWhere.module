@@ -12,7 +12,7 @@
  * @see field
  */
 
-ddl('thumbwhere.module');
+//ddl('thumbwhere.module');
 
 /**
 * A simple self-contained function used to demonstrate unit tests.
@@ -33,7 +33,7 @@ function thumbwhere_feature_xyz($date_string) {
  */
 function thumbwhere_help($section) {
   
-  ddl('thumbwhere_help(' + $section + ')');
+  //ddl('thumbwhere_help(' . $section . ')');
   
   switch ($section) {
     case 'thumbwhere/reference':
@@ -83,6 +83,10 @@ function thumbwhere_modules_installed($modules) {
 function thumbwhere_menu() {
 
   
+  //
+  // Config sections
+  //
+  
   $items['admin/config/thumbwhere/settings'] = array(
     'title' => 'ThumbWhere Settings',
     'description' => 'ThumbWhere configuration.',
@@ -104,8 +108,53 @@ function thumbwhere_menu() {
   );
   
   
+  //
+  // Report
+  //
+  
+  
+  
+  $items['admin/reports/thumbwhere/activity'] = array(
+        'title' => 'ThumbWhere Activity Report',
+        'description' => 'View ThumbWhere Actvity.',
+  		  'page arguments' => array('thumbwhere_activity_report'),
+        'page callback' => 'thumbwhere_report_page',
+        'access arguments' => array('access thumbwhere report information'),
+  );
+    
+
+  $items['admin/reports/thumbwhere'] = array(
+        'title' => 'ThumbWhere Reports',
+        'description' => 'ThumbWhere general reports and dashboard.',
+        'page callback' => 'thumbwhere_report_page',
+        'page arguments' => array('thumbwhere_summary_report'),
+        'access arguments' => array('access thumbwhere report information'),
+  );
+  
   return $items;
 }
+
+
+/**
+* Displays the debug messages table.
+*/
+function thumbwhere_report_page() {
+  // Add auto-refresh javascript on the first page only.
+  //if (!isset($_GET['page'])) {
+  //  drupal_add_js(drupal_get_path('module', 'thumbwhere') . '/thumbwhere_report.js.js');
+  //}
+
+  $table_page = array(
+    'messages_table' => devel_debug_log_get_messages_table(),
+    'pager' => array(
+      '#theme' => 'pager',
+  ),
+  );
+
+  return $table_page;
+}
+
+
 
 /**
  * Implements hook_admin_paths().

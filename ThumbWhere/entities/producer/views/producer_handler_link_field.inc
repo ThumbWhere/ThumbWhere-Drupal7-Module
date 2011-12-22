@@ -11,7 +11,7 @@ class producer_handler_link_field extends views_handler_field {
     parent::construct();
 
     $this->additional_fields['producer_id'] = 'producer_id';
-    $this->additional_fields['type'] = 'type';
+    //$this->additional_fields['type'] = 'type';
   }
 
   function option_definition() {
@@ -26,7 +26,7 @@ class producer_handler_link_field extends views_handler_field {
     parent::options_form($form, $form_state);
 
     $form['text'] = array(
-      '#type' => 'textfield',
+      //'#type' => 'textfield',
       '#title' => t('Text to display'),
       '#default_value' => $this->options['text'],
     );

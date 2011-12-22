@@ -18,29 +18,56 @@
  */
 function producer_entity_info() {
   $return['producer'] = array(
+  
+    // The human-readable name of the type.
     'label' => t('Producer'),
-    // The entity class and controller class extend the classes provided by the
-    // Entity API
-    'entity class' => 'Producer',
-    'controller class' => 'ProducerController',
+    
+    // (used by DrupalDefaultEntityController) The name of the entity type's base table.
     'base table' => 'producer',
+    
+    // fieldable: Set to TRUE if you want your entity type to accept fields being attached to it.
     'fieldable' => TRUE,
+    
     'entity keys' => array(
         'id' => 'producer_id',
-        'bundle' => 'type',
+        //'bundle' => 'type',
     ),
     // Bundles are defined by the producer types below
     'bundles' => array(),
     // Bundle keys tell the FieldAPI how to extract information from the bundle objects
+    
     'bundle keys' => array(
-      'bundle' => 'type',
+    //  'bundle' => 'type',
     ),
+    
+    // A function taking an entity and an entity type as arguments and returning the label of the entity. 
+    // The entity label is the main string associated with an entity; for example, the title of a node or 
+    // the subject of a comment. If there is an entity object property that defines the label, use the 
+  	// 'label' element of the 'entity keys' return value component to provide this information (see below). 
+    // If more complex logic is needed to determine the label of an entity, you can instead specify a callback 
+    // function here, which will be called to determine the entity label. See also the entity_label() 
+    // function, which implements this logic.  
     'label callback' => 'entity_class_label',
+    
+    // A function taking an entity as argument and returning the uri elements of the entity, e.g. 'path' and 'options'. 
+    // The actual entity uri can be constructed by passing these elements to url().
     'uri callback' => 'entity_class_uri',
+
     //'creation callback' => 'producer_create',
     //'access callback' => 'producer_access',
     //'presave callback' => 'producer_presave',
+
+    //
+    // Entity API Components
+    //
+  
+    // The entity class and controller class extend the classes provided by the Entity API
+
+		'entity class' => 'Producer',
+    'controller class' => 'ProducerController',
+  
     'module' => 'producer',
+    
     // The information below is used by the ProducerUIController (which extends the EntityDefaultUIController)
     'admin ui' => array(
       'path' => 'admin/content/producers',
@@ -100,19 +127,6 @@ function producer_permission() {
     ),  
   );
   
-  /*
-  //Generate permissions per producer 
-  foreach (producer_get_types() as $type) {
-    $type_name = check_plain($type->type);
-    $permissions += array(
-      "edit any $type_name producer" => array(
-        'title' => t('%type_name: Edit any producer', array('%type_name' => $type->label)),
-      ),
-      "view any $type_name producer" => array(
-        'title' => t('%type_name: View any producer', array('%type_name' => $type->label)),
-      ),
-    );
-  }*/
   return $permissions;  
 }
 
@@ -139,13 +153,6 @@ function producer_access($op, $producer = NULL, $account = NULL) {
     return TRUE;
   }
   
-  /*
-  if (isset($producer) && $type_name = $producer->type) {
-    $op = ($op == 'view') ? 'view' : 'edit';
-    if (user_access("$op any $type_name producer", $account)) {
-      return TRUE;
-    }
-  }*/
   return FALSE;
 }
 
@@ -169,8 +176,6 @@ function producer_load($producer_id, $reset = FALSE) {
 
   dd('HOOK producer_load');
   dargs(TRUE);
-  
-  //$producers = producer_load_multiple(array($producer_id), array(), $reset);
   
   $producers = entity_load('producer', array($producer_id), array(), $reset);
   
@@ -479,8 +484,6 @@ class ProducerController extends EntityAPIController {
     dd('ProducerController:view');
     dargs(TRUE);
       
-      
-      
     $view = parent::view($entities,$view_mode,$langcode,$page);
   
     dd($producer);
@@ -634,7 +637,9 @@ class ProducerController extends EntityAPIController {
    * Overriding the buldContent function to add entity specific fields
    */
   public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
+    
     $content = parent::buildContent($entity, $view_mode, $langcode, $content);
+    
     $content['producer_sample_data'] =  array(
       '#markup' => theme('producer_sample_data', array('producer_sample_data' => check_plain($entity->data['sample_data']), 'producer' => $entity)),
     );

@@ -10,18 +10,18 @@
 class producer_handler_edit_link_field extends producer_handler_link_field {
   function construct() {
     parent::construct();
-    $this->additional_fields['type'] = 'type';
+    //$this->additional_fields['type'] = 'type';
   }
 
 
   function render($values) {
-    $type = $values->{$this->aliases['type']};
+    //$type = $values->{$this->aliases['type']};
     
     //Creating a dummy producer to check access against
-    $dummy_producer = (object) array('type' => $type);
-    if (!producer_access('edit', $dummy_producer)) {
-      return;
-    }
+    //$dummy_producer = (object) array('type' => $type);
+    //if (!producer_access('edit', $dummy_producer)) {
+    //  return;
+    //}
     
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $producer_id = $values->{$this->aliases['producer_id']};
