@@ -26,14 +26,11 @@ function producer_uninstall() {
   // http://api.drupal.org/api/function/field_purge_batch/7
   field_purge_batch(1000);
   
-  
   // Clear the entity cache    
   entity_info_cache_clear();
   
   // Clear the everything cache
   drupal_flush_all_caches();
- 
-  
 
   // Uninstall the Menu TODO: Do we even install a menu???
   if (module_exists('menu')) {
@@ -76,6 +73,10 @@ function producer_install() {
  */
 function producer_enable() {
   ddl('producer_enable()');
+  
+  // Rebuild the menu
+  menu_rebuild();
+  
 
    //producer_install();
 }
@@ -89,7 +90,10 @@ function producer_enable() {
  */
 function producer_disable() {
   ddl('producer_disable()');
-
+  
+  // Rebuild the menu
+  menu_rebuild();
+  
   //producer_uninstall();
 }
 
@@ -156,47 +160,6 @@ function producer_schema() {
     ),
   );
 
-  $schema['producer_type'] = array(
-    'description' => 'Stores information about defined producer types.',
-    'fields' => array(
-      'id' => array(
-        'type' => 'serial',
-        'not null' => TRUE,
-        'description' => 'Primary Key: Unique producer type identifier.',
-      ),
-      'type' => array(
-        'description' => 'The machine-readable name of this producer type.',
-        'type' => 'varchar',
-        'length' => 255,
-        'not null' => TRUE,
-      ),
-      'label' => array(
-        'description' => 'The human-readable name of this producer type.',
-        'type' => 'varchar',
-        'length' => 255,
-        'not null' => TRUE,
-        'default' => '',
-      ),
-      'weight' => array(
-        'type' => 'int',
-        'not null' => TRUE,
-        'default' => 0,
-        'size' => 'tiny',
-        'description' => 'The weight of this producer type in relation to others.',
-      ),
-      'data' => array(
-        'type' => 'text',
-        'not null' => FALSE,
-        'size' => 'big',
-        'serialize' => TRUE,
-        'description' => 'A serialized array of additional data related to this producer type.',
-      ),
-    ) + entity_exportable_schema_fields(),
-    'primary key' => array('id'),
-    'unique keys' => array(
-      'type' => array('type'),
-    ),
-  );
 
   return $schema;
 }

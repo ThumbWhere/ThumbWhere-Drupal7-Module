@@ -10,7 +10,6 @@ dependencies[] = thumbwhere
 
 
 files[] = producer.admin.inc
-files[] = producer_type.admin.inc
 files[] = views/producer.views.inc
 files[] = views/producer_handler_link_field.inc
 files[] = views/producer_handler_delete_link_field.inc
