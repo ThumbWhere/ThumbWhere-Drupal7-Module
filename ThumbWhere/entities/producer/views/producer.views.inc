@@ -118,6 +118,50 @@ function producer_views_default_views() {
   $handler->display->display_options['fields']['producer_id']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['producer_id']['hide_empty'] = 0;
   $handler->display->display_options['fields']['producer_id']['empty_zero'] = 0;
+  
+  /* Field: Producer: thumbwhere_id */
+  $handler->display->display_options['fields']['thumbwhere_id']['id'] = 'thumbwhere_id';
+  $handler->display->display_options['fields']['thumbwhere_id']['table'] = 'producer';
+  $handler->display->display_options['fields']['thumbwhere_id']['field'] = 'thumbwhere_id';
+  $handler->display->display_options['fields']['thumbwhere_id']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['thumbwhere_id']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['thumbwhere_id']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['thumbwhere_id']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['thumbwhere_id']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['thumbwhere_id']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['thumbwhere_id']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['thumbwhere_id']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['thumbwhere_id']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['thumbwhere_id']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['thumbwhere_id']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['thumbwhere_id']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['thumbwhere_id']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['thumbwhere_id']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['thumbwhere_id']['empty_zero'] = 0;
+
+  /* Field: Producer: Token */
+  /*
+  $handler->display->display_options['fields']['producer_quantity']['id'] = 'producer_quantity';
+  $handler->display->display_options['fields']['producer_quantity']['table'] = 'producer';
+  $handler->display->display_options['fields']['producer_quantity']['field'] = 'producer_quantity';
+  $handler->display->display_options['fields']['producer_quantity']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['producer_quantity']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['producer_quantity']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['producer_quantity']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['producer_quantity']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['producer_quantity']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['producer_quantity']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['producer_quantity']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['producer_quantity']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['producer_quantity']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['producer_quantity']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['producer_quantity']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['producer_quantity']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['producer_quantity']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['producer_quantity']['empty_zero'] = 0;
+  */
+  
+  
   /* Field: Producer: Name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'producer';
@@ -137,6 +181,8 @@ function producer_views_default_views() {
   $handler->display->display_options['fields']['name']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['name']['hide_empty'] = 0;
   $handler->display->display_options['fields']['name']['empty_zero'] = 0;
+  
+  
   /* Field: Producer: Link */
   $handler->display->display_options['fields']['link_producer']['id'] = 'link_producer';
   $handler->display->display_options['fields']['link_producer']['table'] = 'producer';

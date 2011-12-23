@@ -3,16 +3,12 @@
 
 /**
 * @file
- * Install file ThumbWhere Module
+ * Main ThumbWhere Module file
  *
- * Everything that the module needs to do on instalation is performed here.
+ * Core module functionlaity is here.
  *
- * @see http://drupal.org/node/707832
- * @see http://drupal.org/node/443536
- * @see field
  */
 
-//ddl('thumbwhere.module');
 
 /**
 * A simple self-contained function used to demonstrate unit tests.
@@ -117,11 +113,11 @@ function thumbwhere_menu() {
   $items['admin/reports/thumbwhere/activity'] = array(
         'title' => 'ThumbWhere Activity Report',
         'description' => 'View ThumbWhere Actvity.',
-  		  'page arguments' => array('thumbwhere_activity_report'),
+         'page arguments' => array('thumbwhere_activity_report'),
         'page callback' => 'thumbwhere_report_page',
         'access arguments' => array('access thumbwhere report information'),
   );
-    
+
 
   $items['admin/reports/thumbwhere'] = array(
         'title' => 'ThumbWhere Reports',

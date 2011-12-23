@@ -2,11 +2,9 @@
 
 /**
  * @file
- * Module for the Producer Entity - a starting point to create your own Entity
- * and associated administration interface
+ * Module for the ThumbWhere Producer Entity
+ * 
  */  
-
-//dd('producer.module');
 
 /**
  * Implement hook_entity_info().
@@ -30,16 +28,9 @@ function producer_entity_info() {
     
     'entity keys' => array(
         'id' => 'producer_id',
-        //'bundle' => 'type',
-    ),
-    // Bundles are defined by the producer types below
-    'bundles' => array(),
-    // Bundle keys tell the FieldAPI how to extract information from the bundle objects
-    
-    'bundle keys' => array(
-    //  'bundle' => 'type',
     ),
     
+
     // A function taking an entity and an entity type as arguments and returning the label of the entity. 
     // The entity label is the main string associated with an entity; for example, the title of a node or 
     // the subject of a comment. If there is an entity object property that defines the label, use the 
@@ -53,20 +44,19 @@ function producer_entity_info() {
     // The actual entity uri can be constructed by passing these elements to url().
     'uri callback' => 'entity_class_uri',
 
-    //'creation callback' => 'producer_create',
-    //'access callback' => 'producer_access',
-    //'presave callback' => 'producer_presave',
 
     //
     // Entity API Components
     //
+
+    // The module whwre we can find our classes
+    'module' => 'producer',
   
     // The entity class and controller class extend the classes provided by the Entity API
-
 		'entity class' => 'Producer',
+		
+		// Which Entity API contoller 
     'controller class' => 'ProducerController',
-  
-    'module' => 'producer',
     
     // The information below is used by the ProducerUIController (which extends the EntityDefaultUIController)
     'admin ui' => array(
@@ -79,36 +69,6 @@ function producer_entity_info() {
   
   return $return;
 }
-
-
-/**
- * Implements hook_entity_info_alter().
- *
- * We are adding the info about the producer types via a hook to avoid a recursion
- * issue as loading the producer types requires the entity info as well.
- *
- * @todo This needs to be improved
- */
-/*
-function producer_entity_info_alter(&$entity_info) {
-  
-  
-  //dd('producer_entity_info_alter ');
-  
-  foreach (producer_get_types() as $type => $info) {
-    $entity_info['producer']['bundles'][$type] = array(
-      'label' => $info->label,
-      'admin' => array(
-        'path' => 'admin/structure/producer_types/manage/%producer_type',
-        'real path' => 'admin/structure/producer_types/manage/' . $type,
-        'bundle argument' => 4,
-        'access arguments' => array('administer producer types'),
-      ),
-    );
-  }  
-}
-*/
-
 
 
 /**
@@ -450,6 +410,7 @@ class ProducerController extends EntityAPIController {
     dd('ProducerController:create');       
     dargs(TRUE);
     
+    /*
     // Add values that are specific to our Producer
     $values += array( 
       'producer_id' => '',
@@ -459,10 +420,16 @@ class ProducerController extends EntityAPIController {
       'changed' => '',
       'data' => '',
     );
+    */
     
+    // Add values that are specific to our Producer
+    //$values += array(
+    //      'token' => 'a token',
+    //);
+        
     $producer = parent::create($values);
     
-    dd($producer);
+    ///dd($producer);
     
     return $producer;
   }
@@ -486,9 +453,9 @@ class ProducerController extends EntityAPIController {
       
     $view = parent::view($entities,$view_mode,$langcode,$page);
   
-    dd($producer);
+    dd($view);
   
-    return $producer;
+    return $view;
   }
   
   
@@ -515,8 +482,14 @@ class ProducerController extends EntityAPIController {
     dd($conditions);
   
     dargs(TRUE);
+    
+    $result = parent::load($ids, $conditions);
+    
+    //$result[1]->token = "my token";
+    
+    //dd($result);
   
-    return parent::load($ids, $conditions);
+    return $result;
   }
     
 
@@ -632,10 +605,10 @@ class ProducerController extends EntityAPIController {
   }
   
   
-  
   /**
    * Overriding the buldContent function to add entity specific fields
    */
+  /*
   public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
     
     $content = parent::buildContent($entity, $view_mode, $langcode, $content);
@@ -645,6 +618,21 @@ class ProducerController extends EntityAPIController {
     );
 
     return $content;
-  }
+  }*/
+}
+
+
+/**
+* Implements hook_field_storage_load().
+*
+* Load field from storage
+*
+* @todo This needs to be improved
+*/
+function producer_field_storage_load($entity_type, $entities, $age, $fields, $options) {
+  
+  dd('HOOK producer_field_storage_load');
+  dargs(TRUE);
   
 }
+
