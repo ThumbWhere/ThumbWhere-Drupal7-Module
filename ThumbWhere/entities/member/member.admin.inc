@@ -9,16 +9,13 @@
  * be end-user facing.
  */
 
-
-
-
 /**
  * Form callback wrapper: create or edit a member.
  *
  * @param $member
  *   The member object being edited by this form.
  *
- * @see member_edit_form()
+ * @see member_edit_form().
  */
 function member_form_wrapper($member) {
   // Add the breadcrumb for the form's location.
@@ -33,7 +30,7 @@ function member_form_wrapper($member) {
  * @param $member
  *   The member object being edited by this form.
  *
- * @see member_edit_form()
+ * @see member_edit_form().
  */
 function member_delete_form_wrapper($member) {
   // Add the breadcrumb for the form's location.
@@ -59,7 +56,7 @@ function member_edit_form($form, &$form_state, $member) {
     '#required' => TRUE,
     '#weight' => -5,
   );
-  
+
   $form['data']['#tree'] = TRUE;
   $form['data']['sample_data'] = array(
     '#type' => 'checkbox',
@@ -90,7 +87,7 @@ function member_edit_form($form, &$form_state, $member) {
     '#value' => t('Save member'),
     '#submit' => $submit + array('member_edit_form_submit'),
   );
-  
+
   if (!empty($member->name)) {
     $form['actions']['delete'] = array(
       '#type' => 'submit',
@@ -113,7 +110,7 @@ function member_edit_form($form, &$form_state, $member) {
  */
 function member_edit_form_validate(&$form, &$form_state) {
   $member = $form_state['member'];
-  
+
   // Notify field widgets to validate their data.
   field_attach_form_validate('member', $member, $form, $form_state);
 }
@@ -121,28 +118,28 @@ function member_edit_form_validate(&$form, &$form_state) {
 
 /**
  * Form API submit callback for the member form.
- * 
+ *
  * @todo remove hard-coded link
  */
 function member_edit_form_submit(&$form, &$form_state) {
-  
+
   $member = entity_ui_controller('member')->entityFormSubmitBuildEntity($form, $form_state);
   // Save the member and go back to the list of members
-  
+
   // Add in created and changed times.
   if ($member->is_new = isset($member->is_new) ? $member->is_new : 0) {
     $member->created = time();
   }
 
   $member->changed = time();
-  
+
   $member->save();
   $form_state['redirect'] = 'admin/content/members';
 }
 
 /**
  * Form API submit callback for the delete button.
- * 
+ *
  * @todo Remove hard-coded path
  */
 function member_form_submit_delete(&$form, &$form_state) {
@@ -156,7 +153,7 @@ function member_form_submit_delete(&$form, &$form_state) {
  * @param $member
  *   The member to delete
  *
- * @see confirm_form()
+ * @see confirm_form().
  */
 function member_delete_form($form, &$form_state, $member) {
   $form_state['member'] = $member;
@@ -171,7 +168,7 @@ function member_delete_form($form, &$form_state, $member) {
     t('Cancel'),
     'confirm'
   );
-  
+
   return $form;
 }
 

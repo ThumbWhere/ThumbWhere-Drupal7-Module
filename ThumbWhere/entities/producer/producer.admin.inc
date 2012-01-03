@@ -21,7 +21,7 @@ class ProducerUIController extends EntityDefaultUIController {
    * parent class hook_menu() is optimized for entity type administration.
    */
   public function hook_menu() {
-    
+
     $items = array();
     $id_count = count(explode('/', $this->path));
     $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
@@ -34,10 +34,10 @@ class ProducerUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', 'system'),
       'file' => 'system.admin.inc',
     );
-    
+
     // Change the overview menu type for the list of producers.
     $items[$this->path]['type'] = MENU_LOCAL_TASK;
-    
+
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
       'title' => 'Add a producer',
@@ -51,7 +51,7 @@ class ProducerUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
-    
+
     /*
     // Add menu items to add each different type of entity.
     foreach (producer_get_types() as $type) {
@@ -66,7 +66,7 @@ class ProducerUIController extends EntityDefaultUIController {
       );
     }
     */
-    
+
       $items[$this->path . '/add/' . 'producer'] = array(
         'title' => 'Add ' . 'Producer',
         'page callback' => 'producer_form_wrapper',
@@ -76,7 +76,7 @@ class ProducerUIController extends EntityDefaultUIController {
         'file' => 'producer.admin.inc',
         'file path' => drupal_get_path('module', $this->entityInfo['module'])
       );
-        
+
 
     // Loading and editing producer entities
     $items[$this->path . '/producer/' . $wildcard] = array(
@@ -95,7 +95,7 @@ class ProducerUIController extends EntityDefaultUIController {
       'weight' => -10,
       'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
     );
-    
+
     $items[$this->path . '/producer/' . $wildcard . '/delete'] = array(
       'title' => 'Delete',
       'page callback' => 'producer_delete_form_wrapper',
@@ -108,7 +108,7 @@ class ProducerUIController extends EntityDefaultUIController {
       'file' => 'producer.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
-    
+
     // Menu item for viewing producers
     $items['producer/' . $wildcard] = array(
       //'title' => 'Title',
@@ -122,12 +122,12 @@ class ProducerUIController extends EntityDefaultUIController {
     );
     return $items;
   }
-  
-  
+
+
   /**
    * Create the markup for the add Producer Entities page within the class
    * so it can easily be extended/overriden.
-   */ 
+   */
   public function addPage() {
     $item = menu_get_item();
     $content = system_admin_menu_block($item);
@@ -135,11 +135,11 @@ class ProducerUIController extends EntityDefaultUIController {
     if (count($content) == 1) {
       $item = array_shift($content);
       drupal_goto($item['href']);
-    }    
-        
+    }
+
     return theme('producer_add_list', array('content' => $content));
   }
-  
+
 }
 
 
@@ -190,7 +190,7 @@ function producer_edit_form($form, &$form_state, $producer) {
     '#required' => TRUE,
     '#weight' => -5,
   );
-  
+
   $form['data']['#tree'] = TRUE;
   $form['data']['sample_data'] = array(
     '#type' => 'checkbox',
@@ -221,7 +221,7 @@ function producer_edit_form($form, &$form_state, $producer) {
     '#value' => t('Save producer'),
     '#submit' => $submit + array('producer_edit_form_submit'),
   );
-  
+
   if (!empty($producer->name)) {
     $form['actions']['delete'] = array(
       '#type' => 'submit',
@@ -244,7 +244,7 @@ function producer_edit_form($form, &$form_state, $producer) {
  */
 function producer_edit_form_validate(&$form, &$form_state) {
   $producer = $form_state['producer'];
-  
+
   // Notify field widgets to validate their data.
   field_attach_form_validate('producer', $producer, $form, $form_state);
 }
@@ -252,28 +252,28 @@ function producer_edit_form_validate(&$form, &$form_state) {
 
 /**
  * Form API submit callback for the producer form.
- * 
+ *
  * @todo remove hard-coded link
  */
 function producer_edit_form_submit(&$form, &$form_state) {
-  
+
   $producer = entity_ui_controller('producer')->entityFormSubmitBuildEntity($form, $form_state);
   // Save the producer and go back to the list of producers
-  
+
   // Add in created and changed times.
   if ($producer->is_new = isset($producer->is_new) ? $producer->is_new : 0) {
     $producer->created = time();
   }
 
   $producer->changed = time();
-  
+
   $producer->save();
   $form_state['redirect'] = 'admin/content/producers';
 }
 
 /**
  * Form API submit callback for the delete button.
- * 
+ *
  * @todo Remove hard-coded path
  */
 function producer_form_submit_delete(&$form, &$form_state) {
@@ -302,7 +302,7 @@ function producer_delete_form($form, &$form_state, $producer) {
     t('Cancel'),
     'confirm'
   );
-  
+
   return $form;
 }
 
@@ -339,9 +339,9 @@ function producer_add_page() {
  * @ingroup themeable
  */
 function theme_producer_add_list($variables) {
-  
-  
-  //$content = $variables['content'];  
+
+
+  //$content = $variables['content'];
   $output = '';
   /*
   if ($content) {

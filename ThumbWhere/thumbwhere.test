@@ -16,8 +16,7 @@
  * Functional test cases are far slower to execute than unit test cases because
  * they require a complete Drupal install to be done for each test.
  *
- * @see DrupalWebTestCase
- * @see ThumbWhereFeatureXYZUnitTestCase
+ * @see DrupalWebTestCase, ThumbWhereFeatureXYZUnitTestCase.
  */
 class ThumbWhereTestCase extends DrupalWebTestCase {
   protected $privileged_user;
@@ -70,6 +69,7 @@ class ThumbWhereTestCase extends DrupalWebTestCase {
       // as a drupal_set_message().
       debug('We are not running on the PIFR testing server, so will go ahead and catch the failure.');
       $this->drupalGet("node/{$node->nid}/edit");
+
       // Make sure we don't get a 401 unauthorized response:
       $this->assertResponse(200, t('User is allowed to edit the content.'));
 
@@ -100,7 +100,7 @@ class ThumbWhereTestCase extends DrupalWebTestCase {
  * one. No environment is provided to a test case based on DrupalUnitTestCase;
  * it must be entirely self-contained.
  *
- * @see DrupalUnitTestCase
+ * @see DrupalUnitTestCase.
  */
 class ThumbWhereFeatureXYZUnitTestCase extends DrupalUnitTestCase {
 

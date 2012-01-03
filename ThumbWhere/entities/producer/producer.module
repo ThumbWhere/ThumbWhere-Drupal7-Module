@@ -3,8 +3,8 @@
 /**
  * @file
  * Module for the ThumbWhere Producer Entity
- * 
- */  
+ *
+ */
 
 /**
  * Implement hook_entity_info().
@@ -16,31 +16,31 @@
  */
 function producer_entity_info() {
   $return['producer'] = array(
-  
+
     // The human-readable name of the type.
     'label' => t('Producer'),
-    
+
     // (used by DrupalDefaultEntityController) The name of the entity type's base table.
     'base table' => 'producer',
-    
+
     // fieldable: Set to TRUE if you want your entity type to accept fields being attached to it.
     'fieldable' => TRUE,
-    
+
     'entity keys' => array(
         'id' => 'producer_id',
     ),
-    
 
-    // A function taking an entity and an entity type as arguments and returning the label of the entity. 
-    // The entity label is the main string associated with an entity; for example, the title of a node or 
-    // the subject of a comment. If there is an entity object property that defines the label, use the 
-  	// 'label' element of the 'entity keys' return value component to provide this information (see below). 
-    // If more complex logic is needed to determine the label of an entity, you can instead specify a callback 
-    // function here, which will be called to determine the entity label. See also the entity_label() 
-    // function, which implements this logic.  
+
+    // A function taking an entity and an entity type as arguments and returning the label of the entity.
+    // The entity label is the main string associated with an entity; for example, the title of a node or
+    // the subject of a comment. If there is an entity object property that defines the label, use the
+    // 'label' element of the 'entity keys' return value component to provide this information (see below).
+    // If more complex logic is needed to determine the label of an entity, you can instead specify a callback
+    // function here, which will be called to determine the entity label. See also the entity_label()
+    // function, which implements this logic.
     'label callback' => 'entity_class_label',
-    
-    // A function taking an entity as argument and returning the uri elements of the entity, e.g. 'path' and 'options'. 
+
+    // A function taking an entity as argument and returning the uri elements of the entity, e.g. 'path' and 'options'.
     // The actual entity uri can be constructed by passing these elements to url().
     'uri callback' => 'entity_class_uri',
 
@@ -51,13 +51,13 @@ function producer_entity_info() {
 
     // The module whwre we can find our classes
     'module' => 'producer',
-  
+
     // The entity class and controller class extend the classes provided by the Entity API
-		'entity class' => 'Producer',
-		
-		// Which Entity API contoller 
+    'entity class' => 'Producer',
+
+    // Which Entity API contoller
     'controller class' => 'ProducerController',
-    
+
     // The information below is used by the ProducerUIController (which extends the EntityDefaultUIController)
     'admin ui' => array(
       'path' => 'admin/content/producers',
@@ -66,7 +66,7 @@ function producer_entity_info() {
       'menu wildcard' => '%producer',
     ),
   );
-  
+
   return $return;
 }
 
@@ -75,19 +75,19 @@ function producer_entity_info() {
  * Implements hook_permission().
  */
 function producer_permission() {
-  
+
   //dd('producer_permission');
-  
+
   // We set up permisssions to manage entity types, manage all entities and the
   // permissions for each individual entity
   $permissions = array(
     'administer producers' => array(
       'title' => t('Administer producers'),
       'description' => t('Edit and delete all producers'),
-    ),  
+    ),
   );
-  
-  return $permissions;  
+
+  return $permissions;
 }
 
 
@@ -106,13 +106,13 @@ function producer_permission() {
  *   Whether access is allowed or not.
  */
 function producer_access($op, $producer = NULL, $account = NULL) {
-  
+
   //dd('producer_access');
-  
+
   if (user_access('administer producers', $account)) {
     return TRUE;
   }
-  
+
   return FALSE;
 }
 
@@ -120,7 +120,7 @@ function producer_access($op, $producer = NULL, $account = NULL) {
 
 
 /**
- * Fetch a producer object. Make sure that the wildcard you choose 
+ * Fetch a producer object. Make sure that the wildcard you choose
  * in the producer entity definition fits the function name here.
  *
  * @param $producer_id
@@ -136,29 +136,29 @@ function producer_load($producer_id, $reset = FALSE) {
 
   dd('HOOK producer_load');
   dargs(TRUE);
-  
+
   $producers = entity_load('producer', array($producer_id), array(), $reset);
-  
+
   return reset($producers);
 }
 
 
 /**
-* Implements hook_entity_presave
-*
-* @param $entity
-*   Integer specifying the producer id.
-  * @param $type
-  *   A boolean indicating that the internal cache should be reset.
-* @return
-*   A fully-loaded $producer object or FALSE if it cannot be loaded.
-*
-* @see producer_load_multiple()
-*/
+ * Implements hook_entity_presave().
+ *
+ * @param $entity
+ *   Integer specifying the producer id.
+ * @param $type
+ *   A boolean indicating that the internal cache should be reset.
+ * @return
+ *   A fully-loaded $producer object or FALSE if it cannot be loaded.
+ *
+ * @see producer_load_multiple()
+ */
 function producer_presave($entity, $type) {
 
   dd('HOOK producer_entity_presave');
-  
+
   dargs(TRUE);
 }
 
@@ -180,14 +180,14 @@ function producer_presave($entity, $type) {
  * @see producer_load()
  */
 function producer_load_multiple($producer_ids = array(), $conditions = array(), $reset = FALSE) {
-  
-  dd('HOOK producer_load_multiple');  
+
+  dd('HOOK producer_load_multiple');
   dargs(TRUE);
-  
+
   $loaded = entity_load('producer', $producer_ids, $conditions, $reset);
-  
+
   dd($loaded);
-  
+
   return $loaded;
 }
 
@@ -196,10 +196,10 @@ function producer_load_multiple($producer_ids = array(), $conditions = array(), 
  * Deletes a producer.
  */
 function producer_delete(Producer $producer) {
-  
+
   dd('HOOK producer_delete');
   dd($producer);
-  
+
   $producer->delete();
 }
 
@@ -211,9 +211,9 @@ function producer_delete(Producer $producer) {
  *   An array of producer IDs.
  */
 function producer_delete_multiple(array $producer_ids) {
-  
+
   dd('HOOK producer_delete_multiple');
-  
+
   entity_get_controller('producer')->delete($producer_ids);
 }
 
@@ -222,12 +222,11 @@ function producer_delete_multiple(array $producer_ids) {
 /**
  * Create a producer object.
  */
-
 function producer_create($values = array()) {
-  
-  dd('HOOK producer_create');  
+
+  dd('HOOK producer_create');
   dargs(TRUE);
-  
+
   return entity_get_controller('producer')->create($values);
 }
 
@@ -240,21 +239,21 @@ function producer_create($values = array()) {
  */
 
 function producer_save(Producer $producer) {
-  
+
   dd('HOOK producer_save');
   dargs(TRUE);
-  
+
   return $producer->save();
 }
 
 
 
 /**
-* Create a producer
-*
-* @param $producer
-*   The producer object.
-*/
+ * Create a producer
+ *
+ * @param $producer
+ *   The producer object.
+ */
 function producer_insert(array $values = array()) {
 
   dd('HOOK producer_insert');
@@ -268,10 +267,10 @@ function producer_insert(array $values = array()) {
 /**
  * URI callback for producers
  */
-function producer_uri(Producer $producer){
-  
+function producer_uri(Producer $producer) {
+
   dd('HOOK producer_uri');
-  
+
   return array(
     'path' => 'producer/' . $producer->producer_id,
   );
@@ -281,10 +280,10 @@ function producer_uri(Producer $producer){
 /**
  * Menu title callback for showing individual entities
  */
-function producer_page_title(Producer $producer){
-  
+function producer_page_title(Producer $producer) {
+
   dd('HOOK producer_page_title');
-  
+
   return $producer->name;
 }
 
@@ -293,11 +292,11 @@ function producer_page_title(Producer $producer){
  * Sets up content to show an individual producer
  * @todo - get rid of drupal_set_title();
  */
-function producer_page_view($producer, $view_mode = 'full') {   
+function producer_page_view($producer, $view_mode = 'full') {
 
   dd('HOOK producer_page_view');
-  
-  $controller = entity_get_controller('producer');  
+
+  $controller = entity_get_controller('producer');
   $content = $controller->view(array($producer->producer_id => $producer));
   drupal_set_title($producer->name);
   return $content;
@@ -308,9 +307,9 @@ function producer_page_view($producer, $view_mode = 'full') {
  * Implements hook_views_api().
  */
 function producer_views_api() {
-  
+
   dd('HOOK producer_views_api');
-  
+
   return array(
     'api' => 3,
     'path' => drupal_get_path('module', 'producer') . '/views',
@@ -322,9 +321,9 @@ function producer_views_api() {
  * Implement hook_theme().
  */
 function producer_theme() {
-  
+
   dd('HOOK producer_theme');
-  
+
   return array(
     'producer_add_list' => array(
       'variables' => array('content' => array()),
@@ -340,16 +339,16 @@ function producer_theme() {
     ),
 
   );
-}  
+}
 
 
 /**
  * Implements hook_menu_local_tasks_alter().
  */
 function producer_menu_local_tasks_alter(&$data, $router_item, $root_path) {
-  
+
   //dd('producer_menu_local_tasks_alter');
-  
+
   // Add action link 'admin/structure/producers/add' on 'admin/structure/producers'.
   if ($root_path == 'admin/content/producers') {
     $item = menu_get_item('admin/content/producers/add');
@@ -367,7 +366,7 @@ function producer_menu_local_tasks_alter(&$data, $router_item, $root_path) {
  * The class used for producer entities
  */
 class Producer extends Entity {
-  
+
   public function __construct($values = array()) {
     parent::__construct($values, 'producer');
   }
@@ -379,8 +378,8 @@ class Producer extends Entity {
   protected function defaultUri() {
     return array('path' => 'producer/' . $this->producer_id);
   }
-  
-  
+
+
 }
 
 
@@ -398,7 +397,7 @@ class ProducerController extends EntityAPIController {
    * Create a producer - we first set up the values that are specific
    * to our producer schema but then also go through the EntityAPIController
    * function.
-   * 
+   *
    * @param $type
    *   The machine-readable type of the producer.
    *
@@ -406,13 +405,13 @@ class ProducerController extends EntityAPIController {
    *   A producer object with all default fields initialized.
    */
   public function create(array $values = array()) {
-    
-    dd('ProducerController:create');       
+
+    dd('ProducerController:create');
     dargs(TRUE);
-    
+
     /*
     // Add values that are specific to our Producer
-    $values += array( 
+    $values += array(
       'producer_id' => '',
       'is_new' => TRUE,
       'title' => '',
@@ -421,20 +420,20 @@ class ProducerController extends EntityAPIController {
       'data' => '',
     );
     */
-    
+
     // Add values that are specific to our Producer
     //$values += array(
     //      'token' => 'a token',
     //);
-        
+
     $producer = parent::create($values);
-    
+
     ///dd($producer);
-    
+
     return $producer;
   }
-  
-  
+
+
   /**
   * view
   * to our producer schema but then also go through the EntityAPIController
@@ -447,20 +446,20 @@ class ProducerController extends EntityAPIController {
   *   A producer object with all default fields initialized.
   */
     public function view($entities, $view_mode = 'full', $langcode = NULL, $page = NULL) {
-  
+
     dd('ProducerController:view');
     dargs(TRUE);
-      
-    $view = parent::view($entities,$view_mode,$langcode,$page);
-  
+
+    $view = parent::view($entities, $view_mode, $langcode, $page);
+
     dd($view);
-  
+
     return $view;
   }
-  
-  
-  
-  
+
+
+
+
   /**
   * query - Builds and executes the query for loading.
   *
@@ -475,23 +474,23 @@ class ProducerController extends EntityAPIController {
   *   A producer object with all default fields initialized.
   */
   public function load($ids = array(), $conditions = array()) {
-  
+
     dd('ProducerController:load');
-  
+
     dd($ids);
     dd($conditions);
-  
+
     dargs(TRUE);
-    
+
     $result = parent::load($ids, $conditions);
-    
+
     //$result[1]->token = "my token";
-    
+
     //dd($result);
-  
+
     return $result;
   }
-    
+
 
   /**
   * Invoke
@@ -506,21 +505,21 @@ class ProducerController extends EntityAPIController {
   *   A producer object with all default fields initialized.
   */
   public function invoke($hook, $entity) {
-  
+
     dd('ProducerController:invoke');
     dargs(TRUE);
-  
+
     parent::invoke($hook, $entity);
-  
+
   }
-  
-  
+
+
   /**
   * Delete a producer.
   *
   * @param $ids
   *   Array of ids
-  *   
+  *
   * @param $transaction
   *   If not null then the transaction this is taking part in
   *
@@ -528,15 +527,15 @@ class ProducerController extends EntityAPIController {
   *   A producer object with all default fields initialized.
   */
   public function delete($ids, DatabaseTransaction $transaction = NULL) {
-  
+
     dd('ProducerController:delete');
     dargs(TRUE);
-    
-    parent::delete($ids,$transaction);
-    
-  }  
 
-  
+    parent::delete($ids, $transaction);
+
+  }
+
+
   /**
   * Save a producer.
   *
@@ -550,15 +549,15 @@ class ProducerController extends EntityAPIController {
   *   A producer object with all default fields initialized.
   */
   public function save($producer, DatabaseTransaction $transaction = NULL) {
-  
+
     dd('ProducerController:save');
     dargs(TRUE);
-  
-    return parent::save($producer,$transaction);
-  
+
+    return parent::save($producer, $transaction);
+
   }
-  
-  
+
+
   /**
   * resetCache - Called when the cache is
   *
@@ -569,13 +568,13 @@ class ProducerController extends EntityAPIController {
   *   void
   */
   public function resetCache(array $ids = NULL) {
-  
+
     dd('ProducerController:resetCache');
     dargs(TRUE);
-  
-     parent::resetCache($ids);
+
+    parent::resetCache($ids);
   }
-  
+
 
   /**
   * query - Builds and executes the query for loading.
@@ -592,27 +591,27 @@ class ProducerController extends EntityAPIController {
   *   A producer object with all default fields initialized.
   */
   public function query($ids, $conditions, $revision_id = FALSE) {
-  
+
     dd('ProducerController:query');
     dargs(TRUE);
-    
+
     dd($ids);
     dd($conditions);
-  
+
     $result= parent::query($ids, $conditions, $revision_id);
-    
+
     return $result;
   }
-  
-  
+
+
   /**
    * Overriding the buldContent function to add entity specific fields
    */
   /*
   public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
-    
+
     $content = parent::buildContent($entity, $view_mode, $langcode, $content);
-    
+
     $content['producer_sample_data'] =  array(
       '#markup' => theme('producer_sample_data', array('producer_sample_data' => check_plain($entity->data['sample_data']), 'producer' => $entity)),
     );
@@ -623,16 +622,16 @@ class ProducerController extends EntityAPIController {
 
 
 /**
-* Implements hook_field_storage_load().
-*
-* Load field from storage
-*
-* @todo This needs to be improved
-*/
+ * Implements hook_field_storage_load().
+ *
+ * Load field from storage
+ *
+ * @todo This needs to be improved
+ */
 function producer_field_storage_load($entity_type, $entities, $age, $fields, $options) {
-  
+
   dd('HOOK producer_field_storage_load');
   dargs(TRUE);
-  
+
 }
 

@@ -7,9 +7,9 @@
 
 
 /**
- * Implements hook_views_data()
+ * Implements hook_views_data().
  */
-function producer_views_data_alter(&$data) { 
+function producer_views_data_alter(&$data) {
   $data['producer']['link_producer'] = array(
     'field' => array(
       'title' => t('Link'),
@@ -58,7 +58,7 @@ function producer_views_default_views() {
   $view->core = 7;
   $view->api_version = '3.0-alpha1';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
-  
+
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Producers';
@@ -118,7 +118,7 @@ function producer_views_default_views() {
   $handler->display->display_options['fields']['producer_id']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['producer_id']['hide_empty'] = 0;
   $handler->display->display_options['fields']['producer_id']['empty_zero'] = 0;
-  
+
   /* Field: Producer: thumbwhere_id */
   $handler->display->display_options['fields']['thumbwhere_id']['id'] = 'thumbwhere_id';
   $handler->display->display_options['fields']['thumbwhere_id']['table'] = 'producer';
@@ -160,8 +160,8 @@ function producer_views_default_views() {
   $handler->display->display_options['fields']['producer_quantity']['hide_empty'] = 0;
   $handler->display->display_options['fields']['producer_quantity']['empty_zero'] = 0;
   */
-  
-  
+
+
   /* Field: Producer: Name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'producer';
@@ -181,8 +181,8 @@ function producer_views_default_views() {
   $handler->display->display_options['fields']['name']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['name']['hide_empty'] = 0;
   $handler->display->display_options['fields']['name']['empty_zero'] = 0;
-  
-  
+
+
   /* Field: Producer: Link */
   $handler->display->display_options['fields']['link_producer']['id'] = 'link_producer';
   $handler->display->display_options['fields']['link_producer']['table'] = 'producer';
@@ -222,7 +222,7 @@ function producer_views_default_views() {
   $handler->display->display_options['fields']['operations']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['operations']['hide_empty'] = 0;
   $handler->display->display_options['fields']['operations']['empty_zero'] = 0;
-  
+
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'producers_admin_page');
   $handler->display->display_options['path'] = 'admin/content/producers/list';

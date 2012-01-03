@@ -17,18 +17,18 @@
 function producer_uninstall() {
 
   ddl('_producer_uninstall()');
-  
+
   //
   // Uninstall all the field info
   //
- 
+
   // Loop over each of the fields defined by this module and delete
   // all instances of the field, their data, and the field itself.
   // http://api.drupal.org/api/function/field_delete_field/7
   foreach (array_keys(_producer_installed_fields()) as $field) {
     field_delete_field($field);
   }
-  
+
   // Loop over any remaining field instances attached to the producer
   // content type (such as the body field) and delete them individually.
   // http://api.drupal.org/api/function/field_delete_field/7
@@ -36,10 +36,10 @@ function producer_uninstall() {
   foreach ($instances as $instance_name => $instance) {
     field_delete_instance($instance);
   }
-    
+
   // Purge all field infromation
   // http://api.drupal.org/api/function/field_purge_batch/7
-  field_purge_batch(1000);  
+  field_purge_batch(1000);
 
   // Purge all field infromation
   // Clear the entity cache
@@ -70,13 +70,13 @@ function producer_uninstall() {
 function producer_install() {
 
   ddl('producer_install()');
-  
+
   // Create all the fields we are adding to our content type.
   // http://api.drupal.org/api/function/field_create_field/7
   foreach (_producer_installed_fields() as $field) {
     field_create_field($field);
   }
-  
+
   // Create all the instances for our fields.
   // http://api.drupal.org/api/function/field_create_instance/7
   foreach (_producer_installed_instances() as $instance) {
@@ -84,7 +84,7 @@ function producer_install() {
     $instance['bundle'] ='producer';
     field_create_instance($instance);
   }
-  
+
 }
 
 
@@ -121,14 +121,14 @@ function producer_disable() {
 
 /**
  * Implements hook_schema().
- * 
- * 
+ *
+ *
  * This is where we define the schema for our entity.
- * 
+ *
  * This results in a table being created called 'producer'
  *
  * producer_id
- * The primary key used by  
+ * The primary key used by
  *
  * thumbwhere_id
  * Used to map to the actual object in ThumbWhere.
@@ -136,7 +136,7 @@ function producer_disable() {
  */
 function producer_schema() {
   $t = get_t();
-  
+
   $schema = array();
 
   $schema['producer'] = array(
@@ -154,7 +154,7 @@ function producer_schema() {
         'not null' => TRUE,
         'default' => 0,
       ),
-      'name' => array(  
+      'name' => array(
           'description' => 'The name of the producer - a human-readable identifier.',
           'type' => 'varchar',
           'length' => 255,
@@ -196,25 +196,25 @@ function _producer_installed_fields() {
         'max_length' => 60,
       ),
       'storage'    => array(
-          'type' => 'field_sql_storage',
+          'type' => 'producer_field_storage',
           'settings' => array(),
-      ),  
+      ),
     ),
     'producer_quantity' => array(
       'field_name'  => 'producer_quantity',
       'cardinality' => 1,
       'type'        => 'text',
       'storage'    => array(
-        'type' => 'field_sql_storage',
+        'type' => 'producer_field_storage',
         'settings' => array(),
-      ),  
+      ),
     ),
     'producer_image' => array(
       'field_name' => 'producer_image',
       'type'       => 'image',
       'cardinality' => 1,
       'storage'    => array(
-          'type' => 'field_sql_storage',
+          'type' => 'producer_field_storage',
           'settings' => array(),
       ),
     ),
@@ -240,14 +240,14 @@ function _producer_installed_fields() {
  * @ingroup producer
  */
 function _producer_installed_instances() {
-  
+
   $t = get_t();
-  
-  return array(  
+
+  return array(
     'producer_colorrgba' => array(
       'field_name' => 'producer_colorrgba',
       'no_ui'       => TRUE,
-      'label'       => $t('The colors available for this object.'),      
+      'label'       => $t('The colors available for this object.'),
       'widget'      => array(
           'type'    => 'text_textfield',
       ),
@@ -258,7 +258,7 @@ function _producer_installed_instances() {
           ),
       ),
     ),
-    
+
     'producer_quantity' => array(
       'field_name'  => 'producer_quantity',
       'no_ui'       => TRUE,
@@ -274,7 +274,7 @@ function _producer_installed_instances() {
         ),
       ),
     ),
-    
+
     'producer_image' => array(
       'field_name'  => 'producer_image',
       'no_ui'       => TRUE,

@@ -1,9 +1,9 @@
 <?php
 
 /**
-* @file
-* Provides list of operations that are possible in the producer editing view
-*/
+ * @file
+ * Provides list of operations that are possible in the producer editing view.
+ */
 
 /**
  * This field handler aggregates operations that can be done on a producer
@@ -24,7 +24,7 @@ class producer_handler_producer_operations_field extends views_handler_field {
   function render($values) {
 
     $links = menu_contextual_links('producer', 'admin/content/producers/producer', array($this->get_value($values, 'producer_id')));
-    
+
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));
     }

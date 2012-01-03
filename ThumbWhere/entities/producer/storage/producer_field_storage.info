@@ -1,0 +1,16 @@
+name = ThumbWhere Producer Field Storage
+description = Stores field data for 'Producer' entities in a remote ThumbWhere server.
+package = "ThumbWhere"
+core = 7.x
+
+dependencies[] = field
+dependencies[] = thumbwhere
+
+files[] = producer_field_storage.test
+;required = TRUE
+
+; Information added by drupal.org packaging script on 2011-10-26
+version = "7.x-0.0-0"
+project = "ThumbWhere Producer Storage"
+datestamp = "1270000000"
+

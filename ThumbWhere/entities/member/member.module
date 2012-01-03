@@ -1,34 +1,13 @@
 <?php
 
 /**
- *@file
+ * @file
  * Implementes the member functionality required to create an entity and display it.
  */
 
 
-
 /**
-* Implements hook_menu_local_tasks_alter().
-*/
-
-/*
-function member_menu_local_tasks_alter(&$data, $router_item, $root_path) {
-  // Add action link 'admin/structure/models/add' on 'admin/structure/models'.
-  if ($root_path == 'admin/content/members') {
-    $item = menu_get_item('admin/content/members/add');
-    if ($item['access']) {
-      $data['actions']['output'][] = array(
-        '#theme' => 'menu_local_action',
-        '#link' => $item,
-      );
-    }
-  }
-}
-*/
-
-
-/**
- * Implements hook_entity_info()
+ * Implements hook_entity_info().
  *
  * We let Drupal know about our entity via this functions - have a look at
  * http://api.drupal.org/api/drupal/modules--system--system.api.php/function/hook_entity_info/7
@@ -52,24 +31,24 @@ function member_entity_info() {
     'entity keys' => array(
       'id' => 'member_id',
     ),
-    
-    
+
+
     //'label callback' => 'entity_class_label',
     //'uri callback' => 'entity_class_uri',
     //'creation callback' => 'model_create',
     'access callback' => 'member_access',
     'module' => 'member',
     // The information below is used by the ModelUIController (which extends the EntityDefaultUIController)
-  
-  
+
+
     'admin ui' => array(
           'path' => 'admin/content/members',
           'file' => 'member.admin.inc',
           'controller class' => 'MemberUIController',
           'menu wildcard' => '%member',
     ),
-  
-    
+
+
     // FALSE disables caching -  caching functionality is handled by Drupal core
     'static cache' => TRUE,
     // Attach bundles - i.e. alternative configurations of fields associated with a main entity.
@@ -108,7 +87,8 @@ function member_entity_info() {
  * @return
  *   A fully-loaded $member object or FALSE if it cannot be loaded.
  *
- * @see member_load_multiple()
+ * @see member_load_multiple().
+ *
  */
 function member_load($member_id = NULL, $reset = FALSE) {
   $member_ids = (isset($member_id) ? array($member_id) : array());
@@ -137,7 +117,7 @@ function member_uri($member) {
 
 
 /**
- * Implements hook_menu()
+ * Implements hook_menu().
  */
 function member_menu() {
   // This provides a place for Field API to hang its own
@@ -174,7 +154,7 @@ function member_menu() {
 
 
 /**
- * Implements hook_permission()
+ * Implements hook_permission().
  */
 function example_entity_permission() {
     return array(
@@ -333,10 +313,10 @@ function member_save(&$member) {
  */
 class MemberController extends DrupalDefaultEntityController{
 
- /**
-  * Saves the member entity mathching custom fields via drupal_write_record()
-  */
- public function save($member) {
+  /**
+   * Saves the member entity mathching custom fields via drupal_write_record()
+   */
+  public function save($member) {
     drupal_write_record('member', $member);
     field_attach_insert('member', $member);
     module_invoke_all('entity_insert', 'member', $member);
@@ -346,8 +326,8 @@ class MemberController extends DrupalDefaultEntityController{
 
 
 /**
-* UI controller.
-*/
+ * UI controller.
+ */
 class MemberUIController extends EntityDefaultUIController {
 
   /**
@@ -399,7 +379,7 @@ class MemberUIController extends EntityDefaultUIController {
         'file path' => drupal_get_path('module', $this->entityInfo['module'])
       );
     }
-*/
+    */
     // Loading and editing member entities
     $items[$this->path . '/member/' . $wildcard] = array(
       'page callback' => 'member_form_wrapper',

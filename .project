@@ -3,6 +3,7 @@
 	<name>ThumbWhere-Drupal7-Module</name>
 	<comment></comment>
 	<projects>
+		<project>ThumbWhere-PHP5-WebServiceLibrary</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
