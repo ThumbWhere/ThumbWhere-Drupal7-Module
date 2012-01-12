@@ -52,31 +52,15 @@ class ProducerUIController extends EntityDefaultUIController {
 
     );
 
-    /*
-    // Add menu items to add each different type of entity.
-    foreach (producer_get_types() as $type) {
-      $items[$this->path . '/add/' . $type->type] = array(
-        'title' => 'Add ' . $type->label,
-        'page callback' => 'producer_form_wrapper',
-        'page arguments' => array(producer_create(array('type' => $type->type))),
-        'access callback' => 'producer_access',
-        'access arguments' => array('edit', 'edit ' . $type->type),
-        'file' => 'producer.admin.inc',
-        'file path' => drupal_get_path('module', $this->entityInfo['module'])
-      );
-    }
-    */
-
-      $items[$this->path . '/add/' . 'producer'] = array(
-        'title' => 'Add ' . 'Producer',
-        'page callback' => 'producer_form_wrapper',
-        'page arguments' => array(producer_create(array('type' => 'producer'))),
-        'access callback' => 'producer_access',
-        'access arguments' => array('edit', 'edit ' . 'producer'),
-        'file' => 'producer.admin.inc',
-        'file path' => drupal_get_path('module', $this->entityInfo['module'])
-      );
-
+    $items[$this->path . '/add/' . 'producer'] = array(
+      'title' => 'Add ' . 'Producer',
+      'page callback' => 'producer_form_wrapper',
+      'page arguments' => array(producer_create(array('type' => 'producer'))),
+      'access callback' => 'producer_access',
+      'access arguments' => array('edit', 'edit ' . 'producer'),
+      'file' => 'producer.admin.inc',
+      'file path' => drupal_get_path('module', $this->entityInfo['module'])
+    );
 
     // Loading and editing producer entities
     $items[$this->path . '/producer/' . $wildcard] = array(
@@ -192,11 +176,15 @@ function producer_edit_form($form, &$form_state, $producer) {
   );
 
   $form['data']['#tree'] = TRUE;
+
+  /*
   $form['data']['sample_data'] = array(
     '#type' => 'checkbox',
     '#title' => t('An interesting producer switch'),
     '#default_value' => isset($producer->data['sample_data']) ? $producer->data['sample_data'] : 1,
   );
+	*/
+
 
   // Add the field related form elements.
   $form_state['producer'] = $producer;

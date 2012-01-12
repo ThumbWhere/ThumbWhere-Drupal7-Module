@@ -1,5 +1,10 @@
 <?php
 
+// Include the ThumbWhere SDK
+require_once(dirname(__FILE__) . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'dependencies' . DIRECTORY_SEPARATOR . 'tw' . DIRECTORY_SEPARATOR . 'sdk.class.php');
+
+
+
 /**
  * @file
  * Default implementation of the field storage API.
@@ -207,10 +212,15 @@ function _producer_field_storage_schema($field) {
   );
 }
 
+
+
 /**
  * Implements hook_field_storage_create_field().
  */
 function producer_field_storage_field_storage_create_field($field) {
+
+  twfd();
+
   $schema = _producer_field_storage_schema($field);
   foreach ($schema as $name => $table) {
     db_create_table($name, $table);
@@ -225,6 +235,10 @@ function producer_field_storage_field_storage_create_field($field) {
  * any data.
  */
 function producer_field_storage_field_update_forbid($field, $prior_field, $has_data) {
+
+  dd('HOOK producer_field_storage_field_update_forbid');
+  dargs(TRUE);
+
   if ($has_data && $field['columns'] != $prior_field['columns']) {
     throw new FieldUpdateForbiddenException("producer_field_storage cannot change the schema for an existing field with data.");
   }
@@ -234,6 +248,9 @@ function producer_field_storage_field_update_forbid($field, $prior_field, $has_d
  * Implements hook_field_storage_update_field().
  */
 function producer_field_storage_field_storage_update_field($field, $prior_field, $has_data) {
+
+  twfd();
+
   if (! $has_data) {
     // There is no data. Re-create the tables completely.
 
@@ -303,6 +320,9 @@ function producer_field_storage_field_storage_update_field($field, $prior_field,
  * Implements hook_field_storage_delete_field().
  */
 function producer_field_storage_field_storage_delete_field($field) {
+
+  twfd();
+
   // Mark all data associated with the field for deletion.
   $field['deleted'] = 0;
   $table = _producer_field_storage_tablename($field);
@@ -324,6 +344,12 @@ function producer_field_storage_field_storage_delete_field($field) {
  * Implements hook_field_storage_load().
  */
 function producer_field_storage_field_storage_load($entity_type, $entities, $age, $fields, $options) {
+
+  // Flee if this entity type is not one we look after...
+  if ($entity_type != 'producer') return;
+
+  twfd();
+
   $field_info = field_info_field_by_ids();
   $load_current = $age == FIELD_LOAD_CURRENT;
 
@@ -366,12 +392,60 @@ function producer_field_storage_field_storage_load($entity_type, $entities, $age
       }
     }
   }
+
+  //// Saving existing... let's just modify the producer quantity
+  //$entity->producer_quantity['und'][0]['value'] = 'updated-at-save-' . rand(100,200);
+
+  foreach ($entities as $entity) {
+
+    twd('ENTITY');
+    twd($entity);
+
+    // Saving existing... let's just modify the producer quantity
+    $entity->producer_colorrgba['und'][0]['value'] = 'updated-at-load-' . rand(100,200);
+    $entity->producer_colorrgba['und'][1]['value'] = 'updated-at-load-' . rand(100,200);
+    $entity->producer_colorrgba['und'][2]['value'] = 'updated-at-load-' . rand(100,200);
+
+    twd($entity);
+
+    }
+
+
+}
+
+/**
+* Implements hook_field_storage_pre_insert().
+*/
+function producer_field_storage_pre_insert($entity_type, $entity, &$skip_fields) {
+
+  // Flee if this entity type is not one we look after...
+  if ($entity_type != 'producer') return;
+
+  twfd();
+
 }
 
 /**
  * Implements hook_field_storage_write().
  */
 function producer_field_storage_field_storage_write($entity_type, $entity, $op, $fields) {
+
+  // Flee if this entity type is not one we look after...
+  if ($entity_type != 'producer') return;
+
+  twfd();
+
+  // We only want to write if this is new (
+  if (!$entity->is_new)
+  {
+    twd('Updating Remote Object');
+
+    // Saving existing... let's just modify the producer quantity
+    $entity->producer_quantity['und'][0]['value'] = 'updated-at-save-' . rand(100,200);
+  }
+
+
+
   list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
   if (!isset($vid)) {
     $vid = $id;
@@ -457,6 +531,12 @@ function producer_field_storage_field_storage_write($entity_type, $entity, $op, 
  * This function deletes data for all fields for an entity from the database.
  */
 function producer_field_storage_field_storage_delete($entity_type, $entity, $fields) {
+
+  // Flee if this entity type is not one we look after...
+  if ($entity_type != 'producer') return;
+
+  twfd();
+
   list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
 
   foreach (field_info_instances($entity_type, $bundle) as $instance) {
@@ -474,6 +554,13 @@ function producer_field_storage_field_storage_delete($entity_type, $entity, $fie
  * an entity.
  */
 function producer_field_storage_field_storage_purge($entity_type, $entity, $field, $instance) {
+
+
+  // Flee if this entity type is not one we look after...
+  if ($entity_type != 'producer') return;
+
+  twfd();
+
   list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
 
   $table_name = _producer_field_storage_tablename($field);
@@ -492,6 +579,9 @@ function producer_field_storage_field_storage_purge($entity_type, $entity, $fiel
  * Implements hook_field_storage_query().
  */
 function producer_field_storage_field_storage_query(EntityFieldQuery $query) {
+
+  twfd();
+
   if ($query->age == FIELD_LOAD_CURRENT) {
     $tablename_function = '_producer_field_storage_tablename';
     $id_key = 'entity_id';
@@ -593,6 +683,7 @@ function producer_field_storage_field_storage_query(EntityFieldQuery $query) {
  *   The name of the entity base table joined in.
  */
 function _producer_field_storage_query_join_entity(SelectQuery $select_query, $entity_type, $field_base_table) {
+
   $entity_info = entity_get_info($entity_type);
   $entity_base_table = $entity_info['base table'];
   $entity_field = $entity_info['entity keys']['id'];
@@ -651,6 +742,9 @@ function _producer_field_storage_query_columnname($field_name, $column) {
  * This function actually deletes the data from the database.
  */
 function producer_field_storage_field_storage_delete_revision($entity_type, $entity, $fields) {
+
+  twfd();
+
   list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
 
   if (isset($vid)) {
@@ -672,6 +766,9 @@ function producer_field_storage_field_storage_delete_revision($entity_type, $ent
  * This function simply marks for deletion all data associated with the field.
  */
 function producer_field_storage_field_storage_delete_instance($instance) {
+
+  twfd();
+
   $field = field_info_field($instance['field_name']);
   $table_name = _producer_field_storage_tablename($field);
   $revision_name = _producer_field_storage_revision_tablename($field);
@@ -691,6 +788,9 @@ function producer_field_storage_field_storage_delete_instance($instance) {
  * Implements hook_field_attach_rename_bundle().
  */
 function producer_field_storage_field_attach_rename_bundle($entity_type, $bundle_old, $bundle_new) {
+
+  twfd();
+
   // We need to account for deleted or inactive fields and instances.
   $instances = field_read_instances(array('entity_type' => $entity_type, 'bundle' => $bundle_new), array('include_deleted' => TRUE, 'include_inactive' => TRUE));
   foreach ($instances as $instance) {
@@ -719,6 +819,9 @@ function producer_field_storage_field_attach_rename_bundle($entity_type, $bundle
  * that is left is to delete the table.
  */
 function producer_field_storage_field_storage_purge_field($field) {
+
+  twfd();
+
   $table_name = _producer_field_storage_tablename($field);
   $revision_name = _producer_field_storage_revision_tablename($field);
   db_drop_table($table_name);
@@ -728,7 +831,9 @@ function producer_field_storage_field_storage_purge_field($field) {
 /**
  * Implements hook_field_storage_details().
  */
+/*
 function producer_field_storage_field_storage_details($field) {
+
   $details = array();
   if (!empty($field['columns'])) {
      // Add field columns.
@@ -747,4 +852,35 @@ function producer_field_storage_field_storage_details($field) {
       ),
     );
   }
+}
+*/
+
+
+
+/**
+ * Implements producer_field_storage_entity_presave().
+ *
+ * Act on an entity before it is about to be created or updated.
+ *
+ * @param $entity
+ *   The entity object
+ * @param $type
+ *   The type of entity being saved (i.e. node, user, comment).
+ */
+function producer_field_storage_entity_presave($entity, $type) {
+
+  // Flee if this is not the entity type we are looking for
+  if ($type != 'producer') return;
+
+  twfd();
+
+   // If this is new
+  if ($entity->is_new)
+  {
+    twd('Creating Remote Object');
+
+    // Create the new producer entity
+    $entity->thumbwhere_id = $_SESSION['thumbwhere_producer']['id']++;
+  }
+
 }

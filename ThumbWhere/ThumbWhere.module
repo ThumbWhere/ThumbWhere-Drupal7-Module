@@ -1,5 +1,9 @@
 <?php
 
+// Include the ThumbWhere SDK
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'dependencies' . DIRECTORY_SEPARATOR . 'tw' . DIRECTORY_SEPARATOR . 'sdk.class.php');
+
+
 /**
  * @file
  *
@@ -8,6 +12,41 @@
  * Core module functionality is here.
  *
  */
+
+
+/**
+* Debug the calling function and it's paramaters to the log
+*
+* @see SimpletestUnitTestExampleTestCase.
+*/
+function twfd($dumpcallstack = FALSE) {
+
+  if (!module_exists('devel_debug_log')) return;
+
+  $bt = debug_backtrace();
+  dd($bt[1]['function'],$label= date('Y-m-d\TH:i:s ') . 'FUNCTION');
+  dd($bt[1]['args'],$label= date('Y-m-d\TH:i:s ') .'ARGS');
+
+  if ($dumpcallstack)
+  {
+    dd($bt,$label= date('Y-m-d\TH:i:s ') . 'CALLSTACK');
+  }
+
+}
+
+
+/**
+* Print a message to the debug log
+*
+* @see SimpletestUnitTestExampleTestCase.
+*/
+function twd($massage) {
+
+  if (!module_exists('devel_debug_log')) return;
+
+  dd($massage,$label= date('Y-m-d\TH:i:s ') . 'DEBUG ');
+
+}
 
 
 /**

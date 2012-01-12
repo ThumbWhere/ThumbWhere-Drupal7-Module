@@ -115,7 +115,6 @@ function producer_disable() {
 
   // Rebuild the menu
   menu_rebuild();
-
 }
 
 
@@ -152,7 +151,7 @@ function producer_schema() {
         'description' => 'ThumbWhere Id: ThumbWhere\'s id for this entity. Represents the id of this entity in the ThumbWhere \'Producers\' entity.',
         'type' => 'int',
         'not null' => TRUE,
-        'default' => 0,
+        'default' => -1,
       ),
       'name' => array(
           'description' => 'The name of the producer - a human-readable identifier.',
@@ -218,6 +217,19 @@ function _producer_installed_fields() {
           'settings' => array(),
       ),
     ),
+    'producer_related' => array(
+      'field_name' => 'producer_related',
+    	'type' => 'entityreference',
+    	'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+    	'settings' => array(
+      	'target_type' => 'producer',
+      	'handler_settings' => array('target_bundles' => array('producer')),
+      ),
+      'storage'    => array(
+				'type' => 'producer_field_storage',
+				'settings' => array(),
+      ),
+    ),
   );
 }
 
@@ -251,12 +263,14 @@ function _producer_installed_instances() {
       'widget'      => array(
           'type'    => 'text_textfield',
       ),
+      /*
       'display' => array(
         'example_node_list' => array(
           'label' => 'hidden',
           'type' => 'producer_colors',
           ),
       ),
+      */
     ),
 
     'producer_quantity' => array(
@@ -267,12 +281,14 @@ function _producer_installed_instances() {
       'widget'      => array(
         'type'    => 'text_textfield',
       ),
+      /*
       'display' => array(
         'example_node_list' => array(
           'label' => 'hidden',
           'type' => 'hidden',
         ),
       ),
+      */
     ),
 
     'producer_image' => array(
@@ -284,12 +300,31 @@ function _producer_installed_instances() {
         'type'    => 'image_image',
         'weight'  => 2.10,
       ),
+      /*
       'display' => array(
         'example_node_list' => array(
           'label' => 'hidden',
           'type' => 'image_link_content__thumbnail',
         ),
+      ),*/
+    ),
+
+   'producer_related' => array(
+      'field_name' => 'producer_related',
+  	  'no_ui'       => TRUE,
+      'entity_type' => 'producer',
+  		'required'    => FALSE,
+      'label' => 'Your Label',
+      'widget' => array(
+        'type' => 'options_select',
       ),
+  		/*
+  		'display' => array(
+          'example_node_list' => array(
+            'label' => 'hidden',
+            'type' => 'hidden',
+          ),
+      	),*/
     ),
   );
 }

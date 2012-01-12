@@ -49,6 +49,13 @@ function producer_views_data_alter(&$data) {
 function producer_views_default_views() {
   $views = array();
 
+  //
+  // PASTE EXPORT HERE
+  //
+  // vvvvvvvvvvvvvvvvv
+  //
+
+
   $view = new view;
   $view->name = 'producers';
   $view->description = 'A list of all producers';
@@ -56,37 +63,60 @@ function producer_views_default_views() {
   $view->base_table = 'producer';
   $view->human_name = 'Producers';
   $view->core = 7;
-  $view->api_version = '3.0-alpha1';
+  $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Producers';
-  $handler->display->display_options['access']['type'] = 'perm';
-  $handler->display->display_options['access']['perm'] = 'create any producer type';
+  $handler->display->display_options['use_ajax'] = TRUE;
+  $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
-    'name' => 'name',
     'producer_id' => 'producer_id',
+    'thumbwhere_id' => 'thumbwhere_id',
+    'name' => 'name',
+    'link_producer' => 'link_producer',
+    'operations' => 'operations',
   );
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
-    'name' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-    ),
     'producer_id' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
+      'empty_column' => 0,
+    ),
+    'thumbwhere_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'link_producer' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'operations' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
     ),
   );
   $handler->display->display_options['style_options']['override'] = 1;
@@ -108,18 +138,17 @@ function producer_views_default_views() {
   $handler->display->display_options['fields']['producer_id']['alter']['absolute'] = 0;
   $handler->display->display_options['fields']['producer_id']['alter']['external'] = 0;
   $handler->display->display_options['fields']['producer_id']['alter']['replace_spaces'] = 0;
-  $handler->display->display_options['fields']['producer_id']['alter']['trim'] = 0;
   $handler->display->display_options['fields']['producer_id']['alter']['nl2br'] = 0;
   $handler->display->display_options['fields']['producer_id']['alter']['word_boundary'] = 1;
   $handler->display->display_options['fields']['producer_id']['alter']['ellipsis'] = 1;
   $handler->display->display_options['fields']['producer_id']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['producer_id']['alter']['trim'] = 0;
   $handler->display->display_options['fields']['producer_id']['alter']['html'] = 0;
   $handler->display->display_options['fields']['producer_id']['element_label_colon'] = 1;
   $handler->display->display_options['fields']['producer_id']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['producer_id']['hide_empty'] = 0;
   $handler->display->display_options['fields']['producer_id']['empty_zero'] = 0;
-
-  /* Field: Producer: thumbwhere_id */
+  /* Field: Producer: Thumbwhere_id */
   $handler->display->display_options['fields']['thumbwhere_id']['id'] = 'thumbwhere_id';
   $handler->display->display_options['fields']['thumbwhere_id']['table'] = 'producer';
   $handler->display->display_options['fields']['thumbwhere_id']['field'] = 'thumbwhere_id';
@@ -128,40 +157,16 @@ function producer_views_default_views() {
   $handler->display->display_options['fields']['thumbwhere_id']['alter']['absolute'] = 0;
   $handler->display->display_options['fields']['thumbwhere_id']['alter']['external'] = 0;
   $handler->display->display_options['fields']['thumbwhere_id']['alter']['replace_spaces'] = 0;
-  $handler->display->display_options['fields']['thumbwhere_id']['alter']['trim'] = 0;
   $handler->display->display_options['fields']['thumbwhere_id']['alter']['nl2br'] = 0;
   $handler->display->display_options['fields']['thumbwhere_id']['alter']['word_boundary'] = 1;
   $handler->display->display_options['fields']['thumbwhere_id']['alter']['ellipsis'] = 1;
   $handler->display->display_options['fields']['thumbwhere_id']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['thumbwhere_id']['alter']['trim'] = 0;
   $handler->display->display_options['fields']['thumbwhere_id']['alter']['html'] = 0;
   $handler->display->display_options['fields']['thumbwhere_id']['element_label_colon'] = 1;
   $handler->display->display_options['fields']['thumbwhere_id']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['thumbwhere_id']['hide_empty'] = 0;
   $handler->display->display_options['fields']['thumbwhere_id']['empty_zero'] = 0;
-
-  /* Field: Producer: Token */
-  /*
-  $handler->display->display_options['fields']['producer_quantity']['id'] = 'producer_quantity';
-  $handler->display->display_options['fields']['producer_quantity']['table'] = 'producer';
-  $handler->display->display_options['fields']['producer_quantity']['field'] = 'producer_quantity';
-  $handler->display->display_options['fields']['producer_quantity']['alter']['alter_text'] = 0;
-  $handler->display->display_options['fields']['producer_quantity']['alter']['make_link'] = 0;
-  $handler->display->display_options['fields']['producer_quantity']['alter']['absolute'] = 0;
-  $handler->display->display_options['fields']['producer_quantity']['alter']['external'] = 0;
-  $handler->display->display_options['fields']['producer_quantity']['alter']['replace_spaces'] = 0;
-  $handler->display->display_options['fields']['producer_quantity']['alter']['trim'] = 0;
-  $handler->display->display_options['fields']['producer_quantity']['alter']['nl2br'] = 0;
-  $handler->display->display_options['fields']['producer_quantity']['alter']['word_boundary'] = 1;
-  $handler->display->display_options['fields']['producer_quantity']['alter']['ellipsis'] = 1;
-  $handler->display->display_options['fields']['producer_quantity']['alter']['strip_tags'] = 0;
-  $handler->display->display_options['fields']['producer_quantity']['alter']['html'] = 0;
-  $handler->display->display_options['fields']['producer_quantity']['element_label_colon'] = 1;
-  $handler->display->display_options['fields']['producer_quantity']['element_default_classes'] = 1;
-  $handler->display->display_options['fields']['producer_quantity']['hide_empty'] = 0;
-  $handler->display->display_options['fields']['producer_quantity']['empty_zero'] = 0;
-  */
-
-
   /* Field: Producer: Name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'producer';
@@ -171,18 +176,16 @@ function producer_views_default_views() {
   $handler->display->display_options['fields']['name']['alter']['absolute'] = 0;
   $handler->display->display_options['fields']['name']['alter']['external'] = 0;
   $handler->display->display_options['fields']['name']['alter']['replace_spaces'] = 0;
-  $handler->display->display_options['fields']['name']['alter']['trim'] = 0;
   $handler->display->display_options['fields']['name']['alter']['nl2br'] = 0;
   $handler->display->display_options['fields']['name']['alter']['word_boundary'] = 1;
   $handler->display->display_options['fields']['name']['alter']['ellipsis'] = 1;
   $handler->display->display_options['fields']['name']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['name']['alter']['trim'] = 0;
   $handler->display->display_options['fields']['name']['alter']['html'] = 0;
   $handler->display->display_options['fields']['name']['element_label_colon'] = 1;
   $handler->display->display_options['fields']['name']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['name']['hide_empty'] = 0;
   $handler->display->display_options['fields']['name']['empty_zero'] = 0;
-
-
   /* Field: Producer: Link */
   $handler->display->display_options['fields']['link_producer']['id'] = 'link_producer';
   $handler->display->display_options['fields']['link_producer']['table'] = 'producer';
@@ -193,11 +196,11 @@ function producer_views_default_views() {
   $handler->display->display_options['fields']['link_producer']['alter']['absolute'] = 0;
   $handler->display->display_options['fields']['link_producer']['alter']['external'] = 0;
   $handler->display->display_options['fields']['link_producer']['alter']['replace_spaces'] = 0;
-  $handler->display->display_options['fields']['link_producer']['alter']['trim'] = 0;
   $handler->display->display_options['fields']['link_producer']['alter']['nl2br'] = 0;
   $handler->display->display_options['fields']['link_producer']['alter']['word_boundary'] = 1;
   $handler->display->display_options['fields']['link_producer']['alter']['ellipsis'] = 1;
   $handler->display->display_options['fields']['link_producer']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['link_producer']['alter']['trim'] = 0;
   $handler->display->display_options['fields']['link_producer']['alter']['html'] = 0;
   $handler->display->display_options['fields']['link_producer']['element_label_colon'] = 1;
   $handler->display->display_options['fields']['link_producer']['element_default_classes'] = 1;
@@ -212,16 +215,35 @@ function producer_views_default_views() {
   $handler->display->display_options['fields']['operations']['alter']['absolute'] = 0;
   $handler->display->display_options['fields']['operations']['alter']['external'] = 0;
   $handler->display->display_options['fields']['operations']['alter']['replace_spaces'] = 0;
-  $handler->display->display_options['fields']['operations']['alter']['trim'] = 0;
   $handler->display->display_options['fields']['operations']['alter']['nl2br'] = 0;
   $handler->display->display_options['fields']['operations']['alter']['word_boundary'] = 1;
   $handler->display->display_options['fields']['operations']['alter']['ellipsis'] = 1;
   $handler->display->display_options['fields']['operations']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['operations']['alter']['trim'] = 0;
   $handler->display->display_options['fields']['operations']['alter']['html'] = 0;
   $handler->display->display_options['fields']['operations']['element_label_colon'] = 1;
   $handler->display->display_options['fields']['operations']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['operations']['hide_empty'] = 0;
   $handler->display->display_options['fields']['operations']['empty_zero'] = 0;
+  /* Sort criterion: Producer: Name */
+  $handler->display->display_options['sorts']['name']['id'] = 'name';
+  $handler->display->display_options['sorts']['name']['table'] = 'producer';
+  $handler->display->display_options['sorts']['name']['field'] = 'name';
+  /* Filter criterion: Search Name */
+  $handler->display->display_options['filters']['name']['id'] = 'name';
+  $handler->display->display_options['filters']['name']['table'] = 'producer';
+  $handler->display->display_options['filters']['name']['field'] = 'name';
+  $handler->display->display_options['filters']['name']['ui_name'] = 'Search Name';
+  $handler->display->display_options['filters']['name']['operator'] = 'contains';
+  $handler->display->display_options['filters']['name']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['name']['expose']['operator_id'] = 'name_op';
+  $handler->display->display_options['filters']['name']['expose']['label'] = 'Name';
+  $handler->display->display_options['filters']['name']['expose']['use_operator'] = 1;
+  $handler->display->display_options['filters']['name']['expose']['operator'] = 'name_op';
+  $handler->display->display_options['filters']['name']['expose']['identifier'] = 'name';
+  $handler->display->display_options['filters']['name']['expose']['required'] = 0;
+  $handler->display->display_options['filters']['name']['expose']['remember'] = 1;
+  $handler->display->display_options['filters']['name']['expose']['multiple'] = FALSE;
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'producers_admin_page');
@@ -234,6 +256,15 @@ function producer_views_default_views() {
   $handler->display->display_options['tab_options']['description'] = 'Manage producers';
   $handler->display->display_options['tab_options']['weight'] = '0';
   $handler->display->display_options['tab_options']['name'] = 'management';
+
+  //
+  // ^^^^^^^^^^^^^^^^^
+  //
+  // PASTE EXPORT HERE
+  //
+
+
+
   $translatables['producers'] = array(
     t('Master'),
     t('Producers'),
