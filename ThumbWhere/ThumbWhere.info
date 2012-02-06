@@ -8,7 +8,7 @@ configure = admin/config/thumbwhere
 dependencies[] = menu
 dependencies[] = entity
 ;dependencies[] = entityreference
-
+  
 files[] = thumbwhere.install
 files[] = thumbwhere.module
 files[] = thumbwhere.admin.inc

@@ -71,6 +71,9 @@ function producer_install() {
 
   ddl('producer_install()');
 
+  // Entity provided by ThumbWhere gets a weight of 12. Storage = 11 and ThumbWere itself, 10
+  db_query("UPDATE {system} SET weight = 12 WHERE name = 'producer'");
+
   // Create all the fields we are adding to our content type.
   // http://api.drupal.org/api/function/field_create_field/7
   foreach (_producer_installed_fields() as $field) {
@@ -183,7 +186,7 @@ function producer_schema() {
  *  new node type.
  *
  * @ingroup producer
- */
+*/
 function _producer_installed_fields() {
   $t = get_t();
   return array(

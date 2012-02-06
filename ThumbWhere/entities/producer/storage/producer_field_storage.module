@@ -40,7 +40,9 @@ function producer_field_storage_field_storage_create_field($field) {
 
   twfd();
 
-  throw new Exception('You attempted to create a field that is defined in ThumbWhere.');
+
+  // This is all ok... this is what is done when something adds a ThumbWhere field to itself.
+  //throw new Exception('You attempted to create a field that is defined in ThumbWhere.');
 }
 
 
@@ -61,7 +63,8 @@ function producer_field_storage_field_storage_delete_field($field) {
 
   twfd();
 
-  throw new Exception('You attempted to delete a field that is defined in ThumbWhere.');
+  // This is OK... but I don't know why...
+  //throw new Exception('You attempted to delete a field that is defined in ThumbWhere.');
 }
 
 /**
@@ -69,26 +72,36 @@ function producer_field_storage_field_storage_delete_field($field) {
  */
 function producer_field_storage_field_storage_load($entity_type, $entities, $age, $fields, $options) {
 
-  // Flee if this entity type is not one we look after...
-  if ($entity_type != 'producer') return;
-
   twfd();
 
+    foreach ($entities as $entity)
+    {
 
-  foreach ($entities as $entity)
-  {
+      // Flee if this entity type is not one we look after...
+      if (($entity_type == 'producer') || (($entity_type == 'node') && ($entity->type == 'track')))
+      {
 
-    twd('ThumbWhere \'Producer\' ENTITY ' . $entity->thumbwhere_id);
-    twd($entity);
+        if ($entity->thumbwhere_id == NULL)
+        {
+          throw new Exception('Entity using ThumbWhere field storage has no thumbwhere_id');
+        }
 
-    // Saving existing... let's just modify the producer quantity
-    $entity->producer_colorrgba['und'][0]['value'] = 'updated-at-load-' . rand(100,200) . 'tw-' . $entity->thumbwhere_id ;
-    $entity->producer_colorrgba['und'][1]['value'] = 'updated-at-load-' . rand(100,200) . 'tw-' . $entity->thumbwhere_id;
-    $entity->producer_colorrgba['und'][2]['value'] = 'updated-at-load-' . rand(100,200) . 'tw-' . $entity->thumbwhere_id;
-    $entity->producer_quantity['und'][0]['value']  = 'updated-at-load -' . rand(100,200) . 'tw-' . $entity->thumbwhere_id;
 
-    twd($entity);
-  }
+        twd('ThumbWhere \'Producer\' ENTITY ' . $entity->thumbwhere_id);
+        twd($entity);
+
+
+        // Saving existing... let's just modify the producer quantity
+        $entity->producer_colorrgba['und'][0]['value'] = 'updated-at-load-' . rand(100,200) . 'tw-' . $entity->thumbwhere_id ;
+        $entity->producer_colorrgba['und'][1]['value'] = 'updated-at-load-' . rand(100,200) . 'tw-' . $entity->thumbwhere_id;
+        $entity->producer_colorrgba['und'][2]['value'] = 'updated-at-load-' . rand(100,200) . 'tw-' . $entity->thumbwhere_id;
+        $entity->producer_quantity['und'][0]['value']  = 'updated-at-load -' . rand(100,200) . 'tw-' . $entity->thumbwhere_id;
+
+        twd($entity);
+
+      }
+    }
+
 
 }
 
@@ -97,10 +110,11 @@ function producer_field_storage_field_storage_load($entity_type, $entities, $age
 */
 function producer_field_storage_pre_insert($entity_type, $entity, &$skip_fields) {
 
+  twfd();
+
   // Flee if this entity type is not one we look after...
   if ($entity_type != 'producer') return;
 
-  twfd();
 
 }
 
@@ -109,20 +123,20 @@ function producer_field_storage_pre_insert($entity_type, $entity, &$skip_fields)
  */
 function producer_field_storage_field_storage_write($entity_type, $entity, $op, $fields) {
 
-  // Flee if this entity type is not one we look after...
-  if ($entity_type != 'producer') return;
-
   twfd();
 
-  // We only want to write if this is new (
-  if (!$entity->is_new)
+  // Flee if this entity type is not one we look after...
+  if (($entity_type == 'producer') || (($entity_type == 'node') && ($entity->type == 'track')))
   {
-    twd('Updating Remote Object');
+    // We only want to write if this is new (
+    if (!$entity->is_new)
+    {
+      twd('Updating Remote Object');
 
-    // Saving existing... let's just modify the producer quantity
-    $entity->producer_quantity['und'][0]['value'] = 'updated-at-save-' . rand(100,200);
+      // Saving existing... let's just modify the producer quantity
+      $entity->producer_quantity['und'][0]['value'] = 'updated-at-save-' . rand(100,200);
+    }
   }
-
 }
 
 /**
@@ -132,10 +146,11 @@ function producer_field_storage_field_storage_write($entity_type, $entity, $op, 
  */
 function producer_field_storage_field_storage_delete($entity_type, $entity, $fields) {
 
-  // Flee if this entity type is not one we look after...
-  if ($entity_type != 'producer') return;
-
-  twfd();
+  // We only look after what we want...
+  if (($entity_type == 'producer') || (($entity_type == 'node') && ($entity->type == 'track')))
+  {
+    twfd();
+  }
 
 }
 
@@ -148,23 +163,33 @@ function producer_field_storage_field_storage_delete($entity_type, $entity, $fie
 function producer_field_storage_field_storage_purge($entity_type, $entity, $field, $instance) {
 
 
-  // Flee if this entity type is not one we look after...
-  if ($entity_type != 'producer') return;
-
-  twfd();
+  // We only look after what we want...
+  if (($entity_type == 'producer') || (($entity_type == 'node') && ($entity->type == 'track')))
+  {
+    twfd();
+  }
 
 }
 
 /**
  * Implements hook_field_storage_query().
+ *
+ * This hook is called to find the entities having certain entity and field conditions and
+ * sort them in the given field order.
+ *
+ * If the field storage engine also handles property sorts and orders, it should unset those
+ * properties in the called object to signal that those have been handled.
  */
 function producer_field_storage_field_storage_query(EntityFieldQuery $query) {
 
   twfd();
 
-  throw new Exception('You attempted to execute a query against this field. Not currently supported.');
+  //throw new Exception('You attempted to execute a query against this field. Not currently supported.');
 
-  return null;
+  //return $query->finishQuery(null, null);
+
+  return array();
+
 
   /*
 
@@ -277,7 +302,8 @@ function producer_field_storage_field_storage_delete_instance($instance) {
 
   twfd();
 
-  throw new Exception('You attempted to delete an instance of a field that is defined in ThumbWhere.');
+  // This is OK as this is just an instance being used by another Entity/Content Type
+  //throw new Exception('You attempted to delete an instance of a field that is defined in ThumbWhere.');
 
 }
 
@@ -302,7 +328,7 @@ function producer_field_storage_field_storage_purge_field($field) {
 
   twfd();
 
-  throw new Exception('You attempted to purge field storage for a field that is ThumbWhere. (This might happen if you deleted the last Entity. We may need to make this ne quiet)');
+  //throw new Exception('You attempted to purge field storage for a field that is ThumbWhere. (This might happen if you deleted the last Entity. We may need to make this ne quiet)');
 }
 
 /**
@@ -315,20 +341,27 @@ function producer_field_storage_field_storage_purge_field($field) {
  * @param $type
  *   The type of entity being saved (i.e. node, user, comment).
  */
-function producer_field_storage_entity_presave($entity, $type) {
+function producer_field_storage_entity_presave($entity, $entity_type) {
 
-  // Flee if this is not the entity type we are looking for
-  if ($type != 'producer') return;
-
-  twfd();
-
-   // If this is new
-  if ($entity->is_new)
+  // We only look after what we want...
+  if (($entity_type == 'producer') || (($entity_type == 'node') && ($entity->type == 'track')))
   {
-    twd('Creating Remote Object and linking to ThumbWhere entity..');
+    twfd();
 
-    // Create the new producer entity
-    $entity->thumbwhere_id = $_SESSION['thumbwhere_producer']['id']++;
+     // If this is new
+    if ($entity->is_new)
+    {
+      twd('Creating Remote Object and linking to ThumbWhere entity..');
+
+
+      if (!isset($entity->thumbwhere_id))
+      {
+          throw new Exception('Entity using ThumbWhere field storage has no thumbwhere_id');
+      }
+
+      // Create the new producer entity
+      $entity->thumbwhere_id = $_SESSION['thumbwhere_producer']['id']++;
+    }
   }
 
 }

@@ -34,9 +34,13 @@ ddl('thumbwhere.install');
  * @ingroup twcontent
  */
 function _thumbwhere_install() {
-  
+
   ddl('_thumbwhere_install()');
-  
+
+
+  // New module weights in core: put devel as the very last in the chain.
+  db_query("UPDATE {system} SET weight = 10 WHERE name = 'thumbwhere'");
+
   // During installation, the t() function is unavailable, so we use get_t()
   // to store the name of the translation function.
   $t = get_t();
@@ -101,12 +105,12 @@ function _thumbwhere_install() {
     $instance['bundle'] = $twcontent['type'];
     field_create_instance($instance);
   }
-  
-  
+
+
   //
   // Install our menu
   //
-  
+
   // Create a custom menu, if Menu module is enabled.
   // @see thumbwhere_modules_installed()
   if (module_exists('menu')) {
@@ -117,8 +121,8 @@ function _thumbwhere_install() {
     );
     menu_save($menu);
   }
-  
-  
+
+
 }
 /**
  * Implements hook_uninstall().
@@ -132,9 +136,9 @@ function _thumbwhere_install() {
  * @ingroup twcontent
  */
 function _thumbwhere_uninstall() {
-  
+
   ddl('_thumbwhere_uninstall()');
-  
+
   // Gather all the example content that might have been created while this
   // module was enabled.  Simple selects still use db_query().
   // http://api.drupal.org/api/function/db_query/7
@@ -171,17 +175,17 @@ function _thumbwhere_uninstall() {
   // Purge all field infromation
   // http://api.drupal.org/api/function/field_purge_batch/7
   field_purge_batch(1000);
-  
+
   //
   // Uninstall the Menu
   //
-  
+
   // Delete the development menu.
   if (module_exists('menu')) {
     if ($devel_menu = menu_load('thumbwhere')) {
       menu_delete($devel_menu);
     }
-  }  
+  }
 }
 
 /**
@@ -295,7 +299,7 @@ function _twcontent_installed_instances() {
 */
 function thumbwhere_enable() {
   ddl('thumbwhere_enable()');
-  
+
   _thumbwhere_install();
 }
 

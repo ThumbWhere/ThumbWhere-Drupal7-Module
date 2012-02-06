@@ -4,6 +4,19 @@
  * @file
  * Install, update and uninstall functions for the producer_field_storage module.
  *
- * Which at this point... requires nothing...
  */
 
+/**
+* Implements hook_install().
+*
+* This hook is called when the module is installed.
+*
+* @ingroup producer
+*/
+function producer_field_storage_install()
+{
+
+  // Storage provided by ThumbWhere gets a weight of 11. Entity using the storage = 11 and ThumbWere itself, 10
+  db_query("UPDATE {system} SET weight = 11 WHERE name = 'producer_field_storage'");
+
+}

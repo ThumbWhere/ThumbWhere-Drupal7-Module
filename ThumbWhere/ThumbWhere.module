@@ -222,11 +222,12 @@ function thumbwhere_permission() {
 
 
 
+/*
 function thumbwhere_entity_info_alter(&$entity_info) {
 
   twfd();
 
 }
-
+*/
 
 
