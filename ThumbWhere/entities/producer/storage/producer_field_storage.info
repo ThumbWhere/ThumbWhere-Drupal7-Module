@@ -10,7 +10,8 @@ files[] = producer_field_storage.test
 ;required = TRUE
 
 ; Information added by drupal.org packaging script on 2011-10-26
+project status url = "http://drupalmodules.thumbwhere.com/release-history"
 version = "7.x-0.0-0"
-project = "ThumbWhere Producer Storage"
+project = "ThumbWhere Producer Field Storage"
 datestamp = "1270000000"
 

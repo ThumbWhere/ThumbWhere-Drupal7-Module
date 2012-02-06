@@ -29,6 +29,14 @@ function member_schema() {
           'not null' => TRUE,
           'default' => '',
         ),
+  			'nickname' => array(
+            'description' => 'The nickname of our member entity.',
+            'type' => 'varchar',
+            'length' => 255,
+            'not null' => TRUE,
+            'default' => '',
+  ),
+
     ),
     'primary key' => array('member_id'),
   );
