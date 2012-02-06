@@ -286,7 +286,9 @@ function producer_field_storage_entity_presave($entity, $entity_type) {
 
       // We need to treat nodes differently to entities
       if ($entity_type == 'node') {
-          if (!isset($entity->thumbwhere_id['und'][0]['value'])) {
+
+          // For presave we just want to ensure that the field is ready to be populated...
+          if (!isset($entity->thumbwhere_id['und'])) {
               throw new Exception('Entity using ThumbWhere field storage has no thumbwhere_id');
           }
 

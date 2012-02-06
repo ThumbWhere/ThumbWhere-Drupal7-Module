@@ -41,10 +41,14 @@ function _thumbwhere_install() {
   // New module weights in core: put devel as the very last in the chain.
   db_query("UPDATE {system} SET weight = 10 WHERE name = 'thumbwhere'");
 
+
   // During installation, the t() function is unavailable, so we use get_t()
   // to store the name of the translation function.
   $t = get_t();
 
+
+
+  /*
   // We define the node type as an associative array.
   $twcontent = array(
     'type' => 'twcontent',
@@ -105,7 +109,7 @@ function _thumbwhere_install() {
     $instance['bundle'] = $twcontent['type'];
     field_create_instance($instance);
   }
-
+	*/
 
   //
   // Install our menu
@@ -139,6 +143,8 @@ function _thumbwhere_uninstall() {
 
   ddl('_thumbwhere_uninstall()');
 
+
+  /*
   // Gather all the example content that might have been created while this
   // module was enabled.  Simple selects still use db_query().
   // http://api.drupal.org/api/function/db_query/7
@@ -171,6 +177,7 @@ function _thumbwhere_uninstall() {
   // Delete our content type
   // http://api.drupal.org/api/function/node_type_delete/7
   node_type_delete('twcontent');
+  */
 
   // Purge all field infromation
   // http://api.drupal.org/api/function/field_purge_batch/7
@@ -200,6 +207,7 @@ function _thumbwhere_uninstall() {
  *
  * @ingroup twcontent
  */
+/*
 function _twcontent_installed_fields() {
   $t = get_t();
   return array(
@@ -223,6 +231,7 @@ function _twcontent_installed_fields() {
     ),
   );
 }
+*/
 
 /**
  * Returns a structured array defining the instances for this content type.
@@ -242,6 +251,7 @@ function _twcontent_installed_fields() {
  *
  * @ingroup twcontent
  */
+/*
 function _twcontent_installed_instances() {
   $t = get_t();
   return array(
@@ -289,6 +299,7 @@ function _twcontent_installed_instances() {
     ),
   );
 }
+*/
 
 /**
 * Implements hook_enable().
