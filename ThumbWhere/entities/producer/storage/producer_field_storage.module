@@ -277,6 +277,7 @@ function producer_field_storage_entity_presave($entity, $entity_type) {
 
   // We only look after what we want...
   if (($entity_type == 'producer') || (($entity_type == 'node') && ($entity->type == 'track'))) {
+
     twfd();
 
      // If this is new
