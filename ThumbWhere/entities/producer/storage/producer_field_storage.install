@@ -13,8 +13,7 @@
 *
 * @ingroup producer
 */
-function producer_field_storage_install()
-{
+function producer_field_storage_install() {
 
   // Storage provided by ThumbWhere gets a weight of 11. Entity using the storage = 11 and ThumbWere itself, 10
   db_query("UPDATE {system} SET weight = 11 WHERE name = 'producer_field_storage'");

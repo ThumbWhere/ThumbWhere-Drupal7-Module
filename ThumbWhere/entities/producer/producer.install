@@ -222,15 +222,15 @@ function _producer_installed_fields() {
     ),
     'producer_related' => array(
       'field_name' => 'producer_related',
-    	'type' => 'entityreference',
-    	'cardinality' => FIELD_CARDINALITY_UNLIMITED,
-    	'settings' => array(
-      	'target_type' => 'producer',
-      	'handler_settings' => array('target_bundles' => array('producer')),
+      'type' => 'entityreference',
+      'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+      'settings' => array(
+        'target_type' => 'producer',
+        'handler_settings' => array('target_bundles' => array('producer')),
       ),
       'storage'    => array(
-				'type' => 'producer_field_storage',
-				'settings' => array(),
+        'type' => 'producer_field_storage',
+        'settings' => array(),
       ),
     ),
   );
@@ -314,20 +314,20 @@ function _producer_installed_instances() {
 
    'producer_related' => array(
       'field_name' => 'producer_related',
-  	  'no_ui'       => TRUE,
+      'no_ui'       => TRUE,
       'entity_type' => 'producer',
-  		'required'    => FALSE,
+      'required'    => FALSE,
       'label' => 'Your Label',
       'widget' => array(
         'type' => 'options_select',
       ),
-  		/*
-  		'display' => array(
+      /*
+      'display' => array(
           'example_node_list' => array(
             'label' => 'hidden',
             'type' => 'hidden',
           ),
-      	),*/
+        ),*/
     ),
   );
 }

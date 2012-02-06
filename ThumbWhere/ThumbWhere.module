@@ -24,12 +24,11 @@ function twfd($dumpcallstack = FALSE) {
   if (!module_exists('devel_debug_log')) return;
 
   $bt = debug_backtrace();
-  dd($bt[1]['function'],$label= date('Y-m-d\TH:i:s ') . 'FUNCTION');
-  dd($bt[1]['args'],$label= date('Y-m-d\TH:i:s ') .'ARGS');
+  dd($bt[1]['function'], $label= date('Y-m-d\TH:i:s ') . 'FUNCTION');
+  dd($bt[1]['args'], $label= date('Y-m-d\TH:i:s ') . 'ARGS');
 
-  if ($dumpcallstack)
-  {
-    dd($bt,$label= date('Y-m-d\TH:i:s ') . 'CALLSTACK');
+  if ($dumpcallstack) {
+    dd($bt, $label= date('Y-m-d\TH:i:s ') . 'CALLSTACK');
   }
 
 }
@@ -44,7 +43,7 @@ function twd($massage) {
 
   if (!module_exists('devel_debug_log')) return;
 
-  dd($massage,$label= date('Y-m-d\TH:i:s ') . 'DEBUG ');
+  dd($massage, $label= date('Y-m-d\TH:i:s ') . 'DEBUG ');
 
 }
 

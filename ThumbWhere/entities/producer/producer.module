@@ -9,8 +9,7 @@ require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATO
  *
  */
 
-if(!isset($_SESSION['thumbwhere_producer']))
-{
+if(!isset($_SESSION['thumbwhere_producer'])) {
   $_SESSION['thumbwhere_producer'] = array();
 
   // Simulatation of unique external ids...
@@ -450,7 +449,7 @@ class ProducerController extends EntityAPIController {
 
     return $result;
   }
-	*/
+  */
 
   /**
   * Invoke
