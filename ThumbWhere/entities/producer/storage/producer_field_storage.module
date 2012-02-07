@@ -289,17 +289,19 @@ function producer_field_storage_entity_presave($entity, $entity_type) {
       if ($entity_type == 'node') {
 
           // For presave we just want to ensure that the field is ready to be populated...
-          if (!isset($entity->thumbwhere_id['und'])) {
-              throw new Exception('Entity using ThumbWhere field storage has no thumbwhere_id');
-          }
+          //if (!isset($entity->thumbwhere_id['und'])) {
+          //    throw new Exception('Entity using ThumbWhere field storage has no thumbwhere_id');
+          //}
 
           $entity->thumbwhere_id['und'][0]['value'] =  $_SESSION['thumbwhere_producer']['id']++;
 
       }
       else {
-        if (!isset($entity->thumbwhere_id))  {
-            throw new Exception('Entity using ThumbWhere field storage has no thumbwhere_id');
-        }
+
+        //if (!isset($entity->thumbwhere_id)) {
+        //    throw new Exception('Entity using ThumbWhere field storage has no thumbwhere_id');
+        //}
+
         // Create the new producer entity
         $entity->thumbwhere_id = $_SESSION['thumbwhere_producer']['id']++;
       }

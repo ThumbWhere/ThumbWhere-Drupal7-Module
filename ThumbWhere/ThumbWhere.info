@@ -5,6 +5,7 @@ core = "7.x"
 configure = admin/config/thumbwhere
 
 ; actual dependencies
+dependencies[] = image
 dependencies[] = menu
 dependencies[] = entity
 ;dependencies[] = entityreference
