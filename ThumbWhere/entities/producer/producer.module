@@ -612,7 +612,12 @@ function producer_entity_presave($entity, $type) {
   // Flee if this is not the entity type we are looking for
   //if ($type != 'producer') return;
 
+
+
+
   twfd();
+
+  $entity->thumbwhere_id = 100;
 
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-ddl('thumbwhere.install');
+
 
 /**
 * @file
@@ -35,7 +35,7 @@ ddl('thumbwhere.install');
  */
 function _thumbwhere_install() {
 
-  ddl('_thumbwhere_install()');
+  twd('_thumbwhere_install()');
 
 
   // New module weights in core: put devel as the very last in the chain.
@@ -141,7 +141,7 @@ function _thumbwhere_install() {
  */
 function _thumbwhere_uninstall() {
 
-  ddl('_thumbwhere_uninstall()');
+  twd('_thumbwhere_uninstall()');
 
 
   /*
@@ -309,7 +309,7 @@ function _twcontent_installed_instances() {
 * @ingroup thumbwhere
 */
 function thumbwhere_enable() {
-  ddl('thumbwhere_enable()');
+  twd('thumbwhere_enable()');
 
   _thumbwhere_install();
 }
@@ -322,7 +322,7 @@ function thumbwhere_enable() {
 * @ingroup thumbwhere
 */
 function thumbwhere_disable() {
-  ddl('thumbwhere_disable()');
+  twd('thumbwhere_disable()');
 
   _thumbwhere_uninstall();
 }

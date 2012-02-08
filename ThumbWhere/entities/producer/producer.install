@@ -121,6 +121,89 @@ function producer_disable() {
 }
 
 
+function field_bar_config()
+{
+  // Exported field: 'node-producer-field_bar'
+  return array(
+
+      'field_config' => array(
+        'active' => '1',
+        'cardinality' => '1',
+        'deleted' => '0',
+        'entity_types' => array(),
+        'field_name' => 'field_foobar',
+        'foreign keys' => array(
+          'format' => array(
+            'columns' => array(
+              'format' => 'format',
+  ),
+            'table' => 'filter_format',
+  ),
+  ),
+        'indexes' => array(
+          'format' => array(
+  0 => 'format',
+  ),
+  ),
+        'module' => 'text',
+        'settings' => array(
+          'max_length' => '255',
+  ),
+        'translatable' => '0',
+        'type' => 'text',
+
+    //'storage'    => array(
+    //         'type' => 'field_sql_storagex',
+    //         'settings' => array(),
+    //),
+
+  ),
+
+
+
+
+      'field_instance' => array(
+        'bundle' => 'producer',
+        'default_value' => NULL,
+        'deleted' => '0',
+        'description' => '',
+        'display' => array(
+          'default' => array(
+            'label' => 'above',
+            'module' => 'text',
+            'settings' => array(),
+            'type' => 'text_default',
+            'weight' => 3,
+  ),
+          'teaser' => array(
+            'label' => 'above',
+            'settings' => array(),
+            'type' => 'hidden',
+            'weight' => 0,
+  ),
+  ),
+        'entity_type' => 'node',
+        'field_name' => 'field_foobar',
+        'label' => 'foobar',
+        'required' => 0,
+        'settings' => array(
+          'text_processing' => '0',
+          'user_register_form' => FALSE,
+  ),
+        'widget' => array(
+          'active' => 1,
+          'module' => 'text',
+          'settings' => array(
+            'size' => '60',
+  ),
+          'type' => 'text_textfield',
+          'weight' => '4',
+  ),
+  ),
+  );
+}
+
+
 /**
  * Implements hook_schema().
  *
@@ -163,6 +246,14 @@ function producer_schema() {
           'not null' => TRUE,
           'default' => '',
       ),
+  		'genre' => array(
+            'description' => 'The name of the primary genre of this producer.',
+            'type' => 'varchar',
+            'length' => 255,
+            'not null' => TRUE,
+            'default' => '',
+      ),
+
     ),
     'primary key' => array('producer_id'),
     'indexes' => array(
@@ -189,7 +280,7 @@ function producer_schema() {
 */
 function _producer_installed_fields() {
   $t = get_t();
-  return array(
+  $result = array(
     'producer_colorrgba' => array(
       'field_name' => 'producer_colorrgba',
       'cardinality' => 3,
@@ -197,28 +288,28 @@ function _producer_installed_fields() {
       'settings'    => array(
         'max_length' => 60,
       ),
-      'storage'    => array(
-          'type' => 'producer_field_storage',
-          'settings' => array(),
-      ),
+      //'storage'    => array(
+      //    'type' => 'producer_field_storage',
+      //    'settings' => array(),
+      //),
     ),
     'producer_quantity' => array(
       'field_name'  => 'producer_quantity',
       'cardinality' => 1,
       'type'        => 'text',
-      'storage'    => array(
-        'type' => 'producer_field_storage',
-        'settings' => array(),
-      ),
+      //'storage'    => array(
+      //  'type' => 'producer_field_storage',
+      //  'settings' => array(),
+      //),
     ),
     'producer_image' => array(
       'field_name' => 'producer_image',
       'type'       => 'image',
       'cardinality' => 1,
-      'storage'    => array(
-          'type' => 'producer_field_storage',
-          'settings' => array(),
-      ),
+      //'storage'    => array(
+      //    'type' => 'producer_field_storage',
+      //    'settings' => array(),
+      //),
     ),
     'producer_related' => array(
       'field_name' => 'producer_related',
@@ -228,12 +319,18 @@ function _producer_installed_fields() {
         'target_type' => 'producer',
         'handler_settings' => array('target_bundles' => array('producer')),
       ),
-      'storage'    => array(
-        'type' => 'producer_field_storage',
-        'settings' => array(),
-      ),
+      //'storage'    => array(
+      //  'type' => 'producer_field_storage',
+      //  'settings' => array(),
+      //),
     ),
   );
+
+ $config =  field_bar_config();
+
+  $result['foobar'] = $config['field_config'];
+
+  return $result;
 }
 
 /**
@@ -258,7 +355,7 @@ function _producer_installed_instances() {
 
   $t = get_t();
 
-  return array(
+  $result = array(
     'producer_colorrgba' => array(
       'field_name' => 'producer_colorrgba',
       'no_ui'       => TRUE,
@@ -330,4 +427,10 @@ function _producer_installed_instances() {
         ),*/
     ),
   );
+
+  $config =  field_bar_config();
+
+  $result['foobar'] = $config['field_instance'];
+
+  return $result;
 }

@@ -8,7 +8,7 @@ dependencies[] = entityreference
 dependencies[] = views
 dependencies[] = menu
 dependencies[] = thumbwhere
-dependencies[] = producer_field_storage
+;dependencies[] = producer_field_storage
 
 
 files[] = producer.admin.inc

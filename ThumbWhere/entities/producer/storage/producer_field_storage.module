@@ -40,9 +40,22 @@ function producer_field_storage_field_storage_create_field($field) {
 
   twfd();
 
+  drupal_get_schema(NULL, TRUE);
 
   // This is all ok... this is what is done when something adds a ThumbWhere field to itself.
   //throw new Exception('You attempted to create a field that is defined in ThumbWhere.');
+}
+
+
+/**
+ * Implements hook_field_update_forbid().
+*
+* Forbid any field update that changes column definitions if there is
+* any data.
+*/
+function producer_field_storage_field_update_forbid($field, $prior_field, $has_data) {
+
+  twfd();
 }
 
 
@@ -53,7 +66,10 @@ function producer_field_storage_field_storage_update_field($field, $prior_field,
 
   twfd();
 
-  throw new Exception('You attempted to update a field that is defined in ThumbWhere.');
+  // This is OK... but I don't know why...
+  //throw new Exception('You attempted to update a field that is defined in ThumbWhere.');
+
+  drupal_get_schema(NULL, TRUE);
 }
 
 /**
@@ -65,6 +81,8 @@ function producer_field_storage_field_storage_delete_field($field) {
 
   // This is OK... but I don't know why...
   //throw new Exception('You attempted to delete a field that is defined in ThumbWhere.');
+
+  drupal_get_schema(NULL, TRUE);
 }
 
 /**
@@ -96,7 +114,7 @@ function producer_field_storage_field_storage_load($entity_type, $entities, $age
         }
         else {
 
-          if ($entity->thumbwhere_id == NULL)  {
+          if (!property_exists($entity,'thumbwhere_id')) {
             throw new Exception('Entity using ThumbWhere field storage has no thumbwhere_id');
           }
 
@@ -275,32 +293,35 @@ function producer_field_storage_field_storage_purge_field($field) {
  */
 function producer_field_storage_entity_presave($entity, $entity_type) {
 
+  twfd();
+
   // We only look after what we want...
   if (($entity_type == 'producer') || (($entity_type == 'node') && ($entity->type == 'track'))) {
 
-    twfd();
+//     /twfd();
 
      // If this is new
     if ($entity->is_new) {
 
       twd('Creating Remote Object and linking to ThumbWhere entity..');
 
+      // The entity needs the thumbwhere_id
+//       if (!property_exists($entity,'thumbwhere_id')) {
+//         throw new Exception('Entity using ThumbWhere field storage has no thumbwhere_id');
+//       }
+
       // We need to treat nodes differently to entities
       if ($entity_type == 'node') {
 
-          // For presave we just want to ensure that the field is ready to be populated...
-          //if (!isset($entity->thumbwhere_id['und'])) {
-          //    throw new Exception('Entity using ThumbWhere field storage has no thumbwhere_id');
-          //}
+          // For node, the field is set up differently
+          if (!array_key_exists ('und', $entity->thumbwhere_id)) {
+            throw new Exception('Entity using ThumbWhere field storage thumbwhere_id in an unexpected format.');
+          }
 
           $entity->thumbwhere_id['und'][0]['value'] =  $_SESSION['thumbwhere_producer']['id']++;
 
       }
       else {
-
-        //if (!isset($entity->thumbwhere_id)) {
-        //    throw new Exception('Entity using ThumbWhere field storage has no thumbwhere_id');
-        //}
 
         // Create the new producer entity
         $entity->thumbwhere_id = $_SESSION['thumbwhere_producer']['id']++;
