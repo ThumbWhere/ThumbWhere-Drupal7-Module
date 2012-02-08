@@ -4,7 +4,7 @@ package = "ThumbWhere"
 core = 7.x
 
 dependencies[] = field
-dependencies[] = thumbwhere
+dependencies[] = ThumbWhere
 
 files[] = producer_field_storage.test
 ;required = TRUE

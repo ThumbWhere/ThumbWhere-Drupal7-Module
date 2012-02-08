@@ -7,7 +7,7 @@ dependencies[] = entity
 dependencies[] = entityreference
 dependencies[] = views
 dependencies[] = menu
-dependencies[] = thumbwhere
+dependencies[] = ThumbWhere
 ;dependencies[] = producer_field_storage
 
 
