@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @file
+ * Tests for producer_field_storage.module.
+ *
+ * Field_sql_storage.module implements the default back-end storage plugin
+ * for the Field Strage API.
+ */
+
+/**
+ * Tests field storage.
+ */
+class ThumbWhereProducerTestCase extends DrupalWebTestCase {
+  public static function getInfo() {
+    return array(
+      'name'  => 'ThumbWhere Producer Entity Tests',
+      'description'  => "Test ThumbWhere Producer Entity module.",
+      'group' => 'ThumbWhere'
+    );
+  }
+
+  function setUp() {
+    parent::setUp('producer', 'field', 'field_test', 'text');
+  }
+
+  /**
+   * Test that the field storage works.
+   */
+  function testSomething() {
+      entity_create('producer', array( 'name' => 'bob' ));
+    }
+}
+
