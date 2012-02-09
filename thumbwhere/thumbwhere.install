@@ -115,8 +115,11 @@ function thumbwhere_install() {
   // Install our menu
   //
 
+
   // Create a custom menu, if Menu module is enabled.
   // @see thumbwhere_modules_installed()
+
+  /*
   if (module_exists('menu')) {
     $menu = array(
         'menu_name' => 'thumbwhere',
@@ -125,7 +128,7 @@ function thumbwhere_install() {
     );
     menu_save($menu);
   }
-
+ */
 
 }
 /**

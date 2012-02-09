@@ -101,6 +101,7 @@ function thumbwhere_modules_installed($modules) {
 
   ddl('thumbwhere_modules_installed()');
 
+  /*
   if (in_array('menu', $modules)) {
     $menu = array(
       'menu_name' => 'thumbwhere',
@@ -109,6 +110,7 @@ function thumbwhere_modules_installed($modules) {
     );
     menu_save($menu);
   }
+  */
 }
 
 /**
