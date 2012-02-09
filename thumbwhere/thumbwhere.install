@@ -33,7 +33,7 @@
  * @see field_create_instance()
  * @ingroup twcontent
  */
-function _thumbwhere_install() {
+function thumbwhere_install() {
 
   //twd('_thumbwhere_install()');
 
@@ -139,7 +139,7 @@ function _thumbwhere_install() {
  *
  * @ingroup twcontent
  */
-function _thumbwhere_uninstall() {
+function thumbwhere_uninstall() {
 
   //twd('_thumbwhere_uninstall()');
 
@@ -311,7 +311,7 @@ function _twcontent_installed_instances() {
 function thumbwhere_enable() {
   //twd('thumbwhere_enable()');
 
-  _thumbwhere_install();
+
 }
 
 /**
@@ -324,7 +324,7 @@ function thumbwhere_enable() {
 function thumbwhere_disable() {
   //twd('thumbwhere_disable()');
 
-  _thumbwhere_uninstall();
+
 }
 
 
