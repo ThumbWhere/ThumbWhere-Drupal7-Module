@@ -604,21 +604,33 @@ function producer_field_storage_load($entity_type, $entities, $age, $fields, $op
 *
 * @param $entity
 *   The entity object
-* @param $type
+* @param $entity_type
 *   The type of entity being saved (i.e. node, user, comment).
 */
-function producer_entity_presave($entity, $type) {
+function producer_entity_presave($entity, $entity_type) {
 
-  // Flee if this is not the entity type we are looking for
-  //if ($type != 'producer') return;
+  // We only look after what we want...
+  if ($entity_type == 'producer')  {
 
+    twfd();
 
+    // If this is new
+    if ($entity->is_new)
+    {
+      // .. then we create a new producer entity...
 
+      twd('Creating Remote Object and linking to ThumbWhere entity..');
 
-  twfd();
+      // Link it up to the thumbwhere id
+      $entity->thumbwhere_id = $_SESSION['thumbwhere_producer']['id']++;
 
-  $entity->thumbwhere_id = 100;
-
+    }
+    else
+    {
+        // .. otherwise we calculate the changes and ship them off to thumbwhere
+        twd('Calculate changes and ship them off to ThumbWhere');
+    }
+  }
 }
 
 

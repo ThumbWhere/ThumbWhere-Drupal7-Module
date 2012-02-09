@@ -1,0 +1,26 @@
+name = "ThumbWhere Producer"
+description = "Exposes ThumbWhere Members and Entities in Drupal"
+package = "ThumbWhere"
+core = "7.x"
+
+dependencies[] = entity
+dependencies[] = entityreference
+dependencies[] = views
+dependencies[] = menu
+dependencies[] = thumbwhere
+;dependencies[] = producer_field_storage
+
+
+files[] = producer.admin.inc
+files[] = views/producer.views.inc
+files[] = views/producer_handler_link_field.inc
+files[] = views/producer_handler_delete_link_field.inc
+files[] = views/producer_handler_edit_link_field.inc
+files[] = views/producer_handler_producer_operations_field.inc
+
+; Information added by drupal.org packaging script on 2011-07-03
+project status url = "http://drupalmodules.thumbwhere.com/release-history"
+version = "7.x-0.0-0"
+project = "ThumbWhere Producer"
+datestamp = "1270000000"
+

@@ -1,0 +1,232 @@
+<?php
+
+// Include the ThumbWhere SDK
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'dependencies' . DIRECTORY_SEPARATOR . 'tw' . DIRECTORY_SEPARATOR . 'sdk.class.php');
+
+
+/**
+ * @file
+ *
+ * Main ThumbWhere Module file
+ *
+ * Core module functionality is here.
+ *
+ */
+
+
+/**
+* Debug the calling function and it's paramaters to the log
+*
+* @see SimpletestUnitTestExampleTestCase.
+*/
+function twfd($dumpcallstack = FALSE) {
+
+  if (!module_exists('devel_debug_log')) return;
+
+  $bt = debug_backtrace();
+  dd($bt[1]['function'], $label= date('Y-m-d\TH:i:s ') . 'FUNCTION');
+  dd($bt[1]['args'], $label= date('Y-m-d\TH:i:s ') . 'ARGS');
+
+  if ($dumpcallstack) {
+    dd($bt, $label= date('Y-m-d\TH:i:s ') . 'CALLSTACK');
+  }
+
+}
+
+
+/**
+* Print a message to the debug log
+*
+* @see SimpletestUnitTestExampleTestCase.
+*/
+function twd($massage) {
+
+  if (!module_exists('devel_debug_log')) return;
+
+  dd($massage, $label= date('Y-m-d\TH:i:s ') . 'DEBUG ');
+
+}
+
+
+/**
+ * A simple self-contained function used to demonstrate unit tests.
+ *
+ * @see SimpletestUnitTestExampleTestCase.
+ */
+function thumbwhere_feature_xyz($date_string) {
+  if (empty($date_string) || $date_string == '0000-00-00' || $date_string == '0000-00-00 00:00:00') {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+
+/**
+ * Implements hook_help().
+ */
+function thumbwhere_help($section) {
+
+  //ddl('thumbwhere_help(' . $section . ')');
+
+  switch ($section) {
+    case 'thumbwhere/reference':
+      return '<p>' . t('This is a list of defined user functions that generated this current request lifecycle. Click on a function name to view its documention.') . '</p>';
+    case 'thumbwhere/session':
+      return '<p>' . t('Here are the contents of your <code>$_SESSION</code> variable.') . '</p>';
+    case 'thumbwhere/variable':
+      $api = variable_get('thumbwhere_api_url', 'api.drupal.org');
+      return '<p>' . t('This is a list of the variables and their values currently stored in variables table and the <code>$conf</code> array of your settings.php file. These variables are usually accessed with <a href="@variable-get-doc">variable_get()</a> and <a href="@variable-set-doc">variable_set()</a>. Variables that are too long can slow down your pages.', array('@variable-get-doc' => "http://$api/api/HEAD/function/variable_get", '@variable-set-doc' => "http://$api/api/HEAD/function/variable_set")) . '</p>';
+    case 'thumbwhere/reinstall':
+      return t('Warning - will delete your module tables and variables.');
+
+      case 'admin/settings/modules#description':
+        return t('Thumbwhere settings description.');
+        break;
+
+      case 'admin/help#thumbwhere':
+        $output  = '<p>' . t('The ThumbWhere Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tempus mi ut risus fringilla a posuere quam feugiat. Mauris interdum, dui at eleifend rutrum, lacus risus aliquet arcu, ut eleifend magna augue a ligula. Nam accumsan suscipit volutpat. Suspendisse ut eros tempus purus suscipit placerat. Cras sed ipsum ligula. Pellentesque enim ligula, vehicula et fringilla eget, tincidunt vel magna. Nullam arcu sapien, interdum et pharetra at, ultrices nec nisi. Vivamus eleifend sollicitudin ligula, non auctor urna tincidunt sed.') . "</p>\n";
+        $output .= '<p>' . t('This module provides donec vitae risus ut nulla tristique cursus at ac arcu. Aliquam blandit feugiat posuere. Mauris vitae nisi quam. Aliquam fermentum orci sit amet risus sollicitudin id dapibus libero varius. Integer id rhoncus purus. Phasellus vel accumsan quam. Sed ornare malesuada ipsum in interdum. Praesent mauris nisl, laoreet iaculis blandit ut, faucibus ut libero. Maecenas molestie nibh at lectus luctus lacinia. Pellentesque tempor fermentum turpis et pharetra. Aenean lacinia nunc non lorem sollicitudin sit amet facilisis odio luctus. Aenean in orci vel augue sagittis commodo. In hac habitasse platea dictumst.') . "</p>\n";
+        return $output;
+
+  }
+}
+
+/**
+ * Implements hook_modules_installed().
+ *
+ * @see thumbwhere_install()
+ */
+function thumbwhere_modules_installed($modules) {
+
+  ddl('thumbwhere_modules_installed()');
+
+  if (in_array('menu', $modules)) {
+    $menu = array(
+      'menu_name' => 'thumbwhere',
+      'title' => t('thumbwhere'),
+      'description' => t('thumbwhere link'),
+    );
+    menu_save($menu);
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function thumbwhere_menu() {
+
+
+  //
+  // Config sections
+  //
+
+  $items['admin/config/thumbwhere/settings'] = array(
+    'title' => 'ThumbWhere Settings',
+    'description' => 'ThumbWhere configuration.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('thumbwhere_admin_settings'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'thumbwhere.admin.inc',
+  );
+
+
+  $items['admin/config/thumbwhere'] = array(
+    'title' => 'Thumbwhere Configuration',
+    'description' =>  'ThumbWhere configuration',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('thumbwhere_admin_settings'),
+    'file' => 'thumbwhere.admin.inc',
+    'access arguments' => array('administer site configuration'),
+  );
+
+
+  //
+  // Report
+  //
+
+
+
+  $items['admin/reports/thumbwhere/activity'] = array(
+        'title' => 'ThumbWhere Activity Report',
+        'description' => 'View ThumbWhere Actvity.',
+        'page arguments' => array('thumbwhere_activity_report'),
+        'page callback' => 'thumbwhere_report_page',
+        'access arguments' => array('access thumbwhere report information'),
+  );
+
+
+  $items['admin/reports/thumbwhere'] = array(
+        'title' => 'ThumbWhere Reports',
+        'description' => 'ThumbWhere general reports and dashboard.',
+        'page callback' => 'thumbwhere_report_page',
+        'page arguments' => array('thumbwhere_summary_report'),
+        'access arguments' => array('access thumbwhere report information'),
+  );
+
+  return $items;
+}
+
+
+/**
+ * Displays the debug messages table.
+ */
+function thumbwhere_report_page() {
+  // Add auto-refresh javascript on the first page only.
+  //if (!isset($_GET['page'])) {
+  //  drupal_add_js(drupal_get_path('module', 'thumbwhere') . '/thumbwhere_report.js.js');
+  //}
+
+  $table_page = array(
+    'messages_table' => devel_debug_log_get_messages_table(),
+    'pager' => array(
+      '#theme' => 'pager',
+  ),
+  );
+
+  return $table_page;
+}
+
+
+
+/**
+ * Implements hook_admin_paths().
+ */
+function thumbwhere_admin_paths() {
+  $paths = array(
+    'thumbwhere/*' => TRUE
+  );
+  return $paths;
+}
+
+
+/**
+ * Implements hook_permission().
+ */
+function thumbwhere_permission() {
+  return array(
+    'access thumbwhere information' => array(
+      'description' => t('View developer output like variable printouts, query log, etc.'),
+      'title' => t('Access developer information'),
+      'restrict access' => TRUE,
+  ),
+    'switch thumbwhere users' => array(
+      'title' => t('Switch users'),
+      'description' => t('Become any ThumbWhere user on the site with just a click.'),
+      'restrict access' => TRUE,
+  ),
+  );
+}
+
+
+
+/*
+function thumbwhere_entity_info_alter(&$entity_info) {
+
+  twfd();
+
+}
+*/
+
+
