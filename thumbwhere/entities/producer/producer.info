@@ -18,9 +18,9 @@ files[] = views/producer_handler_delete_link_field.inc
 files[] = views/producer_handler_edit_link_field.inc
 files[] = views/producer_handler_producer_operations_field.inc
 
-; Information added by drupal.org packaging script on 2011-07-03
+; Uncomment these lines to set current version to be immune from upgrade scripts
 project status url = "http://drupalmodules.thumbwhere.com/release-history"
-version = "7.x-0.0-0"
+version = "7.x-9.9-9"
 project = "ThumbWhere Producer"
-datestamp = "1270000000"
+datestamp = "9999999999"
 

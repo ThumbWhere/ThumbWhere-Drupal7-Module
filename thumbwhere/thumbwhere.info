@@ -3,6 +3,7 @@ description = "This is the Core ThumbWhere module which allows entires in ThumbW
 package = "ThumbWhere"
 core = "7.x"
 configure = admin/config/thumbwhere
+testing_api = 2.x
 
 ; actual dependencies
 dependencies[] = image
@@ -21,12 +22,11 @@ dependencies[] = devel_debug_log
 dependencies[] = coder
 
 
-;
-; This information is purely for module updates
+; Uncomment these lines to set current version to be immune from upgrade scripts
 project status url = "http://drupalmodules.thumbwhere.com/release-history"
-version = "7.x-0.0-0"
+version = "7.x-9.9-9"
 project = "ThumbWhere"
-datestamp = "1270000000"
+datestamp = "9999999999"
 ;
 
     
