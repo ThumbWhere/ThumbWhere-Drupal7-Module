@@ -1,5 +1,10 @@
-@REM ***NOTE*** - no / on end of DRUPALROOT
+@REM ***NOTE*** - no \ on end of DRUPALROOT
 IF ("%DRUPALROOT%")==("") SET DRUPALROOT=%USERPROFILE%\sites\acquia-drupal
+
+
+@REM ***NOTE*** - no \ on end of DRUPALROOT
+IF ("%THUMBWHERE_MODULEROOT%")==("") SET THUMBWHERE_MODULEROOT=E:\Inetpub\wwwroot\ThumbWhere-Drupal7-Module
+
 
 PUSHD ..
 IF NOT ERRORLEVEL 0 GOTO ReportError
@@ -10,7 +15,7 @@ IF NOT ERRORLEVEL 0 GOTO ReportError
 rmdir /Q /S %DRUPALROOT%\sites\default\modules\thumbwhere
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
-tools\junction.exe %DRUPALROOT%\sites\default\modules\thumbwhere thumbwhere
+tools\junction.exe %DRUPALROOT%\sites\default\modules\thumbwhere %THUMBWHERE_MODULEROOT%\thumbwhere
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 POPD
