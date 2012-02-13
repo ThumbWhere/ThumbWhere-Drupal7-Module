@@ -20,7 +20,7 @@ files[] = views/producer_handler_producer_operations_field.inc
 
 ; Uncomment these lines to set current version to be immune from upgrade scripts
 project status url = "http://drupalmodules.thumbwhere.com/release-history"
-version = "7.x-9.9-9"
+version = "7.x-0.0-dev"
 project = "ThumbWhere Producer"
-datestamp = "9999999999"
+datestamp = "2000000000"
 
