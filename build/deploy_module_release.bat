@@ -54,10 +54,6 @@ REM Make sure we are up to date
 "C:\Program Files\Git\bin\git.exe" pull
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
-REM Make sure we have the correct branch
-"C:\Program Files\Git\bin\git.exe" checkout %STREAM%
-IF NOT ERRORLEVEL 0 GOTO ReportError
-
 REM Add the new changes
 "C:\Program Files\Git\bin\git.exe" add .
 IF NOT ERRORLEVEL 0 GOTO ReportError
@@ -67,7 +63,7 @@ REM Add the new changes
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Push the new changes
-"C:\Program Files\Git\bin\git.exe" push origin %STREAM%
+"C:\Program Files\Git\bin\git.exe" push
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 POPD
