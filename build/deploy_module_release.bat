@@ -34,7 +34,7 @@ PUSHD E:\checkout\%STREAM%\
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Checkout if we need to
-IF NOT EXIST ThumbWhere-Drupal7-Module-Releases "C:\Program Files\Git\bin\git.exe" clone git@github.com:ThumbWhere/ThumbWhere-Drupal7-Module-Releases.git -b %STREAM%
+IF NOT EXIST ThumbWhere-Drupal7-Module-Releases "C:\Program Files\Git\bin\git.exe" clone git@github.com:ThumbWhere/ThumbWhere-Drupal7-Module-Releases.git
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 POPD
@@ -55,7 +55,7 @@ REM Make sure we are up to date
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Make sure we have the correct branch
-"C:\Program Files\Git\bin\git.exe" checkout -STREAM%
+"C:\Program Files\Git\bin\git.exe" checkout %STREAM%
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Add the new changes
