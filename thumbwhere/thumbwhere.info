@@ -14,7 +14,7 @@ dependencies[] = entity
 files[] = thumbwhere.module  
 files[] = thumbwhere.install
 files[] = thumbwhere.admin.inc
-files[] = thumbwhere.test
+files[] = thumbwhere.unit.test
 
 
 ; And while we are developing

@@ -25,7 +25,7 @@ class ThumbWhereTestCase extends DrupalWebTestCase {
     return array(
       'name' => 'ThumbWhere Core',
       'description' => 'Ensure that the thumbwhere content type provided functions properly.',
-      'group' => 'ThumbWhere',
+      'group' => 'ThumbWhere_Unit_Tests',
     );
   }
 
@@ -108,7 +108,7 @@ class ThumbWhereFeatureXYZUnitTestCase extends DrupalUnitTestCase {
     return array(
       'name' => 'ThumbWhere Feature XYZ Unit Test',
       'description' => 'Test that thumbwhere_feature_xyz works properly.',
-      'group' => 'ThumbWhere',
+      'group' => 'ThumbWhere_Unit_Tests',
     );
   }
 
