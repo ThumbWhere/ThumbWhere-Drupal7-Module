@@ -15,11 +15,13 @@ dependencies[] = thumbwhere
 
 
 files[] = producer.admin.inc
+files[] = producer.unit.test
 files[] = views/producer.views.inc
 files[] = views/producer_handler_link_field.inc
 files[] = views/producer_handler_delete_link_field.inc
 files[] = views/producer_handler_edit_link_field.inc
 files[] = views/producer_handler_producer_operations_field.inc
+
 
 ; Uncomment these lines to set current version to be immune from upgrade scripts
 project status url = "http://drupalmodules.thumbwhere.com/release-history"

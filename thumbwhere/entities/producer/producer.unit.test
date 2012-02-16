@@ -16,7 +16,7 @@ class ThumbWhereProducerTestCase extends DrupalWebTestCase {
     return array(
       'name'  => 'ThumbWhere Producer Entity Tests',
       'description'  => "Test ThumbWhere Producer Entity module.",
-      'group' => 'ThumbWhere'
+      'group' => 'ThumbWhere_Unit_Tests'
     );
   }
 
