@@ -39,7 +39,7 @@ function thumbwhere_install() {
 
 
   // New module weights in core: put devel as the very last in the chain.
-  db_query("UPDATE {system} SET weight = 10 WHERE name = 'thumbwhere'");
+  //db_query("UPDATE {system} SET weight = 10 WHERE name = 'thumbwhere'");
 
 
   // During installation, the t() function is unavailable, so we use get_t()
@@ -184,7 +184,7 @@ function thumbwhere_uninstall() {
 
   // Purge all field infromation
   // http://api.drupal.org/api/function/field_purge_batch/7
-  field_purge_batch(1000);
+  //field_purge_batch(1000);
 
   //
   // Uninstall the Menu

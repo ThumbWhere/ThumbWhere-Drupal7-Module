@@ -52,7 +52,7 @@ function producer_install() {
   ddl('producer_install()');
 
   // Entity provided by ThumbWhere gets a weight of 12. Storage = 11 and ThumbWere itself, 10
-  db_query("UPDATE {system} SET weight = 12 WHERE name = 'producer'");
+  //db_query("UPDATE {system} SET weight = 12 WHERE name = 'producer'");
 
 }
 

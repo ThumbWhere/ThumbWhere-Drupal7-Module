@@ -3,10 +3,15 @@ description = "Exposes ThumbWhere Members and Entities in Drupal"
 package = "ThumbWhere"
 core = "7.x"
 
+testing_api = 2.x
+
 dependencies[] = entity
 dependencies[] = views
 dependencies[] = menu
 dependencies[] = thumbwhere
+
+
+;hidden = TRUE
 
 
 files[] = producer.admin.inc
