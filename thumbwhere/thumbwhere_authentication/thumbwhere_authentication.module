@@ -45,6 +45,162 @@ function thumbwhere_authentication_form_alter(&$form, &$form_state, $form_id) {
       }
   }
 }
+
+
+/**
+* Implements hook_user_presave().
+*
+* A user account is about to be created or updated.
+*
+*/
+function thumbwhere_authentication_user_presave(&$edit, $account, $category)
+{
+  debug("thumbwhere_authentication_user_presave");
+  debug($edit);
+  debug($account);
+  debug($category);
+
+  // If fk_member has no value.. then we are a new user....
+  if (!isset($edit->fk_member))
+  {
+    debug('populate member id...');
+
+    //$edit['mail'] = '';
+
+    // If we want we can set the ThumbWhere ID here...
+    /*
+    $edit['fk_member'] = array(
+              'und' =>
+              array (
+                0 =>
+                array (
+                  'thumbwhere_id' => '123',
+                ),
+              ),
+            );
+
+    debug($edit);
+	*/
+
+  }
+}
+
+
+
+
+
+/**
+ * Implements hook_node_presave().
+ *
+ * We need to keep an eye out for any create/update/delete operations so that we can update ThumbWhere entites.
+ *
+ * We use hook_node_presave to keep track of create/update
+ * We use hook_node_delete to keep track of delete
+ */
+function thumbwhere_authentication_entity_presave($entity, $type) {
+
+  debug("thumbwhere_authentication_entity_presave");
+
+  twfd();
+
+  if ($type != 'user') return;
+
+  // If this is new
+  if ($entity->is_new)
+  {
+    debug('New User...');
+
+    debug($entity);
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    //  Here we create a corresponding entity in the ThumbWhere domain..
+    //
+
+    //
+    // Do some stuff...
+    //
+
+    //
+    //  ... then we get back an id we can use..
+    //
+
+    $entity->fk_member = array(
+              'und' =>
+                array (
+                0 =>
+                  array (
+                      'thumbwhere_id' => '123',
+              ),
+            ),
+      );
+
+    debug($entity);
+
+
+    //
+    // After that we are all good to return our populated node, and Drupal should be none the wiser...
+    //
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Ta dah!
+
+  }
+  else
+  {
+
+    debug('Old User...');
+
+    debug($entity);
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    //  Here we maybe modify a corresponding entity in the ThumbWhere domain..
+    //  We only want to modify it if something has changed. For this size of object that we have, it
+    //  is cheaper to work out if and what has changed instead of performing a superflous update to the database
+    //
+
+    //
+    // Work out what has changed.
+    //
+
+    $changes = array();
+
+    /*
+     if ($node->track_quantity['und'][0]['value'] != $node->original->track_quantity['und'][0]['value'])
+    {
+    debug('Changed!');
+
+    $changes['track_quantity'] = $node->track_quantity;
+    }
+    */
+
+    $changesCount = count($changes);
+
+    //
+    // If there are fields we care about, we perform an update to the corresponding ThumbWhere entity.
+    //
+
+    if ($changesCount > 0)
+    {
+      debug('We have ' . $changesCount . ' changes.');
+    }
+
+
+    //
+    // Also... we have an oportunity here to update the Node with any new values...
+    //
+
+    //$node->track_quantity['und'][0]['value'] += 1;
+
+    //
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+  }
+}
+
+
 /**
  * Custom form validation function
  */
@@ -111,3 +267,6 @@ function thumbwhere_login($username, $password)
 
     return TRUE;
 }
+
+
+

@@ -12,12 +12,119 @@
  * Implements hook_install().
  */
 function thumbwhere_authentication_install() {
+
+
+  // During installation, the t() function is unavailable, so we use get_t()
+  // to store the name of the translation function.
+  $t = get_t();
+
+
+  // Create all the fields we are adding to our content type.
+  // http://api.drupal.org/api/function/field_create_field/7
+  foreach (_thumbwhere_authentication_installed_fields() as $field) {
+    field_create_field($field);
+  }
+
+  // Create all the instances for our fields.
+  // http://api.drupal.org/api/function/field_create_instance/7
+  foreach (_thumbwhere_authentication_installed_instances() as $instance) {
+    $instance['entity_type'] = 'user';
+    $instance['bundle'] = 'user';
+    field_create_instance($instance);
+  }
+
+  // Purge all field infromation
+  // http://api.drupal.org/api/function/field_purge_batch/7
+  field_purge_batch(1000);
+
+
 }
 
 /**
  * Implements hook_uninstall().
  */
 function thumbwhere_authentication_uninstall() {
+
+
+  // Loop over each of the fields defined by this module and delete
+  // all instances of the field, their data, and the field itself.
+  // http://api.drupal.org/api/function/field_delete_field/7
+  foreach (array_keys(_thumbwhere_authentication_installed_fields()) as $field) {
+    field_delete_field($field);
+  }
+
+  // Loop over any remaining field instances attached to the thumbwhere_authentication
+  // content type (such as the body field) and delete them individually.
+  // http://api.drupal.org/api/function/field_delete_field/7
+  $instances = field_info_instances('user', 'user');
+  foreach ($instances as $instance_name => $instance) {
+      field_delete_instance($instance);
+  }
+
+
+  // Purge all field infromation
+  // http://api.drupal.org/api/function/field_purge_batch/7
+  field_purge_batch(1000);
 }
+
+
+
+/**
+ * Returns a structured array defining the fields created by this content type.
+ *
+ * @return
+ *  An associative array specifying the fields we wish to add to our
+ *  new node type.
+ *
+ * @ingroup thumbwhere_authentication
+ */
+function _thumbwhere_authentication_installed_fields() {
+  $t = get_t();
+
+  // TODO: thumbwhere_id needs to be compulsory
+  // TODO: thumbwhere_id needs to be integer
+  // TODO: thumbwhere_id needs to be hidden for all but admins and thumbwhere_admins
+  // TODO: thumbwhere_id needs to be editible for only thumbwhere_admins
+
+  return array(
+    'fk_member' => array(
+      'field_name'  => 'fk_member',
+      'cardinality' => 1,
+      'type'        => 'thumbwhere_id',
+    )
+  );
+}
+
+/**
+ * Returns a structured array defining the instances for this content type.
+ *
+ * @return
+ *  An associative array specifying the instances we wish to add to our new
+ *  node type.
+ *
+ * @ingroup thumbwhere_authentication
+ */
+function _thumbwhere_authentication_installed_instances() {
+  $t = get_t();
+  return array(
+    'fk_member' => array(
+      'field_name'  => 'fk_member',
+      'label' => $t('Member Id'),
+      'type'        => 'thumbwhere_id',
+      'widget'      => array(
+        'type'    => 'thumbwhere_id',
+      ),
+
+      'display' => array(
+      	'default' => array(
+               'label' => 'above',
+               'type' => 'thumbwhere_id_formatter',
+        ),
+      ),
+      'description' => 'The id of the ThumbWhere member associated with this user.',
+    ),
+  );
+}
+
 
 
