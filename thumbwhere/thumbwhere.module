@@ -240,9 +240,7 @@ function thumbwhere_permission() {
 
 /*
 function thumbwhere_entity_info_alter(&$entity_info) {
-
   twfd();
-
 }
 */
 
@@ -305,8 +303,6 @@ function thumbwhere_field_widget_form(&$form, &$form_state, $field, $instance, $
 
   $default_date_int = $instance['default_value'][0][$field_type][$field_type];
 
-  debug($items);
-
   if (isset($items[0]['thumbwhere_id']))
   {
       $default_date_int = $items[0]['thumbwhere_id'];
@@ -323,12 +319,31 @@ function thumbwhere_field_widget_form(&$form, &$form_state, $field, $instance, $
           '#required' => $element['#required'],
           '#weight' => isset($element['#weight']) ? $element['#weight'] : 0,
           '#delta' => $delta,
-          //'#element_validate' => array('strToDateValidate'),
+          '#element_validate' => array('validateThumbWhereId'),
       );
 
       break;
   }
   return $element;
+}
+
+
+/**
+* Utility function which validates that the thumbwhere id is correct.
+*/
+function validateThumbWhereId($element, &$form_state) {
+
+  debug('validateThumbWhereId');
+  debug($element);
+
+  if (isset($element['#value'])) {
+    $value = $element['#value'];
+
+    if (!is_numeric($value))
+    {
+      form_set_error($element['#parents'][0], t($element['#title'] . ' must be an integer.'));
+    }
+  }
 }
 
 /**
