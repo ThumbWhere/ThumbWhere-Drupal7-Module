@@ -21,16 +21,27 @@ require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'dependencies' . DIRECTOR
 */
 function twfd($dumpcallstack = FALSE) {
 
-  if (!module_exists('devel_debug_log')) return;
-
   $bt = debug_backtrace();
-  dd($bt[1]['function'], $label= date('Y-m-d\TH:i:s ') . 'FUNCTION');
-  dd($bt[1]['args'], $label= date('Y-m-d\TH:i:s ') . 'ARGS');
 
-  if ($dumpcallstack) {
-    dd($bt, $label= date('Y-m-d\TH:i:s ') . 'CALLSTACK');
+  if (!module_exists('devel_debug_log'))
+  {
+    debug(date('Y-m-d\TH:i:s ') . 'FUNCTION' . $bt[1]['function']);
+    debug(date('Y-m-d\TH:i:s ') . 'ARGS' . $bt[1]['args']);
+
+    if ($dumpcallstack) {
+      debug(date('Y-m-d\TH:i:s ') . 'CALLSTACK' . $bt);
+    }
   }
+  else
+  {
 
+    dd($bt[1]['function'], $label= date('Y-m-d\TH:i:s ') . 'FUNCTION');
+    dd($bt[1]['args'], $label= date('Y-m-d\TH:i:s ') . 'ARGS');
+
+    if ($dumpcallstack) {
+      dd($bt, $label= date('Y-m-d\TH:i:s ') . 'CALLSTACK');
+    }
+  }
 }
 
 
@@ -41,7 +52,10 @@ function twfd($dumpcallstack = FALSE) {
 */
 function twd($massage) {
 
-  if (!module_exists('devel_debug_log')) return;
+  if (!module_exists('devel_debug_log')) {
+     debug(date('Y-m-d\TH:i:s ') . 'DEBUG ' . $massag);
+     return;
+  }
 
   dd($massage, $label= date('Y-m-d\TH:i:s ') . 'DEBUG ');
 
@@ -99,6 +113,8 @@ function thumbwhere_help($section) {
  */
 function thumbwhere_modules_installed($modules) {
 
+
+
   ddl('thumbwhere_modules_installed()');
 
   /*
@@ -117,6 +133,7 @@ function thumbwhere_modules_installed($modules) {
  * Implements hook_menu().
  */
 function thumbwhere_menu() {
+
 
 
   //
@@ -221,8 +238,6 @@ function thumbwhere_permission() {
   );
 }
 
-
-
 /*
 function thumbwhere_entity_info_alter(&$entity_info) {
 
@@ -230,5 +245,123 @@ function thumbwhere_entity_info_alter(&$entity_info) {
 
 }
 */
+
+
+/**
+* Implements hook_field_info().
+*/
+function thumbwhere_field_info() {
+  return array(
+    'thumbwhere_id' => array(
+      'label' => t('News  Date'),
+      'description' => t('A Date Time Period'),
+      'default_widget' => 'thumbwhere_id_widget',
+      'default_formatter' => 'thumbwhere_id_formatter',
+  ),
+  );
+}
+
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function thumbwhere_field_formatter_info() {
+  return array(
+      'thumbwhere_id_formatter' => array(
+          'label' => t('Simple News Date formatter'),
+          'field types' => array('thumbwhere_id'),
+  ),
+  );
+}
+
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function thumbwhere_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  switch ($display['type']) {
+    case 'thumbwhere_id_formatter':
+      foreach ($items as $delta => $item) {
+        if ($item['thumbwhere_id']) {
+          //$formattedDate = _dateToString($item['thumbwhere']);
+
+          $formattedDate = $item['thumbwhere_id'];
+          $element[$delta]['#markup'] = '<span>' . $formattedDate .'</span>';
+        }
+      }
+      break;
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function thumbwhere_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  $field_name = $field['field_name'];
+  $field_type = $field['type'];
+
+  $default_date_int = $instance['default_value'][0][$field_type][$field_type];
+
+  debug($items);
+
+  if (isset($items[0]['thumbwhere_id']))
+  {
+      $default_date_int = $items[0]['thumbwhere_id'];
+  }
+
+  switch ($instance['widget']['type']) {
+    case 'thumbwhere_id':
+
+      $element['thumbwhere_id'] = array(
+          '#type' => 'textfield',
+          '#title' => $element['#title'],
+          '#description' => $element['#description'],
+          '#default_value' => t($default_date_int),
+          '#required' => $element['#required'],
+          '#weight' => isset($element['#weight']) ? $element['#weight'] : 0,
+          '#delta' => $delta,
+          //'#element_validate' => array('strToDateValidate'),
+      );
+
+      break;
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_widget_error().
+ */
+function thumbwhere_widget_error($element, $error, $form, &$form_state) {
+  switch ($error['error']) {
+    case 'thumbwhere_id_invalid':
+      form_error($element, $error['message']);
+      break;
+  }
+}
+
+
+/**
+ * Implements hook_field_is_empty().
+ */
+function thumbwhere_field_is_empty($item, $field) {
+  if (empty($item['thumbwhere_id'])) {
+    return true;
+  }
+}
+
+/**
+ * Implements hook_field_widget_info().
+ */
+function thumbwhere_field_widget_info() {
+  return array(
+    'thumbwhere_id' => array(
+      'label' => t('ThumbWhere Entity Id'),
+      'field types' => array('thumbwhere_id'),
+  ),
+  );
+}
 
 
