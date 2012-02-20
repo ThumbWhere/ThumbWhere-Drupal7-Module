@@ -1,0 +1,22 @@
+; $Id: thumbwhere_authentication.info,v 1.1.4.2 2011/02/08 06:01:00 johnbarclay Exp $
+
+name = ThumbWhere Authentication
+description = "Enabled Drupal to authenticate users with ThumbWhere."
+package = "ThumbWhere"
+core = 7.x
+
+dependencies[] = devel
+dependencies[] = devel_debug_log
+dependencies[] = coder
+dependencies[] = thumbwhere
+
+
+files[] = thumbwhere_authentication.module
+files[] = thumbwhere_authentication.install
+
+; Uncomment these lines to set current version to be immune from upgrade scripts
+project status url = "http://drupalmodules.thumbwhere.com/release-history"
+version = "7.x-0.0-dev-local0"
+project = "ThumbWhere"
+datestamp = "2000000000"
+;

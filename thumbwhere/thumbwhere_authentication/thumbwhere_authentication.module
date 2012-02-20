@@ -1,0 +1,113 @@
+<?php
+/**
+ * @file
+ *
+ * This module injects itself into Drupal's Authentication stack.
+ * And allows users to authenticate against with Drupal, against the external
+ * ThumbWhere web service API.
+ *
+ */
+
+
+/**
+ * Implements hook_info().
+ */
+function thumbwhere_authentication_info($field = 0) {
+
+  $info['name']= 'thumbwhere_authentication';
+  $info['protocol'] = 'ThumbWhere';
+
+  if ($field) {
+    return $info[$field];
+  }
+
+  return $info;
+}
+
+
+/**
+* Implements hook_form_alter().
+*
+* We replace the local login validation handler with our own that will
+* authenticate with ThumbWhere.
+*/
+function thumbwhere_authentication_form_alter(&$form, &$form_state, $form_id) {
+
+  // When the time is right...
+  if ($form_id == 'user_login' || $form_id == 'user_login_block') {
+    // Find the normal password validator.
+      $key = array_search('user_login_authenticate_validate', $form['#validate']);
+
+      // And if it exists,
+      if ($key !== FALSE) {
+        // Replace it with out own..
+        $form['#validate'][$key] = '_thumbwhere_authentication_user_form_validate';
+      }
+  }
+}
+/**
+ * Custom form validation function
+ */
+function _thumbwhere_authentication_user_form_validate($form, &$form_state) {
+
+  debug('_thumbwhere_authentication_user_form_validate');
+
+  if (!_thumbwhere_authentication_authenticate($form_state)) {
+    form_set_error('name', t('Login failed.'));
+  }
+}
+
+
+/**
+ * Custom user authentication function
+ */
+function _thumbwhere_authentication_authenticate(&$form_state) {
+
+  global $user;
+
+  debug('_thumbwhere_authentication_user_form_validate');
+
+  // get the first four characters of the users name
+  $username = trim($form_state['input']['name']);
+  $password = trim($form_state['values']['pass']);
+
+  debug('login ' . $username . ' ' . $password);
+
+  if ($username == "admin")
+  {
+      $form_state['uid'] = user_authenticate($username, $password);
+
+      return  ($form_state['uid'] != 0);
+  }
+  else
+  if (thumbwhere_login($username, $password))
+  {
+    // If we can let them in, we let them in.
+
+    // Register or create the user
+    user_external_login_register($username, t("thumbwhere_authentication"));
+
+    // If you don't do this...  there will be an error
+    $form_state['uid'] = $user->uid;
+
+    return TRUE;
+  }
+  else
+  {
+    return FALSE;
+  }
+}
+
+/**
+* Return true if the user is authenticates with ThumbWhere
+*/
+function thumbwhere_login($username, $password)
+{
+    debug('login ' . $username . ' ' . $password);
+
+    //
+    // TODO: Make web service call to ThumbWhere to identify user.
+    //
+
+    return TRUE;
+}
