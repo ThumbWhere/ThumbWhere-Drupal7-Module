@@ -8,13 +8,17 @@
  *
  */
 
+///////////////////////////////////////////////////////////////////
+//
+//  Official Drupal Hooks
+//
 
 /**
  * Implements hook_info().
  */
 function thumbwhere_authentication_info($field = 0) {
 
-  $info['name']= 'thumbwhere_authentication';
+  $info['name'] = 'thumbwhere_authentication';
   $info['protocol'] = 'ThumbWhere';
 
   if ($field) {
@@ -24,119 +28,81 @@ function thumbwhere_authentication_info($field = 0) {
   return $info;
 }
 
-
 /**
-* Implements hook_form_alter().
-*
-* We replace the local login validation handler with our own that will
-* authenticate with ThumbWhere.
-*/
+ * Implements hook_form_alter().
+ *
+ * We replace the local login validation handler with our own that will
+ * authenticate with ThumbWhere.
+ */
 function thumbwhere_authentication_form_alter(&$form, &$form_state, $form_id) {
 
   // When the time is right...
+
   if ($form_id == 'user_login' || $form_id == 'user_login_block') {
     // Find the normal password validator.
-      $key = array_search('user_login_authenticate_validate', $form['#validate']);
+    $key = array_search('user_login_authenticate_validate', $form['#validate']);
 
-      // And if it exists,
-      if ($key !== FALSE) {
-        // Replace it with out own..
-        $form['#validate'][$key] = '_thumbwhere_authentication_user_form_validate';
-      }
+    // And if it exists,
+    if ($key !== FALSE) {
+      // Replace it with out own..
+      $form['#validate'][$key] = '_thumbwhere_user_login_form_validate';
+    }
   }
-}
+  elseif ($form_id == 'user_profile_form') {
+    // Find the normal password validator.
 
+    // Find the normal password validator.
+    $key = array_search('user_validate_current_pass', $form['#validate']);
 
-/**
-* Implements hook_user_presave().
-*
-* A user account is about to be created or updated.
-*
-*/
-function thumbwhere_authentication_user_presave(&$edit, $account, $category)
-{
-  debug("thumbwhere_authentication_user_presave");
-  debug($edit);
-  debug($account);
-  debug($category);
-
-  // If fk_member has no value.. then we are a new user....
-  if (!isset($edit->fk_member))
-  {
-    debug('populate member id...');
-
-    //$edit['mail'] = '';
-
-    // If we want we can set the ThumbWhere ID here...
-    /*
-    $edit['fk_member'] = array(
-              'und' =>
-              array (
-                0 =>
-                array (
-                  'thumbwhere_id' => '123',
-                ),
-              ),
-            );
-
-    debug($edit);
-	*/
+    // And if it exists,
+    if ($key !== FALSE) {
+      // Replace it with out own..
+      $form['#validate'][$key] = '_thumbwhere_validate_current_pass';
+      //unset($form['#validate'][$key]);
+    }
 
   }
+
 }
 
-
-
-
-
 /**
- * Implements hook_node_presave().
+ * Implements hook__entity_presave().
  *
- * We need to keep an eye out for any create/update/delete operations so that we can update ThumbWhere entites.
+ * When the user entity is saved, we need to check if it is new and create a new ThumbWhere member.
  *
- * We use hook_node_presave to keep track of create/update
- * We use hook_node_delete to keep track of delete
  */
 function thumbwhere_authentication_entity_presave($entity, $type) {
 
-  debug("thumbwhere_authentication_entity_presave");
+  // This global represents the current thumbwhere member id
 
-  twfd();
+  global $_tw_pk_member;
 
   if ($type != 'user') return;
 
   // If this is new
-  if ($entity->is_new)
-  {
-    debug('New User...');
-
-    debug($entity);
+  if ($entity->is_new) {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     //
-    //  Here we create a corresponding entity in the ThumbWhere domain..
+    //  Here we create a corresponding entity in the ThumbWhere domain if we need to.
     //
 
-    //
-    // Do some stuff...
-    //
+    // $_tw_pk_member has not been set - so this is Register...
+    if (empty($_tw_pk_member)) {
 
-    //
-    //  ... then we get back an id we can use..
-    //
+      // $_tw_pk_member has not been set - so this is Register so this will create a ThumbWhere and Drupal user
+      _thumbwhere_register($entity->name, $entity->pass);
 
-    $entity->fk_member = array(
-              'und' =>
-                array (
-                0 =>
-                  array (
-                      'thumbwhere_id' => '123',
-              ),
-            ),
-      );
+      // If we managed to get back a tw identity, then all is good.
+      if (!empty($_tw_pk_member)) {
+        _set_thumbwhere_id($entity, $_tw_pk_member);
+      }
+      else {
+        // We were not expecting that...
+        throw new Exception('Failed to Create User : Error TA-001');
+      }
 
-    debug($entity);
-
+    }
 
     //
     // After that we are all good to return our populated node, and Drupal should be none the wiser...
@@ -146,12 +112,7 @@ function thumbwhere_authentication_entity_presave($entity, $type) {
     // Ta dah!
 
   }
-  else
-  {
-
-    debug('Old User...');
-
-    debug($entity);
+  else {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     //
@@ -168,12 +129,10 @@ function thumbwhere_authentication_entity_presave($entity, $type) {
 
     /*
      if ($node->track_quantity['und'][0]['value'] != $node->original->track_quantity['und'][0]['value'])
-    {
-    debug('Changed!');
-
-    $changes['track_quantity'] = $node->track_quantity;
-    }
-    */
+     {
+     $changes['track_quantity'] = $node->track_quantity;
+     }
+     */
 
     $changesCount = count($changes);
 
@@ -181,17 +140,13 @@ function thumbwhere_authentication_entity_presave($entity, $type) {
     // If there are fields we care about, we perform an update to the corresponding ThumbWhere entity.
     //
 
-    if ($changesCount > 0)
-    {
+    if ($changesCount > 0) {
       debug('We have ' . $changesCount . ' changes.');
     }
-
 
     //
     // Also... we have an oportunity here to update the Node with any new values...
     //
-
-    //$node->track_quantity['und'][0]['value'] += 1;
 
     //
     //
@@ -200,19 +155,45 @@ function thumbwhere_authentication_entity_presave($entity, $type) {
   }
 }
 
+//
+//  Official Drupal Hooks
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//  Custom Validators
+//
 
 /**
- * Custom form validation function
+ * Custom form validation function - Login as the user
  */
-function _thumbwhere_authentication_user_form_validate($form, &$form_state) {
-
-  debug('_thumbwhere_authentication_user_form_validate');
+function _thumbwhere_user_login_form_validate($form, &$form_state) {
 
   if (!_thumbwhere_authentication_authenticate($form_state)) {
     form_set_error('name', t('Login failed.'));
   }
 }
 
+/**
+ * Custom form validation function - validate the current password
+ */
+function _thumbwhere_validate_current_pass($form, &$form_state) {
+
+  if (!_thumbwhere_authentication_validate_and_changepassword($form_state)) {
+    form_set_error('pass', t('Password failed to validate.'));
+  }
+}
+
+//
+//  Custom Validators
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//  Business Logic
+//
 
 /**
  * Custom user authentication function
@@ -221,52 +202,245 @@ function _thumbwhere_authentication_authenticate(&$form_state) {
 
   global $user;
 
-  debug('_thumbwhere_authentication_user_form_validate');
-
   // get the first four characters of the users name
   $username = trim($form_state['input']['name']);
   $password = trim($form_state['values']['pass']);
 
-  debug('login ' . $username . ' ' . $password);
+  // Authenticate with Thumbwhere, return the drupal user id
+  $uid = _thumbwhere_login($username, $password);
 
-  if ($username == "admin")
-  {
-      $form_state['uid'] = user_authenticate($username, $password);
-
-      return  ($form_state['uid'] != 0);
+  if (empty($uid)) {
+    return FALSE;
   }
-  else
-  if (thumbwhere_login($username, $password))
-  {
-    // If we can let them in, we let them in.
-
-    // Register or create the user
-    user_external_login_register($username, t("thumbwhere_authentication"));
-
-    // If you don't do this...  there will be an error
-    $form_state['uid'] = $user->uid;
+  else {
+    // Populate the form with the uid
+    $form_state['uid'] = $uid;
 
     return TRUE;
-  }
-  else
-  {
-    return FALSE;
   }
 }
 
 /**
-* Return true if the user is authenticates with ThumbWhere
-*/
-function thumbwhere_login($username, $password)
-{
-    debug('login ' . $username . ' ' . $password);
+ * Custom user validate and change password function
+ */
+function _thumbwhere_authentication_validate_and_changepassword(&$form_state) {
 
-    //
-    // TODO: Make web service call to ThumbWhere to identify user.
-    //
+  global $user;
 
-    return TRUE;
+  // get the first four characters of the users name
+  $username = trim($form_state['values']['name']);
+  $new_password = trim($form_state['values']['pass']);
+  $current_password = trim($form_state['values']['current_pass']);
+
+  // If we are changing the password?
+  if (!empty($new_password)) {
+    // ... yes.. then validate and change the password
+    return _thumbwhere_validate_and_change_password($username, $current_password, $new_password);
+  }
+  else {
+    // .. no just validate the password
+    return _thumbwhere_validate($username, $current_password);
+  }
+
 }
 
+//
+//  Business Logic
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//  ThumbWhere/Drupal Integration
+//
 
+/**
+ * Return true if the user is authenticates with ThumbWhere
+ */
+function _thumbwhere_login($username, $password) {
+
+  // This global represents the current thumbwhere member id
+  global $_tw_pk_member;
+
+  // Do we have a uid for this user
+  $uid = db_query("SELECT uid FROM {users} WHERE name = :name", array(
+      ':name' => $username
+  ))->fetchField();
+
+  // If we dom't know about this user in drupal...
+  if (empty($uid)) {
+
+    //
+    // Does the user exist in ThumbWhere?
+    //
+
+    $_tw_pk_member = NULL;
+
+    // If we know about the user in ThumbWhere
+    if (!empty($_tw_pk_member)) {
+      global $user;
+
+      // Register or create the user
+      user_external_login_register($username, t("thumbwhere_authentication"));
+
+      // If you don't do this...  there will be an error
+      return $user->uid;
+    }
+
+   // drupal_set_message(t('No such user'), 'error.');
+
+    // User doesn't exist
+
+    return NULL;
+  }
+  else {
+
+    //
+    // TODO: Authenticate the user.. get their id
+    //
+
+    $_tw_pk_member = 666;
+
+    // If we run into trouble during the login...
+    //throw new Exception('Failed to Authenticate User : Error TA-002');
+
+    return $uid;
+  }
+
+}
+
+/**
+ * Return true if the user is authenticates with ThumbWhere
+ */
+function _thumbwhere_validate($username, $current_password) {
+
+  // Do we have a uid for this user
+  $uid = db_query("SELECT uid FROM {users} WHERE name = :name", array(
+      ':name' => $username
+  ))->fetchField();
+
+  // If we dom't know about this user in drupal...
+  if (empty($uid)) {
+
+    return FALSE;
+  }
+  else {
+
+    //
+    // TODO: Authenticate the user
+    //
+
+    // If we run into trouble during the verifiy...
+    //throw new Exception('Failed to Verify User : Error TA-002');
+
+    return TRUE;
+  }
+
+}
+
+/**
+ * Return true if the user is authenticates with ThumbWhere
+ */
+function _thumbwhere_validate_and_change_password($username, $current_password, $new_password) {
+
+  // Do we have a uid for this user
+  $uid = db_query("SELECT uid FROM {users} WHERE name = :name", array(
+      ':name' => $username
+  ))->fetchField();
+
+  // If we dom't know about this user in drupal...
+  if (empty($uid)) {
+
+    return FALSE;
+  }
+  else {
+
+    //
+    // TODO: Validate and change password.
+    //
+
+    // If we run into trouble during the verifiy...
+    //throw new Exception('Failed to Verify User : Error TA-005');
+
+    return TRUE;
+  }
+
+}
+
+/**
+ * Return true if the user is authenticates with ThumbWhere
+ */
+function _thumbwhere_register($username, $password) {
+
+  // Just make sure that the uset does not already exist...
+  if (!db_query("SELECT COUNT(*) FROM {users} WHERE name = :name", array(
+      ':name' => $username
+  ))->fetchField()) {
+
+    // This global represents the current thumbwhere member id
+    global $_tw_pk_member;
+
+    //
+    // TODO: Create the user - get id
+    //
+
+    $_tw_pk_member = 667;
+
+    // or if were not expecting an error..
+    //throw new Exception('Failed to Authenticate User : Error TA-001');
+
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+//
+//  ThumbWhere/Drupal Integration
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//  Utilities
+//
+
+/**
+ * Set the ThumbWhere ID for the User
+ */
+function _set_thumbwhere_id(&$object, $id) {
+
+  if (is_array($object)) {
+    if (isset($object['pk_member']['und'][0])) {
+      form_set_error('name', t('Attempt to set id on user, when they already have an id.'));
+    }
+    else {
+      $object['pk_member'] = array(
+          'und' => array(
+              0 => array(
+                  'thumbwhere_id' => $id,
+              ),
+          ),
+      );
+    }
+  }
+  else {
+    if (isset($object->pk_member['und'][0])) {
+      form_set_error('name', t('Attempt to set id on user, when they already have an id.'));
+    }
+    else {
+      $object->pk_member = array(
+          'und' => array(
+              0 => array(
+                  'thumbwhere_id' => $id,
+              ),
+          )
+      );
+    }
+  }
+}
+
+//
+//  ThumbWhere/Drupal Integration
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////

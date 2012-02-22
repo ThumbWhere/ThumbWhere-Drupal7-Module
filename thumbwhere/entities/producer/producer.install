@@ -6,9 +6,6 @@
  * the entity types.
  */
 
-
-
-
 /**
  * Implements hook_uninstall().
  *
@@ -56,7 +53,6 @@ function producer_install() {
 
 }
 
-
 /**
  * Implements hook_enable().
  *
@@ -86,7 +82,6 @@ function producer_disable() {
   menu_rebuild();
 }
 
-
 /**
  * Implements hook_schema().
  *
@@ -108,43 +103,45 @@ function producer_schema() {
   $schema = array();
 
   $schema['producer'] = array(
-    'description' => 'The base table for producer entities.',
-    'fields' => array(
-      'producer_id' => array(
-        'description' => 'Primary Key: Identifier for a producer.',
-        'type' => 'serial',
-        'unsigned' => TRUE,
-        'not null' => TRUE,
+      'description' => 'The base table for producer entities.',
+      'fields' => array(
+          'producer_id' => array(
+              'description' => 'Primary Key: Identifier for a producer.',
+              'type' => 'serial',
+              'unsigned' => TRUE,
+              'not null' => TRUE,
+          ),
+          'thumbwhere_id' => array(
+              'description' => 'ThumbWhere Id: ThumbWhere\'s id for this entity. Represents the id of this entity in the ThumbWhere \'Producers\' entity.',
+              'type' => 'int',
+              'not null' => TRUE,
+              'default' => -1,
+          ),
+          'name' => array(
+              'description' => 'The name of the producer - a human-readable identifier.',
+              'type' => 'varchar',
+              'length' => 255,
+              'not null' => TRUE,
+              'default' => '',
+          ),
+          'genre' => array(
+              'description' => 'The name of the primary genre of this producer.',
+              'type' => 'varchar',
+              'length' => 255,
+              'not null' => TRUE,
+              'default' => '',
+          ),
       ),
-      'thumbwhere_id' => array(
-        'description' => 'ThumbWhere Id: ThumbWhere\'s id for this entity. Represents the id of this entity in the ThumbWhere \'Producers\' entity.',
-        'type' => 'int',
-        'not null' => TRUE,
-        'default' => -1,
+      'primary key' => array(
+          'producer_id'
       ),
-      'name' => array(
-          'description' => 'The name of the producer - a human-readable identifier.',
-          'type' => 'varchar',
-          'length' => 255,
-          'not null' => TRUE,
-          'default' => '',
+      'indexes' => array(
+          'thumbwhere_id' => array(
+              'thumbwhere_id'
+          ),
       ),
-  		'genre' => array(
-            'description' => 'The name of the primary genre of this producer.',
-            'type' => 'varchar',
-            'length' => 255,
-            'not null' => TRUE,
-            'default' => '',
-      ),
-
-    ),
-    'primary key' => array('producer_id'),
-    'indexes' => array(
-      'thumbwhere_id' => array('thumbwhere_id'),
-    ),
   );
 
   return $schema;
 }
-
 

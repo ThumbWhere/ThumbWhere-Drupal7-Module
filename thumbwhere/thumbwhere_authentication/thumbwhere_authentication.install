@@ -1,23 +1,62 @@
 <?php
-// $Id: thumbwhere_authentication.install,v 1.1.4.2 2011/02/08 06:01:00 johnbarclay Exp $
 
 /**
  * @file
+ *
  * Install, update and uninstall functions for the ThumbWhere authentication module.
  */
 
 /**
+ * Implements hook_requirements().
+ *
+ * We want to check for settings that we want to check on or issue any warnings.
+ *
+ */
+function thumbwhere_authentication_requirements($phase) {
+
+  $requirements = array();
+
+  $t = get_t();
+
+  // Handle runtime check
+  if ($phase == 'runtime') {
+
+    if (variable_get('user_register') != '1') {
+
+      $requirements['thumbwhere_authentication_user_register'] = array(
+          'title' => $t('ThumbWhere Authentication'),
+          'description' => $t('The site should be configured to allow users to automatically register.<p/> Go to the Configuration for <b>People/Account Settings</b> and set "<b>Who can register accounts?</b>" to be "Visitors" '),
+          'severity' => REQUIREMENT_ERROR,
+          'value' => $t('Required configuration'),
+      );
+    }
+
+    if (variable_get('user_email_verification') != '0') {
+
+      $requirements['thumbwhere_authentication_user_email_verification'] = array(
+          'title' => $t('ThumbWhere Authentication'),
+          'description' => $t(
+              'The site should be configured to allow users to automatically register.<p/> Go to the Configuration for <b>People/Account Settings</b> and for "<b>Who can register accounts?</b>" disable "<i>Require e-mail verification when a visitor creates an account</i>." '),
+          'severity' => REQUIREMENT_ERROR,
+          'value' => $t('Required configuration'),
+      );
+    }
+
+  }
+
+  return $requirements;
+}
+
 
 /**
  * Implements hook_install().
  */
 function thumbwhere_authentication_install() {
 
-
   // During installation, the t() function is unavailable, so we use get_t()
   // to store the name of the translation function.
-  $t = get_t();
 
+  $t = get_t();
 
   // Create all the fields we are adding to our content type.
   // http://api.drupal.org/api/function/field_create_field/7
@@ -37,7 +76,6 @@ function thumbwhere_authentication_install() {
   // http://api.drupal.org/api/function/field_purge_batch/7
   field_purge_batch(1000);
 
-
 }
 
 /**
@@ -45,10 +83,10 @@ function thumbwhere_authentication_install() {
  */
 function thumbwhere_authentication_uninstall() {
 
-
   // Loop over each of the fields defined by this module and delete
   // all instances of the field, their data, and the field itself.
   // http://api.drupal.org/api/function/field_delete_field/7
+
   foreach (array_keys(_thumbwhere_authentication_installed_fields()) as $field) {
     field_delete_field($field);
   }
@@ -58,16 +96,13 @@ function thumbwhere_authentication_uninstall() {
   // http://api.drupal.org/api/function/field_delete_field/7
   $instances = field_info_instances('user', 'user');
   foreach ($instances as $instance_name => $instance) {
-      field_delete_instance($instance);
+    field_delete_instance($instance);
   }
-
 
   // Purge all field infromation
   // http://api.drupal.org/api/function/field_purge_batch/7
   field_purge_batch(1000);
 }
-
-
 
 /**
  * Returns a structured array defining the fields created by this content type.
@@ -79,19 +114,20 @@ function thumbwhere_authentication_uninstall() {
  * @ingroup thumbwhere_authentication
  */
 function _thumbwhere_authentication_installed_fields() {
+
   $t = get_t();
 
-  // TODO: thumbwhere_id needs to be compulsory
-  // TODO: thumbwhere_id needs to be integer
-  // TODO: thumbwhere_id needs to be hidden for all but admins and thumbwhere_admins
-  // TODO: thumbwhere_id needs to be editible for only thumbwhere_admins
-
   return array(
-    'fk_member' => array(
-      'field_name'  => 'fk_member',
-      'cardinality' => 1,
-      'type'        => 'thumbwhere_id',
-    )
+      'pk_member' => array(
+          'field_name' => 'pk_member',
+          'cardinality' => 1,
+          'type' => 'thumbwhere_id',
+          'default_value' => array(
+              array(
+                  'value' => -2
+              )
+          ),
+      )
   );
 }
 
@@ -105,26 +141,25 @@ function _thumbwhere_authentication_installed_fields() {
  * @ingroup thumbwhere_authentication
  */
 function _thumbwhere_authentication_installed_instances() {
+
   $t = get_t();
   return array(
-    'fk_member' => array(
-      'field_name'  => 'fk_member',
-      'label' => $t('Member Id'),
-      'type'        => 'thumbwhere_id',
-      'widget'      => array(
-        'type'    => 'thumbwhere_id',
+      'pk_member' => array(
+          'field_name' => 'pk_member',
+          'label' => $t('Member Id'),
+          //'type'        => 'thumbwhere_id',
+          'widget' => array(
+              'type' => 'thumbwhere_id',
+          ),
+          //'default_value' => array(array('value' => -2)),
+          'display' => array(
+              'default' => array(
+                  'label' => 'above',
+                  'type' => 'thumbwhere_id_formatter',
+              ),
+          ),
+          'description' => 'The id of the ThumbWhere member associated with this user.',
       ),
-
-      'display' => array(
-      	'default' => array(
-               'label' => 'above',
-               'type' => 'thumbwhere_id_formatter',
-        ),
-      ),
-      'description' => 'The id of the ThumbWhere member associated with this user.',
-    ),
   );
 }
-
-
 
