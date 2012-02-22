@@ -147,11 +147,9 @@ function _thumbwhere_authentication_installed_instances() {
       'pk_member' => array(
           'field_name' => 'pk_member',
           'label' => $t('Member Id'),
-          //'type'        => 'thumbwhere_id',
           'widget' => array(
               'type' => 'thumbwhere_id',
           ),
-          //'default_value' => array(array('value' => -2)),
           'display' => array(
               'default' => array(
                   'label' => 'above',
