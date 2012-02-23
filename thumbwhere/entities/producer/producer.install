@@ -48,6 +48,12 @@ function producer_install() {
 
   ddl('producer_install()');
 
+  // Clear the everything cache
+  drupal_flush_all_caches();
+
+  // Rebuild the menu
+  menu_rebuild();
+
   // Entity provided by ThumbWhere gets a weight of 12. Storage = 11 and ThumbWere itself, 10
   //db_query("UPDATE {system} SET weight = 12 WHERE name = 'producer'");
 
@@ -63,6 +69,9 @@ function producer_install() {
 function producer_enable() {
   ddl('producer_enable()');
 
+  // Clear the everything cache
+  drupal_flush_all_caches();
+
   // Rebuild the menu
   menu_rebuild();
 
@@ -76,11 +85,13 @@ function producer_enable() {
  * @ingroup producer
  */
 function producer_disable() {
-  ddl('producer_disable()');
+
+  // Clear the everything cache
+  drupal_flush_all_caches();
 
   // Rebuild the menu
   menu_rebuild();
-}
+  }
 
 /**
  * Implements hook_schema().
