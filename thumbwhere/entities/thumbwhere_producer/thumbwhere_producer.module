@@ -115,11 +115,12 @@ function thumbwhere_producer_permission() {
  */
 function thumbwhere_producer_access($op, $thumbwhere_producer = NULL, $account = NULL) {
 
-  if (user_access('administer thumbwhere_producers', $account)) {
-    return TRUE;
-  }
+  //if (user_access('administer thumbwhere_producers', $account)) {
+  //  return TRUE;
+ // }
 
-  return FALSE;
+  //return FALSE;
+  return TRUE;
 }
 
 
