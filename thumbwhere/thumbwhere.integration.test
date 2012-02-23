@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * @file
+ * An example of simpletest tests to accompany the tutorial at
+ * http://drupal.org/node/890654.
+ */
+
+/**
+ * The ThumbWhereTestCase is a functional test case, meaning that it
+ * actually exercises a particular sequence of actions through the web UI.
+ * The majority of core test cases are done this way, but the Simpletest suite
+ * also provides unit tests as demonstrated in the unit test case example later
+ * in this file.
+ *
+ * Functional test cases are far slower to execute than unit test cases because
+ * they require a complete Drupal install to be done for each test.
+ *
+ * @see DrupalWebTestCase, ThumbWhereFeatureXYZUnitTestCase.
+ */
+class ThumbWhereFeatureXYZIntegrationTest extends DrupalWebTestCase {
+  protected $privileged_user;
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Feature XYZ Integration Test',
+      'description' => 'Integration tests for feature XYZ.',
+      'group' => 'ThumbWhere_Integration_Tests',
+    );
+  }
+
+  public function setUp() {
+
+    // Make sure we are using the testing profile
+    $this->profile = 'testing';
+
+
+    parent::setUp('thumbwhere');  // Enable any modules required for the test
+    // Create and log in our user. The user has the arbitrary privilege
+    // 'extra special edit any thumbwhere' which the code uses
+    // to grant access.
+    $this->privileged_user = $this->drupalCreateUser(array('create thumbwhere content', 'extra special edit any thumbwhere'));
+    $this->drupalLogin($this->privileged_user);
+  }
+
+  // Create a thumbwhere node and then see if our user can edit it
+  public function testSimpleTestExampleEdit()
+  {
+
+  }
+
+  /**
+   * Detect if we're running on PIFR testbot; skip intentional failure in that
+   * case. It happens that on the testbot the site under test is in a directory
+   * named 'checkout' or 'site_under_test'.
+   *
+   * @return boolean
+   *   TRUE if running on testbot.
+   */
+  public function runningOnTestbot() {
+    return (file_exists("../checkout") || file_exists("../site_under_test"));
+  }
+}
+
+
+

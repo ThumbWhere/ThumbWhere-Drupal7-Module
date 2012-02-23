@@ -1,0 +1,133 @@
+<?php
+
+/**
+ * @file
+ * Stress tests for the Producer module
+ */
+
+class ProducerStressTestCase extends DrupalWebTestCase {
+
+  protected $privileged_user;
+
+  public function getInfo() {
+    return array(
+        'name' => 'Producer Entity Stress Test',
+        'description' => 'Creates Producers in lots of 10, 100, 1000.',
+        'group' => 'ThumbWhere_Stress_Tests',
+    );
+  }
+
+  public function setUp() {
+
+    // Make sure we are using the testing profile
+    $this->profile = 'testing';
+
+    // Enable the module.
+    parent::setUp('thumbwhere_producer');
+
+    $this->privileged_user = $this->drupalCreateUser(array());
+    $this->drupalLogin($this->privileged_user);
+  }
+
+  /**
+   * Create 100 tracks..
+   */
+  function testStress100() {
+
+    $n = 100;
+
+    $time_start = microtime(TRUE);
+
+
+
+    for ($i = 0; $i < $n; $i++) {
+
+      $entity = entity_create('thumbwhere_producer', array(
+          'name' => $this->randomName(),
+          'uid' => $this->privileged_user->uid
+      ));
+
+      $entity->save();
+
+    }
+
+    $time_end = microtime(TRUE);
+    $time = $time_end - $time_start;
+
+    //debug("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
+
+    $result = TRUE;
+    $message = t("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
+    $this->assertTrue($result, $message);
+
+  }
+
+
+  /**
+  * Create 1000 tracks..
+  */
+  function testStress1000() {
+
+    $n = 1000;
+
+    $time_start = microtime(TRUE);
+
+
+
+    for ($i = 0; $i < $n; $i++) {
+
+      $entity = entity_create('thumbwhere_producer', array(
+            'name' => $this->randomName(),
+            'uid' => $this->privileged_user->uid
+      ));
+
+      $entity->save();
+
+    }
+
+    $time_end = microtime(TRUE);
+    $time = $time_end - $time_start;
+
+    //debug("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
+
+    $result = TRUE;
+    $message = t("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
+    $this->assertTrue($result, $message);
+
+  }
+
+
+  /**
+  * Create 10000 tracks..
+  */
+  function testStress10000() {
+
+    $n = 10000;
+
+    $time_start = microtime(TRUE);
+
+
+
+    for ($i = 0; $i < $n; $i++) {
+
+      $entity = entity_create('thumbwhere_producer', array(
+            'name' => $this->randomName(),
+            'uid' => $this->privileged_user->uid
+      ));
+
+      $entity->save();
+
+    }
+
+    $time_end = microtime(TRUE);
+    $time = $time_end - $time_start;
+
+    //debug("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
+
+    $result = TRUE;
+    $message = t("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
+    $this->assertTrue($result, $message);
+
+  }
+}
+
