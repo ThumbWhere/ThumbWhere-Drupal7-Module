@@ -6,11 +6,11 @@
  * as fields.
  */
 
-class producer_handler_link_field extends views_handler_field {
+class thumbwhere_producer_handler_link_field extends views_handler_field {
   function construct() {
     parent::construct();
 
-    $this->additional_fields['producer_id'] = 'producer_id';
+    $this->additional_fields['thumbwhere_producer_id'] = 'thumbwhere_producer_id';
     //$this->additional_fields['type'] = 'type';
   }
 
@@ -39,8 +39,8 @@ class producer_handler_link_field extends views_handler_field {
 
   function render($values) {
     $text = !empty($this->options['text']) ? $this->options['text'] : t('view');
-    $producer_id = $values->{$this->aliases['producer_id']};
+    $thumbwhere_producer_id = $values->{$this->aliases['thumbwhere_producer_id']};
 
-    return l($text, 'producer/' . $producer_id);
+    return l($text, 'thumbwhere_producer/' . $thumbwhere_producer_id);
   }
 }

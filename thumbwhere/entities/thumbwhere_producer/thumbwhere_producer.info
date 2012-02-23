@@ -1,0 +1,31 @@
+name = "ThumbWhere Producer Entity"
+description = "Exposes ThumbWhere 'Producer' Enity in Drupal"
+package = "ThumbWhere"
+core = "7.x"
+
+testing_api = 2.x
+
+dependencies[] = entity
+dependencies[] = views
+dependencies[] = menu
+dependencies[] = thumbwhere
+
+
+;hidden = TRUE
+
+
+files[] = thumbwhere_producer.admin.inc
+files[] = thumbwhere_producer.unit.test
+files[] = views/thumbwhere_producer.views.inc
+files[] = views/thumbwhere_producer_handler_link_field.inc
+files[] = views/thumbwhere_producer_handler_delete_link_field.inc
+files[] = views/thumbwhere_producer_handler_edit_link_field.inc
+files[] = views/thumbwhere_producer_handler_thumbwhere_producer_operations_field.inc
+
+
+; Uncomment these lines to set current version to be immune from upgrade scripts
+project status url = "http://drupalmodules.thumbwhere.com/release-history"
+version = "7.x-0.0-dev-local0"
+project = "ThumbWhere"
+datestamp = "2000000000"
+
