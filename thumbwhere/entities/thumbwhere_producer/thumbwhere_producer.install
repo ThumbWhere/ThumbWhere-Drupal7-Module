@@ -104,7 +104,7 @@ function thumbwhere_producer_disable() {
  * thumbwhere_producer_id
  * The primary key used by
  *
- * thumbwhere_id
+ * pk_producer
  * Used to map to the actual object in ThumbWhere.
 
  */
@@ -122,9 +122,10 @@ function thumbwhere_producer_schema() {
               'unsigned' => TRUE,
               'not null' => TRUE,
           ),
-          'thumbwhere_id' => array(
+          'pk_producer' => array(
               'description' => 'ThumbWhere Id: ThumbWhere\'s id for this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereProducers\' entity.',
               'type' => 'int',
+  						'size' => 'big',
               'not null' => TRUE,
               'default' => -1,
           ),
@@ -147,8 +148,8 @@ function thumbwhere_producer_schema() {
           'thumbwhere_producer_id'
       ),
       'indexes' => array(
-          'thumbwhere_id' => array(
-              'thumbwhere_id'
+          'pk_producer' => array(
+              'pk_producer'
           ),
       ),
   );

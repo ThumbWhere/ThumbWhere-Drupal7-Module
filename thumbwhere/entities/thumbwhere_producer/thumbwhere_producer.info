@@ -9,6 +9,9 @@ dependencies[] = entity
 dependencies[] = views
 dependencies[] = menu
 dependencies[] = thumbwhere
+dependencies[] = devel
+dependencies[] = devel_debug_log
+
 
 
 ;hidden = TRUE
@@ -16,6 +19,10 @@ dependencies[] = thumbwhere
 
 files[] = thumbwhere_producer.admin.inc
 files[] = thumbwhere_producer.unit.test
+files[] = thumbwhere_producer.integration.test
+files[] = thumbwhere_producer.stress.test
+files[] = thumbwhere_producer.module
+files[] = thumbwhere_producer.tpl.php
 files[] = views/thumbwhere_producer.views.inc
 files[] = views/thumbwhere_producer_handler_link_field.inc
 files[] = views/thumbwhere_producer_handler_delete_link_field.inc

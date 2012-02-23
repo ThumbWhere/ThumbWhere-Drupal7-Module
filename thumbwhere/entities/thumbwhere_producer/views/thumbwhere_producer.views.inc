@@ -80,7 +80,7 @@ function thumbwhere_producer_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
     'thumbwhere_producer_id' => 'thumbwhere_producer_id',
-    'thumbwhere_id' => 'thumbwhere_id',
+    'pk_producer' => 'pk_producer',
     'name' => 'name',
     'link_thumbwhere_producer' => 'link_thumbwhere_producer',
     'operations' => 'operations',
@@ -94,7 +94,7 @@ function thumbwhere_producer_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'thumbwhere_id' => array(
+    'pk_producer' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -149,24 +149,24 @@ function thumbwhere_producer_views_default_views() {
   $handler->display->display_options['fields']['thumbwhere_producer_id']['hide_empty'] = 0;
   $handler->display->display_options['fields']['thumbwhere_producer_id']['empty_zero'] = 0;
   /* Field: ThumbWhereProducer: Thumbwhere_id */
-  $handler->display->display_options['fields']['thumbwhere_id']['id'] = 'thumbwhere_id';
-  $handler->display->display_options['fields']['thumbwhere_id']['table'] = 'thumbwhere_producer';
-  $handler->display->display_options['fields']['thumbwhere_id']['field'] = 'thumbwhere_id';
-  $handler->display->display_options['fields']['thumbwhere_id']['alter']['alter_text'] = 0;
-  $handler->display->display_options['fields']['thumbwhere_id']['alter']['make_link'] = 0;
-  $handler->display->display_options['fields']['thumbwhere_id']['alter']['absolute'] = 0;
-  $handler->display->display_options['fields']['thumbwhere_id']['alter']['external'] = 0;
-  $handler->display->display_options['fields']['thumbwhere_id']['alter']['replace_spaces'] = 0;
-  $handler->display->display_options['fields']['thumbwhere_id']['alter']['nl2br'] = 0;
-  $handler->display->display_options['fields']['thumbwhere_id']['alter']['word_boundary'] = 1;
-  $handler->display->display_options['fields']['thumbwhere_id']['alter']['ellipsis'] = 1;
-  $handler->display->display_options['fields']['thumbwhere_id']['alter']['strip_tags'] = 0;
-  $handler->display->display_options['fields']['thumbwhere_id']['alter']['trim'] = 0;
-  $handler->display->display_options['fields']['thumbwhere_id']['alter']['html'] = 0;
-  $handler->display->display_options['fields']['thumbwhere_id']['element_label_colon'] = 1;
-  $handler->display->display_options['fields']['thumbwhere_id']['element_default_classes'] = 1;
-  $handler->display->display_options['fields']['thumbwhere_id']['hide_empty'] = 0;
-  $handler->display->display_options['fields']['thumbwhere_id']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['pk_producer']['id'] = 'pk_producer';
+  $handler->display->display_options['fields']['pk_producer']['table'] = 'thumbwhere_producer';
+  $handler->display->display_options['fields']['pk_producer']['field'] = 'pk_producer';
+  $handler->display->display_options['fields']['pk_producer']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['pk_producer']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['pk_producer']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['pk_producer']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['pk_producer']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['pk_producer']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['pk_producer']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['pk_producer']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['pk_producer']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['pk_producer']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['pk_producer']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['pk_producer']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['pk_producer']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['pk_producer']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['pk_producer']['empty_zero'] = 0;
   /* Field: ThumbWhereProducer: Name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'thumbwhere_producer';

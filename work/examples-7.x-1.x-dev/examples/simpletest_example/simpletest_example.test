@@ -35,7 +35,7 @@ class SimpletestExampleTestCase extends DrupalWebTestCase {
     // Create and log in our user. The user has the arbitrary privilege
     // 'extra special edit any simpletest_example' which the code uses
     // to grant access.
-    $this->privileged_user = $this->drupalCreateUser(array('create simpletest_example content', 'extra special edit any simpletest_example'));
+    $this->privileged_user = $this->drupalCreateUser();
     $this->drupalLogin($this->privileged_user);
   }
 

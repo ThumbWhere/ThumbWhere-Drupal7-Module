@@ -11,17 +11,13 @@
 /**
  * Tests field storage.
  */
-class ThumbWhereThumbWhereProducerTestCase extends DrupalWebTestCase {
+class ThumbWhereProducerUnitTestCase extends DrupalUnitTestCase {
   public static function getInfo() {
     return array(
-      'name'  => 'ThumbWhere Producer Entity Tests',
+      'name'  => 'ThumbWhere Producer Entity Unit Tests',
       'description'  => "Test ThumbWhere Producer Entity module.",
       'group' => 'ThumbWhere_Unit_Tests'
     );
-  }
-
-  function setUp() {
-    parent::setUp('thumbwhere_producer', 'field', 'field_test', 'text');
   }
 
   /**
