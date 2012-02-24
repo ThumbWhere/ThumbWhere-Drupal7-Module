@@ -16,7 +16,7 @@ class ThumbWhereFeatureXYZUnitTest extends DrupalUnitTestCase {
     return array(
         'name' => 'Feature XYZ Unit Test',
         'description' => 'Unit tests for feature XYZ.',
-        'group' => 'ThumbWhere Unit',
+        'group' => 'ThumbWhereUnit',
     );
   }
 
