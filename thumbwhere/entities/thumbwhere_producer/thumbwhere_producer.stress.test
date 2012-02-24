@@ -12,7 +12,7 @@ class ProducerStressTestCase extends DrupalWebTestCase {
   public function getInfo() {
     return array(
         'name' => 'Producer Entity Stress Test',
-        'description' => 'Creates Producers in lots of 10, 100, 1000.',
+        'description' => 'Creates Producers in lots of 10, 100, 1000 and outputs the times take and the average rate of creation.',
         'group' => 'ThumbWhere_Stress_Tests',
     );
   }
@@ -54,10 +54,10 @@ class ProducerStressTestCase extends DrupalWebTestCase {
     $time_end = microtime(TRUE);
     $time = $time_end - $time_start;
 
-    //debug("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
+    //debug("Created $n Producers in $time seconds = " . $n / $time . ' tracks per second.');
 
     $result = TRUE;
-    $message = t("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
+    $message = t("Created $n Producers in $time seconds = " . $n / $time . ' tracks per second.');
     $this->assertTrue($result, $message);
 
   }
@@ -88,10 +88,10 @@ class ProducerStressTestCase extends DrupalWebTestCase {
     $time_end = microtime(TRUE);
     $time = $time_end - $time_start;
 
-    //debug("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
+    //debug("Created $n Producers in $time seconds = " . $n / $time . ' tracks per second.');
 
     $result = TRUE;
-    $message = t("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
+    $message = t("Created $n Producers in $time seconds = " . $n / $time . ' tracks per second.');
     $this->assertTrue($result, $message);
 
   }
@@ -122,10 +122,10 @@ class ProducerStressTestCase extends DrupalWebTestCase {
     $time_end = microtime(TRUE);
     $time = $time_end - $time_start;
 
-    //debug("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
+    //debug("Created $n Producers in $time seconds = " . $n / $time . ' tracks per second.');
 
     $result = TRUE;
-    $message = t("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
+    $message = t("Created $n Producers in $time seconds = " . $n / $time . ' tracks per second.');
     $this->assertTrue($result, $message);
 
   }

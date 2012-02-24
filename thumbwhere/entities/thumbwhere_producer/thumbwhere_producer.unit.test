@@ -25,6 +25,11 @@ class ThumbWhereProducerUnitTestCase extends DrupalUnitTestCase {
    */
   function testSomething() {
 
+    $result = TRUE;
+    $message = t("Test Passed.");
+    $this->assertTrue($result, $message);
+
     }
+
 }
 

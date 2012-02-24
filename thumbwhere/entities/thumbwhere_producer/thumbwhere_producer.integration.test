@@ -15,7 +15,7 @@ class ThumbWhereProducerIntegrationTestCase extends DrupalWebTestCase {
   public static function getInfo() {
     return array(
       'name'  => 'Producer Entity Integration Tests',
-      'description'  => "Test ThumbWhere Producer Entity module.",
+      'description'  => "Tests integration of the ThumbWhere Producer entity.",
       'group' => 'ThumbWhere_Integration_Tests'
     );
   }
@@ -25,14 +25,19 @@ class ThumbWhereProducerIntegrationTestCase extends DrupalWebTestCase {
     // Make sure we are using the testing profile
     $this->profile = 'testing';
 
-    parent::setUp('thumbwhere_producer', 'field', 'field_test', 'text');
+    parent::setUp('thumbwhere_producer');
   }
 
   /**
    * Test that the field storage works.
    */
   function testSomething() {
-      entity_create('thumbwhere_producer', array( 'name' => 'bob' ));
+      $entity = entity_create('thumbwhere_producer', array( 'name' => 'bob' ));
+
+      $result = TRUE;
+      $message = t("Test Passed.");
+      $this->assertTrue($result, $message);
+
     }
 }
 

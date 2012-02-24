@@ -52,8 +52,6 @@ class ThumbWhereFeatureXYZStressTestCase extends DrupalWebTestCase {
     $time_end = microtime(TRUE);
     $time = $time_end - $time_start;
 
-    //debug("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
-
     $result = TRUE;
     $message = t("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
     $this->assertTrue($result, $message);
@@ -86,8 +84,6 @@ class ThumbWhereFeatureXYZStressTestCase extends DrupalWebTestCase {
     $time_end = microtime(TRUE);
     $time = $time_end - $time_start;
 
-    //debug("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
-
     $result = TRUE;
     $message = t("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
     $this->assertTrue($result, $message);
@@ -119,8 +115,6 @@ class ThumbWhereFeatureXYZStressTestCase extends DrupalWebTestCase {
 
     $time_end = microtime(TRUE);
     $time = $time_end - $time_start;
-
-    //debug("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
 
     $result = TRUE;
     $message = t("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
