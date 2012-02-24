@@ -13,7 +13,7 @@ class ThumbWhereFeatureXYZStressTestCase extends DrupalWebTestCase {
     return array(
         'name' => 'Feature XYZ Stress Test',
         'description' => 'Stress tests for feature XYZ.',
-        'group' => 'ThumbWhere_Stress_Tests',
+        'group' => 'ThumbWhere Stress Tests',
     );
   }
 
