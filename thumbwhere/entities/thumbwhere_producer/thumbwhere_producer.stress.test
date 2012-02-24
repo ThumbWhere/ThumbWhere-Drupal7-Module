@@ -56,7 +56,14 @@ class ThumbWhereProducerStressTestCase extends DrupalWebTestCase {
 
     $result = TRUE;
     $message = t("Created $n Producers in $time seconds = " . $n / $time . ' tracks per second.');
+
+    if (function_exists('drush_log')) {
+      drush_log($message, 'metric');
+    }
+
     $this->assertTrue($result, $message);
+
+
 
   }
 
@@ -86,6 +93,9 @@ class ThumbWhereProducerStressTestCase extends DrupalWebTestCase {
 
     $result = TRUE;
     $message = t("Created $n Producers in $time seconds = " . $n / $time . ' tracks per second.');
+    if (function_exists('drush_log')) {
+      drush_log($message, 'metric');
+    }
     $this->assertTrue($result, $message);
 
   }
@@ -116,6 +126,9 @@ class ThumbWhereProducerStressTestCase extends DrupalWebTestCase {
 
     $result = TRUE;
     $message = t("Created $n Producers in $time seconds = " . $n / $time . ' tracks per second.');
+    if (function_exists('drush_log')) {
+      drush_log($message, 'metric');
+    }
     $this->assertTrue($result, $message);
 
   }

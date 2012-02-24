@@ -54,27 +54,27 @@ class ThumbWhereFeatureXYZStressTestCase extends DrupalWebTestCase {
 
     $result = TRUE;
     $message = t("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
+    if (function_exists('drush_log')) {
+      drush_log($message, 'metric');
+    }
     $this->assertTrue($result, $message);
 
   }
 
-
   /**
-  * Create 1000 tracks..
-  */
+   * Create 1000 tracks..
+   */
   function testStress1000() {
 
     $n = 1000;
 
     $time_start = microtime(TRUE);
 
-
-
     for ($i = 0; $i < $n; $i++) {
 
       $entity = entity_create('thumbwhere_producer', array(
-            'name' => $this->randomName(),
-            'uid' => $this->privileged_user->uid
+          'name' => $this->randomName(),
+          'uid' => $this->privileged_user->uid
       ));
 
       $entity->save();
@@ -86,27 +86,27 @@ class ThumbWhereFeatureXYZStressTestCase extends DrupalWebTestCase {
 
     $result = TRUE;
     $message = t("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
+    if (function_exists('drush_log')) {
+      drush_log($message, 'metric');
+    }
     $this->assertTrue($result, $message);
 
   }
 
-
   /**
-  * Create 10000 tracks..
-  */
+   * Create 10000 tracks..
+   */
   function testStress10000() {
 
     $n = 10000;
 
     $time_start = microtime(TRUE);
 
-
-
     for ($i = 0; $i < $n; $i++) {
 
       $entity = entity_create('thumbwhere_producer', array(
-            'name' => $this->randomName(),
-            'uid' => $this->privileged_user->uid
+          'name' => $this->randomName(),
+          'uid' => $this->privileged_user->uid
       ));
 
       $entity->save();
@@ -118,6 +118,9 @@ class ThumbWhereFeatureXYZStressTestCase extends DrupalWebTestCase {
 
     $result = TRUE;
     $message = t("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
+    if (function_exists('drush_log')) {
+      drush_log($message, 'metric');
+    }
     $this->assertTrue($result, $message);
 
   }
