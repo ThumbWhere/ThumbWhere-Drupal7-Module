@@ -15,7 +15,6 @@
  */
 function thumbwhere_producer_uninstall() {
 
-  ddl('_thumbwhere_producer_uninstall()');
 
   //
   // Uninstall all the field info
@@ -24,7 +23,6 @@ function thumbwhere_producer_uninstall() {
   // Uninstall the Menu TODO: Do we even install a menu???
   if (module_exists('menu')) {
     if ($thumbwhere_producer_menu = menu_load('thumbwhere_producer')) {
-      ddl('deleting thumbwhere_producer menu');
       menu_delete($thumbwhere_producer_menu);
     }
   }
@@ -46,8 +44,6 @@ function thumbwhere_producer_uninstall() {
  */
 function thumbwhere_producer_install() {
 
-  ddl('thumbwhere_producer_install()');
-
   // Clear the everything cache
   drupal_flush_all_caches();
 
@@ -67,7 +63,6 @@ function thumbwhere_producer_install() {
  * @ingroup thumbwhere_producer
  */
 function thumbwhere_producer_enable() {
-  ddl('thumbwhere_producer_enable()');
 
   // Clear the everything cache
   drupal_flush_all_caches();

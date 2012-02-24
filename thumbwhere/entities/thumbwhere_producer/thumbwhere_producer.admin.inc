@@ -9,8 +9,6 @@
  * be end-user facing.
  */
 
-//ddl('thumbwhere_producer.admin.inc');
-
 /**
  * UI controller.
  */

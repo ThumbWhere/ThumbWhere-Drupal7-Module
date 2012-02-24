@@ -84,8 +84,6 @@ function thumbwhere_producer_entity_info() {
  */
 function thumbwhere_producer_permission() {
 
-  //dd('thumbwhere_producer_permission');
-
   // We set up permisssions to manage entity types, manage all entities and the
   // permissions for each individual entity
   $permissions = array(
@@ -141,7 +139,7 @@ function thumbwhere_producer_access($op, $thumbwhere_producer = NULL, $account =
  */
 function thumbwhere_producer_load($thumbwhere_producer_id, $reset = FALSE) {
 
-  //twfd();
+  //
 
   $thumbwhere_producers = entity_load('thumbwhere_producer', array($thumbwhere_producer_id), array(), $reset);
 
@@ -170,7 +168,7 @@ function thumbwhere_producer_load($thumbwhere_producer_id, $reset = FALSE) {
 /*
 function thumbwhere_producer_load_multiple($thumbwhere_producer_ids = array(), $conditions = array(), $reset = FALSE) {
 
-  twfd();
+
 
   $loaded = entity_load('thumbwhere_producer', $thumbwhere_producer_ids, $conditions, $reset);
 
@@ -182,8 +180,6 @@ function thumbwhere_producer_load_multiple($thumbwhere_producer_ids = array(), $
  * Deletes a thumbwhere_producer.
  */
 function thumbwhere_producer_delete(ThumbWhereProducer $thumbwhere_producer) {
-
-  twfd();
 
   $thumbwhere_producer->delete();
 }
@@ -198,7 +194,7 @@ function thumbwhere_producer_delete(ThumbWhereProducer $thumbwhere_producer) {
 /*
 function thumbwhere_producer_delete_multiple(array $thumbwhere_producer_ids) {
 
-  twfd();
+
 
   entity_get_controller('thumbwhere_producer')->delete($thumbwhere_producer_ids);
 }
@@ -208,8 +204,6 @@ function thumbwhere_producer_delete_multiple(array $thumbwhere_producer_ids) {
  * Create a thumbwhere_producer object.
  */
 function thumbwhere_producer_create($values = array()) {
-
-  twfd();
 
   return entity_get_controller('thumbwhere_producer')->create($values);
 }
@@ -224,7 +218,7 @@ function thumbwhere_producer_create($values = array()) {
 /*
 function thumbwhere_producer_save(ThumbWhereProducer $thumbwhere_producer) {
 
-  twfd();
+
 
   return $thumbwhere_producer->save();
 }*/
@@ -240,7 +234,7 @@ function thumbwhere_producer_save(ThumbWhereProducer $thumbwhere_producer) {
 /*
 function thumbwhere_producer_insert(array $values = array()) {
 
-  twfd();
+
 
   //return $thumbwhere_producer->create($values);
   return entity_get_controller('thumbwhere_producer')->insert($values);
@@ -257,7 +251,7 @@ function thumbwhere_producer_insert(array $values = array()) {
  */
 function thumbwhere_producer_uri(ThumbWhereProducer $thumbwhere_producer) {
 
-  twfd();
+
 
   return array(
     'path' => 'thumbwhere_producer/' . $thumbwhere_producer->thumbwhere_producer_id,
@@ -270,7 +264,7 @@ function thumbwhere_producer_uri(ThumbWhereProducer $thumbwhere_producer) {
  */
 function thumbwhere_producer_page_title(ThumbWhereProducer $thumbwhere_producer) {
 
-  twfd();
+
 
   return $thumbwhere_producer->name;
 }
@@ -282,7 +276,7 @@ function thumbwhere_producer_page_title(ThumbWhereProducer $thumbwhere_producer)
  */
 function thumbwhere_producer_page_view($thumbwhere_producer, $view_mode = 'full') {
 
-  twfd();
+
 
   $controller = entity_get_controller('thumbwhere_producer');
   $content = $controller->view(array($thumbwhere_producer->thumbwhere_producer_id => $thumbwhere_producer));
@@ -296,7 +290,7 @@ function thumbwhere_producer_page_view($thumbwhere_producer, $view_mode = 'full'
  */
 function thumbwhere_producer_views_api() {
 
-  twfd();
+
 
   return array(
     'api' => 3,
@@ -310,7 +304,7 @@ function thumbwhere_producer_views_api() {
  */
 function thumbwhere_producer_theme() {
 
-  twfd();
+
 
   return array(
     'thumbwhere_producer_add_list' => array(
@@ -388,7 +382,7 @@ class ThumbWhereProducerController extends EntityAPIController {
   /*
   public function create(array $values = array()) {
 
-    twfd();
+
 
     //$values += array(
     //  'thumbwhere_id' => -1,
@@ -413,7 +407,7 @@ class ThumbWhereProducerController extends EntityAPIController {
   /*
   public function view($entities, $view_mode = 'full', $langcode = NULL, $page = NULL) {
 
-    twfd();
+
 
     $view = parent::view($entities, $view_mode, $langcode, $page);
 
@@ -440,13 +434,11 @@ class ThumbWhereProducerController extends EntityAPIController {
   /*
   public function load($ids = array(), $conditions = array()) {
 
-    twfd();
+
 
     $result = parent::load($ids, $conditions);
 
     //$result[1]->token = "my token";
-
-    //dd($result);
 
     return $result;
   }
@@ -467,7 +459,7 @@ class ThumbWhereProducerController extends EntityAPIController {
   /*
   public function invoke($hook, $entity) {
 
-    twfd();
+
 
     parent::invoke($hook, $entity);
 
@@ -490,7 +482,7 @@ class ThumbWhereProducerController extends EntityAPIController {
   /*
   public function delete($ids, DatabaseTransaction $transaction = NULL) {
 
-    twfd();
+
 
     parent::delete($ids, $transaction);
 
@@ -513,7 +505,7 @@ class ThumbWhereProducerController extends EntityAPIController {
   /*
   public function save($thumbwhere_producer, DatabaseTransaction $transaction = NULL) {
 
-    twfd();
+
 
     return parent::save($thumbwhere_producer, $transaction);
   }
@@ -532,7 +524,7 @@ class ThumbWhereProducerController extends EntityAPIController {
   /*
   public function resetCache(array $ids = NULL) {
 
-    twfd();
+
 
     parent::resetCache($ids);
   }
@@ -556,7 +548,7 @@ class ThumbWhereProducerController extends EntityAPIController {
   /*
   public function query($ids, $conditions, $revision_id = FALSE) {
 
-    twfd();
+
 
     $result= parent::query($ids, $conditions, $revision_id);
 
@@ -592,7 +584,7 @@ class ThumbWhereProducerController extends EntityAPIController {
 /*
 function thumbwhere_producer_field_storage_load($entity_type, $entities, $age, $fields, $options) {
 
-    twfd();
+
 }
 */
 
@@ -613,7 +605,7 @@ function thumbwhere_producer_entity_presave($entity, $entity_type) {
   // We only look after what we want...
   if ($entity_type == 'thumbwhere_producer')  {
 
-    twfd();
+
 
     // If this is new
     if ($entity->is_new)
@@ -650,7 +642,7 @@ function thumbwhere_producer_entity_insert($entity, $type) {
   // Flee if this is not the entity type we are looking for
   if ($type != 'thumbwhere_producer') return;
 
-  twfd();
+
 }
 
 
@@ -669,7 +661,7 @@ function thumbwhere_producer_entity_delete($entity, $type) {
   // Flee if this is not the entity type we are looking for
   if ($type != 'thumbwhere_producer') return;
 
-  twfd();
+
 }
 
 

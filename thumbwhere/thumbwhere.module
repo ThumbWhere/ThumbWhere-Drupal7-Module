@@ -18,7 +18,7 @@ require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'dependencies' . DIRECTOR
  * @see SimpletestUnitTestExampleTestCase.
  */
 function twfd($dumpcallstack = FALSE) {
-
+/*
   $bt = debug_backtrace();
 
   if (!module_exists('devel_debug_log')) {
@@ -38,6 +38,7 @@ function twfd($dumpcallstack = FALSE) {
       dd($bt, $label = date('Y-m-d\TH:i:s ') . 'CALLSTACK');
     }
   }
+ */
 }
 
 /**
@@ -72,8 +73,6 @@ function thumbwhere_feature_xyz($date_string) {
  * Implements hook_help().
  */
 function thumbwhere_help($section) {
-
-  //ddl('thumbwhere_help(' . $section . ')');
 
   switch ($section) {
   case 'thumbwhere/reference':
@@ -116,8 +115,6 @@ function thumbwhere_help($section) {
  * @see thumbwhere_install()
  */
 function thumbwhere_modules_installed($modules) {
-
-  ddl('thumbwhere_modules_installed()');
 
   /*
   if (in_array('menu', $modules)) {
