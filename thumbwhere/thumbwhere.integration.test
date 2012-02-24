@@ -25,7 +25,7 @@ class ThumbWhereFeatureXYZIntegrationTest extends DrupalWebTestCase {
     return array(
       'name' => 'Feature XYZ Integration Test',
       'description' => 'Integration tests for feature XYZ.',
-      'group' => 'ThumbWhere_Integration_Tests',
+      'group' => 'ThumbWhere Integration',
     );
   }
 

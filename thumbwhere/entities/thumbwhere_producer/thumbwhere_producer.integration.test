@@ -16,7 +16,7 @@ class ThumbWhereProducerIntegrationTestCase extends DrupalWebTestCase {
     return array(
       'name'  => 'Producer Entity Integration Tests',
       'description'  => "Tests integration of the ThumbWhere Producer entity.",
-      'group' => 'ThumbWhere_Integration_Tests'
+      'group' => 'ThumbWhere Integration'
     );
   }
 
