@@ -35,8 +35,6 @@
  */
 function thumbwhere_install() {
 
-  //twd('_thumbwhere_install()');
-
 
   // New module weights in core: put devel as the very last in the chain.
   //db_query("UPDATE {system} SET weight = 10 WHERE name = 'thumbwhere'");
@@ -143,8 +141,6 @@ function thumbwhere_install() {
  * @ingroup twcontent
  */
 function thumbwhere_uninstall() {
-
-  //twd('_thumbwhere_uninstall()');
 
 
   /*
@@ -312,8 +308,6 @@ function _twcontent_installed_instances() {
 * @ingroup thumbwhere
 */
 function thumbwhere_enable() {
-  //twd('thumbwhere_enable()');
-
 
 }
 
@@ -325,9 +319,6 @@ function thumbwhere_enable() {
 * @ingroup thumbwhere
 */
 function thumbwhere_disable() {
-  //twd('thumbwhere_disable()');
-
-
 }
 
 

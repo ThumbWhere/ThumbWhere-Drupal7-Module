@@ -612,8 +612,6 @@ function thumbwhere_producer_entity_presave($entity, $entity_type) {
     {
       // .. then we create a new thumbwhere_producer entity...
 
-      twd('Creating Remote Object and linking to ThumbWhere entity..');
-
       // Link it up to the thumbwhere id
       $entity->pk_producer = $_SESSION['thumbwhere_thumbwhere_producer']['id']++;
 
@@ -621,7 +619,6 @@ function thumbwhere_producer_entity_presave($entity, $entity_type) {
     else
     {
         // .. otherwise we calculate the changes and ship them off to thumbwhere
-        twd('Calculate changes and ship them off to ThumbWhere');
     }
   }
 }
