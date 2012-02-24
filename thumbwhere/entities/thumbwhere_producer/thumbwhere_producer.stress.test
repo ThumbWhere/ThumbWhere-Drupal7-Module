@@ -5,7 +5,7 @@
  * Stress tests for the Producer module
  */
 
-class ProducerStressTestCase extends DrupalWebTestCase {
+class ThumbWhereProducerStressTestCase extends DrupalWebTestCase {
 
   protected $privileged_user;
 

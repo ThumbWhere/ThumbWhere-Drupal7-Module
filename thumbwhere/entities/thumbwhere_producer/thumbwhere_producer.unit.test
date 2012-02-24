@@ -11,7 +11,7 @@
 /**
  * Tests field storage.
  */
-class ThumbWhereProducerUnitTestCase extends DrupalUnitTestCase {
+class ProducerUnitTestCase extends DrupalUnitTestCase {
   public static function getInfo() {
     return array(
       'name'  => 'Producer Entity Unit Tests',
