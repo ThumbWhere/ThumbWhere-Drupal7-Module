@@ -31,13 +31,8 @@ class ThumbWhereFeatureXYZIntegrationTest extends DrupalWebTestCase {
 
   public function setUp() {
 
-    // We need temporary folder
-    static $temporary_directory = NULL;
-    $temporary_directory = 'C:\\TEMP\\';
-
     // Make sure we are using the testing profile
     $this->profile = 'testing';
-
 
 
     parent::setUp('thumbwhere');  // Enable any modules required for the test

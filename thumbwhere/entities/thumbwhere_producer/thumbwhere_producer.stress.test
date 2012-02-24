@@ -13,7 +13,7 @@ class ProducerStressTestCase extends DrupalWebTestCase {
     return array(
         'name' => 'Producer Entity Stress Test',
         'description' => 'Creates Producers in lots of 10, 100, 1000 and outputs the times take and the average rate of creation.',
-        'group' => 'ThumbWhere Stress',
+        'group' => 'ThumbWhereStress',
     );
   }
 
