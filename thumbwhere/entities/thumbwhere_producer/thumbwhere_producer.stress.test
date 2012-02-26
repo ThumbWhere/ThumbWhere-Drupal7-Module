@@ -30,7 +30,7 @@ class ThumbWhereProducerStressTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * Create 100 tracks..
+   * Create 100 producers..
    */
   function testStress100() {
 
@@ -55,7 +55,7 @@ class ThumbWhereProducerStressTestCase extends DrupalWebTestCase {
     $time = $time_end - $time_start;
 
     $result = TRUE;
-    $message = t("Created $n Producers in $time seconds = " . $n / $time . ' tracks per second.');
+    $message = t("Created $n Producers in $time seconds = " . $n / $time . ' producers per second.');
 
     if (function_exists('drush_log')) {
       drush_log($message, 'metric');
@@ -69,7 +69,7 @@ class ThumbWhereProducerStressTestCase extends DrupalWebTestCase {
 
 
   /**
-  * Create 1000 tracks..
+  * Create 1000 producers..
   */
   function testStress1000() {
 
@@ -92,7 +92,7 @@ class ThumbWhereProducerStressTestCase extends DrupalWebTestCase {
     $time = $time_end - $time_start;
 
     $result = TRUE;
-    $message = t("Created $n Producers in $time seconds = " . $n / $time . ' tracks per second.');
+    $message = t("Created $n Producers in $time seconds = " . $n / $time . ' producers per second.');
     if (function_exists('drush_log')) {
       drush_log($message, 'metric');
     }
@@ -102,7 +102,7 @@ class ThumbWhereProducerStressTestCase extends DrupalWebTestCase {
 
 
   /**
-  * Create 10000 tracks..
+  * Create 10000 producers..
   */
   function testStress10000() {
 
@@ -125,7 +125,7 @@ class ThumbWhereProducerStressTestCase extends DrupalWebTestCase {
     $time = $time_end - $time_start;
 
     $result = TRUE;
-    $message = t("Created $n Producers in $time seconds = " . $n / $time . ' tracks per second.');
+    $message = t("Created $n Producers in $time seconds = " . $n / $time . ' producers per second.');
     if (function_exists('drush_log')) {
       drush_log($message, 'metric');
     }
