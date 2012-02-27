@@ -1,0 +1,1 @@
+Implements the ThumbWhere 'ThumbWhereContent' Entity.

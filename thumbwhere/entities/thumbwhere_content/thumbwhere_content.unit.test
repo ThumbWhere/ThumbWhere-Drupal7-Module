@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * @file
+ * Tests for thumbwhere_content_field_storage.module.
+ *
+ * Field_sql_storage.module implements the default back-end storage plugin
+ * for the Field Strage API.
+ */
+
+/**
+ * Tests field storage.
+ */
+class ThumbWhereContentUnitTestCase extends DrupalUnitTestCase {
+  public static function getInfo() {
+    return array(
+      'name'  => 'Content Entity Unit Tests',
+      'description'  => "Test ThumbWhere Content Entity module.",
+      'group' => 'ThumbWhereUnit'
+    );
+  }
+
+
+  function setUp() {
+
+    // Make sure we are using the testing profile
+    $this->profile = 'testing';
+
+    drupal_load('module', 'thumbwhere_content');
+    parent::setUp();
+  }
+
+
+  /**
+   * Test that the field storage works.
+   */
+  function testSomething() {
+
+    $result = TRUE;
+    $message = t("Test Passed.");
+    $this->assertTrue($result, $message);
+
+    }
+
+}
+
