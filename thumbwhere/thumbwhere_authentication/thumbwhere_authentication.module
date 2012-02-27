@@ -90,6 +90,12 @@ function thumbwhere_authentication_entity_presave($entity, $type) {
     // $_tw_pk_member has not been set - so this is Register...
     if (empty($_tw_pk_member)) {
 
+      // If no password is provided (when we are testing) then we supply one just for completeness.
+      if (!isset($entity->pass))
+      {
+        $entity->pass = 'pass-' . uniqid();
+      }
+
       // $_tw_pk_member has not been set - so this is Register so this will create a ThumbWhere and Drupal user
       _thumbwhere_register($entity->name, $entity->pass);
 
