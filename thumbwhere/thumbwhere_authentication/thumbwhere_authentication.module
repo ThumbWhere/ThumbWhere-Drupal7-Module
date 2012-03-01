@@ -91,8 +91,7 @@ function thumbwhere_authentication_entity_presave($entity, $type) {
     if (empty($_tw_pk_member)) {
 
       // If no password is provided (when we are testing) then we supply one just for completeness.
-      if (!isset($entity->pass))
-      {
+      if (!isset($entity->pass)) {
         $entity->pass = 'pass-' . uniqid();
       }
 
@@ -293,7 +292,7 @@ function _thumbwhere_login($username, $password) {
       return $user->uid;
     }
 
-   // drupal_set_message(t('No such user'), 'error.');
+    // drupal_set_message(t('No such user'), 'error.');
 
     // User doesn't exist
 
@@ -444,6 +443,42 @@ function _set_thumbwhere_id(&$object, $id) {
       );
     }
   }
+}
+
+//
+//  ThumbWhere/Drupal Integration
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//  Helper methods
+//
+
+/**
+ * Set the ThumbWhere ID for the User
+ */
+function thumbwhere_authentication_utility_get_user_pk_member() {
+
+  global $user;
+
+  $user_loaded = user_load($user->uid);
+
+  // If we have
+  if (!isset($user_loaded->pk_member['und'][0])) {
+
+    if ($user->uid == 1) {
+      // Admin user needs to be allocated a ThumbWhere id...
+      throw new Exception('Admin account is missing a ThumbWhere Id : Error TA-006');
+    }
+    else {
+      throw new Exception('User is missing a ThumbWhere Id : Error TA-006');
+    }
+
+    debug('create admin user');
+  }
+
+  return $user_loaded->pk_member['und'][0]['thumbwhere_id'];
 }
 
 //

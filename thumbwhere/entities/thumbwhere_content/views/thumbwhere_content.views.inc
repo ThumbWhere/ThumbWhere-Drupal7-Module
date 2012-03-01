@@ -5,43 +5,41 @@
  * Providing extra functionality for the ThumbWhereContent UI via views.
  */
 
-
 /**
  * Implements hook_views_data().
  */
 function thumbwhere_content_views_data_alter(&$data) {
   $data['thumbwhere_content']['link_thumbwhere_content'] = array(
-    'field' => array(
-      'title' => t('Link'),
-      'help' => t('Provide a link to the thumbwhere_content.'),
-      'handler' => 'thumbwhere_content_handler_link_field',
-    ),
+      'field' => array(
+          'title' => t('Link'),
+          'help' => t('Provide a link to the thumbwhere_content.'),
+          'handler' => 'thumbwhere_content_handler_link_field',
+      ),
   );
   $data['thumbwhere_content']['edit_thumbwhere_content'] = array(
-    'field' => array(
-      'title' => t('Edit Link'),
-      'help' => t('Provide a link to the edit form for the thumbwhere_content.'),
-      'handler' => 'thumbwhere_content_handler_edit_link_field',
-    ),
+      'field' => array(
+          'title' => t('Edit Link'),
+          'help' => t('Provide a link to the edit form for the thumbwhere_content.'),
+          'handler' => 'thumbwhere_content_handler_edit_link_field',
+      ),
   );
   $data['thumbwhere_content']['delete_thumbwhere_content'] = array(
-    'field' => array(
-      'title' => t('Delete Link'),
-      'help' => t('Provide a link to delete the thumbwhere_content.'),
-      'handler' => 'thumbwhere_content_handler_delete_link_field',
-    ),
+      'field' => array(
+          'title' => t('Delete Link'),
+          'help' => t('Provide a link to delete the thumbwhere_content.'),
+          'handler' => 'thumbwhere_content_handler_delete_link_field',
+      ),
   );
   // This content of this field are decided based on the menu structure that
   // follows thumbwhere_contents/thumbwhere_content/%thumbwhere_content_id/op
   $data['thumbwhere_content']['operations'] = array(
-    'field' => array(
-      'title' => t('Operations links'),
-      'help' => t('Display all operations available for this thumbwhere_content.'),
-      'handler' => 'thumbwhere_content_handler_thumbwhere_content_operations_field',
-    ),
+      'field' => array(
+          'title' => t('Operations links'),
+          'help' => t('Display all operations available for this thumbwhere_content.'),
+          'handler' => 'thumbwhere_content_handler_thumbwhere_content_operations_field',
+      ),
   );
 }
-
 
 /**
  * Implements hook_views_default_views().
@@ -54,7 +52,6 @@ function thumbwhere_content_views_default_views() {
   //
   // vvvvvvvvvvvvvvvvv
   //
-
 
   $view = new view;
   $view->name = 'thumbwhere_contents';
@@ -79,45 +76,45 @@ function thumbwhere_content_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
-    'thumbwhere_content_id' => 'thumbwhere_content_id',
-    'pk_content' => 'pk_content',
-    'name' => 'name',
-    'link_thumbwhere_content' => 'link_thumbwhere_content',
-    'operations' => 'operations',
+      'thumbwhere_content_id' => 'thumbwhere_content_id',
+      'pk_content' => 'pk_content',
+      'name' => 'name',
+      'link_thumbwhere_content' => 'link_thumbwhere_content',
+      'operations' => 'operations',
   );
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
-    'thumbwhere_content_id' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'pk_content' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'name' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'link_thumbwhere_content' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'operations' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
+      'thumbwhere_content_id' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'pk_content' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'name' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'link_thumbwhere_content' => array(
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'operations' => array(
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
   );
   $handler->display->display_options['style_options']['override'] = 1;
   $handler->display->display_options['style_options']['sticky'] = 0;
@@ -129,7 +126,7 @@ function thumbwhere_content_views_default_views() {
   $handler->display->display_options['empty']['area']['label'] = 'Empty ';
   $handler->display->display_options['empty']['area']['empty'] = FALSE;
   $handler->display->display_options['empty']['area']['content'] = 'No thumbwhere_contents have been created yet';
-  /* Field: ThumbWhereContent: ThumbWhereContent ID */
+  /* Field: ThumbWhereContent: Thumbwherecontent ID */
   $handler->display->display_options['fields']['thumbwhere_content_id']['id'] = 'thumbwhere_content_id';
   $handler->display->display_options['fields']['thumbwhere_content_id']['table'] = 'thumbwhere_content';
   $handler->display->display_options['fields']['thumbwhere_content_id']['field'] = 'thumbwhere_content_id';
@@ -148,7 +145,7 @@ function thumbwhere_content_views_default_views() {
   $handler->display->display_options['fields']['thumbwhere_content_id']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['thumbwhere_content_id']['hide_empty'] = 0;
   $handler->display->display_options['fields']['thumbwhere_content_id']['empty_zero'] = 0;
-  /* Field: ThumbWhereContent: Thumbwhere_id */
+  /* Field: ThumbWhereContent: Pk_content */
   $handler->display->display_options['fields']['pk_content']['id'] = 'pk_content';
   $handler->display->display_options['fields']['pk_content']['table'] = 'thumbwhere_content';
   $handler->display->display_options['fields']['pk_content']['field'] = 'pk_content';
@@ -206,6 +203,75 @@ function thumbwhere_content_views_default_views() {
   $handler->display->display_options['fields']['link_thumbwhere_content']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['link_thumbwhere_content']['hide_empty'] = 0;
   $handler->display->display_options['fields']['link_thumbwhere_content']['empty_zero'] = 0;
+  /* Field: ThumbWhereContent: Fk_mediaitem */
+  $handler->display->display_options['fields']['fk_mediaitem']['id'] = 'fk_mediaitem';
+  $handler->display->display_options['fields']['fk_mediaitem']['table'] = 'thumbwhere_content';
+  $handler->display->display_options['fields']['fk_mediaitem']['field'] = 'fk_mediaitem';
+  $handler->display->display_options['fields']['fk_mediaitem']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['fk_mediaitem']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['fk_mediaitem']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['fk_mediaitem']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['fk_mediaitem']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['fk_mediaitem']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['fk_mediaitem']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['fk_mediaitem']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['fk_mediaitem']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['fk_mediaitem']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['fk_mediaitem']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['fk_mediaitem']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['fk_mediaitem']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['fk_mediaitem']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['fk_mediaitem']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['fk_mediaitem']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['fk_mediaitem']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['fk_mediaitem']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['fk_mediaitem']['format_plural'] = 0;
+  /* Field: ThumbWhereContent: Fk_metadata */
+  $handler->display->display_options['fields']['fk_metadata']['id'] = 'fk_metadata';
+  $handler->display->display_options['fields']['fk_metadata']['table'] = 'thumbwhere_content';
+  $handler->display->display_options['fields']['fk_metadata']['field'] = 'fk_metadata';
+  $handler->display->display_options['fields']['fk_metadata']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['fk_metadata']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['fk_metadata']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['fk_metadata']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['fk_metadata']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['fk_metadata']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['fk_metadata']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['fk_metadata']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['fk_metadata']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['fk_metadata']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['fk_metadata']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['fk_metadata']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['fk_metadata']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['fk_metadata']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['fk_metadata']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['fk_metadata']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['fk_metadata']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['fk_metadata']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['fk_metadata']['format_plural'] = 0;
+  /* Field: ThumbWhereContent: Fk_producer */
+  $handler->display->display_options['fields']['fk_producer']['id'] = 'fk_producer';
+  $handler->display->display_options['fields']['fk_producer']['table'] = 'thumbwhere_content';
+  $handler->display->display_options['fields']['fk_producer']['field'] = 'fk_producer';
+  $handler->display->display_options['fields']['fk_producer']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['fk_producer']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['fk_producer']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['fk_producer']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['fk_producer']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['fk_producer']['format_plural'] = 0;
   /* Field: ThumbWhereContent: Operations links */
   $handler->display->display_options['fields']['operations']['id'] = 'operations';
   $handler->display->display_options['fields']['operations']['table'] = 'thumbwhere_content';
@@ -263,29 +329,27 @@ function thumbwhere_content_views_default_views() {
   // PASTE EXPORT HERE
   //
 
-
-
   $translatables['thumbwhere_contents'] = array(
-    t('Master'),
-    t('ThumbWhereContents'),
-    t('more'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
-    t('Asc'),
-    t('Desc'),
-    t('Items per page'),
-    t('- All -'),
-    t('Offset'),
-    t('Empty'),
-    t('No thumbwhere_contents have been created yet'),
-    t('ThumbWhereContent ID'),
-    t('.'),
-    t(','),
-    t('Name'),
-    t('View'),
-    t('Operations links'),
-    t('Page'),
+      t('Master'),
+      t('ThumbWhereContents'),
+      t('more'),
+      t('Apply'),
+      t('Reset'),
+      t('Sort by'),
+      t('Asc'),
+      t('Desc'),
+      t('Items per page'),
+      t('- All -'),
+      t('Offset'),
+      t('Empty'),
+      t('No thumbwhere_contents have been created yet'),
+      t('ThumbWhereContent ID'),
+      t('.'),
+      t(','),
+      t('Name'),
+      t('View'),
+      t('Operations links'),
+      t('Page'),
   );
   $views[$view->name] = $view;
   return $views;

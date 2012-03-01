@@ -15,7 +15,6 @@
  */
 function thumbwhere_content_uninstall() {
 
-
   //
   // Uninstall all the field info
   //
@@ -86,7 +85,7 @@ function thumbwhere_content_disable() {
 
   // Rebuild the menu
   menu_rebuild();
-  }
+}
 
 /**
  * Implements hook_schema().
@@ -120,19 +119,32 @@ function thumbwhere_content_schema() {
           'pk_content' => array(
               'description' => 'ThumbWhere Id: ThumbWhere\'s id for this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereContents\' entity.',
               'type' => 'int',
-  						'size' => 'big',
+              'size' => 'big',
+              'not null' => TRUE,
+              'default' => -1,
+          ),
+          'fk_producer' => array(
+              'description' => 'ThumbWhere Id: ThumbWhere\'s id for this the producer of this content entity.',
+              'type' => 'int',
+              'size' => 'big',
+              'not null' => TRUE,
+              'default' => -1,
+          ),
+          'fk_mediaitem' => array(
+              'description' => 'ThumbWhere Id: ThumbWhere\'s id for the media of this content entity',
+              'type' => 'int',
+              'size' => 'big',
+              'not null' => FALSE
+          ),
+          'fk_metadata' => array(
+              'description' => 'ThumbWhere Id: ThumbWhere\'s id for the metadata of this content entity',
+              'type' => 'int',
+              'size' => 'big',
               'not null' => TRUE,
               'default' => -1,
           ),
           'name' => array(
               'description' => 'The name of the thumbwhere_content - a human-readable identifier.',
-              'type' => 'varchar',
-              'length' => 255,
-              'not null' => TRUE,
-              'default' => '',
-          ),
-          'genre' => array(
-              'description' => 'The name of the primary genre of this thumbwhere_content.',
               'type' => 'varchar',
               'length' => 255,
               'not null' => TRUE,
@@ -145,6 +157,9 @@ function thumbwhere_content_schema() {
       'indexes' => array(
           'pk_content' => array(
               'pk_content'
+          ),
+          'fk_producer' => array(
+              'fk_producer'
           ),
       ),
   );

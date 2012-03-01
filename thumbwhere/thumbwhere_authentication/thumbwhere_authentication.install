@@ -42,11 +42,19 @@ function thumbwhere_authentication_requirements($phase) {
       );
     }
 
+    // Make sure the Admin user has a member attached...
+    if (!isset(user_load(1)->pk_member['und'][0])) {
+      $requirements['thumbwhere_authentication_admin_memberid'] = array(
+          'title' => $t('ThumbWhere Authentication'),
+          'description' => $t('The site admin needs to be allocated a ThumbWhere Member id if you want to be able to use the site as admin. <p/> Go to the Configuration for <b>People</b> and edit the Admin user and allocate them a valid ThumbWhere member.'),
+          'severity' => REQUIREMENT_ERROR,
+          'value' => $t('Required configuration'),
+      );
+    }
   }
 
   return $requirements;
 }
-
 
 /**
  * Implements hook_install().
@@ -124,7 +132,7 @@ function _thumbwhere_authentication_installed_fields() {
           'type' => 'thumbwhere_id',
           'default_value' => array(
               array(
-                  'value' => -2
+                  'value' => -1
               )
           ),
       )
