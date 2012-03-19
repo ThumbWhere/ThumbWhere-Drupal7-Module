@@ -100,7 +100,6 @@ function thumbwhere_content_disable() {
  *
  * pk_content
  * Used to map to the actual object in ThumbWhere.
-
  */
 function thumbwhere_content_schema() {
   $t = get_t();
@@ -108,59 +107,71 @@ function thumbwhere_content_schema() {
   $schema = array();
 
   $schema['thumbwhere_content'] = array(
-      'description' => 'The base table for thumbwhere_content entities.',
-      'fields' => array(
-      		/*'thumbwhere_content_id' => array(
-              'description' => 'Primary Key: Identifier for a thumbwhere_content.',
-              'type' => 'serial',
-              'unsigned' => TRUE,
-              'not null' => TRUE,
-          ),*/
+  'description' => 'The base table for thumbwhere_content entities.' . 'Content... A more advanced wrapper for MediaItem mediatem: The raw media that makes up this content. metadata: The data describes the mediaitem. producer: The producer of the content.',
+		'fields' => array(
           'pk_content' => array(
-              'description' => 'ThumbWhere Id: ThumbWhere\'s id for this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereContents\' entity.',
-              'type' => 'int',
-              'size' => 'big',
-              'not null' => TRUE,
-              'default' => -1,
-          ),
-          'fk_producer' => array(
-              'description' => 'ThumbWhere Id: ThumbWhere\'s id for this the producer of this content entity.',
+              'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereContents\' entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => TRUE,
               'default' => -1,
           ),
           'fk_mediaitem' => array(
-              'description' => 'ThumbWhere Id: ThumbWhere\'s id for the media of this content entity',
+              'description' => 'ThumbWhere Id: ThumbWhere\'s id for this the producer of this content entity.',
               'type' => 'int',
               'size' => 'big',
-              'not null' => FALSE
+              'not null' => FALSE,
+              //'default' => -1,
           ),
           'fk_metadata' => array(
-              'description' => 'ThumbWhere Id: ThumbWhere\'s id for the metadata of this content entity',
+              'description' => 'ThumbWhere Id: ThumbWhere\'s id for this the producer of this content entity.',
               'type' => 'int',
               'size' => 'big',
-              'not null' => TRUE,
-              'default' => -1,
+              'not null' => FALSE,
+              //'default' => -1,
           ),
-          'name' => array(
-              'description' => 'The name of the thumbwhere_content - a human-readable identifier.',
+          'fk_producer' => array(
+              'description' => 'ThumbWhere Id: ThumbWhere\'s id for this the producer of this content entity.',
+              'type' => 'int',
+              'size' => 'big',
+              'not null' => FALSE,
+              //'default' => -1,
+          ),
+          'fk_contentingest' => array(
+              'description' => 'ThumbWhere Id: ThumbWhere\'s id for this the producer of this content entity.',
+              'type' => 'int',
+              'size' => 'big',
+              'not null' => FALSE,
+              //'default' => -1,
+          ),
+          'title' => array(
+              'description' => 'The \'title\' field of the \'thumbwhere_content\' entity.',
               'type' => 'varchar',
-              'length' => 255,
-              'not null' => TRUE,
-              'default' => '',
-          ),
+              'size' => 'normal',
+              'length' => 128,
+              'not null' => FALSE,		              
+          ),      
       ),
       'primary key' => array(
-          'pk_content'
-      ),
+          'pk_content'			
+      ),      
       'indexes' => array(
           'pk_content' => array(
               'pk_content'
           ),
+          'fk_mediaitem' => array(
+              'fk_mediaitem'
+          ),
+          'fk_metadata' => array(
+              'fk_metadata'
+          ),
           'fk_producer' => array(
               'fk_producer'
           ),
+          'fk_contentingest' => array(
+              'fk_contentingest'
+          ),
+			
       ),
   );
 

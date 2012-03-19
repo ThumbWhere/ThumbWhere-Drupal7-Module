@@ -9,15 +9,18 @@
  * be end-user facing.
  */
 
+
+
+
 /**
- * Menu callback; Retrieve a JSON object containing data for the debug messages page.
+ * Menu callback: React to a notifications for Content.
  */
 function _thumbwhere_content_notify() {
 
   $content = array(
       'messages' => array(
           '#markup' => t('No messages.'),
-          '#prefix' => '<div id="devel-debug-log-messages-table">',
+          '#prefix' => '<div id="content-notification-table">',
           '#suffix' => '</div>',
       )
   );
@@ -29,27 +32,12 @@ function _thumbwhere_content_notify() {
   drupal_json_output($data);
 }
 
-/**
- * Implements hook_menu().
- */
-/*
-function thumbwhere_content_menu() {
 
-  // Add a notificatiuon page...
-  $items['thumbwhere/content/notify'] = array(
-      'title' => 'Notifications Callback',
-      'page callback' => '_thumbwhere_content_notify',
-      'access arguments' => array(
-          'access administration pages'
-      ),
-  );
 
-  return $items;
-}
- */
+
 
 /**
- * UI controller.
+ * Content UI controller.
  */
 class ThumbWhereContentUIController extends EntityDefaultUIController {
 
@@ -57,34 +45,31 @@ class ThumbWhereContentUIController extends EntityDefaultUIController {
    * Overrides hook_menu() defaults. Main reason for doing this is that
    * parent class hook_menu() is optimized for entity type administration.
    */
-
   public function hook_menu() {
 
     $items = array();
-
-    // Add a notificatiuon page...
+    
+  	// Add a notification page...
     $items['thumbwhere/content/notify'] = array(
-        'title' => 'Notifications Callback',
+        'title' => 'Notifications Callback for "Content" Entity',
         'page callback' => '_thumbwhere_content_notify',
         'access arguments' => array(
-            'access administration pages'
+            'send thumbwhere content notifications'
         ),
         'file' => 'thumbwhere_content.admin.inc',
         'file path' => drupal_get_path('module', $this->entityInfo['module'])
-    );
-
+    );    
+    
     $id_count = count(explode('/', $this->path));
     $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
 
     $items[$this->path] = array(
-        'title' => 'ThumbWhereContents',
-        'description' => 'Add edit and update thumbwhere_contents.',
-        'page callback' => 'system_admin_menu_block_page',
-        'access arguments' => array(
-            'access administration pages'
-        ),
-        'file path' => drupal_get_path('module', 'system'),
-        'file' => 'system.admin.inc',
+      'title' => 'ThumbWhereContents',
+      'description' => 'Add edit and update thumbwhere_contents.',
+      'page callback' => 'system_admin_menu_block_page',
+      'access arguments' => array('access administration pages'),
+      'file path' => drupal_get_path('module', 'system'),
+      'file' => 'system.admin.inc',
     );
 
     // Change the overview menu type for the list of thumbwhere_contents.
@@ -92,103 +77,78 @@ class ThumbWhereContentUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-        'title' => 'Add a thumbwhere_content',
-        'description' => 'Add a new thumbwhere_content',
-        'page callback' => 'thumbwhere_content_add_page',
-        'access callback' => 'thumbwhere_content_access',
-        'access arguments' => array(
-            'edit'
-        ),
-        'type' => MENU_NORMAL_ITEM,
-        'weight' => 20,
-        'file' => 'thumbwhere_content.admin.inc',
-        'file path' => drupal_get_path('module', $this->entityInfo['module'])
+      'title' => 'Add a thumbwhere_content',
+      'description' => 'Add a new thumbwhere_content',
+      'page callback'  => 'thumbwhere_content_add_page',
+      'access callback'  => 'thumbwhere_content_access',
+      'access arguments' => array('edit'),
+      'type' => MENU_NORMAL_ITEM,
+      'weight' => 20,
+      'file' => 'thumbwhere_content.admin.inc',
+      'file path' => drupal_get_path('module', $this->entityInfo['module'])
+
     );
 
     $items[$this->path . '/add/' . 'thumbwhere_content'] = array(
-        'title' => 'Add ' . 'ThumbWhereContent',
-        'page callback' => 'thumbwhere_content_form_wrapper',
-        'page arguments' => array(
-            thumbwhere_content_create(array(
-                'type' => 'thumbwhere_content'
-            ))
-        ),
-        'access callback' => 'thumbwhere_content_access',
-        'access arguments' => array(
-            'edit',
-            'edit ' . 'thumbwhere_content'
-        ),
-        'file' => 'thumbwhere_content.admin.inc',
-        'file path' => drupal_get_path('module', $this->entityInfo['module'])
+      'title' => 'Add ' . 'ThumbWhereContent',
+      'page callback' => 'thumbwhere_content_form_wrapper',
+      'page arguments' => array(thumbwhere_content_create(array('type' => 'thumbwhere_content'))),
+      'access callback' => 'thumbwhere_content_access',
+      'access arguments' => array('edit', 'edit ' . 'thumbwhere_content'),
+      'file' => 'thumbwhere_content.admin.inc',
+      'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
 
     // Loading and editing thumbwhere_content entities
     $items[$this->path . '/thumbwhere_content/' . $wildcard] = array(
-        'page callback' => 'thumbwhere_content_form_wrapper',
-        'page arguments' => array(
-            $id_count + 1
-        ),
-        'access callback' => 'thumbwhere_content_access',
-        'access arguments' => array(
-            'edit',
-            $id_count + 1
-        ),
-        'weight' => 0,
-        'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
-        'file' => 'thumbwhere_content.admin.inc',
-        'file path' => drupal_get_path('module', $this->entityInfo['module'])
+      'page callback' => 'thumbwhere_content_form_wrapper',
+      'page arguments' => array($id_count + 1),
+      'access callback' => 'thumbwhere_content_access',
+      'access arguments' => array('edit', $id_count + 1),
+      'weight' => 0,
+      'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+      'file' => 'thumbwhere_content.admin.inc',
+      'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
     $items[$this->path . '/thumbwhere_content/' . $wildcard . '/edit'] = array(
-        'title' => 'Edit',
-        'type' => MENU_DEFAULT_LOCAL_TASK,
-        'weight' => -10,
-        'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+      'title' => 'Edit',
+      'type' => MENU_DEFAULT_LOCAL_TASK,
+      'weight' => -10,
+      'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
     );
 
     $items[$this->path . '/thumbwhere_content/' . $wildcard . '/delete'] = array(
-        'title' => 'Delete',
-        'page callback' => 'thumbwhere_content_delete_form_wrapper',
-        'page arguments' => array(
-            $id_count + 1
-        ),
-        'access callback' => 'thumbwhere_content_access',
-        'access arguments' => array(
-            'edit',
-            $id_count + 1
-        ),
-        'type' => MENU_LOCAL_TASK,
-        'context' => MENU_CONTEXT_INLINE,
-        'weight' => 10,
-        'file' => 'thumbwhere_content.admin.inc',
-        'file path' => drupal_get_path('module', $this->entityInfo['module'])
+      'title' => 'Delete',
+      'page callback' => 'thumbwhere_content_delete_form_wrapper',
+      'page arguments' => array($id_count + 1),
+      'access callback' => 'thumbwhere_content_access',
+      'access arguments' => array('edit', $id_count + 1),
+      'type' => MENU_LOCAL_TASK,
+      'context' => MENU_CONTEXT_INLINE,
+      'weight' => 10,
+      'file' => 'thumbwhere_content.admin.inc',
+      'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
 
     // Menu item for viewing thumbwhere_contents
     $items['thumbwhere_content/' . $wildcard] = array(
-        //'title' => 'Title',
-        'title callback' => 'thumbwhere_content_page_title',
-        'title arguments' => array(
-            1
-        ),
-        'page callback' => 'thumbwhere_content_page_view',
-        'page arguments' => array(
-            1
-        ),
-        'access callback' => 'thumbwhere_content_access',
-        'access arguments' => array(
-            'view',
-            1
-        ),
-        'type' => MENU_CALLBACK,
+      //'title' => 'Title',
+      'title callback' => 'thumbwhere_content_page_title',
+      'title arguments' => array(1),
+      'page callback' => 'thumbwhere_content_page_view',
+      'page arguments' => array(1),
+      'access callback' => 'thumbwhere_content_access',
+      'access arguments' => array('view', 1),
+      'type' => MENU_CALLBACK,
     );
     return $items;
   }
+
 
   /**
    * Create the markup for the add ThumbWhereContent Entities page within the class
    * so it can easily be extended/overriden.
    */
-
   public function addPage() {
     $item = menu_get_item();
     $content = system_admin_menu_block($item);
@@ -198,12 +158,11 @@ class ThumbWhereContentUIController extends EntityDefaultUIController {
       drupal_goto($item['href']);
     }
 
-    return theme('thumbwhere_content_add_list', array(
-        'content' => $content
-    ));
+    return theme('thumbwhere_content_add_list', array('content' => $content));
   }
 
 }
+
 
 /**
  * Form callback wrapper: create or edit a thumbwhere_content.
@@ -219,6 +178,7 @@ function thumbwhere_content_form_wrapper($thumbwhere_content) {
   return drupal_get_form('thumbwhere_content_edit_form', $thumbwhere_content);
 }
 
+
 /**
  * Form callback wrapper: delete a thumbwhere_content.
  *
@@ -233,6 +193,7 @@ function thumbwhere_content_delete_form_wrapper($thumbwhere_content) {
   return drupal_get_form('thumbwhere_content_delete_form', $thumbwhere_content);
 }
 
+
 /**
  * Form callback: create or edit a thumbwhere_content.
  *
@@ -241,15 +202,54 @@ function thumbwhere_content_delete_form_wrapper($thumbwhere_content) {
  *     with only a thumbwhere_content type defined.
  */
 function thumbwhere_content_edit_form($form, &$form_state, $thumbwhere_content) {
+
   // Add the default field elements.
-  $form['name'] = array(
-      '#type' => 'textfield',
-      '#title' => t('ThumbWhereContent Name'),
-      '#default_value' => isset($thumbwhere_content->name) ? $thumbwhere_content->name : '',
-      '#maxlength' => 255,
-      '#required' => TRUE,
-      '#weight' => -5,
+  $form['fk_mediaitem'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereContent fk_mediaitem'),
+    '#default_value' => isset($thumbwhere_content->fk_mediaitem) ? $thumbwhere_content->fk_mediaitem : '',
+    '#maxlength' => 255,
+   /// '#required' => TRUE,
+    '#weight' => -5,
   );
+  // Add the default field elements.
+  $form['fk_metadata'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereContent fk_metadata'),
+    '#default_value' => isset($thumbwhere_content->fk_metadata) ? $thumbwhere_content->fk_metadata : '',
+    '#maxlength' => 255,
+   /// '#required' => TRUE,
+    '#weight' => -5,
+  );
+  // Add the default field elements.
+  $form['fk_producer'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereContent fk_producer'),
+    '#default_value' => isset($thumbwhere_content->fk_producer) ? $thumbwhere_content->fk_producer : '',
+    '#maxlength' => 255,
+   /// '#required' => TRUE,
+    '#weight' => -5,
+  );
+  // Add the default field elements.
+  $form['fk_contentingest'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereContent fk_contentingest'),
+    '#default_value' => isset($thumbwhere_content->fk_contentingest) ? $thumbwhere_content->fk_contentingest : '',
+    '#maxlength' => 255,
+   /// '#required' => TRUE,
+    '#weight' => -5,
+  );
+  // Add the default field elements.
+    $form['title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereContent title'),
+    '#default_value' => isset($thumbwhere_content->title) ? $thumbwhere_content->title : '',
+    '#maxlength' => 255,
+   // '#required' => TRUE,
+    '#weight' => -5,
+  );
+
+
 
   $form['data']['#tree'] = TRUE;
 
@@ -259,20 +259,17 @@ function thumbwhere_content_edit_form($form, &$form_state, $thumbwhere_content) 
     '#title' => t('An interesting thumbwhere_content switch'),
     '#default_value' => isset($thumbwhere_content->data['sample_data']) ? $thumbwhere_content->data['sample_data'] : 1,
   );
-   */
+	*/
+
 
   // Add the field related form elements.
   $form_state['thumbwhere_content'] = $thumbwhere_content;
   field_attach_form('thumbwhere_content', $thumbwhere_content, $form, $form_state);
 
   $form['actions'] = array(
-      '#type' => 'container',
-      '#attributes' => array(
-          'class' => array(
-              'form-actions'
-          )
-      ),
-      '#weight' => 400,
+    '#type' => 'container',
+    '#attributes' => array('class' => array('form-actions')),
+    '#weight' => 400,
   );
 
   // We add the form's #submit array to this button along with the actual submit
@@ -284,22 +281,19 @@ function thumbwhere_content_edit_form($form, &$form_state, $thumbwhere_content) 
   }
 
   $form['actions']['submit'] = array(
-      '#type' => 'submit',
-      '#value' => t('Save thumbwhere_content'),
-      '#submit' => $submit + array(
-              'thumbwhere_content_edit_form_submit'
-          ),
+    '#type' => 'submit',
+    '#value' => t('Save thumbwhere_content'),
+    '#submit' => $submit + array('thumbwhere_content_edit_form_submit'),
   );
 
-  if (!empty($thumbwhere_content->name)) {
+  // Do we show the delete button?
+  if (!empty($thumbwhere_content->pk_content)) {
     $form['actions']['delete'] = array(
-        '#type' => 'submit',
-        '#value' => t('Delete thumbwhere_content'),
-        '#suffix' => l(t('Cancel'), 'admin/content/thumbwhere_contents'),
-        '#submit' => $submit + array(
-                'thumbwhere_content_form_submit_delete'
-            ),
-        '#weight' => 45,
+      '#type' => 'submit',
+      '#value' => t('Delete thumbwhere_content'),
+      '#suffix' => l(t('Cancel'), 'admin/content/thumbwhere_contents'),
+      '#submit' => $submit + array('thumbwhere_content_form_submit_delete'),
+      '#weight' => 45,
     );
   }
 
@@ -308,6 +302,7 @@ function thumbwhere_content_edit_form($form, &$form_state, $thumbwhere_content) 
   $form['#validate'][] = 'thumbwhere_content_edit_form_validate';
   return $form;
 }
+
 
 /**
  * Form API validate callback for the thumbwhere_content form
@@ -318,6 +313,7 @@ function thumbwhere_content_edit_form_validate(&$form, &$form_state) {
   // Notify field widgets to validate their data.
   field_attach_form_validate('thumbwhere_content', $thumbwhere_content, $form, $form_state);
 }
+
 
 /**
  * Form API submit callback for the thumbwhere_content form.
@@ -346,9 +342,9 @@ function thumbwhere_content_edit_form_submit(&$form, &$form_state) {
  * @todo Remove hard-coded path
  */
 function thumbwhere_content_form_submit_delete(&$form, &$form_state) {
-  //$form_state['redirect'] = 'admin/content/thumbwhere_contents/thumbwhere_content/' . $form_state['thumbwhere_content']->thumbwhere_content_id . '/delete';
   $form_state['redirect'] = 'admin/content/thumbwhere_contents/thumbwhere_content/' . $form_state['thumbwhere_content']->pk_content . '/delete';
 }
+
 
 /**
  * Form callback: confirmation form for deleting a thumbwhere_content.
@@ -363,9 +359,14 @@ function thumbwhere_content_delete_form($form, &$form_state, $thumbwhere_content
 
   $form['#submit'][] = 'thumbwhere_content_delete_form_submit';
 
-  $form = confirm_form($form, t('Are you sure you want to delete thumbwhere_content %name?', array(
-          '%name' => $thumbwhere_content->name
-      )), 'admin/content/thumbwhere_contents/thumbwhere_content', '<p>' . t('This action cannot be undone.') . '</p>', t('Delete'), t('Cancel'), 'confirm');
+  $form = confirm_form($form,
+    t('Are you sure you want to delete thumbwhere_content %name?', array('%name' => $thumbwhere_content->title)),
+    'admin/content/thumbwhere_contents/thumbwhere_content',
+    '<p>' . t('This action cannot be undone.') . '</p>',
+    t('Delete'),
+    t('Cancel'),
+    'confirm'
+  );
 
   return $form;
 }
@@ -378,15 +379,13 @@ function thumbwhere_content_delete_form_submit($form, &$form_state) {
 
   thumbwhere_content_delete($thumbwhere_content);
 
-  drupal_set_message(t('The thumbwhere_content %name has been deleted.', array(
-      '%name' => $thumbwhere_content->name
-  )));
-  watchdog('thumbwhere_content', 'Deleted thumbwhere_content %name.', array(
-      '%name' => $thumbwhere_content->name
-  ));
+  drupal_set_message(t('The thumbwhere_content %name has been deleted.', array('%name' => $thumbwhere_content->title)));
+  watchdog('thumbwhere_content', 'Deleted thumbwhere_content %name.', array('%name' => $thumbwhere_content->title));
 
   $form_state['redirect'] = 'admin/content/thumbwhere_contents';
 }
+
+
 
 /**
  * Page to add ThumbWhereContent Entities.
@@ -398,12 +397,14 @@ function thumbwhere_content_add_page() {
   return $controller->addPage();
 }
 
+
 /**
  * Displays the list of available thumbwhere_content types for thumbwhere_content creation.
  *
  * @ingroup themeable
  */
 function theme_thumbwhere_content_add_list($variables) {
+
 
   //$content = $variables['content'];
   $output = '';
@@ -424,21 +425,27 @@ function theme_thumbwhere_content_add_list($variables) {
       $output = '<p>' . t('No thumbwhere_content types have been created yet for you to use.') . '</p>';
     }
   }
-   */
+	*/
   return $output;
 }
+
+
+
+
 
 /**
  * Sets the breadcrumb for administrative thumbwhere_content pages.
  */
 function thumbwhere_content_set_breadcrumb() {
   $breadcrumb = array(
-      l(t('Home'), '<front>'),
-      l(t('Administration'), 'admin'),
-      l(t('Content'), 'admin/content'),
-      l(t('ThumbWhereContents'), 'admin/content/thumbwhere_contents'),
+    l(t('Home'), '<front>'),
+    l(t('Administration'), 'admin'),
+    l(t('Content'), 'admin/content'),
+    l(t('ThumbWhereContents'), 'admin/content/thumbwhere_contents'),
   );
 
   drupal_set_breadcrumb($breadcrumb);
 }
+
+
 

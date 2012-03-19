@@ -239,6 +239,11 @@ function thumbwhere_permission() {
           'description' => t('Become any ThumbWhere user on the site with just a click.'),
           'restrict access' => TRUE,
       ),
+      'send thumbwhere notifications' => array(
+          'title' => t('Send ThumbWhere Notifications'),
+          'description' => t('Allow the caller to call the Notifications Endpoint.'),
+          'restrict access' => TRUE,
+      ),
   );
 }
 

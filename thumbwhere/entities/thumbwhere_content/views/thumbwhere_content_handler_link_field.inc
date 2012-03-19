@@ -10,9 +10,7 @@ class thumbwhere_content_handler_link_field extends views_handler_field {
   function construct() {
     parent::construct();
 
-    //$this->additional_fields['thumbwhere_content_id'] = 'thumbwhere_content_id';
-    $this->additional_fields['pk_content'] = 'pk_content';
-    //$this->additional_fields['type'] = 'type';
+    $this->additional_fields['pk_content'] = 'pk_content';    
   }
 
   function option_definition() {
@@ -40,7 +38,6 @@ class thumbwhere_content_handler_link_field extends views_handler_field {
 
   function render($values) {
     $text = !empty($this->options['text']) ? $this->options['text'] : t('view');
-    //$thumbwhere_content_id = $values->{$this->aliases['thumbwhere_content_id']};
     $thumbwhere_content_id = $values->{$this->aliases['pk_content']};
 
     return l($text, 'thumbwhere_content/' . $thumbwhere_content_id);
