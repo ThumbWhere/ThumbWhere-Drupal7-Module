@@ -110,12 +110,12 @@ function thumbwhere_content_schema() {
   $schema['thumbwhere_content'] = array(
       'description' => 'The base table for thumbwhere_content entities.',
       'fields' => array(
-          'thumbwhere_content_id' => array(
+      		/*'thumbwhere_content_id' => array(
               'description' => 'Primary Key: Identifier for a thumbwhere_content.',
               'type' => 'serial',
               'unsigned' => TRUE,
               'not null' => TRUE,
-          ),
+          ),*/
           'pk_content' => array(
               'description' => 'ThumbWhere Id: ThumbWhere\'s id for this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereContents\' entity.',
               'type' => 'int',
@@ -152,7 +152,7 @@ function thumbwhere_content_schema() {
           ),
       ),
       'primary key' => array(
-          'thumbwhere_content_id'
+          'pk_content'
       ),
       'indexes' => array(
           'pk_content' => array(

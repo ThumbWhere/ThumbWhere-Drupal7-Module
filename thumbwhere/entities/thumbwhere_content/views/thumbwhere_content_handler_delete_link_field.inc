@@ -23,8 +23,8 @@ class thumbwhere_content_handler_delete_link_field extends thumbwhere_content_ha
     //}
 
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
-    $thumbwhere_content_id = $values->{$this->aliases['thumbwhere_content_id']};
+    $thumbwhere_content_id = $values->{$this->aliases['pk_content']};
 
-    return l($text, 'admin/content/thumbwhere_contents/thumbwhere_content/' . $thumbwhere_content_id . '/delete');
+    return l($text, 'admin/content/thumbwhere_contents/thumbwhere_content/' . $pk_content . '/delete');
   }
 }

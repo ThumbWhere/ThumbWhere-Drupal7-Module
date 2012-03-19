@@ -76,7 +76,6 @@ function thumbwhere_content_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
-      'thumbwhere_content_id' => 'thumbwhere_content_id',
       'pk_content' => 'pk_content',
       'name' => 'name',
       'link_thumbwhere_content' => 'link_thumbwhere_content',
@@ -84,13 +83,6 @@ function thumbwhere_content_views_default_views() {
   );
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
-      'thumbwhere_content_id' => array(
-          'sortable' => 0,
-          'default_sort_order' => 'asc',
-          'align' => '',
-          'separator' => '',
-          'empty_column' => 0,
-      ),
       'pk_content' => array(
           'sortable' => 0,
           'default_sort_order' => 'asc',
@@ -127,6 +119,8 @@ function thumbwhere_content_views_default_views() {
   $handler->display->display_options['empty']['area']['empty'] = FALSE;
   $handler->display->display_options['empty']['area']['content'] = 'No thumbwhere_contents have been created yet';
   /* Field: ThumbWhereContent: Thumbwherecontent ID */
+
+  /*
   $handler->display->display_options['fields']['thumbwhere_content_id']['id'] = 'thumbwhere_content_id';
   $handler->display->display_options['fields']['thumbwhere_content_id']['table'] = 'thumbwhere_content';
   $handler->display->display_options['fields']['thumbwhere_content_id']['field'] = 'thumbwhere_content_id';
@@ -145,10 +139,14 @@ function thumbwhere_content_views_default_views() {
   $handler->display->display_options['fields']['thumbwhere_content_id']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['thumbwhere_content_id']['hide_empty'] = 0;
   $handler->display->display_options['fields']['thumbwhere_content_id']['empty_zero'] = 0;
+  */
+
+
   /* Field: ThumbWhereContent: Pk_content */
   $handler->display->display_options['fields']['pk_content']['id'] = 'pk_content';
   $handler->display->display_options['fields']['pk_content']['table'] = 'thumbwhere_content';
   $handler->display->display_options['fields']['pk_content']['field'] = 'pk_content';
+  $handler->display->display_options['fields']['pk_content']['label'] = 'pk_content';
   $handler->display->display_options['fields']['pk_content']['alter']['alter_text'] = 0;
   $handler->display->display_options['fields']['pk_content']['alter']['make_link'] = 0;
   $handler->display->display_options['fields']['pk_content']['alter']['absolute'] = 0;
@@ -343,7 +341,7 @@ function thumbwhere_content_views_default_views() {
       t('Offset'),
       t('Empty'),
       t('No thumbwhere_contents have been created yet'),
-      t('ThumbWhereContent ID'),
+      t('ThumbWhereContent IDXXX'),
       t('.'),
       t(','),
       t('Name'),

@@ -13,6 +13,70 @@
  * @see field
  */
 
+
+function thumbwhere_boot()
+{
+  debug("Booting ThumbWhere Moduke");
+  $handle = background_process_start('thumbwhere_background_probe');
+}
+
+function thumbwhere_background_probe()
+{
+  debug('thumbwhere_background_probe');
+}
+
+
+/**
+* Implements hook_requirements().
+*
+* We want to check for settings that we want to check on or issue any warnings.
+*
+*/
+function thumbwhere_requirements($phase) {
+
+  $requirements = array();
+
+  $t = get_t();
+
+  // Handle runtime check
+  if ($phase == 'runtime') {
+
+    if (variable_get('thumbwhere_api_url') == '') {
+
+      $requirements['thumbwhere_api_url'] = array(
+          'title' => $t('ThumbWhere API'),
+          'description' => $t(' The configuration variable "thumbwhere_api_url" should be configured. <p/> Go to the Configuration for <b>ThumbWhere Settings</b> and enter the correct value.'),
+          'severity' => REQUIREMENT_ERROR,
+          'value' => $t('Required configuration'),
+      );
+    }
+
+    if (variable_get('thumbwhere_api_key') == '') {
+
+      $requirements['thumbwhere_api_key'] = array(
+          'title' => $t('ThumbWhere API'),
+					'description' => $t(' The configuration variable "thumbwhere_api_key" should be configured. <p/> Go to the Configuration for <b>ThumbWhere Settings</b> and enter the correct value.'),            'severity' => REQUIREMENT_ERROR,
+          'value' => $t('Required configuration'),
+      );
+    }
+
+    if (variable_get('thumbwhere_master_console') == '1' )
+    {
+      if (variable_get('thumbwhere_master_key') == '') {
+
+        $requirements['thumbwhere_master_key'] = array(
+                'title' => $t('ThumbWhere API'),
+    			  		'description' => $t(' The configuration variable "thumbwhere_master_key" should be configured. <p/> This server is configured as a thumbwhere master consile so the "thumbwhere_master_key" needs to be configured. Go to the Configuration for <b>ThumbWhere Settings</b> and enter the correct value or turn the Master Console functions off..'),            'severity' => REQUIREMENT_ERROR,
+              	'value' => $t('Required configuration'),
+        );
+      }
+    }
+  }
+
+  return $requirements;
+}
+
+
 /**
  * Implements hook_install().
  *

@@ -376,3 +376,14 @@ function thumbwhere_field_widget_info() {
   );
 }
 
+/**
+* Implements hook_cron().
+*/
+function thumbwhere_cron() {
+  debug('thumbwhere_cron');
+}
+
+
+
+
+

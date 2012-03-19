@@ -1,50 +1,146 @@
 <?php
 
 /**
-* @file
-* Install file ThumbWhere Admin Include
-*
-* Our admin components.
-*
-*/
+ * @file
+ * Install file ThumbWhere Admin Include
+ *
+ * Our admin components.
+ *
+ */
 
+/**
+ * Provides form validation for the ThumbWhere configuration settings
+ */
+function thumbwhere_admin_settings_validator($form, &$form_state) {
+  //debug('thumbwhere_admin_settings_validator');
+
+  //
+  // Validate thumbwhere_api_url
+  //
+
+  $regex = '((^(([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z]|[A-Za-z][A-Za-z0-9\-]*[A-Za-z0-9])$)|(^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$))';
+
+  $string = strtoupper($form_state['values']['thumbwhere_api_url']);
+  if (!preg_match($regex, $string)) {
+    form_set_error('thumbwhere_api_url', t('Must be a valid domain name or IP address.'));
+  }
+
+  //
+  // Validate thumbwhere_api_version
+  //
+
+  $regex = '((v|V)\d+\.\d+)';
+  // Normalise it..
+  $form_state['values']['thumbwhere_api_version'] = strtolower($form_state['values']['thumbwhere_api_version']);
+
+  $string = strtoupper($form_state['values']['thumbwhere_api_version']);
+  if (!preg_match($regex, $string)) {
+    form_set_error('thumbwhere_api_version', t('Version number must be in the form vMAJOR.MINOR eg. v1.1'));
+  }
+
+  $regex = '(^(\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\}{0,1})$)';
+
+  $string = strtoupper($form_state['values']['thumbwhere_api_key']);
+  if (!preg_match($regex, $string)) {
+    form_set_error('thumbwhere_api_key', t('API Key must be a GUID.'));
+  }
+
+  if ($form_state['values']['thumbwhere_master_console'] == 1) {
+    $string = strtoupper($form_state['values']['thumbwhere_master_key']);
+    //if (!preg_match($regex, $string)) {
+    //  form_set_error('thumbwhere_master_key', t('Master Key must be a GUID.'));
+    //}
+    if ($string == '') {
+      form_set_error('thumbwhere_master_key', t('Master Key cannot be blank.'));
+    }
+
+  }
+
+}
+
+/**
+ * Provides form structure for the ThumbWhere configuration settings
+ */
 function thumbwhere_admin_settings() {
-  
-  
-  $form['queries'] = array('#type' => 'fieldset', '#title' => t('Query log'));
 
-  $description = t('Display a log of the database queries needed to generate the current page, and the execution time for each. Also, queries which are repeated during a single page view are summed in the # column, and printed in red since they are candidates for caching.');
-//  if (!thumbwhere_is_compatible_optimizer()) {
-//    $description = t('You must disable or upgrade the php Zend Optimizer extension in order to enable this feature. The minimum required version is 3.2.8. Earlier versions of Zend Optimizer are <a href="!url">horribly buggy and segfault your Apache</a> ... ', array('!url' => url('http://drupal.org/node/126098'))) . $description;
-//  }
-  $form['queries']['thumbwhere_query_display'] = array('#type' => 'checkbox',
-    '#title' => t('Display query log'),
-    '#default_value' => variable_get('thumbwhere_query_display', 0),
-    '#description' => $description,
-    '#disabled' => FALSE,
+  $form['#validate'] = array(
+      'thumbwhere_admin_settings_validator'
   );
-  $form['queries']['settings'] = array(
-    '#type' => 'container',
+
+  $form['thumbwhere_api_url'] = array(
+      '#type' => 'textfield',
+      '#title' => t('API URL'),
+      '#default_value' => variable_get('thumbwhere_api_url', 'thumbwhere.com'),
+      '#description' => t('The base URL for ThumbWhere API calls. You might change this if you run your own instance of ThumbWhere.')
+  );
+
+  $form['thumbwhere_api_version'] = array(
+      '#type' => 'textfield',
+      '#title' => t('API Version'),
+      '#default_value' => variable_get('thumbwhere_api_version', 'v1.1'),
+      '#description' => t('The prefered version of the ThumbWhere API that we want to consume..')
+  );
+
+  $form['thumbwhere_api_key'] = array(
+      '#type' => 'textfield',
+      '#title' => t('API Key'),
+      '#default_value' => variable_get('thumbwhere_api_key', ''),
+      '#description' => t('The API Key for a specific campaign.')
+  );
+
+  $form['thumbwhere_master_console'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Master Consile')
+  );
+
+  $description = t('If this is enabled then this server will be used to control more than one campaign..');
+  $form['thumbwhere_master_console']['thumbwhere_master_console'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Master Console'),
+      '#default_value' => variable_get('thumbwhere_master_console', 0),
+      '#description' => $description,
+      '#disabled' => FALSE,
+  );
+
+  $form['thumbwhere_master_console']['settings'] = array(
+      '#type' => 'container',
       '#states' => array(
-        // Hide the query log settings when not displaying query log.
-        'invisible' => array(
-          'input[name="thumbwhere_query_display"]' => array('checked' => FALSE),
-        ),
+          // Hide the thumbwhere_master_console settings when not displaying query log.
+          'invisible' => array(
+              'input[name="thumbwhere_master_console"]' => array(
+                  'checked' => FALSE
+              ),
+          ),
       ),
   );
-  $form['queries']['settings']['thumbwhere_query_sort'] = array('#type' => 'radios',
+
+  $form['thumbwhere_master_console']['settings']['thumbwhere_master_key'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Master Key'),
+      '#default_value' => variable_get('thumbwhere_master_key', ''),
+      '#description' => t('The Master Key for controlling an entire ThumbWhere instance.')
+  );
+
+  /*
+
+
+  $form['thumbwhere_master_console']['settings']['thumbwhere_query_sort'] = array('#type' => 'radios',
     '#title' => t('Sort query log'),
     '#default_value' =>   variable_get('thumbwhere_query_sort', DEVEL_QUERY_SORT_BY_SOURCE),
     '#options' => array(t('by source'), t('by duration')),
     '#description' => t('The query table can be sorted in the order that the queries were executed or by descending duration.'),
   );
-  $form['queries']['settings']['thumbwhere_execution'] = array('#type' => 'textfield',
+
+
+  $form['thumbwhere_master_console']['settings']['thumbwhere_execution'] = array('#type' => 'textfield',
     '#title' => t('Slow query highlighting'),
     '#default_value' => variable_get('thumbwhere_execution', 5),
     '#size' => 4,
     '#maxlength' => 4,
     '#description' => t('Enter an integer in milliseconds. Any query which takes longer than this many milliseconds will be highlighted in the query log. This indicates a possibly inefficient query, or a candidate for caching.'),
   );
+
+
 
   $form['xhprof'] = array(
     '#type' => 'fieldset',
@@ -90,10 +186,10 @@ function thumbwhere_admin_settings() {
     ),
   );
 
-  $form['thumbwhere_api_url'] = array('#type' => 'textfield',
-    '#title' => t('API Site'),
-    '#default_value' => variable_get('thumbwhere_api_url', 'api.drupal.org'),
-    '#description' => t('The base URL for your thumbwhere documentation links. You might change this if you run <a href="!url">api.module</a> locally.', array('!url' => url('http://drupal.org/project/api'))));
+   */
+
+  /*
+
   $form['dev_timer'] = array('#type' => 'checkbox',
     '#title' => t('Display page timer'),
     '#default_value' => variable_get('dev_timer', 0),
@@ -147,6 +243,8 @@ function thumbwhere_admin_settings() {
     '#default_value' => variable_get('thumbwhere_use_uncompressed_jquery', FALSE),
     '#description' => t("Use a human-readable version of jQuery instead of the minified version that ships with Drupal, to make JavaScript debugging easier."),
   );
+
+   */
 
   return system_settings_form($form);
 }
