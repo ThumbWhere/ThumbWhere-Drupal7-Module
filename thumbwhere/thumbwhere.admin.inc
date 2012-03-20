@@ -121,6 +121,22 @@ function thumbwhere_admin_settings() {
       '#description' => t('The Master Key for controlling an entire ThumbWhere instance.')
   );
 
+
+  $form['thumbwhere_api_log_debug'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Log API Debug Messages'),
+      '#default_value' => variable_get('thumbwhere_api_log_debug', 0),
+      '#description' => t('Include Thumbwhere API call debugging messages in the watchdog log..')
+  );
+
+  $form['thumbwhere_api_log_trace'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Log API Trace Messages'),
+      '#default_value' => variable_get('thumbwhere_api_log_trace', 0),
+      '#description' => t('Include Thumbwhere API call trace messages in the watchdog log..')
+  );
+
+
   /*
 
 
