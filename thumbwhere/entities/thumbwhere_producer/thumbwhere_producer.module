@@ -38,6 +38,7 @@ function thumbwhere_producer_entity_info() {
 
     'entity keys' => array(
         'id' => 'thumbwhere_producer_id',
+        'label' => 'name'
     ),
 
     // A function taking an entity and an entity type as arguments and returning the label of the entity.

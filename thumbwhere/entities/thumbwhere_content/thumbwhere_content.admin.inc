@@ -214,6 +214,7 @@ function thumbwhere_content_edit_form($form, &$form_state, $thumbwhere_content) 
     '#maxlength' => 255,
    /// '#required' => TRUE,
     '#weight' => -5,
+    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_mediaitem',
   );
   // Add the default field elements.
   $form['fk_metadata'] = array(
@@ -223,6 +224,7 @@ function thumbwhere_content_edit_form($form, &$form_state, $thumbwhere_content) 
     '#maxlength' => 255,
    /// '#required' => TRUE,
     '#weight' => -5,
+    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_metadata',
   );
   // Add the default field elements.
   $form['fk_producer'] = array(
@@ -232,6 +234,7 @@ function thumbwhere_content_edit_form($form, &$form_state, $thumbwhere_content) 
     '#maxlength' => 255,
    /// '#required' => TRUE,
     '#weight' => -5,
+    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_producer',
   );
   // Add the default field elements.
   $form['fk_contentingest'] = array(
@@ -241,12 +244,13 @@ function thumbwhere_content_edit_form($form, &$form_state, $thumbwhere_content) 
     '#maxlength' => 255,
    /// '#required' => TRUE,
     '#weight' => -5,
+    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_contentingest',
   );
   // Add the default field elements.
     $form['title'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereContent title'),
-    '#default_value' => isset($thumbwhere_content->title) ? $thumbwhere_content->title : '',
+    '#default_value' => isset($thumbwhere_content->title) ? $thumbwhere_content->title : 'Hello',
     '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -311,10 +315,81 @@ function thumbwhere_content_edit_form($form, &$form_state, $thumbwhere_content) 
  * Form API validate callback for the thumbwhere_content form
  */
 function thumbwhere_content_edit_form_validate(&$form, &$form_state) {
+ 	
+  //debug($form); 	
+  //debug($form_state);
+
+
+  // No validation for pk
+
+
+  // Convert fk autocomplete for fk_mediaitem
+  $value = $form['fk_mediaitem']['#value'];
+  // If we have something, escape the auto-completion encoding.
+  if (!empty($value)) { 
+    $value = entity_autocomplete_get_id($value);
+    form_set_value($form['fk_mediaitem'], $value,$form_state);
+  }
+  //debug($form['fk_mediaitem']);
+  debug('fk_mediaitem = ' . $value);
+  // Validate fk fk_mediaitem
+
+
+  // Convert fk autocomplete for fk_metadata
+  $value = $form['fk_metadata']['#value'];
+  // If we have something, escape the auto-completion encoding.
+  if (!empty($value)) { 
+    $value = entity_autocomplete_get_id($value);
+    form_set_value($form['fk_metadata'], $value,$form_state);
+  }
+  //debug($form['fk_metadata']);
+  debug('fk_metadata = ' . $value);
+  // Validate fk fk_metadata
+
+
+  // Convert fk autocomplete for fk_producer
+  $value = $form['fk_producer']['#value'];
+  // If we have something, escape the auto-completion encoding.
+  if (!empty($value)) { 
+    $value = entity_autocomplete_get_id($value);
+    form_set_value($form['fk_producer'], $value,$form_state);
+  }
+  //debug($form['fk_producer']);
+  debug('fk_producer = ' . $value);
+  // Validate fk fk_producer
+
+
+  // Convert fk autocomplete for fk_contentingest
+  $value = $form['fk_contentingest']['#value'];
+  // If we have something, escape the auto-completion encoding.
+  if (!empty($value)) { 
+    $value = entity_autocomplete_get_id($value);
+    form_set_value($form['fk_contentingest'], $value,$form_state);
+  }
+  //debug($form['fk_contentingest']);
+  debug('fk_contentingest = ' . $value);
+  // Validate fk fk_contentingest
+
+
+  // Validate normaltitle
+  $value = $form['title']['#value'];
+  if (empty($value)) {
+    throw new Exception('Field \'title\' in is mandatory.');
+  }
+
+							
+
+	//form_set_value( array('#parents' => array('array_key_parent', 'array_key_to_replace')) , $value, $form_state);
+
+ 	
+ 	
   $thumbwhere_content = $form_state['thumbwhere_content'];
 
   // Notify field widgets to validate their data.
   field_attach_form_validate('thumbwhere_content', $thumbwhere_content, $form, $form_state);
+  	
+  	
+  
 }
 
 
@@ -347,6 +422,9 @@ function thumbwhere_content_edit_form_submit(&$form, &$form_state) {
 function thumbwhere_content_form_submit_delete(&$form, &$form_state) {
   $form_state['redirect'] = 'admin/content/thumbwhere_contents/thumbwhere_content/' . $form_state['thumbwhere_content']->pk_content . '/delete';
 }
+
+
+
 
 
 /**

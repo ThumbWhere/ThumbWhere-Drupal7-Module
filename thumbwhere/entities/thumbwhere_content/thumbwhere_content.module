@@ -32,8 +32,10 @@ function thumbwhere_content_entity_info() {
     // fieldable: Set to TRUE if you want your entity type to accept fields being attached to it.
     'fieldable' => TRUE,
 
+	// Declare the endty keys..
     'entity keys' => array(
-        'id' => 'pk_content',
+    	'id' => 'pk_content',
+    	'label' => 'title',
     ),
 
     // A function taking an entity and an entity type as arguments and returning the label of the entity.
