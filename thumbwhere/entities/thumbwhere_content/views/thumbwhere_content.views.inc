@@ -83,7 +83,6 @@ function thumbwhere_content_views_default_views() {
     'fk_mediaitem' => 'fk_mediaitem',
     'fk_metadata' => 'fk_metadata',
     'fk_producer' => 'fk_producer',
-    'fk_contentingest' => 'fk_contentingest',
     'title' => 'title',
     'link_thumbwhere_content' => 'link_thumbwhere_content',
     'operations' => 'operations',
@@ -112,13 +111,6 @@ function thumbwhere_content_views_default_views() {
           'empty_column' => 0,
       ),
       'fk_producer' => array(
-          'sortable' => 0,
-          'default_sort_order' => 'asc',
-          'align' => '',
-          'separator' => '',
-          'empty_column' => 0,
-      ),
-      'fk_contentingest' => array(
           'sortable' => 0,
           'default_sort_order' => 'asc',
           'align' => '',
@@ -249,30 +241,6 @@ function thumbwhere_content_views_default_views() {
   $handler->display->display_options['fields']['fk_producer']['empty_zero'] = 0;
   $handler->display->display_options['fields']['fk_producer']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['fk_producer']['format_plural'] = 0;
-  /* Field: ThumbWhereContent: fk_contentingest */
-  $handler->display->display_options['fields']['fk_contentingest']['id'] = 'fk_contentingest';
-  $handler->display->display_options['fields']['fk_contentingest']['table'] = 'thumbwhere_content';
-  $handler->display->display_options['fields']['fk_contentingest']['field'] = 'fk_contentingest';
-  $handler->display->display_options['fields']['fk_contentingest']['lable'] = 'fk_contentingest';
-  $handler->display->display_options['fields']['fk_contentingest']['alter']['alter_text'] = 0;
-  $handler->display->display_options['fields']['fk_contentingest']['alter']['make_link'] = 0;
-  $handler->display->display_options['fields']['fk_contentingest']['alter']['absolute'] = 0;
-  $handler->display->display_options['fields']['fk_contentingest']['alter']['external'] = 0;
-  $handler->display->display_options['fields']['fk_contentingest']['alter']['replace_spaces'] = 0;
-  $handler->display->display_options['fields']['fk_contentingest']['alter']['trim_whitespace'] = 0;
-  $handler->display->display_options['fields']['fk_contentingest']['alter']['nl2br'] = 0;
-  $handler->display->display_options['fields']['fk_contentingest']['alter']['word_boundary'] = 1;
-  $handler->display->display_options['fields']['fk_contentingest']['alter']['ellipsis'] = 1;
-  $handler->display->display_options['fields']['fk_contentingest']['alter']['more_link'] = 0;
-  $handler->display->display_options['fields']['fk_contentingest']['alter']['strip_tags'] = 0;
-  $handler->display->display_options['fields']['fk_contentingest']['alter']['trim'] = 0;
-  $handler->display->display_options['fields']['fk_contentingest']['alter']['html'] = 0;
-  $handler->display->display_options['fields']['fk_contentingest']['element_label_colon'] = 1;
-  $handler->display->display_options['fields']['fk_contentingest']['element_default_classes'] = 1;
-  $handler->display->display_options['fields']['fk_contentingest']['hide_empty'] = 0;
-  $handler->display->display_options['fields']['fk_contentingest']['empty_zero'] = 0;
-  $handler->display->display_options['fields']['fk_contentingest']['hide_alter_empty'] = 1;
-  $handler->display->display_options['fields']['fk_contentingest']['format_plural'] = 0;
   /* Field: ThumbWhereContent: title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'thumbwhere_content';

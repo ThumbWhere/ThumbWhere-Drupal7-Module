@@ -17,6 +17,18 @@
  */
 function thumbwhere_content_uninstall() {
 
+  // Delete the permissions
+  foreach (_thumbwhere_content_get_permissions() as $role_name => $permissions) {
+    // Find the role ID for this role
+    $role = user_role_load_by_name($role_name);
+    if ($role != false) {
+      $rid = $role->rid;
+      // Set the permissions for this role
+      user_role_revoke_permissions($rid, $permissions);
+    }
+  }
+
+
   //
   // Uninstall all the field info
   //
@@ -44,6 +56,18 @@ function thumbwhere_content_uninstall() {
  * @ingroup thumbwhere_content
  */
 function thumbwhere_content_install() {
+
+ // Create the permissions
+  foreach (_thumbwhere_content_get_permissions() as $role_name => $permissions) {
+    // Find the role ID for this role
+    $role = user_role_load_by_name($role_name);
+    if ($role != false) {
+      $rid = $role->rid;
+      // Set the permissions for this role
+      user_role_grant_permissions($rid, $permissions);
+    }
+  }
+
 
   // Clear the everything cache
   drupal_flush_all_caches();
@@ -109,7 +133,7 @@ function thumbwhere_content_schema() {
   $schema = array();
 
   $schema['thumbwhere_content'] = array(
-  'description' => 'The base table for thumbwhere_content entities.' . 'Content... A more advanced wrapper for MediaItem mediatem: The raw media that makes up this content. metadata: The data describes the mediaitem. producer: The producer of the content.',
+  'description' => 'The base table for thumbwhere_content entities.' . 'Content... A more advanced wrapper for MediaItem mediatem: The raw media that makes up this content. metadata: The data describes the mediaitem. producer: The producer of the content. contentingest: The ingestion that created this content.',
 		'fields' => array(
           'pk_content' => array(
               'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereContents\' entity.',
@@ -134,13 +158,6 @@ function thumbwhere_content_schema() {
           ),
           'fk_producer' => array(
 					'description' => 'ThumbWhere Id: Optional reference to a \'Producer\' Entity.',
-              'type' => 'int',
-              'size' => 'big',
-              'not null' => FALSE,
-              //'default' => -1,
-          ),
-          'fk_contentingest' => array(
-					'description' => 'ThumbWhere Id: Optional reference to a \'ContentIngest\' Entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => FALSE,
@@ -171,13 +188,34 @@ function thumbwhere_content_schema() {
           'fk_producer' => array(
               'fk_producer'
           ),
-          'fk_contentingest' => array(
-              'fk_contentingest'
-          ),
 			
       ),
   );
 
   return $schema;
 }
+
+
+/**
+ * Returns a structured array defining the permission for each role.
+ *
+ * @return
+ *  An associative array specifying the permissions for each role
+ *
+ * @ingroup track
+ */
+function _thumbwhere_content_get_permissions() {
+  return array(
+      'anonymous user' => array(
+          'send thumbwhere content notifications',
+      ),
+      'authenticated user' => array(
+          'send thumbwhere content notifications',
+      ),      
+      'administrator' => array(
+      	  'send thumbwhere content notifications',
+      ),
+  );
+}
+
 
