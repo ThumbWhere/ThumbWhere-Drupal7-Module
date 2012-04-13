@@ -9,6 +9,10 @@ testing_api = 2.x
 dependencies[] = image
 dependencies[] = menu
 dependencies[] = entity
+dependencies[] = background_process
+dependencies[] = progress
+dependencies[] = entity_autocomplete
+
 ;dependencies[] = entityreference
 
 files[] = thumbwhere.module  

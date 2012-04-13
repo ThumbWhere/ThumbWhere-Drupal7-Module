@@ -134,7 +134,7 @@ function thumbwhere_content_schema() {
 
   $schema['thumbwhere_content'] = array(
   'description' => 'The base table for thumbwhere_content entities.' . 'Content... A more advanced wrapper for MediaItem mediatem: The raw media that makes up this content. metadata: The data describes the mediaitem. producer: The producer of the content. contentingest: The ingestion that created this content.',
-		'fields' => array(
+    'fields' => array(
           'pk_content' => array(
               'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereContents\' entity.',
               'type' => 'int',
@@ -143,21 +143,21 @@ function thumbwhere_content_schema() {
               'default' => -1,
           ),
           'fk_mediaitem' => array(
-					'description' => 'ThumbWhere Id: Optional reference to a \'MediaItem\' Entity.',
+          'description' => 'ThumbWhere Id: Optional reference to a \'MediaItem\' Entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => FALSE,
               //'default' => -1,
           ),
           'fk_metadata' => array(
-					'description' => 'ThumbWhere Id: Optional reference to a \'Metadata\' Entity.',
+          'description' => 'ThumbWhere Id: Optional reference to a \'Metadata\' Entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => FALSE,
               //'default' => -1,
           ),
           'fk_producer' => array(
-					'description' => 'ThumbWhere Id: Optional reference to a \'Producer\' Entity.',
+          'description' => 'ThumbWhere Id: Optional reference to a \'Producer\' Entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => FALSE,
@@ -169,11 +169,11 @@ function thumbwhere_content_schema() {
               'size' => 'normal',
               'length' => 128,
               'not null' => FALSE,
-              'default' => 'Hello',		              
+              'default' => 'Hello',                  
           ),      
       ),
       'primary key' => array(
-          'pk_content'			
+          'pk_content'      
       ),      
       'indexes' => array(
           'pk_content' => array(
@@ -188,7 +188,7 @@ function thumbwhere_content_schema() {
           'fk_producer' => array(
               'fk_producer'
           ),
-			
+      
       ),
   );
 
@@ -213,7 +213,7 @@ function _thumbwhere_content_get_permissions() {
           'send thumbwhere content notifications',
       ),      
       'administrator' => array(
-      	  'send thumbwhere content notifications',
+          'send thumbwhere content notifications',
       ),
   );
 }

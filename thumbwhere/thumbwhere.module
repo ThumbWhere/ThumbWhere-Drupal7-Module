@@ -41,6 +41,33 @@ function twfd($dumpcallstack = FALSE) {
  */
 }
 
+
+/**
+ * Print a message to the debug log
+ */
+function twCanDebug() {
+
+  return (variable_get('thumbwhere_api_log_debug',0) == 1);
+
+}
+
+/**
+ * Print a trace message to the debug log
+ */
+function twCanTrace() {
+
+  return (variable_get('thumbwhere_api_log_trace',0) == 1);
+}
+
+/**
+ * Print a message to the debug log
+ */
+function twCanInfo() {
+  return (variable_get('thumbwhere_api_log_info',1) == 1);
+}
+
+
+
 /**
  * Print a message to the debug log
  *

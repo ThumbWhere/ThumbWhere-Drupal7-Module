@@ -1,0 +1,40 @@
+name = "ThumbWhere Member Entity"
+description = "Exposes ThumbWhere 'Member' Enity in Drupal"
+package = "ThumbWhere"
+core = "7.x"
+
+testing_api = 2.x
+
+dependencies[] = entity
+dependencies[] = views
+dependencies[] = menu
+dependencies[] = thumbwhere
+dependencies[] = devel
+dependencies[] = devel_debug_log
+dependencies[] = background_process
+dependencies[] = progress
+dependencies[] = entity_autocomplete
+
+
+;hidden = TRUE
+
+
+files[] = thumbwhere_member.admin.inc
+files[] = thumbwhere_member.unit.test
+files[] = thumbwhere_member.integration.test
+files[] = thumbwhere_member.stress.test
+files[] = thumbwhere_member.module
+files[] = thumbwhere_member.tpl.php
+files[] = views/thumbwhere_member.views.inc
+files[] = views/thumbwhere_member_handler_link_field.inc
+files[] = views/thumbwhere_member_handler_delete_link_field.inc
+files[] = views/thumbwhere_member_handler_edit_link_field.inc
+files[] = views/thumbwhere_member_handler_thumbwhere_member_operations_field.inc
+
+
+; Uncomment these lines to set current version to be immune from upgrade scripts
+project status url = "http://drupalmodules.thumbwhere.com/release-history"
+version = "7.x-0.0-dev-local0"
+project = "ThumbWhere"
+datestamp = "2000000000"
+

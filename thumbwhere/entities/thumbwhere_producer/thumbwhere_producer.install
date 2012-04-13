@@ -134,7 +134,7 @@ function thumbwhere_producer_schema() {
 
   $schema['thumbwhere_producer'] = array(
   'description' => 'The base table for thumbwhere_producer entities.' . 'Producer of content.',
-		'fields' => array(
+    'fields' => array(
           'pk_producer' => array(
               'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereProducers\' entity.',
               'type' => 'int',
@@ -143,14 +143,14 @@ function thumbwhere_producer_schema() {
               'default' => -1,
           ),
           'fk_place' => array(
-					'description' => 'ThumbWhere Id: Optional reference to a \'Place\' Entity.',
+          'description' => 'ThumbWhere Id: Optional reference to a \'Place\' Entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => FALSE,
               //'default' => -1,
           ),
           'fk_reputation' => array(
-					'description' => 'ThumbWhere Id: Optional reference to a \'Reputation\' Entity.',
+          'description' => 'ThumbWhere Id: Optional reference to a \'Reputation\' Entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => FALSE,
@@ -161,11 +161,11 @@ function thumbwhere_producer_schema() {
               'type' => 'varchar',
               'size' => 'normal',
               'length' => 128,
-              'not null' => FALSE,		              
+              'not null' => FALSE,                  
           ),      
       ),
       'primary key' => array(
-          'pk_producer'			
+          'pk_producer'      
       ),      
       'indexes' => array(
           'pk_producer' => array(
@@ -177,7 +177,7 @@ function thumbwhere_producer_schema() {
           'fk_reputation' => array(
               'fk_reputation'
           ),
-			
+      
       ),
   );
 
@@ -202,7 +202,7 @@ function _thumbwhere_producer_get_permissions() {
           'send thumbwhere producer notifications',
       ),      
       'administrator' => array(
-      	  'send thumbwhere producer notifications',
+          'send thumbwhere producer notifications',
       ),
   );
 }

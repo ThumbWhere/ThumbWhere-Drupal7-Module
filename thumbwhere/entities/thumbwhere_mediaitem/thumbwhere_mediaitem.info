@@ -1,0 +1,40 @@
+name = "ThumbWhere MediaItem Entity"
+description = "Exposes ThumbWhere 'MediaItem' Enity in Drupal"
+package = "ThumbWhere"
+core = "7.x"
+
+testing_api = 2.x
+
+dependencies[] = entity
+dependencies[] = views
+dependencies[] = menu
+dependencies[] = thumbwhere
+dependencies[] = devel
+dependencies[] = devel_debug_log
+dependencies[] = background_process
+dependencies[] = progress
+dependencies[] = entity_autocomplete
+
+
+;hidden = TRUE
+
+
+files[] = thumbwhere_mediaitem.admin.inc
+files[] = thumbwhere_mediaitem.unit.test
+files[] = thumbwhere_mediaitem.integration.test
+files[] = thumbwhere_mediaitem.stress.test
+files[] = thumbwhere_mediaitem.module
+files[] = thumbwhere_mediaitem.tpl.php
+files[] = views/thumbwhere_mediaitem.views.inc
+files[] = views/thumbwhere_mediaitem_handler_link_field.inc
+files[] = views/thumbwhere_mediaitem_handler_delete_link_field.inc
+files[] = views/thumbwhere_mediaitem_handler_edit_link_field.inc
+files[] = views/thumbwhere_mediaitem_handler_thumbwhere_mediaitem_operations_field.inc
+
+
+; Uncomment these lines to set current version to be immune from upgrade scripts
+project status url = "http://drupalmodules.thumbwhere.com/release-history"
+version = "7.x-0.0-dev-local0"
+project = "ThumbWhere"
+datestamp = "2000000000"
+

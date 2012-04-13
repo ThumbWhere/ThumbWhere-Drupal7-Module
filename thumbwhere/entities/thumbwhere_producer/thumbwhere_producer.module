@@ -32,10 +32,10 @@ function thumbwhere_producer_entity_info() {
     // fieldable: Set to TRUE if you want your entity type to accept fields being attached to it.
     'fieldable' => TRUE,
 
-	// Declare the endty keys..
+  // Declare the endty keys..
     'entity keys' => array(
-    	'id' => 'pk_producer',
-    	'label' => 'name',
+      'id' => 'pk_producer',
+      'label' => 'name',
     ),
 
     // A function taking an entity and an entity type as arguments and returning the label of the entity.
@@ -89,7 +89,7 @@ function thumbwhere_producer_permission() {
       'title' => t('Administer thumbwhere_producers'),
       'description' => t('Edit and delete all thumbwhere_producers'),
     ),
-	'send thumbwhere producer notifications' => array(
+  'send thumbwhere producer notifications' => array(
           'title' => t('Send ThumbWhere Notifications'),
           'description' => t('Allow the caller to call the ThumbWhere Producer Entity Notifications Endpoint.'),
           'restrict access' => TRUE,
@@ -612,13 +612,13 @@ function thumbwhere_producer_entity_presave($entity, $entity_type) {
     if ($entity->is_new) {
   
       // .. then we create a new thumbwhere_producer entity...
-	    // Instantiate the ThumbWhereContent class
+      // Instantiate the ThumbWhereContent class
 
       $twContentAPI = new ThumbWhereAPIContent();
 
-      //debug($twContentAPI);
+      //if (twCanDebug()) debug($twContentAPI);
 
-      //debug($entity);
+      //if (twCanDebug()) debug($entity);
 
       //
       // Collate and validate our fields
@@ -640,19 +640,20 @@ function thumbwhere_producer_entity_presave($entity, $entity_type) {
       $producer = $twContentAPI->create_producer($context = array(
                   'key' => variable_get('thumbwhere_api_key')
           ), $fields);
-						
-       if (variable_get('thumbwhere_api_log_debug',0) == 1) debug($producer);
+            
+       if (twCanDebug()) debug($producer);
 
-      //debug($contentIngest);
+      //if (twCanDebug()) debug($producer);
 
       $attributes = $producer->body->producer->attributes();
 
-      if (variable_get('thumbwhere_api_log_debug',0) == 1) debug('newly created id = ' . $attributes['id']);
+      if (twCanDebug()) debug('newly created id = ' . $attributes['id']);
 
       // Assign new id.
-      $entity->pk_producer = $attributes['id'];
+      $entity->pk_producer = intval($attributes['id']);
 
-      if (variable_get('thumbwhere_api_log_debug',0) == 1) debug('$entity->pk_producer = ' . $entity->pk_producer);    }
+      if (twCanDebug()) debug('$entity->pk_producer = ' . $entity->pk_producer);
+    }
     else
     {
         // .. otherwise we calculate the changes and ship them off to thumbwhere

@@ -1,0 +1,40 @@
+name = "ThumbWhere HostCommand Entity"
+description = "Exposes ThumbWhere 'HostCommand' Enity in Drupal"
+package = "ThumbWhere"
+core = "7.x"
+
+testing_api = 2.x
+
+dependencies[] = entity
+dependencies[] = views
+dependencies[] = menu
+dependencies[] = thumbwhere
+dependencies[] = devel
+dependencies[] = devel_debug_log
+dependencies[] = background_process
+dependencies[] = progress
+dependencies[] = entity_autocomplete
+
+
+;hidden = TRUE
+
+
+files[] = thumbwhere_hostcommand.admin.inc
+files[] = thumbwhere_hostcommand.unit.test
+files[] = thumbwhere_hostcommand.integration.test
+files[] = thumbwhere_hostcommand.stress.test
+files[] = thumbwhere_hostcommand.module
+files[] = thumbwhere_hostcommand.tpl.php
+files[] = views/thumbwhere_hostcommand.views.inc
+files[] = views/thumbwhere_hostcommand_handler_link_field.inc
+files[] = views/thumbwhere_hostcommand_handler_delete_link_field.inc
+files[] = views/thumbwhere_hostcommand_handler_edit_link_field.inc
+files[] = views/thumbwhere_hostcommand_handler_thumbwhere_hostcommand_operations_field.inc
+
+
+; Uncomment these lines to set current version to be immune from upgrade scripts
+project status url = "http://drupalmodules.thumbwhere.com/release-history"
+version = "7.x-0.0-dev-local0"
+project = "ThumbWhere"
+datestamp = "2000000000"
+

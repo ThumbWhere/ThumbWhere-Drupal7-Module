@@ -32,10 +32,10 @@ function thumbwhere_content_entity_info() {
     // fieldable: Set to TRUE if you want your entity type to accept fields being attached to it.
     'fieldable' => TRUE,
 
-	// Declare the endty keys..
+  // Declare the endty keys..
     'entity keys' => array(
-    	'id' => 'pk_content',
-    	'label' => 'title',
+      'id' => 'pk_content',
+      'label' => 'title',
     ),
 
     // A function taking an entity and an entity type as arguments and returning the label of the entity.
@@ -89,7 +89,7 @@ function thumbwhere_content_permission() {
       'title' => t('Administer thumbwhere_contents'),
       'description' => t('Edit and delete all thumbwhere_contents'),
     ),
-	'send thumbwhere content notifications' => array(
+  'send thumbwhere content notifications' => array(
           'title' => t('Send ThumbWhere Notifications'),
           'description' => t('Allow the caller to call the ThumbWhere Content Entity Notifications Endpoint.'),
           'restrict access' => TRUE,
@@ -612,13 +612,13 @@ function thumbwhere_content_entity_presave($entity, $entity_type) {
     if ($entity->is_new) {
   
       // .. then we create a new thumbwhere_content entity...
-	    // Instantiate the ThumbWhereContent class
+      // Instantiate the ThumbWhereContent class
 
       $twContentAPI = new ThumbWhereAPIContent();
 
-      //debug($twContentAPI);
+      //if (twCanDebug()) debug($twContentAPI);
 
-      //debug($entity);
+      //if (twCanDebug()) debug($entity);
 
       //
       // Collate and validate our fields
@@ -656,19 +656,20 @@ function thumbwhere_content_entity_presave($entity, $entity_type) {
       $content = $twContentAPI->create_content($context = array(
                   'key' => variable_get('thumbwhere_api_key')
           ), $fields);
-						
-       if (variable_get('thumbwhere_api_log_debug',0) == 1) debug($content);
+            
+       if (twCanDebug()) debug($content);
 
-      //debug($contentIngest);
+      //if (twCanDebug()) debug($content);
 
       $attributes = $content->body->content->attributes();
 
-      if (variable_get('thumbwhere_api_log_debug',0) == 1) debug('newly created id = ' . $attributes['id']);
+      if (twCanDebug()) debug('newly created id = ' . $attributes['id']);
 
       // Assign new id.
-      $entity->pk_content = $attributes['id'];
+      $entity->pk_content = intval($attributes['id']);
 
-      if (variable_get('thumbwhere_api_log_debug',0) == 1) debug('$entity->pk_content = ' . $entity->pk_content);    }
+      if (twCanDebug()) debug('$entity->pk_content = ' . $entity->pk_content);
+    }
     else
     {
         // .. otherwise we calculate the changes and ship them off to thumbwhere

@@ -99,14 +99,29 @@ function thumbwhere_requirements($phase) {
  */
 function thumbwhere_install() {
 
-
   // New module weights in core: put devel as the very last in the chain.
   //db_query("UPDATE {system} SET weight = 10 WHERE name = 'thumbwhere'");
-
 
   // During installation, the t() function is unavailable, so we use get_t()
   // to store the name of the translation function.
   $t = get_t();
+
+  // Install our user roles
+  $user_roles = _thumbwhere_get_user_roles();
+  foreach ($user_roles as $role_name => $role) {
+    user_role_save($role);
+  }
+
+
+  foreach (_thumbwhere_get_permissions() as $role_name => $permissions) {
+    // Find the role ID for this role
+    $role = user_role_load_by_name($role_name);
+    if ($role != false) {
+      $rid = $role->rid;
+      // Set the permissions for this role
+      user_role_grant_permissions($rid, $permissions);
+    }
+  }
 
 
 
@@ -205,6 +220,24 @@ function thumbwhere_install() {
  * @ingroup twcontent
  */
 function thumbwhere_uninstall() {
+
+  // Delete our user roles
+  $user_roles = _thumbwhere_get_user_roles();
+  foreach ($user_roles as $role_name => $role) {
+    user_role_delete($role);
+  }
+
+
+  // Detach permissions to each of the roles for this content type
+  foreach (_thumbwhere_get_permissions() as $role_name => $permissions) {
+    // Find the role ID for this role
+    $role = user_role_load_by_name($role_name);
+    if ($role != false) {
+      $rid = $role->rid;
+      // Set the permissions for this role
+      user_role_revoke_permissions($rid, $permissions);
+    }
+  }
 
 
   /*
@@ -398,3 +431,111 @@ function thumbwhere_field_schema($field) {
      ),
  );
 }
+
+
+/**
+ * Returns a structured array defining the user roles.
+ *
+ * @return
+ *  An associative array specifying the user roles that are used by this module.
+ *
+ * @ingroup thumbwhere
+ */
+function _thumbwhere_get_user_roles() {
+  return array(
+      'notification' => (object) array(
+          'name' => 'notification',
+          'weight' => 3,
+      )
+  );
+}
+
+
+/**
+ * Returns a structured array defining the permission for each role.
+ *
+ * @return
+ *  An associative array specifying the permissions for each role
+ *
+ * @ingroup track
+ */
+function _thumbwhere_get_permissions() {
+  return array(/*
+      'anonymous user' => array(
+          'view field_unearthed_tags',
+          'view field_unearthed_genre_primary',
+          'view field_unearthed_genres_secondary',
+          'view field_unearthed_played',
+      ),
+      'authenticated user' => array(
+          'edit field_unearthed_tags',
+          'view field_unearthed_tags',
+          'view field_unearthed_genre_primary',
+          'view field_unearthed_genres_secondary',
+          'view field_unearthed_played',
+      ),
+      'staff' => array(
+          'access administration menu',
+          'access administration pages',
+          'access content overview',
+          'access overlay',
+          'access site in maintenance mode',
+          'administer comments',
+          'delete terms in 1',
+          'edit field_unearthed_genre_primary',
+          'edit field_unearthed_genres_secondary',
+          'edit field_unearthed_played',
+          'edit field_unearthed_tags',
+          'edit own comments',
+          'edit terms in 1',
+          'revert revisions',
+          'view field_unearthed_tags',
+          'view field_unearthed_genre_primary',
+          'view field_unearthed_genres_secondary',
+          'view field_unearthed_played',
+          'view own unpublished content',
+          'view revisions',
+          'view the administration theme',
+      ),
+      'operations' => array(
+          'access administration menu',
+          'access administration pages',
+          'access content overview',
+          'access overlay',
+          'access site in maintenance mode',
+          'access site reports',
+          'administer blocks',
+          'administer comments',
+          'block IP addresses',
+          'delete terms in 1',
+          'delete terms in 2',
+          'delete terms in 3',
+          'edit field_unearthed_genre_primary',
+          'edit field_unearthed_genres_secondary',
+          'edit field_unearthed_played',
+          'edit field_unearthed_tags',
+          'edit own comments',
+          'edit terms in 1',
+          'edit terms in 2',
+          'edit terms in 3',
+          'flush caches',
+          'revert revisions',
+          'view field_unearthed_tags',
+          'view field_unearthed_genre_primary',
+          'view field_unearthed_genres_secondary',
+          'view field_unearthed_played',
+          'view own unpublished content',
+          'view revisions',
+          'view the administration theme',
+      ),
+      'administrator' => array(
+          'delete terms in 1',
+          'delete terms in 2',
+          'delete terms in 3',
+          'edit terms in 1',
+          'edit terms in 2',
+          'edit terms in 3',
+      ),*/
+  );
+}
+

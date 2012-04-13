@@ -15,101 +15,289 @@
 
 
 
+ 
 /**
- * Menu callback: React to a notifications for Content.
+ * Handle the notification for content_ingext
+ */
+function _thumbwhere_handle_content_notify_xml($notification) {
+
+  //
+  // Get the operation
+  //
+
+  if (!isset($notification->attributes()->op)) {
+    drupal_add_http_header('Status', '501 unable to fulfull request..');
+    print('We were expecting an \'op\', attribute on the \'content\', element.');
+    exit(0);
+  }
+
+  $op = $notification->attributes()->op;
+
+  if (twCanDebug()) debug('op');
+  if (twCanDebug()) debug($op);
+
+  //
+  // Get the context
+  //
+
+  if (!isset($notification->attributes()->key)) {
+    drupal_add_http_header('Status', '501 unable to fulfull request..');
+    print('We were expecting a \'key\', attribute on the \'content\', element.');
+    exit(0);
+  }
+
+  $context_key =  $notification->attributes()->key;
+
+  //
+  // Now based on the operation..
+  //
+
+  switch($op)
+  {
+    case 'update':
+      {
+        //
+        // What resource are we updating?
+        //
+      
+        //
+        // Get the id
+        //
+		
+        if (!isset($notification->attributes()->id)) {
+          drupal_add_http_header('Status', '501 unable to fulfull request.');
+          print('We were expecting an \'id\', attribute on the \'content\', element when we are performing an \'update\' notification..');
+          exit(0);
+        }
+
+        $id = intval($notification->attributes()->id);
+		
+
+        if (twCanDebug()) debug('id');
+        if (twCanDebug()) debug($id);
+
+      
+        //
+        // Get the fields
+        //
+          
+        $entities = entity_load('thumbwhere_content', array($id));
+
+        if (twCanDebug()) debug('$entities');
+        if (twCanDebug()) debug($entities);
+
+        if (count($entities) == 0) {
+          drupal_add_http_header('Status', '404 No such resource exists.');
+          print('No such \'content\' resource exists with an id of \'' . $id . '\'.');
+	    watchdog('thumbwhere_content', 'No such \'content\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);          exit(0);
+        }
+
+        // Getting a reference to the entity we asked for
+        $entity = $entities[$id];
+
+        //
+        // We are only updating what has been passed through.
+        // No test for missing values.
+        // TODO: Validate incoming values.
+        //
+
+
+        if (isset($notification->mediaitem)) {
+          $entity->fk_mediaitem = intval($notification->mediaitem);
+        }
+
+        if (isset($notification->metadata)) {
+          $entity->fk_metadata = intval($notification->metadata);
+        }
+
+        if (isset($notification->producer)) {
+          $entity->fk_producer = intval($notification->producer);
+        }
+
+        if (isset($notification->title)) {
+          $entity->title = (string)($notification->title);
+        }
+
+        if (!isset($notification->attributes()->key)) {
+          if (twCanDebug()) debug('$entities');
+          if (twCanDebug()) debug($entities);
+        }
+
+        // Finally write the entity.
+        entity_save('thumbwhere_content', $entity);
+
+        //
+        // Send the final response
+        //
+
+        drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<content op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</content>');
+        print('</response>');
+        exit(0);
+      }
+
+    default:
+      {
+        drupal_add_http_header('Status', '501 Unable to fulfull request..');
+        print('We were expecting a \'key\', attribute on the \'content\', element.');
+        exit(0);
+
+      }
+  }
+}
+
+
+
+/**
+ * Menu callback: React to a notifications for ContentIngest.
  */
 function _thumbwhere_content_notify() {
-	    if (variable_get('thumbwhere_api_log_debug',0) == 1) watchdog('thumbwhere_content', 'incoming notification.');
-		
-		
-	  $numargs = func_num_args();
-	  $arg_list = func_get_args();
+
+  if (variable_get('thumbwhere_api_log_debug', 0) == 1) {
+    watchdog('thumbwhere_content', 'incoming notification.');
+  }
+
+  $numargs = func_num_args();
+  $arg_list = func_get_args();
+
+  
+	if (twCanDebug()) debug('$numargs  = ' . $numargs);
 	
-	  if (variable_get('thumbwhere_api_log_debug',0) == 1) debug('$numargs  = ' . $numargs);
-	  if (variable_get('thumbwhere_api_log_debug',0) == 1)debug('$arg_list = ' . $arg_list);
-	  if (variable_get('thumbwhere_api_log_debug',0) == 1)debug($_GET);
+	if (twCanDebug()) debug('$arg_list = ' . $arg_list);
 	
-	  if (variable_get('thumbwhere_api_log_debug',0) == 1) foreach($arg_list as $arg)
-	  {
-	    debug('$arg  = ' .  $arg);
-	  }
+	if (twCanDebug()) debug('$_REQUEST');
+	if (twCanDebug()) debug($_REQUEST);
 	
-	  $url64k = '';
-	  $url128k = '';
+	if (twCanDebug()) debug('$_GET');
+	if (twCanDebug()) debug($_GET);
 	
+	if (twCanDebug()) debug('$_POST');
+	if (twCanDebug()) debug($_POST);
 	
-	  if (isset($_GET['url128k']))
-	  {
-	    $url128k = urldecode($_GET['url128k']);
-	  }
+	//if (twCanDebug()) debug('$HTTP_RAW_POST_DATA');
+	//if (twCanDebug()) debug($HTTP_RAW_POST_DATA);
 	
-	  if (isset($_GET['url64k']))
-	  {
-	    $url64k = urldecode($_GET['url64k']);
-	  }
+	if (twCanDebug()) debug('$_SERVER');
+	if (twCanDebug()) debug($_SERVER);
 	
-	  if (variable_get('thumbwhere_api_log_debug',0) == 1) debug('$url64k = ' . $url64k);
-	  if (variable_get('thumbwhere_api_log_debug',0) == 1) debug('$url128k = ' . $url128k);
-	
-	
-	
-	  //
-	  // Now update the track
-	  //
-	
-	  $query = new EntityFieldQuery();
-	  $result = $query->entityCondition('entity_type', 'node', '=') // select nodes
-	  ->propertyCondition('type', 'track', '=') //type news
-	  //->propertyCondition('status', '1') //published, you don't need to add '=' it's added by default
-	  //->fieldCondition('field_newapp', 'nid', 0, '>') // node referenced so the 2nd parameter is nid
-	  //->propertyOrderBy('created', 'desc') //most recent first
-	  //->range(0,50) // limit
-	  ->execute();
-	
-	  if (variable_get('thumbwhere_api_log_debug',0) == 1) debug($result);
-	  if (variable_get('thumbwhere_api_log_debug',0) == 1) debug($result['node']);
-	
-	  foreach($result['node'] as $track)
-	  {
-	
-	    if (variable_get('thumbwhere_api_log_debug',0) == 1) debug($track);
-	
-	    if (variable_get('thumbwhere_api_log_debug',0) == 1) debug('$nid = ' . $track->nid);
-	
-	    // Load the node again
-	    $node = node_load($track->nid);
-	
-	    if (variable_get('thumbwhere_api_log_debug',0) == 1) debug($node);
-	
-	    $node->field_track_url64k[$node->language][0]['value'] = $url64k;
-	    $node->field_track_url128k[$node->language][0]['value'] = $url128k;
-	    $node->field_track_ready_for_approval[$node->language][0]['value'] = '1';
-	
-	    node_save($node);
-	
-	  }
-	
-	
-	  if (variable_get('thumbwhere_api_log_debug',0) == 1) debug($result);
+	//if (twCanDebug()) debug('$GLOBALS');
+	//if (twCanDebug()) debug($GLOBALS);
+
   
 
-  /*
-  $content = array(
-      'messages' => array(
-          '#markup' => t('No messages.'),
-          '#prefix' => '<div id="content-notification-table">',
-          '#suffix' => '</div>',
-      )
-  );
+  if (variable_get('thumbwhere_api_log_debug', 0) == 1) {
+    foreach ($arg_list as $arg) {
+      if (twCanDebug()) debug('$arg  = ' . $arg);
+    }
+  }
 
-  $data = array(
-      'content' => drupal_render($content)
-  );
 
-  drupal_json_output($data);
-  
-  */
-  
+  //////////////////////////////////////////////////
+  //
+  //
+
+  switch ($_SERVER['REQUEST_METHOD']) {
+
+    case 'POST': {
+        if ($numargs == 1) {
+          if ($arg_list[0] == 'content') {
+
+            //
+            // Get the POST data as XML
+            //
+
+            $post_xml = new SimpleXMLElement('php://input', null, true);
+            if (twCanDebug()) debug('$post_xml');
+            if (twCanDebug()) debug($post_xml);
+
+            if (twCanDebug()) debug('$post_xml->getName()');
+            if (twCanDebug()) debug($post_xml->getName());
+
+            // We expect 'action' as the root element. TODO: I would rather this was the more generic 'request'
+            if ($post_xml->getName() != 'action') {
+              drupal_add_http_header('Status', '404 not found.');
+              print('We were expecting \'action\', as the root element, not \'' . $post_xml->getName() . '\'.');
+              exit(0);
+            }
+
+            /*
+             *  SimpleXMLElement::__set_state(array(
+             *      'content' =>
+             *      SimpleXMLElement::__set_state(array(
+             *       '@attributes' =>
+             *      array (
+             *        'key' => '8e9ff318-3cd7-4593-99de-4c37c0fb335a',
+             *        'op' => 'create',
+             *      ),
+             *    )),
+             *  ))
+             */
+
+
+            // We expect 'action' as the root element.
+            if (!isset($post_xml->content)) {
+              drupal_add_http_header('Status', '404 not found.');
+              print('We were expecting a \'content\', element in the action payload.');
+              exit(0);
+            }
+
+            // Handle the incoming notification for content ingest
+            _thumbwhere_handle_content_notify_xml($post_xml->content);
+
+          }
+          else {
+            drupal_add_http_header('Status', '404 not found.');
+            print('Invalid resource');
+            exit(0);
+          }
+        }
+        else {
+          drupal_add_http_header('Status', '404 not found.');
+          print('Invalid notification request url format.');
+          exit(0);
+        }
+      }
+      break;
+
+    case 'GET': {
+
+        if ($numargs == 1) {
+
+          // If we are returning the index.xml file for the webservice.
+          if ($arg_list[0] == 'index.xml') {
+            // return index.xml
+            drupal_add_http_header('Content-Type', 'text/xml');
+            readfile(dirname(__FILE__) . '/index.xml');
+            exit(0);
+          }
+          else {
+            drupal_add_http_header('Status', '404 not found.');
+            print('File not found.');
+            exit(0);
+          }
+        }
+        else {
+          drupal_add_http_header('Status', '404 not found.');
+          print('Invalid notification request url format.');
+          exit(0);
+        }
+      }
+      break;
+
+    default: {
+        drupal_add_http_header('Status', '404 not found.');
+        exit(0);
+      }
+      break;
+  }
+
+  //
+  //
+  ////////////////////////////////////////////////////////////////////////////////////
+ 
 }
 
 
@@ -129,7 +317,7 @@ class ThumbWhereContentUIController extends EntityDefaultUIController {
 
     $items = array();
     
-  	// Add a notification page...
+    // Add a notification page...
     $items['thumbwhere/content/notify'] = array(
         'title' => 'Notifications Callback for "Content" Entity',
         'page callback' => '_thumbwhere_content_notify',
@@ -333,7 +521,7 @@ function thumbwhere_content_edit_form($form, &$form_state, $thumbwhere_content) 
     '#title' => t('An interesting thumbwhere_content switch'),
     '#default_value' => isset($thumbwhere_content->data['sample_data']) ? $thumbwhere_content->data['sample_data'] : 1,
   );
-	*/
+  */
 
 
   // Add the field related form elements.
@@ -382,9 +570,9 @@ function thumbwhere_content_edit_form($form, &$form_state, $thumbwhere_content) 
  * Form API validate callback for the thumbwhere_content form
  */
 function thumbwhere_content_edit_form_validate(&$form, &$form_state) {
- 	
-  //debug($form); 	
-  //debug($form_state);
+   
+  //if (twCanDebug()) debug($form);   
+  //if (twCanDebug()) debug($form_state);
 
 
   // No validation for pk
@@ -397,8 +585,8 @@ function thumbwhere_content_edit_form_validate(&$form, &$form_state) {
     $value = entity_autocomplete_get_id($value);
     form_set_value($form['fk_mediaitem'], $value,$form_state);
   }
-  //debug($form['fk_mediaitem']);
-   if (variable_get('thumbwhere_api_log_debug',0) == 1) debug('fk_mediaitem = ' . $value);
+  //if (twCanDebug()) debug($form['fk_mediaitem']);
+   if (twCanDebug()) debug('fk_mediaitem = ' . $value);
   // Validate fk fk_mediaitem
 
 
@@ -409,8 +597,8 @@ function thumbwhere_content_edit_form_validate(&$form, &$form_state) {
     $value = entity_autocomplete_get_id($value);
     form_set_value($form['fk_metadata'], $value,$form_state);
   }
-  //debug($form['fk_metadata']);
-   if (variable_get('thumbwhere_api_log_debug',0) == 1) debug('fk_metadata = ' . $value);
+  //if (twCanDebug()) debug($form['fk_metadata']);
+   if (twCanDebug()) debug('fk_metadata = ' . $value);
   // Validate fk fk_metadata
 
 
@@ -421,8 +609,8 @@ function thumbwhere_content_edit_form_validate(&$form, &$form_state) {
     $value = entity_autocomplete_get_id($value);
     form_set_value($form['fk_producer'], $value,$form_state);
   }
-  //debug($form['fk_producer']);
-   if (variable_get('thumbwhere_api_log_debug',0) == 1) debug('fk_producer = ' . $value);
+  //if (twCanDebug()) debug($form['fk_producer']);
+   if (twCanDebug()) debug('fk_producer = ' . $value);
   // Validate fk fk_producer
 
 
@@ -431,18 +619,18 @@ function thumbwhere_content_edit_form_validate(&$form, &$form_state) {
   // If we have no default value then we don't care much for checking for emptyness.
 
 
-							
+              
 
-	//form_set_value( array('#parents' => array('array_key_parent', 'array_key_to_replace')) , $value, $form_state);
+  //form_set_value( array('#parents' => array('array_key_parent', 'array_key_to_replace')) , $value, $form_state);
 
- 	
- 	
+   
+   
   $thumbwhere_content = $form_state['thumbwhere_content'];
 
   // Notify field widgets to validate their data.
   field_attach_form_validate('thumbwhere_content', $thumbwhere_content, $form, $form_state);
-  	
-  	
+    
+    
   
 }
 
@@ -560,7 +748,7 @@ function theme_thumbwhere_content_add_list($variables) {
       $output = '<p>' . t('No thumbwhere_content types have been created yet for you to use.') . '</p>';
     }
   }
-	*/
+  */
   return $output;
 }
 

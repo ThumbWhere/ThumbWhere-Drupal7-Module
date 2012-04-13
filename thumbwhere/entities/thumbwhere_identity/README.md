@@ -1,0 +1,1 @@
+Implements thumbwhere entity Identity.
