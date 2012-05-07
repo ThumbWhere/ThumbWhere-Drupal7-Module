@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metawrap xsi:schemaLocation="http://xsd.metawrap.com/metawrap/metawrap.xsd http://xsd.metawrap.com/metawrap/metawrap.xsd" xmlns="http://xsd.metawrap.com/metawrap/metawrap.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <types>
+    <type name="APIKey" implemented_by="IAPIKeyAggregate" tokenised_by="Key" stored_by="APIKey" />
+    <type name="MediaItem" implemented_by="IMediaItemAggregate" tokenised_by="ID" stored_by="MediaItem" />
+    <type name="Metadata" implemented_by="IMetadataAggregate" tokenised_by="ID" stored_by="Metadata" />
+    <type name="Producer" implemented_by="IProducerAggregate" tokenised_by="ID" stored_by="Producer" />
+    <type name="Content" implemented_by="IContentAggregate" tokenised_by="ID" stored_by="Content" />
+    <type name="ContentIngest" implemented_by="IContentIngestAggregate" tokenised_by="ID" stored_by="ContentIngest" />
+    <type name="MemberToken" implemented_by="IAPIMemberTokenAggregate" tokenised_by="Token" stored_by="APIMemberToken" />
+    <type name="IdentityTokenStatus" implemented_by="IAPIIdentityTokenStateAggregate" tokenised_by="IAPIIdentityTokenState" stored_by="APIIdentityTokenState" />
+    <type name="IdentityToken" implemented_by="IAPIIdentityTokenAggregate" tokenised_by="Token" stored_by="APIIdentityToken" />
+    <type name="IdentityType" implemented_by="IIdentityTypeAggregate" tokenised_by="Name" stored_by="IdentityType" />
+    <type name="Code" implemented_by="ICodeAggregate" tokenised_by="Code" stored_by="Code" />
+    <type name="string" implemented_by="string" />
+    <type name="integer" implemented_by="long" />
+    <type name="datetime" implemented_by="DateTime" />
+  </types>
+  <resources version="V1.1" service="Content">
+    <resource name="actor" type="Actor" runat="server" enabled="true" object="Actor" create="true" subscribe="true">
+      <context name="key" type="APIKey">
+        <doc>Provides context for the campaign.</doc>
+      </context>
+      <field name="member" type="Member" optional="true">
+        <doc>'member' field, which is an embedded 'Member' resource.</doc>
+      </field>
+      <field name="identity" type="Identity" optional="true">
+        <doc>'identity' field, which is an embedded 'Identity' resource.</doc>
+      </field>
+      <field name="producer" type="Producer" optional="true">
+        <doc>'producer' field, which is an embedded 'Producer' resource.</doc>
+      </field>
+      <field name="consumer" type="Consumer" optional="true">
+        <doc>'consumer' field, which is an embedded 'Consumer' resource.</doc>
+      </field>
+    </resource>
+  </resources>
+</metawrap>
