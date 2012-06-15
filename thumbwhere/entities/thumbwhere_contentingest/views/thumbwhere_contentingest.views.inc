@@ -83,6 +83,9 @@ function thumbwhere_contentingest_views_default_views() {
     'fk_mediaitem' => 'fk_mediaitem',
     'fk_content' => 'fk_content',
     'fk_member' => 'fk_member',
+    'fk_identity' => 'fk_identity',
+    'fk_producer' => 'fk_producer',
+    'fk_consumer' => 'fk_consumer',
     'url' => 'url',
     'size' => 'size',
     'uploaded' => 'uploaded',
@@ -119,6 +122,27 @@ function thumbwhere_contentingest_views_default_views() {
           'empty_column' => 0,
       ),
       'fk_member' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'fk_identity' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'fk_producer' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'fk_consumer' => array(
           'sortable' => 0,
           'default_sort_order' => 'asc',
           'align' => '',
@@ -394,6 +418,78 @@ function thumbwhere_contentingest_views_default_views() {
   $handler->display->display_options['fields']['fk_member']['empty_zero'] = 0;
   $handler->display->display_options['fields']['fk_member']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['fk_member']['format_plural'] = 0;
+  /* Field: ThumbWhereContentIngest: fk_identity */
+  $handler->display->display_options['fields']['fk_identity']['id'] = 'fk_identity';
+  $handler->display->display_options['fields']['fk_identity']['table'] = 'thumbwhere_contentingest';
+  $handler->display->display_options['fields']['fk_identity']['field'] = 'fk_identity';
+  $handler->display->display_options['fields']['fk_identity']['label'] = 'fk_identity';
+  $handler->display->display_options['fields']['fk_identity']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['fk_identity']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['fk_identity']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['fk_identity']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['fk_identity']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['fk_identity']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['fk_identity']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['fk_identity']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['fk_identity']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['fk_identity']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['fk_identity']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['fk_identity']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['fk_identity']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['fk_identity']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['fk_identity']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['fk_identity']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['fk_identity']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['fk_identity']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['fk_identity']['format_plural'] = 0;
+  /* Field: ThumbWhereContentIngest: fk_producer */
+  $handler->display->display_options['fields']['fk_producer']['id'] = 'fk_producer';
+  $handler->display->display_options['fields']['fk_producer']['table'] = 'thumbwhere_contentingest';
+  $handler->display->display_options['fields']['fk_producer']['field'] = 'fk_producer';
+  $handler->display->display_options['fields']['fk_producer']['label'] = 'fk_producer';
+  $handler->display->display_options['fields']['fk_producer']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['fk_producer']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['fk_producer']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['fk_producer']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['fk_producer']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['fk_producer']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['fk_producer']['format_plural'] = 0;
+  /* Field: ThumbWhereContentIngest: fk_consumer */
+  $handler->display->display_options['fields']['fk_consumer']['id'] = 'fk_consumer';
+  $handler->display->display_options['fields']['fk_consumer']['table'] = 'thumbwhere_contentingest';
+  $handler->display->display_options['fields']['fk_consumer']['field'] = 'fk_consumer';
+  $handler->display->display_options['fields']['fk_consumer']['label'] = 'fk_consumer';
+  $handler->display->display_options['fields']['fk_consumer']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['fk_consumer']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['fk_consumer']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['fk_consumer']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['fk_consumer']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['fk_consumer']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['fk_consumer']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['fk_consumer']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['fk_consumer']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['fk_consumer']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['fk_consumer']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['fk_consumer']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['fk_consumer']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['fk_consumer']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['fk_consumer']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['fk_consumer']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['fk_consumer']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['fk_consumer']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['fk_consumer']['format_plural'] = 0;
   /* Field: ThumbWhereContentIngest: url */
   $handler->display->display_options['fields']['url']['id'] = 'url';
   $handler->display->display_options['fields']['url']['table'] = 'thumbwhere_contentingest';

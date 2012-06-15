@@ -88,6 +88,8 @@ function thumbwhere_identity_views_default_views() {
     'secret_hash_salt' => 'secret_hash_salt',
     'secret_hash_itterations' => 'secret_hash_itterations',
     'label' => 'label',
+    'last_login' => 'last_login',
+    'total_logins' => 'total_logins',
     'link_thumbwhere_identity' => 'link_thumbwhere_identity',
     'operations' => 'operations',
   );
@@ -150,6 +152,20 @@ function thumbwhere_identity_views_default_views() {
           'empty_column' => 0,
       ),
       'label' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'last_login' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'total_logins' => array(
           'sortable' => 0,
           'default_sort_order' => 'asc',
           'align' => '',
@@ -463,6 +479,48 @@ function thumbwhere_identity_views_default_views() {
   $handler->display->display_options['fields']['label']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['label']['hide_empty'] = 0;
   $handler->display->display_options['fields']['label']['empty_zero'] = 0;
+
+  /* Field: ThumbWhereIdentity: last_login */
+  $handler->display->display_options['fields']['last_login']['id'] = 'last_login';
+  $handler->display->display_options['fields']['last_login']['table'] = 'thumbwhere_identity';
+  $handler->display->display_options['fields']['last_login']['field'] = 'last_login';
+  $handler->display->display_options['fields']['last_login']['label'] = 'last_login';
+  $handler->display->display_options['fields']['last_login']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['last_login']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['last_login']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['last_login']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['last_login']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['last_login']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['last_login']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['last_login']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['last_login']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['last_login']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['last_login']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['last_login']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['last_login']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['last_login']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['last_login']['empty_zero'] = 0;
+
+  /* Field: ThumbWhereIdentity: total_logins */
+  $handler->display->display_options['fields']['total_logins']['id'] = 'total_logins';
+  $handler->display->display_options['fields']['total_logins']['table'] = 'thumbwhere_identity';
+  $handler->display->display_options['fields']['total_logins']['field'] = 'total_logins';
+  $handler->display->display_options['fields']['total_logins']['label'] = 'total_logins';
+  $handler->display->display_options['fields']['total_logins']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['total_logins']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['total_logins']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['total_logins']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['total_logins']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['total_logins']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['total_logins']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['total_logins']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['total_logins']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['total_logins']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['total_logins']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['total_logins']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['total_logins']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['total_logins']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['total_logins']['empty_zero'] = 0;
 
     
     

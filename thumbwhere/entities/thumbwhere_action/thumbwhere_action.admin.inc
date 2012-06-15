@@ -26,7 +26,9 @@ function _thumbwhere_handle_action_notify_xml($notification) {
 
   if (!isset($notification->attributes()->op)) {
     drupal_add_http_header('Status', '501 unable to fulfull request..');
-    print('We were expecting an \'op\', attribute on the \'action\', element.');
+    $err = 'We were expecting an \'op\', attribute on the \'action\', element.';
+    print($err);
+   	watchdog('thumbwhere_action', $err ,array(), WATCHDOG_ERROR);
     exit(0);
   }
 
@@ -41,7 +43,9 @@ function _thumbwhere_handle_action_notify_xml($notification) {
 
   if (!isset($notification->attributes()->key)) {
     drupal_add_http_header('Status', '501 unable to fulfull request..');
-    print('We were expecting a \'key\', attribute on the \'action\', element.');
+    $err = 'We were expecting a \'key\', attribute on the \'action\', element.';
+    print($err);
+    watchdog('thumbwhere_action', $err ,array(), WATCHDOG_ERROR);
     exit(0);
   }
 
@@ -65,7 +69,9 @@ function _thumbwhere_handle_action_notify_xml($notification) {
 		
         if (!isset($notification->attributes()->id)) {
           drupal_add_http_header('Status', '501 unable to fulfull request.');
-          print('We were expecting an \'id\', attribute on the \'action\', element when we are performing an \'update\' notification..');
+          $err = 'We were expecting an \'id\', attribute on the \'action\', element when we are performing an \'update\' notification..';
+          print($err);
+          watchdog('thumbwhere_action', $err ,array(), WATCHDOG_ERROR);
           exit(0);
         }
 
@@ -88,7 +94,8 @@ function _thumbwhere_handle_action_notify_xml($notification) {
         if (count($entities) == 0) {
           drupal_add_http_header('Status', '404 No such resource exists.');
           print('No such \'action\' resource exists with an id of \'' . $id . '\'.');
-	    watchdog('thumbwhere_action', 'No such \'action\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);          exit(0);
+	    		watchdog('thumbwhere_action', 'No such \'action\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
+exit(0);
         }
 
         // Getting a reference to the entity we asked for
@@ -510,7 +517,7 @@ function thumbwhere_action_edit_form($form, &$form_state, $thumbwhere_action) {
     //'#maxlength' => 255,
    /// '#required' => TRUE,
     '#weight' => -5,
-    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_like',
+    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_contentingest',
   );
   // Add the default field elements.
   $form['fk_like'] = array(

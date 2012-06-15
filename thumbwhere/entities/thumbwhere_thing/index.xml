@@ -27,6 +27,9 @@
       <field name="content" type="Content" optional="true">
         <doc>'content' field, which is an embedded 'Content' resource.</doc>
       </field>
+      <field name="contentcollection" type="ContentCollection" optional="true">
+        <doc>'contentcollection' field, which is an embedded 'ContentCollection' resource.</doc>
+      </field>
     </resource>
   </resources>
 </metawrap>

@@ -21,8 +21,8 @@
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>
-      <field name="contentingest" type="Like" optional="true">
-        <doc>'contentingest' field, which is an embedded 'Like' resource.</doc>
+      <field name="contentingest" type="ContentIngest" optional="true">
+        <doc>'contentingest' field, which is an embedded 'ContentIngest' resource.</doc>
       </field>
       <field name="like" type="Like" optional="true">
         <doc>'like' field, which is an embedded 'Like' resource.</doc>

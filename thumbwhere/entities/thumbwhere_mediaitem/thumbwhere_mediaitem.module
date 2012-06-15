@@ -616,6 +616,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
     if ($entity->is_new) {
   
       // .. then we create a new thumbwhere_mediaitem entity...
+      // .. then we create a new thumbwhere_MediaItem entity...
       // Instantiate the ThumbWhereContent class
 
       $twMediaAPI = new ThumbWhereAPIMedia();
@@ -629,19 +630,158 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
       //
 
       $fields = array();
+      // Compulsory so..
+      if (empty($entity->fk_code)) {
+        throw new Exception('code is compulsory.');
+      }
+      else {
+        $fields['code'] = $entity->fk_code;
+      }
+      // Compulsory so..
+      if (empty($entity->fk_identity)) {
+        throw new Exception('identity is compulsory.');
+      }
+      else {
+        $fields['identity'] = $entity->fk_identity;
+      }
+      // Compulsory so..
+      if (empty($entity->fk_format)) {
+        throw new Exception('format is compulsory.');
+      }
+      else {
+        $fields['format'] = $entity->fk_format;
+      }
+      // Compulsory so..
+      if (empty($entity->fk_server)) {
+        throw new Exception('server is compulsory.');
+      }
+      else {
+        $fields['server'] = $entity->fk_server;
+      }
+
+      // Nullable so we only pass it through to create_mediaitem if we have it..
+      if (!empty($entity->fk_license)) {
+        $fields['license'] = $entity->fk_license;
+      }
+
+      // Nullable so we only pass it through to create_mediaitem if we have it..
+      if (!empty($entity->title)) {
+        $fields['title'] = $entity->title;
+      }
+
+      // Nullable so we only pass it through to create_mediaitem if we have it..
+      if (!empty($entity->body)) {
+        $fields['body'] = $entity->body;
+      }
+
+      // Not nullable but we have a default value
+      if (empty($entity->bodyonly)) {
+        $fields['bodyonly'] = $entity->bodyonly = 0;
+      }
+      else {
+        $fields['bodyonly'] = $entity->bodyonly;
+      }
+
+      // Not nullable but we have a default value
+      if (empty($entity->comment)) {
+        $fields['comment'] = $entity->comment = 0;
+      }
+      else {
+        $fields['comment'] = $entity->comment;
+      }
+
+      // Not nullable but we have a default value
+      if (empty($entity->usergenerated)) {
+        $fields['usergenerated'] = $entity->usergenerated = 0;
+      }
+      else {
+        $fields['usergenerated'] = $entity->usergenerated;
+      }
+      // Compulsory so..
+      if (empty($entity->digest)) {
+        throw new Exception('digest is compulsory.');
+      }
+      else {
+        $fields['digest'] = $entity->digest;
+      }
+
+      // Not nullable but we have a default value
+      if (empty($entity->process_attempts)) {
+        $fields['process_attempts'] = $entity->process_attempts = 0;
+      }
+      else {
+        $fields['process_attempts'] = $entity->process_attempts;
+      }
+
+      // Not nullable but we have a default value
+      if (empty($entity->censored)) {
+        $fields['censored'] = $entity->censored = 0;
+      }
+      else {
+        $fields['censored'] = $entity->censored;
+      }
+
+      // Not nullable but we have a default value
+      if (empty($entity->reviewed)) {
+        $fields['reviewed'] = $entity->reviewed = 0;
+      }
+      else {
+        $fields['reviewed'] = $entity->reviewed;
+      }
+
+      // Not nullable but we have a default value
+      if (empty($entity->privacy)) {
+        $fields['privacy'] = $entity->privacy = 0;
+      }
+      else {
+        $fields['privacy'] = $entity->privacy;
+      }
+
+      // Not nullable but we have a default value
+      if (empty($entity->viewcount)) {
+        $fields['viewcount'] = $entity->viewcount = 0;
+      }
+      else {
+        $fields['viewcount'] = $entity->viewcount;
+      }
+
+      // Not nullable but we have a default value
+      if (empty($entity->ratingdividend)) {
+        $fields['ratingdividend'] = $entity->ratingdividend = 0;
+      }
+      else {
+        $fields['ratingdividend'] = $entity->ratingdividend;
+      }
+
+      // Not nullable but we have a default value
+      if (empty($entity->ratingdivisor)) {
+        $fields['ratingdivisor'] = $entity->ratingdivisor = 0;
+      }
+      else {
+        $fields['ratingdivisor'] = $entity->ratingdivisor;
+      }
+
+      // Not nullable but we have a default value
+      if (empty($entity->ratings)) {
+        $fields['ratings'] = $entity->ratings = 0;
+      }
+      else {
+        $fields['ratings'] = $entity->ratings;
+      }
 
       //
       // Now create the Entity in ThumbWhere
       //
 
-      $mediaitem = $twMediaAPI->create_($context = array(
+      $mediaitem = $twMediaAPI->create_mediaitem($context = array(
+                  'key' => variable_get('thumbwhere_api_key')
           ), $fields);
             
        if (twCanDebug()) debug($mediaitem);
 
       //if (twCanDebug()) debug($mediaitem);
 
-      $attributes = $mediaitem->body->->attributes();
+      $attributes = $mediaitem->body->mediaitem->attributes();
 
       if (twCanDebug()) debug('newly created id = ' . $attributes['id']);
 

@@ -155,6 +155,13 @@ function thumbwhere_thing_schema() {
               'size' => 'big',
               'not null' => FALSE,
               //'default' => -1,
+          ),
+          'fk_contentcollection' => array(
+          'description' => 'ThumbWhere Id: Optional reference to a \'ContentCollection\' Entity.',
+              'type' => 'int',
+              'size' => 'big',
+              'not null' => FALSE,
+              //'default' => -1,
           ),      
       ),
       'primary key' => array(
@@ -169,6 +176,9 @@ function thumbwhere_thing_schema() {
           ),
           'fk_content' => array(
               'fk_content'
+          ),
+          'fk_contentcollection' => array(
+              'fk_contentcollection'
           ),
       
       ),

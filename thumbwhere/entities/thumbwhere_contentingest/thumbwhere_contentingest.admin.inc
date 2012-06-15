@@ -26,7 +26,9 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
   if (!isset($notification->attributes()->op)) {
     drupal_add_http_header('Status', '501 unable to fulfull request..');
-    print('We were expecting an \'op\', attribute on the \'content_ingest\', element.');
+    $err = 'We were expecting an \'op\', attribute on the \'content_ingest\', element.';
+    print($err);
+   	watchdog('thumbwhere_contentingest', $err ,array(), WATCHDOG_ERROR);
     exit(0);
   }
 
@@ -41,7 +43,9 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
   if (!isset($notification->attributes()->key)) {
     drupal_add_http_header('Status', '501 unable to fulfull request..');
-    print('We were expecting a \'key\', attribute on the \'content_ingest\', element.');
+    $err = 'We were expecting a \'key\', attribute on the \'content_ingest\', element.';
+    print($err);
+    watchdog('thumbwhere_contentingest', $err ,array(), WATCHDOG_ERROR);
     exit(0);
   }
 
@@ -65,7 +69,9 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 		
         if (!isset($notification->attributes()->id)) {
           drupal_add_http_header('Status', '501 unable to fulfull request.');
-          print('We were expecting an \'id\', attribute on the \'content_ingest\', element when we are performing an \'update\' notification..');
+          $err = 'We were expecting an \'id\', attribute on the \'content_ingest\', element when we are performing an \'update\' notification..';
+          print($err);
+          watchdog('thumbwhere_contentingest', $err ,array(), WATCHDOG_ERROR);
           exit(0);
         }
 
@@ -88,7 +94,8 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         if (count($entities) == 0) {
           drupal_add_http_header('Status', '404 No such resource exists.');
           print('No such \'content_ingest\' resource exists with an id of \'' . $id . '\'.');
-	    watchdog('thumbwhere_contentingest', 'No such \'content_ingest\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);          exit(0);
+	    		watchdog('thumbwhere_contentingest', 'No such \'content_ingest\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
+exit(0);
         }
 
         // Getting a reference to the entity we asked for
@@ -111,6 +118,18 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
         if (isset($notification->member)) {
           $entity->fk_member = intval($notification->member);
+        }
+
+        if (isset($notification->identity)) {
+          $entity->fk_identity = intval($notification->identity);
+        }
+
+        if (isset($notification->producer)) {
+          $entity->fk_producer = intval($notification->producer);
+        }
+
+        if (isset($notification->consumer)) {
+          $entity->fk_consumer = intval($notification->consumer);
         }
 
         if (isset($notification->url)) {
@@ -563,6 +582,36 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
     '#autocomplete_path' => 'entity-autocomplete/thumbwhere_member',
   );
   // Add the default field elements.
+  $form['fk_identity'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereContentIngest fk_identity'),
+    '#default_value' => isset($thumbwhere_contentingest->fk_identity) ? $thumbwhere_contentingest->fk_identity : '',
+    //'#maxlength' => 255,
+   /// '#required' => TRUE,
+    '#weight' => -5,
+    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_identity',
+  );
+  // Add the default field elements.
+  $form['fk_producer'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereContentIngest fk_producer'),
+    '#default_value' => isset($thumbwhere_contentingest->fk_producer) ? $thumbwhere_contentingest->fk_producer : '',
+    //'#maxlength' => 255,
+   /// '#required' => TRUE,
+    '#weight' => -5,
+    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_producer',
+  );
+  // Add the default field elements.
+  $form['fk_consumer'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereContentIngest fk_consumer'),
+    '#default_value' => isset($thumbwhere_contentingest->fk_consumer) ? $thumbwhere_contentingest->fk_consumer : '',
+    //'#maxlength' => 255,
+   /// '#required' => TRUE,
+    '#weight' => -5,
+    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_consumer',
+  );
+  // Add the default field elements.
     $form['url'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereContentIngest url'),
@@ -745,6 +794,42 @@ function thumbwhere_contentingest_edit_form_validate(&$form, &$form_state) {
   //if (twCanDebug()) debug($form['fk_member']);
    if (twCanDebug()) debug('fk_member = ' . $value);
   // Validate fk fk_member
+
+
+  // Convert fk autocomplete for fk_identity
+  $value = $form['fk_identity']['#value'];
+  // If we have something, escape the auto-completion encoding.
+  if (!empty($value)) { 
+    $value = entity_autocomplete_get_id($value);
+    form_set_value($form['fk_identity'], $value,$form_state);
+  }
+  //if (twCanDebug()) debug($form['fk_identity']);
+   if (twCanDebug()) debug('fk_identity = ' . $value);
+  // Validate fk fk_identity
+
+
+  // Convert fk autocomplete for fk_producer
+  $value = $form['fk_producer']['#value'];
+  // If we have something, escape the auto-completion encoding.
+  if (!empty($value)) { 
+    $value = entity_autocomplete_get_id($value);
+    form_set_value($form['fk_producer'], $value,$form_state);
+  }
+  //if (twCanDebug()) debug($form['fk_producer']);
+   if (twCanDebug()) debug('fk_producer = ' . $value);
+  // Validate fk fk_producer
+
+
+  // Convert fk autocomplete for fk_consumer
+  $value = $form['fk_consumer']['#value'];
+  // If we have something, escape the auto-completion encoding.
+  if (!empty($value)) { 
+    $value = entity_autocomplete_get_id($value);
+    form_set_value($form['fk_consumer'], $value,$form_state);
+  }
+  //if (twCanDebug()) debug($form['fk_consumer']);
+   if (twCanDebug()) debug('fk_consumer = ' . $value);
+  // Validate fk fk_consumer
 
 
   // Validate normalurl

@@ -616,6 +616,7 @@ function thumbwhere_contentingest_entity_presave($entity, $entity_type) {
     if ($entity->is_new) {
   
       // .. then we create a new thumbwhere_contentingest entity...
+      // .. then we create a new thumbwhere_ContentIngest entity...
       // Instantiate the ThumbWhereContent class
 
       $twContentAPI = new ThumbWhereAPIContent();
@@ -643,6 +644,21 @@ function thumbwhere_contentingest_entity_presave($entity, $entity_type) {
       // Nullable so we only pass it through to create_content_ingest if we have it..
       if (!empty($entity->fk_member)) {
         $fields['member'] = $entity->fk_member;
+      }
+
+      // Nullable so we only pass it through to create_content_ingest if we have it..
+      if (!empty($entity->fk_identity)) {
+        $fields['identity'] = $entity->fk_identity;
+      }
+
+      // Nullable so we only pass it through to create_content_ingest if we have it..
+      if (!empty($entity->fk_producer)) {
+        $fields['producer'] = $entity->fk_producer;
+      }
+
+      // Nullable so we only pass it through to create_content_ingest if we have it..
+      if (!empty($entity->fk_consumer)) {
+        $fields['consumer'] = $entity->fk_consumer;
       }
       // Compulsory so..
       if (empty($entity->url)) {

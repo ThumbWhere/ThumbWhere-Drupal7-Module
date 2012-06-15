@@ -26,7 +26,9 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
 
   if (!isset($notification->attributes()->op)) {
     drupal_add_http_header('Status', '501 unable to fulfull request..');
-    print('We were expecting an \'op\', attribute on the \'identity\', element.');
+    $err = 'We were expecting an \'op\', attribute on the \'identity\', element.';
+    print($err);
+   	watchdog('thumbwhere_identity', $err ,array(), WATCHDOG_ERROR);
     exit(0);
   }
 
@@ -41,7 +43,9 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
 
   if (!isset($notification->attributes()->key)) {
     drupal_add_http_header('Status', '501 unable to fulfull request..');
-    print('We were expecting a \'key\', attribute on the \'identity\', element.');
+    $err = 'We were expecting a \'key\', attribute on the \'identity\', element.';
+    print($err);
+    watchdog('thumbwhere_identity', $err ,array(), WATCHDOG_ERROR);
     exit(0);
   }
 
@@ -65,7 +69,9 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
 		
         if (!isset($notification->attributes()->id)) {
           drupal_add_http_header('Status', '501 unable to fulfull request.');
-          print('We were expecting an \'id\', attribute on the \'identity\', element when we are performing an \'update\' notification..');
+          $err = 'We were expecting an \'id\', attribute on the \'identity\', element when we are performing an \'update\' notification..';
+          print($err);
+          watchdog('thumbwhere_identity', $err ,array(), WATCHDOG_ERROR);
           exit(0);
         }
 
@@ -88,7 +94,8 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
         if (count($entities) == 0) {
           drupal_add_http_header('Status', '404 No such resource exists.');
           print('No such \'identity\' resource exists with an id of \'' . $id . '\'.');
-	    watchdog('thumbwhere_identity', 'No such \'identity\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);          exit(0);
+	    		watchdog('thumbwhere_identity', 'No such \'identity\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
+exit(0);
         }
 
         // Getting a reference to the entity we asked for
@@ -131,6 +138,14 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
 
         if (isset($notification->label)) {
           $entity->label = (string)($notification->label);
+        }
+
+        if (isset($notification->last_login)) {
+
+        }
+
+        if (isset($notification->total_logins)) {
+
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -560,6 +575,24 @@ function thumbwhere_identity_edit_form($form, &$form_state, $thumbwhere_identity
    // '#required' => TRUE,
     '#weight' => -5,
   );
+  // Add the default field elements.
+    $form['last_login'] = array(
+    '#type' => 'date',
+    '#title' => t('ThumbWhereIdentity last_login'),
+
+    // '#maxlength' => 255,
+   // '#required' => TRUE,
+    '#weight' => -5,
+  );
+  // Add the default field elements.
+    $form['total_logins'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereIdentity total_logins'),
+    '#default_value' => isset($thumbwhere_identity->total_logins) ? $thumbwhere_identity->total_logins : 0,
+    // '#maxlength' => 255,
+   // '#required' => TRUE,
+    '#weight' => -5,
+  );
 
 
 
@@ -682,6 +715,16 @@ function thumbwhere_identity_edit_form_validate(&$form, &$form_state) {
 
   // Validate normallabel
   $value = $form['label']['#value'];
+  // If we have no default value then we don't care much for checking for emptyness.
+
+
+  // Validate normallast_login
+  $value = $form['last_login']['#value'];
+  // If we have no default value then we don't care much for checking for emptyness.
+
+
+  // Validate normaltotal_logins
+  $value = $form['total_logins']['#value'];
   // If we have no default value then we don't care much for checking for emptyness.
 
 

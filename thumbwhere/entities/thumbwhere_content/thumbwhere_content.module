@@ -616,6 +616,7 @@ function thumbwhere_content_entity_presave($entity, $entity_type) {
     if ($entity->is_new) {
   
       // .. then we create a new thumbwhere_content entity...
+      // .. then we create a new thumbwhere_Content entity...
       // Instantiate the ThumbWhereContent class
 
       $twContentAPI = new ThumbWhereAPIContent();

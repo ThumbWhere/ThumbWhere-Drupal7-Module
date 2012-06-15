@@ -45,6 +45,12 @@
       <field name="label" type="string" optional="true">
         <doc>'label' field, which is a 'string' type.</doc>
       </field>
+      <field name="last_login" type="datetime" optional="true">
+        <doc>'last_login' field, which is a 'datetime' type.</doc>
+      </field>
+      <field name="total_logins" type="long" optional="true" default="0">
+        <doc>'total_logins' field, which is a 'long' type.</doc>
+      </field>
     </resource>
   </resources>
 </metawrap>

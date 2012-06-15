@@ -26,7 +26,9 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
 
   if (!isset($notification->attributes()->op)) {
     drupal_add_http_header('Status', '501 unable to fulfull request..');
-    print('We were expecting an \'op\', attribute on the \'actor\', element.');
+    $err = 'We were expecting an \'op\', attribute on the \'actor\', element.';
+    print($err);
+   	watchdog('thumbwhere_actor', $err ,array(), WATCHDOG_ERROR);
     exit(0);
   }
 
@@ -41,7 +43,9 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
 
   if (!isset($notification->attributes()->key)) {
     drupal_add_http_header('Status', '501 unable to fulfull request..');
-    print('We were expecting a \'key\', attribute on the \'actor\', element.');
+    $err = 'We were expecting a \'key\', attribute on the \'actor\', element.';
+    print($err);
+    watchdog('thumbwhere_actor', $err ,array(), WATCHDOG_ERROR);
     exit(0);
   }
 
@@ -65,7 +69,9 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
 		
         if (!isset($notification->attributes()->id)) {
           drupal_add_http_header('Status', '501 unable to fulfull request.');
-          print('We were expecting an \'id\', attribute on the \'actor\', element when we are performing an \'update\' notification..');
+          $err = 'We were expecting an \'id\', attribute on the \'actor\', element when we are performing an \'update\' notification..';
+          print($err);
+          watchdog('thumbwhere_actor', $err ,array(), WATCHDOG_ERROR);
           exit(0);
         }
 
@@ -88,7 +94,8 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
         if (count($entities) == 0) {
           drupal_add_http_header('Status', '404 No such resource exists.');
           print('No such \'actor\' resource exists with an id of \'' . $id . '\'.');
-	    watchdog('thumbwhere_actor', 'No such \'actor\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);          exit(0);
+	    		watchdog('thumbwhere_actor', 'No such \'actor\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
+exit(0);
         }
 
         // Getting a reference to the entity we asked for

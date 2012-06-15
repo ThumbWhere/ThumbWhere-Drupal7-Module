@@ -616,6 +616,7 @@ function thumbwhere_producermember_entity_presave($entity, $entity_type) {
     if ($entity->is_new) {
   
       // .. then we create a new thumbwhere_producermember entity...
+      // .. then we create a new thumbwhere_ProducerMember entity...
       // Instantiate the ThumbWhereContent class
 
       $twContentAPI = new ThumbWhereAPIContent();

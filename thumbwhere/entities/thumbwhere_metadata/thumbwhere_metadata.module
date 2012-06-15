@@ -616,6 +616,7 @@ function thumbwhere_metadata_entity_presave($entity, $entity_type) {
     if ($entity->is_new) {
   
       // .. then we create a new thumbwhere_metadata entity...
+      // .. then we create a new thumbwhere_Metadata entity...
       // Instantiate the ThumbWhereContent class
 
       $twContentAPI = new ThumbWhereAPIContent();
@@ -629,12 +630,10 @@ function thumbwhere_metadata_entity_presave($entity, $entity_type) {
       //
 
       $fields = array();
-      // Compulsory so..
-      if (empty($entity->trackmetadata)) {
-        throw new Exception('trackmetadata is compulsory.');
-      }
-      else {
-        $fields['trackmetadata'] = $entity->trackmetadata;
+
+      // Nullable so we only pass it through to create_metadata if we have it..
+      if (!empty($entity->fk_trackmetadata)) {
+        $fields['trackmetadata'] = $entity->fk_trackmetadata;
       }
 
       //

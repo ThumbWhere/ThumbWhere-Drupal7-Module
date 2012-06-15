@@ -133,7 +133,7 @@ function thumbwhere_consumermember_schema() {
   $schema = array();
 
   $schema['thumbwhere_consumermember'] = array(
-  'description' => 'The base table for thumbwhere_consumermember entities.' . 'Signifies that a member is part of a consumer.',
+  'description' => 'The base table for thumbwhere_consumermember entities.' . 'Signifies that a member is part of a consumer. admin bit: signifies that they can administer the consumer.',
     'fields' => array(
           'pk_consumermember' => array(
               'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereConsumerMembers\' entity.',

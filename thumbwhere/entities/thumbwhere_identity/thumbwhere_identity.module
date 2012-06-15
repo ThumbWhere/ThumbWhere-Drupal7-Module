@@ -616,6 +616,7 @@ function thumbwhere_identity_entity_presave($entity, $entity_type) {
     if ($entity->is_new) {
   
       // .. then we create a new thumbwhere_identity entity...
+      // .. then we create a new thumbwhere_Identity entity...
       // Instantiate the ThumbWhereContent class
 
       $twIdentityAPI = new ThumbWhereAPIIdentity();
@@ -629,19 +630,78 @@ function thumbwhere_identity_entity_presave($entity, $entity_type) {
       //
 
       $fields = array();
+      // Compulsory so..
+      if (empty($entity->fk_identitytype)) {
+        throw new Exception('identitytype is compulsory.');
+      }
+      else {
+        $fields['identitytype'] = $entity->fk_identitytype;
+      }
+
+      // Nullable so we only pass it through to create_identity if we have it..
+      if (!empty($entity->fk_member)) {
+        $fields['member'] = $entity->fk_member;
+      }
+
+      // Nullable so we only pass it through to create_identity if we have it..
+      if (!empty($entity->id)) {
+        $fields['id'] = $entity->id;
+      }
+
+      // Nullable so we only pass it through to create_identity if we have it..
+      if (!empty($entity->secret)) {
+        $fields['secret'] = $entity->secret;
+      }
+
+      // Nullable so we only pass it through to create_identity if we have it..
+      if (!empty($entity->secret_hash)) {
+        $fields['secret_hash'] = $entity->secret_hash;
+      }
+
+      // Nullable so we only pass it through to create_identity if we have it..
+      if (!empty($entity->secret_hash_salt)) {
+        $fields['secret_hash_salt'] = $entity->secret_hash_salt;
+      }
+
+      // Not nullable but we have a default value
+      if (empty($entity->secret_hash_itterations)) {
+        $fields['secret_hash_itterations'] = $entity->secret_hash_itterations = 1;
+      }
+      else {
+        $fields['secret_hash_itterations'] = $entity->secret_hash_itterations;
+      }
+
+      // Nullable so we only pass it through to create_identity if we have it..
+      if (!empty($entity->label)) {
+        $fields['label'] = $entity->label;
+      }
+
+      // Nullable so we only pass it through to create_identity if we have it..
+      if (!empty($entity->last_login)) {
+        $fields['last_login'] = $entity->last_login;
+      }
+
+      // Not nullable but we have a default value
+      if (empty($entity->total_logins)) {
+        $fields['total_logins'] = $entity->total_logins = 0;
+      }
+      else {
+        $fields['total_logins'] = $entity->total_logins;
+      }
 
       //
       // Now create the Entity in ThumbWhere
       //
 
-      $identity = $twIdentityAPI->create_($context = array(
+      $identity = $twIdentityAPI->create_identity($context = array(
+                  'key' => variable_get('thumbwhere_api_key')
           ), $fields);
             
        if (twCanDebug()) debug($identity);
 
       //if (twCanDebug()) debug($identity);
 
-      $attributes = $identity->body->->attributes();
+      $attributes = $identity->body->identity->attributes();
 
       if (twCanDebug()) debug('newly created id = ' . $attributes['id']);
 

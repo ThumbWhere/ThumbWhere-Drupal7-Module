@@ -26,7 +26,9 @@ function _thumbwhere_handle_thing_notify_xml($notification) {
 
   if (!isset($notification->attributes()->op)) {
     drupal_add_http_header('Status', '501 unable to fulfull request..');
-    print('We were expecting an \'op\', attribute on the \'thing\', element.');
+    $err = 'We were expecting an \'op\', attribute on the \'thing\', element.';
+    print($err);
+   	watchdog('thumbwhere_thing', $err ,array(), WATCHDOG_ERROR);
     exit(0);
   }
 
@@ -41,7 +43,9 @@ function _thumbwhere_handle_thing_notify_xml($notification) {
 
   if (!isset($notification->attributes()->key)) {
     drupal_add_http_header('Status', '501 unable to fulfull request..');
-    print('We were expecting a \'key\', attribute on the \'thing\', element.');
+    $err = 'We were expecting a \'key\', attribute on the \'thing\', element.';
+    print($err);
+    watchdog('thumbwhere_thing', $err ,array(), WATCHDOG_ERROR);
     exit(0);
   }
 
@@ -65,7 +69,9 @@ function _thumbwhere_handle_thing_notify_xml($notification) {
 		
         if (!isset($notification->attributes()->id)) {
           drupal_add_http_header('Status', '501 unable to fulfull request.');
-          print('We were expecting an \'id\', attribute on the \'thing\', element when we are performing an \'update\' notification..');
+          $err = 'We were expecting an \'id\', attribute on the \'thing\', element when we are performing an \'update\' notification..';
+          print($err);
+          watchdog('thumbwhere_thing', $err ,array(), WATCHDOG_ERROR);
           exit(0);
         }
 
@@ -88,7 +94,8 @@ function _thumbwhere_handle_thing_notify_xml($notification) {
         if (count($entities) == 0) {
           drupal_add_http_header('Status', '404 No such resource exists.');
           print('No such \'thing\' resource exists with an id of \'' . $id . '\'.');
-	    watchdog('thumbwhere_thing', 'No such \'thing\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);          exit(0);
+	    		watchdog('thumbwhere_thing', 'No such \'thing\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
+exit(0);
         }
 
         // Getting a reference to the entity we asked for
@@ -107,6 +114,10 @@ function _thumbwhere_handle_thing_notify_xml($notification) {
 
         if (isset($notification->content)) {
           $entity->fk_content = intval($notification->content);
+        }
+
+        if (isset($notification->contentcollection)) {
+          $entity->fk_contentcollection = intval($notification->contentcollection);
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -482,6 +493,16 @@ function thumbwhere_thing_edit_form($form, &$form_state, $thumbwhere_thing) {
     '#weight' => -5,
     '#autocomplete_path' => 'entity-autocomplete/thumbwhere_content',
   );
+  // Add the default field elements.
+  $form['fk_contentcollection'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereThing fk_contentcollection'),
+    '#default_value' => isset($thumbwhere_thing->fk_contentcollection) ? $thumbwhere_thing->fk_contentcollection : '',
+    //'#maxlength' => 255,
+   /// '#required' => TRUE,
+    '#weight' => -5,
+    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_contentcollection',
+  );
 
 
 
@@ -572,6 +593,18 @@ function thumbwhere_thing_edit_form_validate(&$form, &$form_state) {
   //if (twCanDebug()) debug($form['fk_content']);
    if (twCanDebug()) debug('fk_content = ' . $value);
   // Validate fk fk_content
+
+
+  // Convert fk autocomplete for fk_contentcollection
+  $value = $form['fk_contentcollection']['#value'];
+  // If we have something, escape the auto-completion encoding.
+  if (!empty($value)) { 
+    $value = entity_autocomplete_get_id($value);
+    form_set_value($form['fk_contentcollection'], $value,$form_state);
+  }
+  //if (twCanDebug()) debug($form['fk_contentcollection']);
+   if (twCanDebug()) debug('fk_contentcollection = ' . $value);
+  // Validate fk fk_contentcollection
 
 
               

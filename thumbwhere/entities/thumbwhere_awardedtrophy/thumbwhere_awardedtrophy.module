@@ -616,6 +616,7 @@ function thumbwhere_awardedtrophy_entity_presave($entity, $entity_type) {
     if ($entity->is_new) {
   
       // .. then we create a new thumbwhere_awardedtrophy entity...
+      // .. then we create a new thumbwhere_AwardedTrophy entity...
       // Instantiate the ThumbWhereContent class
 
       $twContentAPI = new ThumbWhereAPIContent();
@@ -630,25 +631,25 @@ function thumbwhere_awardedtrophy_entity_presave($entity, $entity_type) {
 
       $fields = array();
       // Compulsory so..
-      if (empty($entity->trophy)) {
+      if (empty($entity->fk_trophy)) {
         throw new Exception('trophy is compulsory.');
       }
       else {
-        $fields['trophy'] = $entity->trophy;
+        $fields['trophy'] = $entity->fk_trophy;
       }
       // Compulsory so..
-      if (empty($entity->actor)) {
+      if (empty($entity->fk_actor)) {
         throw new Exception('actor is compulsory.');
       }
       else {
-        $fields['actor'] = $entity->actor;
+        $fields['actor'] = $entity->fk_actor;
       }
       // Compulsory so..
-      if (empty($entity->thing)) {
+      if (empty($entity->fk_thing)) {
         throw new Exception('thing is compulsory.');
       }
       else {
-        $fields['thing'] = $entity->thing;
+        $fields['thing'] = $entity->fk_thing;
       }
       // Compulsory so..
       if (empty($entity->documentation)) {

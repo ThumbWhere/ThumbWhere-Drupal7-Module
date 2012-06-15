@@ -616,6 +616,7 @@ function thumbwhere_member_entity_presave($entity, $entity_type) {
     if ($entity->is_new) {
   
       // .. then we create a new thumbwhere_member entity...
+      // .. then we create a new thumbwhere_Member entity...
       // Instantiate the ThumbWhereContent class
 
       $twMemberAPI = new ThumbWhereAPIMember();
@@ -630,18 +631,44 @@ function thumbwhere_member_entity_presave($entity, $entity_type) {
 
       $fields = array();
 
+      // Nullable so we only pass it through to create_member if we have it..
+      if (!empty($entity->fk_profilepic_mediaitem)) {
+        $fields['profilepic_mediaitem'] = $entity->fk_profilepic_mediaitem;
+      }
+
+      // Nullable so we only pass it through to create_member if we have it..
+      if (!empty($entity->fk_profilepics_mediaitemcollection)) {
+        $fields['profilepics_mediaitemcollection'] = $entity->fk_profilepics_mediaitemcollection;
+      }
+
+      // Nullable so we only pass it through to create_member if we have it..
+      if (!empty($entity->fk_whiteboard_mediaitemcollection)) {
+        $fields['whiteboard_mediaitemcollection'] = $entity->fk_whiteboard_mediaitemcollection;
+      }
+
+      // Nullable so we only pass it through to create_member if we have it..
+      if (!empty($entity->fk_activityfeed)) {
+        $fields['activityfeed'] = $entity->fk_activityfeed;
+      }
+
+      // Nullable so we only pass it through to create_member if we have it..
+      if (!empty($entity->password)) {
+        $fields['password'] = $entity->password;
+      }
+
       //
       // Now create the Entity in ThumbWhere
       //
 
-      $member = $twMemberAPI->create_($context = array(
+      $member = $twMemberAPI->create_member($context = array(
+                  'key' => variable_get('thumbwhere_api_key')
           ), $fields);
             
        if (twCanDebug()) debug($member);
 
       //if (twCanDebug()) debug($member);
 
-      $attributes = $member->body->->attributes();
+      $attributes = $member->body->member->attributes();
 
       if (twCanDebug()) debug('newly created id = ' . $attributes['id']);
 

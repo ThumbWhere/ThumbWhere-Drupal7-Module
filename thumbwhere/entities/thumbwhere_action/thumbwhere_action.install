@@ -143,7 +143,7 @@ function thumbwhere_action_schema() {
               'default' => -1,
           ),
           'fk_contentingest' => array(
-          'description' => 'ThumbWhere Id: Optional reference to a \'Like\' Entity.',
+          'description' => 'ThumbWhere Id: Optional reference to a \'ContentIngest\' Entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => FALSE,

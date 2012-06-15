@@ -616,6 +616,7 @@ function thumbwhere_subject_entity_presave($entity, $entity_type) {
     if ($entity->is_new) {
   
       // .. then we create a new thumbwhere_subject entity...
+      // .. then we create a new thumbwhere_Subject entity...
       // Instantiate the ThumbWhereContent class
 
       $twContentAPI = new ThumbWhereAPIContent();
@@ -629,26 +630,20 @@ function thumbwhere_subject_entity_presave($entity, $entity_type) {
       //
 
       $fields = array();
-      // Compulsory so..
-      if (empty($entity->actor)) {
-        throw new Exception('actor is compulsory.');
+
+      // Nullable so we only pass it through to create_subject if we have it..
+      if (!empty($entity->fk_actor)) {
+        $fields['actor'] = $entity->fk_actor;
       }
-      else {
-        $fields['actor'] = $entity->actor;
+
+      // Nullable so we only pass it through to create_subject if we have it..
+      if (!empty($entity->fk_thing)) {
+        $fields['thing'] = $entity->fk_thing;
       }
-      // Compulsory so..
-      if (empty($entity->thing)) {
-        throw new Exception('thing is compulsory.');
-      }
-      else {
-        $fields['thing'] = $entity->thing;
-      }
-      // Compulsory so..
-      if (empty($entity->action)) {
-        throw new Exception('action is compulsory.');
-      }
-      else {
-        $fields['action'] = $entity->action;
+
+      // Nullable so we only pass it through to create_subject if we have it..
+      if (!empty($entity->fk_action)) {
+        $fields['action'] = $entity->fk_action;
       }
 
       // Nullable so we only pass it through to create_subject if we have it..

@@ -616,6 +616,7 @@ function thumbwhere_thing_entity_presave($entity, $entity_type) {
     if ($entity->is_new) {
   
       // .. then we create a new thumbwhere_thing entity...
+      // .. then we create a new thumbwhere_Thing entity...
       // Instantiate the ThumbWhereContent class
 
       $twContentAPI = new ThumbWhereAPIContent();
@@ -638,6 +639,11 @@ function thumbwhere_thing_entity_presave($entity, $entity_type) {
       // Nullable so we only pass it through to create_thing if we have it..
       if (!empty($entity->fk_content)) {
         $fields['content'] = $entity->fk_content;
+      }
+
+      // Nullable so we only pass it through to create_thing if we have it..
+      if (!empty($entity->fk_contentcollection)) {
+        $fields['contentcollection'] = $entity->fk_contentcollection;
       }
 
       //

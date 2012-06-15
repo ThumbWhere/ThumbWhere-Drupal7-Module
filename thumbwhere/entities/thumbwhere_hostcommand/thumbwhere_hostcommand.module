@@ -616,6 +616,7 @@ function thumbwhere_hostcommand_entity_presave($entity, $entity_type) {
     if ($entity->is_new) {
   
       // .. then we create a new thumbwhere_hostcommand entity...
+      // .. then we create a new thumbwhere_HostCommand entity...
       // Instantiate the ThumbWhereContent class
 
       $twadminAPI = new ThumbWhereAPIadmin();

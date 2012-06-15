@@ -133,7 +133,7 @@ function thumbwhere_contentingest_schema() {
   $schema = array();
 
   $schema['thumbwhere_contentingest'] = array(
-  'description' => 'The base table for thumbwhere_contentingest entities.' . 'Content Ingest Ingests content from the specified url for the specified Producer The media will be owned by this producer when it is uploaded fk_member is the individual member making the actual upload. fk_mediaitem is the actual media item that will be uploaded. fk_content The content placeholder we are targetting. url is the url being uploaded. size is the size of the uploaded file. uploaded if true then we have completed upload transcoded if true then the media has been transoded encrypted if true then the media has been encrypted deployed if true then the media has been deployed to storage error if true then there was an error TODO: in xslt get output_repository_check_entity_before_map to know if beiong used ion create. default value = can be null.',
+  'description' => 'The base table for thumbwhere_contentingest entities.' . 'Content Ingest Ingests content from the specified url for the specified Producer The media will be owned by this producer when it is uploaded fk_member The campaign this is part of. fk_member is the individual member making the actual upload. fk_identity is the specific identity that this media came in through (email, facebook etc). fk_producer The producer performing this upload. fk_consumer The consumer performing this upload. fk_content The content placeholder we are targetting. url is the url being uploaded. fk_mediaitem is the actual media item that was created... size is the size of the uploaded file. uploaded if true then we have completed upload transcoded if true then the media has been transoded encrypted if true then the media has been encrypted deployed if true then the media has been deployed to storage error if true then there was an error TODO: in xslt get output_repository_check_entity_before_map to know if beiong used ion create. default value = can be null.',
     'fields' => array(
           'pk_contentingest' => array(
               'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereContentIngests\' entity.',
@@ -158,6 +158,27 @@ function thumbwhere_contentingest_schema() {
           ),
           'fk_member' => array(
           'description' => 'ThumbWhere Id: Optional reference to a \'Member\' Entity.',
+              'type' => 'int',
+              'size' => 'big',
+              'not null' => FALSE,
+              //'default' => -1,
+          ),
+          'fk_identity' => array(
+          'description' => 'ThumbWhere Id: Optional reference to a \'Identity\' Entity.',
+              'type' => 'int',
+              'size' => 'big',
+              'not null' => FALSE,
+              //'default' => -1,
+          ),
+          'fk_producer' => array(
+          'description' => 'ThumbWhere Id: Optional reference to a \'Producer\' Entity.',
+              'type' => 'int',
+              'size' => 'big',
+              'not null' => FALSE,
+              //'default' => -1,
+          ),
+          'fk_consumer' => array(
+          'description' => 'ThumbWhere Id: Optional reference to a \'Consumer\' Entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => FALSE,
@@ -242,6 +263,15 @@ function thumbwhere_contentingest_schema() {
           ),
           'fk_member' => array(
               'fk_member'
+          ),
+          'fk_identity' => array(
+              'fk_identity'
+          ),
+          'fk_producer' => array(
+              'fk_producer'
+          ),
+          'fk_consumer' => array(
+              'fk_consumer'
           ),
       
       ),

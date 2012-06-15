@@ -75,7 +75,9 @@ function thumbwhere_authentication_entity_presave($entity, $type) {
 
   // This global represents the current thumbwhere member id
 
-  global $_tw_pk_member;
+  //global $_tw_pk_member;
+  //global $_tw_pk_identity;
+  global $_tw_pk_consumer;
 
   if ($type != 'user') return;
 
@@ -87,20 +89,20 @@ function thumbwhere_authentication_entity_presave($entity, $type) {
     //  Here we create a corresponding entity in the ThumbWhere domain if we need to.
     //
 
-    // $_tw_pk_member has not been set - so this is Register...
-    if (empty($_tw_pk_member)) {
+    // $_tw_pk_consumer has not been set - so this is Register...
+    if (empty($_tw_pk_consumer)) {
 
       // If no password is provided (when we are testing) then we supply one just for completeness.
       if (!isset($entity->pass)) {
         $entity->pass = 'pass-' . uniqid();
       }
 
-      // $_tw_pk_member has not been set - so this is Register so this will create a ThumbWhere and Drupal user
+      // $_tw_pk_consumer has not been set - so this is Register so this will create a ThumbWhere and Drupal user
       _thumbwhere_register($entity->name, $entity->pass);
 
       // If we managed to get back a tw identity, then all is good.
-      if (!empty($_tw_pk_member)) {
-        _set_thumbwhere_id($entity, $_tw_pk_member);
+      if (!empty($_tw_pk_consumer)) {
+        _set_pk_consumer($entity, $_tw_pk_consumer);
       }
       else {
         // We were not expecting that...
@@ -133,7 +135,7 @@ function thumbwhere_authentication_entity_presave($entity, $type) {
     $changes = array();
 
     /*
-     if ($node->track_quantity['und'][0]['value'] != $node->original->track_quantity['und'][0]['value'])
+     if ($node->track_quantity[$node->language][0]['value'] != $node->original->track_quantity['und'][0]['value'])
      {
      $changes['track_quantity'] = $node->track_quantity;
      }
@@ -265,24 +267,28 @@ function _thumbwhere_authentication_validate_and_changepassword(&$form_state) {
 function _thumbwhere_login($username, $password) {
 
   // This global represents the current thumbwhere member id
-  global $_tw_pk_member;
+  global $_tw_pk_consumer;
 
   // Do we have a uid for this user
   $uid = db_query("SELECT uid FROM {users} WHERE name = :name", array(
       ':name' => $username
   ))->fetchField();
 
-  // If we dom't know about this user in drupal...
+  // If we don't know about this user in drupal...
   if (empty($uid)) {
+
+    debug('WE DO NOT KNOW USER ' . $username);
+
 
     //
     // Does the user exist in ThumbWhere?
     //
 
-    $_tw_pk_member = NULL;
+    $_tw_pk_consumer = NULL;
 
+    /*
     // If we know about the user in ThumbWhere
-    if (!empty($_tw_pk_member)) {
+    if (!empty($_tw_pk_consumer)) {
       global $user;
 
       // Register or create the user
@@ -291,8 +297,9 @@ function _thumbwhere_login($username, $password) {
       // If you don't do this...  there will be an error
       return $user->uid;
     }
+    */
 
-    // drupal_set_message(t('No such user'), 'error.');
+    drupal_set_message(t('No such user'), 'error.');
 
     // User doesn't exist
 
@@ -300,11 +307,38 @@ function _thumbwhere_login($username, $password) {
   }
   else {
 
+
+    debug('LOGIN TO THUMBWHERE');
+
+
+    // Get a handle on the web service library provider for 'identity v1.1'
+    $twIdentityAPI = new ThumbWhereAPIIdentity();
+
+    //
+    // Request a new 'unearthed' identity...
+    //
+
+    $parameters = array();
+
+    $parameters['key'] = variable_get('thumbwhere_api_key');
+    $parameters['type'] = 'unearthed';
+    $parameters['id'] = $username;
+    $parameters['secret'] = $password;
+
+    $requestResponse = $twIdentityAPI->call_authenticate($parameters);
+
+
+    debug('$requestResponse');
+    debug($requestResponse);
+
+
+
+
     //
     // TODO: Authenticate the user.. get their id
     //
 
-    $_tw_pk_member = 666;
+    //$_tw_pk_consumer = 1;
 
     // If we run into trouble during the login...
     //throw new Exception('Failed to Authenticate User : Error TA-002');
@@ -335,9 +369,40 @@ function _thumbwhere_validate($username, $current_password) {
     // TODO: Authenticate the user
     //
 
+    debug('VALIDATE WITH THUMBWHERE');
+
+
+    // DEBUG USER!
+    global $user;
+    $user_loaded = user_load($user->uid);
+    $user_loaded->language = 'und';
+    debug($user_loaded);
+
+
+/*
+    // Get a handle on the web service library provider for 'identity v1.1'
+    $twIdentityAPI = new ThumbWhereAPIIdentity();
+
+    //
+    // Request a new 'unearthed' identity...
+    //
+
+    $parameters = array();
+
+    $parameters['key'] = variable_get('thumbwhere_api_key');
+    $parameters['type'] = 'unearthed';
+    $parameters['id'] = $username;
+    $parameters['secret'] = $current_password;
+
+    $requestResponse = $twIdentityAPI->call_authenticate($parameters);
+
+
+    debug('$requestResponse');
+    debug($requestResponse);
+
     // If we run into trouble during the verifiy...
     //throw new Exception('Failed to Verify User : Error TA-002');
-
+*/
     return TRUE;
   }
 
@@ -364,6 +429,8 @@ function _thumbwhere_validate_and_change_password($username, $current_password, 
     // TODO: Validate and change password.
     //
 
+    debug('VALIDATE AND CHANGE  THUMBWHERE');
+
     // If we run into trouble during the verifiy...
     //throw new Exception('Failed to Verify User : Error TA-005');
 
@@ -383,13 +450,92 @@ function _thumbwhere_register($username, $password) {
   ))->fetchField()) {
 
     // This global represents the current thumbwhere member id
-    global $_tw_pk_member;
+    //global $_tw_member_token;
+    //global $_tw_identity_token;
+    //global $_tw_pk_member;
+    global $_tw_pk_consumer;
+    //global $_tw_pk_identity;
 
     //
     // TODO: Create the user - get id
     //
 
-    $_tw_pk_member = 667;
+    debug('CREATE NEW THUMBWHERE MEMBER');
+
+
+    // Get a handle on the web service library provider for 'identity v1.1'
+    $twIdentityAPI = new ThumbWhereAPIIdentity();
+
+    //
+    // Request a new 'unearthed' identity...
+    //
+
+
+    $parameters = array();
+
+    $parameters['key'] = variable_get('thumbwhere_api_key');
+    $parameters['type'] = 'unearthed';
+    $parameters['id'] = $username;
+
+    $requestResponse = $twIdentityAPI->call_request($parameters);
+
+
+    debug('REQUEST');
+
+    //if (twCanDebug())
+    debug($requestResponse);
+
+    //
+    // Then authenticate the request...
+    //
+
+    $parameters = array();
+    $parameters['key'] = variable_get('thumbwhere_api_key');
+    $parameters['code'] = $requestResponse->body->request->challenge_code;
+    //$parameters['id'] = $username;
+    $parameters['secret'] = $password;
+
+    $authenticateRequestResponse = $twIdentityAPI->call_authenticate_request($parameters);
+
+    debug('AUTHENTICATEREQUEST');
+    //if (twCanDebug())
+    debug($authenticateRequestResponse);
+
+    $memberToken = $authenticateRequestResponse->body->authenticate_request->member;
+    $identityToken = $authenticateRequestResponse->body->authenticate_request->identity;
+
+    debug('member ' . $memberToken);
+    debug('identity ' . $identityToken);
+
+    //
+    // .. and now we create a consumer with a single member...
+    //
+
+    // Get a handle on the web service library provider for 'content v1.1'
+    $twContentAPI = new ThumbWhereAPIContent();
+
+    $parameters['key'] = variable_get('thumbwhere_api_key');
+    $parameters['member'] = $memberToken;
+    $parameters['name'] = $username;
+
+    $registerConsumerResponse =  $twContentAPI->call_register_consumer($parameters);
+
+    debug('REGISTERCONSUMER');
+    //if (twCanDebug())
+    debug($registerConsumerResponse);
+
+    // TODO: Get member id and
+
+    // Primary id we want to use...
+    $_tw_pk_consumer = $registerConsumerResponse->body->register_consumer->consumer;
+
+    // May need this...
+    //$_tw_member_token = $memberToken;
+
+    // Maybe need these....
+    //$_tw_identity_token = $identityToken;
+    //$_tw_pk_member = 667;
+    //$_tw_pk_identity = 667;
 
     // or if were not expecting an error..
     //throw new Exception('Failed to Authenticate User : Error TA-001');
@@ -411,17 +557,23 @@ function _thumbwhere_register($username, $password) {
 //
 
 /**
- * Set the ThumbWhere ID for the User
+ * Set the pk_consumer ThumbWhere ID for the User
  */
-function _set_thumbwhere_id(&$object, $id) {
+function _set_pk_consumer(&$object, $id) {
+
+
+  watchdog('thumbwhere_authenticate', '_set_pk_consumer ' . $id);
+
+
+
 
   if (is_array($object)) {
-    if (isset($object['pk_member']['und'][0])) {
+    if (isset($object['field_pk_consumer'][$object->language][0])) {
       form_set_error('name', t('Attempt to set id on user, when they already have an id.'));
     }
     else {
-      $object['pk_member'] = array(
-          'und' => array(
+      $object['field_pk_consumer'] = array(
+          $object->language => array(
               0 => array(
                   'thumbwhere_id' => $id,
               ),
@@ -430,12 +582,12 @@ function _set_thumbwhere_id(&$object, $id) {
     }
   }
   else {
-    if (isset($object->pk_member['und'][0])) {
+    if (isset($object->field_pk_consumer[$object->language][0])) {
       form_set_error('name', t('Attempt to set id on user, when they already have an id.'));
     }
     else {
-      $object->pk_member = array(
-          'und' => array(
+      $object->field_pk_consumer = array(
+          $object->language => array(
               0 => array(
                   'thumbwhere_id' => $id,
               ),
@@ -458,14 +610,16 @@ function _set_thumbwhere_id(&$object, $id) {
 /**
  * Set the ThumbWhere ID for the User
  */
+/*
 function thumbwhere_authentication_utility_get_user_pk_member() {
 
   global $user;
 
   $user_loaded = user_load($user->uid);
+  $user_loaded->language = 'und';
 
   // If we have
-  if (!isset($user_loaded->pk_member['und'][0])) {
+  if (!isset($user_loaded->pk_member[$user_loaded->language][0])) {
 
     if ($user->uid == 1) {
       // Admin user needs to be allocated a ThumbWhere id...
@@ -478,9 +632,9 @@ function thumbwhere_authentication_utility_get_user_pk_member() {
     debug('create admin user');
   }
 
-  return $user_loaded->pk_member['und'][0]['thumbwhere_id'];
+  return $user_loaded->pk_member[$user_loaded->language][0]['thumbwhere_id'];
 }
-
+*/
 //
 //  ThumbWhere/Drupal Integration
 //

@@ -195,6 +195,19 @@ function thumbwhere_identity_schema() {
               'size' => 'normal',
               'length' => 128,
               'not null' => FALSE,                  
+          ),
+          'last_login' => array(
+              'description' => 'The \'last_login\' date field of the \'Identity\' entity.',
+              'type' => 'datetime',
+              'size' => 'normal',
+              'not null' => FALSE,                  
+          ),
+          'total_logins' => array(
+              'description' => 'The \'total_logins\' textfield field of the \'Identity\' entity.',
+              'type' => 'int',
+              'size' => 'normal',
+              'not null' => FALSE,
+              'default' => '0',                  
           ),      
       ),
       'primary key' => array(

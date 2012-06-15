@@ -30,6 +30,15 @@
       <field name="member" type="Member" optional="true">
         <doc>'member' field, which is an embedded 'Member' resource.</doc>
       </field>
+      <field name="identity" type="Identity" optional="true">
+        <doc>'identity' field, which is an embedded 'Identity' resource.</doc>
+      </field>
+      <field name="producer" type="Producer" optional="true">
+        <doc>'producer' field, which is an embedded 'Producer' resource.</doc>
+      </field>
+      <field name="consumer" type="Consumer" optional="true">
+        <doc>'consumer' field, which is an embedded 'Consumer' resource.</doc>
+      </field>
       <field name="url" type="string">
         <doc>'url' field, which is a 'string' type.</doc>
       </field>

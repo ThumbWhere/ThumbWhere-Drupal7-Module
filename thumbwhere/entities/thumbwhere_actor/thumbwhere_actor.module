@@ -616,6 +616,7 @@ function thumbwhere_actor_entity_presave($entity, $entity_type) {
     if ($entity->is_new) {
   
       // .. then we create a new thumbwhere_actor entity...
+      // .. then we create a new thumbwhere_Actor entity...
       // Instantiate the ThumbWhereContent class
 
       $twContentAPI = new ThumbWhereAPIContent();
@@ -634,12 +635,10 @@ function thumbwhere_actor_entity_presave($entity, $entity_type) {
       if (!empty($entity->fk_member)) {
         $fields['member'] = $entity->fk_member;
       }
-      // Compulsory so..
-      if (empty($entity->identity)) {
-        throw new Exception('identity is compulsory.');
-      }
-      else {
-        $fields['identity'] = $entity->identity;
+
+      // Nullable so we only pass it through to create_actor if we have it..
+      if (!empty($entity->fk_identity)) {
+        $fields['identity'] = $entity->fk_identity;
       }
 
       // Nullable so we only pass it through to create_actor if we have it..

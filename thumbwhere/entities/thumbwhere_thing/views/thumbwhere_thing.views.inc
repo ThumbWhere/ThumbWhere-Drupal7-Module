@@ -82,6 +82,7 @@ function thumbwhere_thing_views_default_views() {
     'pk_thing' => 'pk_thing',
     'fk_mediaitem' => 'fk_mediaitem',
     'fk_content' => 'fk_content',
+    'fk_contentcollection' => 'fk_contentcollection',
     'link_thumbwhere_thing' => 'link_thumbwhere_thing',
     'operations' => 'operations',
   );
@@ -102,6 +103,13 @@ function thumbwhere_thing_views_default_views() {
           'empty_column' => 0,
       ),
       'fk_content' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'fk_contentcollection' => array(
           'sortable' => 0,
           'default_sort_order' => 'asc',
           'align' => '',
@@ -290,6 +298,30 @@ function thumbwhere_thing_views_default_views() {
   $handler->display->display_options['fields']['fk_content']['empty_zero'] = 0;
   $handler->display->display_options['fields']['fk_content']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['fk_content']['format_plural'] = 0;
+  /* Field: ThumbWhereThing: fk_contentcollection */
+  $handler->display->display_options['fields']['fk_contentcollection']['id'] = 'fk_contentcollection';
+  $handler->display->display_options['fields']['fk_contentcollection']['table'] = 'thumbwhere_thing';
+  $handler->display->display_options['fields']['fk_contentcollection']['field'] = 'fk_contentcollection';
+  $handler->display->display_options['fields']['fk_contentcollection']['label'] = 'fk_contentcollection';
+  $handler->display->display_options['fields']['fk_contentcollection']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['fk_contentcollection']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['fk_contentcollection']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['fk_contentcollection']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['fk_contentcollection']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['fk_contentcollection']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['fk_contentcollection']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['fk_contentcollection']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['fk_contentcollection']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['fk_contentcollection']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['fk_contentcollection']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['fk_contentcollection']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['fk_contentcollection']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['fk_contentcollection']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['fk_contentcollection']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['fk_contentcollection']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['fk_contentcollection']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['fk_contentcollection']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['fk_contentcollection']['format_plural'] = 0;
     
     
     

@@ -616,6 +616,7 @@ function thumbwhere_action_entity_presave($entity, $entity_type) {
     if ($entity->is_new) {
   
       // .. then we create a new thumbwhere_action entity...
+      // .. then we create a new thumbwhere_Action entity...
       // Instantiate the ThumbWhereContent class
 
       $twContentAPI = new ThumbWhereAPIContent();
@@ -629,89 +630,65 @@ function thumbwhere_action_entity_presave($entity, $entity_type) {
       //
 
       $fields = array();
-      // Compulsory so..
-      if (empty($entity->contentingest)) {
-        throw new Exception('contentingest is compulsory.');
+
+      // Nullable so we only pass it through to create_action if we have it..
+      if (!empty($entity->fk_contentingest)) {
+        $fields['contentingest'] = $entity->fk_contentingest;
       }
-      else {
-        $fields['contentingest'] = $entity->contentingest;
+
+      // Nullable so we only pass it through to create_action if we have it..
+      if (!empty($entity->fk_like)) {
+        $fields['like'] = $entity->fk_like;
       }
-      // Compulsory so..
-      if (empty($entity->like)) {
-        throw new Exception('like is compulsory.');
+
+      // Nullable so we only pass it through to create_action if we have it..
+      if (!empty($entity->fk_follow)) {
+        $fields['follow'] = $entity->fk_follow;
       }
-      else {
-        $fields['like'] = $entity->like;
+
+      // Nullable so we only pass it through to create_action if we have it..
+      if (!empty($entity->fk_fan)) {
+        $fields['fan'] = $entity->fk_fan;
       }
-      // Compulsory so..
-      if (empty($entity->follow)) {
-        throw new Exception('follow is compulsory.');
+
+      // Nullable so we only pass it through to create_action if we have it..
+      if (!empty($entity->fk_share)) {
+        $fields['share'] = $entity->fk_share;
       }
-      else {
-        $fields['follow'] = $entity->follow;
+
+      // Nullable so we only pass it through to create_action if we have it..
+      if (!empty($entity->fk_awardedtrophy)) {
+        $fields['awardedtrophy'] = $entity->fk_awardedtrophy;
       }
-      // Compulsory so..
-      if (empty($entity->fan)) {
-        throw new Exception('fan is compulsory.');
+
+      // Nullable so we only pass it through to create_action if we have it..
+      if (!empty($entity->fk_mediaitemrating)) {
+        $fields['mediaitemrating'] = $entity->fk_mediaitemrating;
       }
-      else {
-        $fields['fan'] = $entity->fan;
+
+      // Nullable so we only pass it through to create_action if we have it..
+      if (!empty($entity->fk_booking)) {
+        $fields['booking'] = $entity->fk_booking;
       }
-      // Compulsory so..
-      if (empty($entity->share)) {
-        throw new Exception('share is compulsory.');
+
+      // Nullable so we only pass it through to create_action if we have it..
+      if (!empty($entity->fk_checkin)) {
+        $fields['checkin'] = $entity->fk_checkin;
       }
-      else {
-        $fields['share'] = $entity->share;
+
+      // Nullable so we only pass it through to create_action if we have it..
+      if (!empty($entity->fk_consume)) {
+        $fields['consume'] = $entity->fk_consume;
       }
-      // Compulsory so..
-      if (empty($entity->awardedtrophy)) {
-        throw new Exception('awardedtrophy is compulsory.');
+
+      // Nullable so we only pass it through to create_action if we have it..
+      if (!empty($entity->fk_consumermember)) {
+        $fields['consumermember'] = $entity->fk_consumermember;
       }
-      else {
-        $fields['awardedtrophy'] = $entity->awardedtrophy;
-      }
-      // Compulsory so..
-      if (empty($entity->mediaitemrating)) {
-        throw new Exception('mediaitemrating is compulsory.');
-      }
-      else {
-        $fields['mediaitemrating'] = $entity->mediaitemrating;
-      }
-      // Compulsory so..
-      if (empty($entity->booking)) {
-        throw new Exception('booking is compulsory.');
-      }
-      else {
-        $fields['booking'] = $entity->booking;
-      }
-      // Compulsory so..
-      if (empty($entity->checkin)) {
-        throw new Exception('checkin is compulsory.');
-      }
-      else {
-        $fields['checkin'] = $entity->checkin;
-      }
-      // Compulsory so..
-      if (empty($entity->consume)) {
-        throw new Exception('consume is compulsory.');
-      }
-      else {
-        $fields['consume'] = $entity->consume;
-      }
-      // Compulsory so..
-      if (empty($entity->consumermember)) {
-        throw new Exception('consumermember is compulsory.');
-      }
-      else {
-        $fields['consumermember'] = $entity->consumermember;
-      }
-      // Compulsory so..
-      if (empty($entity->producermember)) {
-        throw new Exception('producermember is compulsory.');
-      }
-      else {
-        $fields['producermember'] = $entity->producermember;
+
+      // Nullable so we only pass it through to create_action if we have it..
+      if (!empty($entity->fk_producermember)) {
+        $fields['producermember'] = $entity->fk_producermember;
       }
 
       //
