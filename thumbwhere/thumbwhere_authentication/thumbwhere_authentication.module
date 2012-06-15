@@ -81,6 +81,9 @@ function thumbwhere_authentication_entity_presave($entity, $type) {
 
   if ($type != 'user') return;
 
+  // Force the language to be 'und' *HACK*
+  $entity->language = 'und';
+
   // If this is new
   if ($entity->is_new) {
 
