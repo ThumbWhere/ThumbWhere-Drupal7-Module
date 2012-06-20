@@ -19,6 +19,6 @@ class thumbwhere_fan_handler_delete_link_field extends thumbwhere_fan_handler_li
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_fan_id = $values->{$this->aliases['pk_fan']};
 
-    return l($text, 'admin/content/thumbwhere_fans/thumbwhere_fan/' . $pk_fan . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_fans/thumbwhere_fan/' . $pk_fan . '/delete');
   }
 }

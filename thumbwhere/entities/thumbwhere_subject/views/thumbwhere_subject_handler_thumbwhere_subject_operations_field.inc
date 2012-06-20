@@ -26,7 +26,7 @@ class thumbwhere_subject_handler_thumbwhere_subject_operations_field extends vie
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_subject', 'admin/content/thumbwhere_subjects/thumbwhere_subject', array($this->get_value($values, 'pk_subject')));
+    $links = menu_contextual_links('thumbwhere_subject', 'admin/thumbwhere/thumbwhere_subjects/thumbwhere_subject', array($this->get_value($values, 'pk_subject')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

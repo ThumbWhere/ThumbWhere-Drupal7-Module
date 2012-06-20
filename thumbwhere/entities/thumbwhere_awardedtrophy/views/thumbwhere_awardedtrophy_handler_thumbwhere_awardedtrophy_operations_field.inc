@@ -26,7 +26,7 @@ class thumbwhere_awardedtrophy_handler_thumbwhere_awardedtrophy_operations_field
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_awardedtrophy', 'admin/content/thumbwhere_awardedtrophys/thumbwhere_awardedtrophy', array($this->get_value($values, 'pk_awardedtrophy')));
+    $links = menu_contextual_links('thumbwhere_awardedtrophy', 'admin/thumbwhere/thumbwhere_awardedtrophys/thumbwhere_awardedtrophy', array($this->get_value($values, 'pk_awardedtrophy')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

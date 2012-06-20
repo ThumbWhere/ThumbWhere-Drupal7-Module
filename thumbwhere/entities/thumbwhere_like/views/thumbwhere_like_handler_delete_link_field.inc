@@ -19,6 +19,6 @@ class thumbwhere_like_handler_delete_link_field extends thumbwhere_like_handler_
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_like_id = $values->{$this->aliases['pk_like']};
 
-    return l($text, 'admin/content/thumbwhere_likes/thumbwhere_like/' . $pk_like . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_likes/thumbwhere_like/' . $pk_like . '/delete');
   }
 }

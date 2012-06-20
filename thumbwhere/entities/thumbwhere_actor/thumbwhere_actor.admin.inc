@@ -42,7 +42,7 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
   //
 
   if (!isset($notification->attributes()->key)) {
-    drupal_add_http_header('Status', '501 unable to fulfull request..');
+    drupal_add_http_header('Status', '412 unable to fulfull request..');
     $err = 'We were expecting a \'key\', attribute on the \'actor\', element.';
     print($err);
     watchdog('thumbwhere_actor', $err ,array(), WATCHDOG_ERROR);
@@ -57,6 +57,112 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
 
   switch($op)
   {
+  
+  
+      case 'create':
+      {
+        //
+        // What resource are we creating?
+        //
+      
+        //
+        // Get the id
+        //
+		
+        if (!isset($notification->attributes()->id)) {
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
+          $err = 'We were expecting an \'id\', attribute on the \'actor\', element when we are performing an \'update\' notification..';
+          print($err);
+          watchdog('thumbwhere_actor', $err ,array(), WATCHDOG_ERROR);
+          exit(0);
+        }
+
+        $id = intval($notification->attributes()->id);
+		
+
+        if (twCanDebug()) debug('id');
+        if (twCanDebug()) debug($id);
+
+      
+        //
+        // Get the fields
+        //
+          
+        $entities = entity_load('thumbwhere_actor', array($id));
+
+        if (twCanDebug()) debug('$entities');
+        if (twCanDebug()) debug($entities);
+
+        if (count($entities) != 0) {
+          //drupal_add_http_header('Status', '409 Resource already exists.');
+          $err = '\'actor\' resource already exists with an id of \'' . $id . '\'.';
+           //print($err);
+          watchdog('thumbwhere_actor', $err ,array(), WATCHDOG_ERROR);
+          //exit(0);	
+          	
+		drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<actor op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</actor>');
+        print('</response>');
+        exit(0);          	
+          
+        }
+
+        // Getting a reference to the entity we asked for
+        $entityfields = array();
+
+        //
+        // We are only updating what has been passed through.
+        // No test for missing values.
+        // TODO: Validate incoming values.
+        //
+
+
+        $entityfields['pk_actor'] = $id;	
+
+        if (isset($notification->member)) {
+          $entityfields['fk_member'] = intval($notification->member);
+        }
+
+        if (isset($notification->identity)) {
+          $entityfields['fk_identity'] = intval($notification->identity);
+        }
+
+        if (isset($notification->producer)) {
+          $entityfields['fk_producer'] = intval($notification->producer);
+        }
+
+        if (isset($notification->consumer)) {
+          $entityfields['fk_consumer'] = intval($notification->consumer);
+        }
+
+        if (!isset($notification->attributes()->key)) {
+          if (twCanDebug()) debug('$entities');
+          if (twCanDebug()) debug($entities);
+        }
+
+        // We are being notified, so we do not want to ship this out again as a notification...
+        // Finally write the entity.
+        $entity = entity_create('thumbwhere_actor', $entityfields);
+        $entity->do_not_propagate = TRUE;
+        $entity->save();
+
+        //
+        // Send the final response
+        //
+
+        drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<actor op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</actor>');
+        print('</response>');
+        exit(0);
+      }
+  
+  
     case 'update':
       {
         //
@@ -68,7 +174,7 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
         //
 		
         if (!isset($notification->attributes()->id)) {
-          drupal_add_http_header('Status', '501 unable to fulfull request.');
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
           $err = 'We were expecting an \'id\', attribute on the \'actor\', element when we are performing an \'update\' notification..';
           print($err);
           watchdog('thumbwhere_actor', $err ,array(), WATCHDOG_ERROR);
@@ -92,10 +198,10 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
         if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
-          drupal_add_http_header('Status', '404 No such resource exists.');
+          drupal_add_http_header('Status', '409 No such resource exists.');
           print('No such \'actor\' resource exists with an id of \'' . $id . '\'.');
-	    		watchdog('thumbwhere_actor', 'No such \'actor\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
-exit(0);
+          watchdog('thumbwhere_actor', 'No such \'actor\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
+          exit(0);
         }
 
         // Getting a reference to the entity we asked for
@@ -129,6 +235,9 @@ exit(0);
           if (twCanDebug()) debug($entities);
         }
 
+        // We are being notified, so we do not want to ship this out again as a notification...
+        $entity->do_not_propagate = TRUE;
+
         // Finally write the entity.
         entity_save('thumbwhere_actor', $entity);
 
@@ -144,11 +253,13 @@ exit(0);
         print('</response>');
         exit(0);
       }
+      
+      
 
     default:
       {
         drupal_add_http_header('Status', '501 Unable to fulfull request..');
-        print('We were expecting a \'key\', attribute on the \'actor\', element.');
+        print('We don\'t handle the \'' . $op . '\', notification operation on the \'actor\', element.');
         exit(0);
 
       }
@@ -338,7 +449,7 @@ class ThumbWhereActorUIController extends EntityDefaultUIController {
     $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
 
     $items[$this->path] = array(
-      'title' => 'ThumbWhereActors',
+      'title' => 'Actor',
       'description' => 'Add edit and update thumbwhere_actors.',
       'page callback' => 'system_admin_menu_block_page',
       'access arguments' => array('access administration pages'),
@@ -351,8 +462,8 @@ class ThumbWhereActorUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a thumbwhere_actor',
-      'description' => 'Add a new thumbwhere_actor',
+      'title' => 'Add a Actor',
+      'description' => 'Add a new Actor',
       'page callback'  => 'thumbwhere_actor_add_page',
       'access callback'  => 'thumbwhere_actor_access',
       'access arguments' => array('edit'),
@@ -560,7 +671,7 @@ function thumbwhere_actor_edit_form($form, &$form_state, $thumbwhere_actor) {
     $form['actions']['delete'] = array(
       '#type' => 'submit',
       '#value' => t('Delete thumbwhere_actor'),
-      '#suffix' => l(t('Cancel'), 'admin/content/thumbwhere_actors'),
+      '#suffix' => l(t('Cancel'), 'admin/thumbwhere/thumbwhere_actors'),
       '#submit' => $submit + array('thumbwhere_actor_form_submit_delete'),
       '#weight' => 45,
     );
@@ -667,7 +778,7 @@ function thumbwhere_actor_edit_form_submit(&$form, &$form_state) {
   $thumbwhere_actor->changed = time();
 
   $thumbwhere_actor->save();
-  $form_state['redirect'] = 'admin/content/thumbwhere_actors';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_actors';
 }
 
 /**
@@ -676,7 +787,7 @@ function thumbwhere_actor_edit_form_submit(&$form, &$form_state) {
  * @todo Remove hard-coded path
  */
 function thumbwhere_actor_form_submit_delete(&$form, &$form_state) {
-  $form_state['redirect'] = 'admin/content/thumbwhere_actors/thumbwhere_actor/' . $form_state['thumbwhere_actor']->pk_actor . '/delete';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_actors/thumbwhere_actor/' . $form_state['thumbwhere_actor']->pk_actor . '/delete';
 }
 
 
@@ -698,7 +809,7 @@ function thumbwhere_actor_delete_form($form, &$form_state, $thumbwhere_actor) {
 
   $form = confirm_form($form,
     t('Are you sure you want to delete thumbwhere_actor %name?', array('%name' => $thumbwhere_actor->pk_actor)),
-    'admin/content/thumbwhere_actors/thumbwhere_actor',
+    'admin/thumbwhere/thumbwhere_actors/thumbwhere_actor',
     '<p>' . t('This action cannot be undone.') . '</p>',
     t('Delete'),
     t('Cancel'),
@@ -719,7 +830,7 @@ function thumbwhere_actor_delete_form_submit($form, &$form_state) {
   drupal_set_message(t('The thumbwhere_actor %name has been deleted.', array('%name' => $thumbwhere_actor->pk_actor)));
   watchdog('thumbwhere_actor', 'Deleted thumbwhere_actor %name.', array('%name' => $thumbwhere_actor->pk_actor));
 
-  $form_state['redirect'] = 'admin/content/thumbwhere_actors';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_actors';
 }
 
 
@@ -778,7 +889,7 @@ function thumbwhere_actor_set_breadcrumb() {
     l(t('Home'), '<front>'),
     l(t('Administration'), 'admin'),
     l(t('Actor'), 'admin/content'),
-    l(t('ThumbWhereActors'), 'admin/content/thumbwhere_actors'),
+    l(t('Actor'), 'admin/thumbwhere/thumbwhere_actors'),
   );
 
   drupal_set_breadcrumb($breadcrumb);

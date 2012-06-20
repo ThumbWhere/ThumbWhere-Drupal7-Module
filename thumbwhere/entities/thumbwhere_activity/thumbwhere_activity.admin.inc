@@ -42,7 +42,7 @@ function _thumbwhere_handle_activity_notify_xml($notification) {
   //
 
   if (!isset($notification->attributes()->key)) {
-    drupal_add_http_header('Status', '501 unable to fulfull request..');
+    drupal_add_http_header('Status', '412 unable to fulfull request..');
     $err = 'We were expecting a \'key\', attribute on the \'activity\', element.';
     print($err);
     watchdog('thumbwhere_activity', $err ,array(), WATCHDOG_ERROR);
@@ -57,6 +57,112 @@ function _thumbwhere_handle_activity_notify_xml($notification) {
 
   switch($op)
   {
+  
+  
+      case 'create':
+      {
+        //
+        // What resource are we creating?
+        //
+      
+        //
+        // Get the id
+        //
+		
+        if (!isset($notification->attributes()->id)) {
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
+          $err = 'We were expecting an \'id\', attribute on the \'activity\', element when we are performing an \'update\' notification..';
+          print($err);
+          watchdog('thumbwhere_activity', $err ,array(), WATCHDOG_ERROR);
+          exit(0);
+        }
+
+        $id = intval($notification->attributes()->id);
+		
+
+        if (twCanDebug()) debug('id');
+        if (twCanDebug()) debug($id);
+
+      
+        //
+        // Get the fields
+        //
+          
+        $entities = entity_load('thumbwhere_activity', array($id));
+
+        if (twCanDebug()) debug('$entities');
+        if (twCanDebug()) debug($entities);
+
+        if (count($entities) != 0) {
+          //drupal_add_http_header('Status', '409 Resource already exists.');
+          $err = '\'activity\' resource already exists with an id of \'' . $id . '\'.';
+           //print($err);
+          watchdog('thumbwhere_activity', $err ,array(), WATCHDOG_ERROR);
+          //exit(0);	
+          	
+		drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<activity op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</activity>');
+        print('</response>');
+        exit(0);          	
+          
+        }
+
+        // Getting a reference to the entity we asked for
+        $entityfields = array();
+
+        //
+        // We are only updating what has been passed through.
+        // No test for missing values.
+        // TODO: Validate incoming values.
+        //
+
+
+        $entityfields['pk_activity'] = $id;	
+
+        if (isset($notification->actor)) {
+          $entityfields['fk_actor'] = intval($notification->actor);
+        }
+
+        if (isset($notification->action)) {
+          $entityfields['fk_action'] = intval($notification->action);
+        }
+
+        if (isset($notification->subject)) {
+          $entityfields['fk_subject'] = intval($notification->subject);
+        }
+
+        if (isset($notification->place)) {
+          $entityfields['fk_place'] = intval($notification->place);
+        }
+
+        if (!isset($notification->attributes()->key)) {
+          if (twCanDebug()) debug('$entities');
+          if (twCanDebug()) debug($entities);
+        }
+
+        // We are being notified, so we do not want to ship this out again as a notification...
+        // Finally write the entity.
+        $entity = entity_create('thumbwhere_activity', $entityfields);
+        $entity->do_not_propagate = TRUE;
+        $entity->save();
+
+        //
+        // Send the final response
+        //
+
+        drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<activity op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</activity>');
+        print('</response>');
+        exit(0);
+      }
+  
+  
     case 'update':
       {
         //
@@ -68,7 +174,7 @@ function _thumbwhere_handle_activity_notify_xml($notification) {
         //
 		
         if (!isset($notification->attributes()->id)) {
-          drupal_add_http_header('Status', '501 unable to fulfull request.');
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
           $err = 'We were expecting an \'id\', attribute on the \'activity\', element when we are performing an \'update\' notification..';
           print($err);
           watchdog('thumbwhere_activity', $err ,array(), WATCHDOG_ERROR);
@@ -92,10 +198,10 @@ function _thumbwhere_handle_activity_notify_xml($notification) {
         if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
-          drupal_add_http_header('Status', '404 No such resource exists.');
+          drupal_add_http_header('Status', '409 No such resource exists.');
           print('No such \'activity\' resource exists with an id of \'' . $id . '\'.');
-	    		watchdog('thumbwhere_activity', 'No such \'activity\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
-exit(0);
+          watchdog('thumbwhere_activity', 'No such \'activity\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
+          exit(0);
         }
 
         // Getting a reference to the entity we asked for
@@ -129,6 +235,9 @@ exit(0);
           if (twCanDebug()) debug($entities);
         }
 
+        // We are being notified, so we do not want to ship this out again as a notification...
+        $entity->do_not_propagate = TRUE;
+
         // Finally write the entity.
         entity_save('thumbwhere_activity', $entity);
 
@@ -144,11 +253,13 @@ exit(0);
         print('</response>');
         exit(0);
       }
+      
+      
 
     default:
       {
         drupal_add_http_header('Status', '501 Unable to fulfull request..');
-        print('We were expecting a \'key\', attribute on the \'activity\', element.');
+        print('We don\'t handle the \'' . $op . '\', notification operation on the \'activity\', element.');
         exit(0);
 
       }
@@ -338,7 +449,7 @@ class ThumbWhereActivityUIController extends EntityDefaultUIController {
     $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
 
     $items[$this->path] = array(
-      'title' => 'ThumbWhereActivitys',
+      'title' => 'Activity',
       'description' => 'Add edit and update thumbwhere_activitys.',
       'page callback' => 'system_admin_menu_block_page',
       'access arguments' => array('access administration pages'),
@@ -351,8 +462,8 @@ class ThumbWhereActivityUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a thumbwhere_activity',
-      'description' => 'Add a new thumbwhere_activity',
+      'title' => 'Add a Activity',
+      'description' => 'Add a new Activity',
       'page callback'  => 'thumbwhere_activity_add_page',
       'access callback'  => 'thumbwhere_activity_access',
       'access arguments' => array('edit'),
@@ -560,7 +671,7 @@ function thumbwhere_activity_edit_form($form, &$form_state, $thumbwhere_activity
     $form['actions']['delete'] = array(
       '#type' => 'submit',
       '#value' => t('Delete thumbwhere_activity'),
-      '#suffix' => l(t('Cancel'), 'admin/content/thumbwhere_activitys'),
+      '#suffix' => l(t('Cancel'), 'admin/thumbwhere/thumbwhere_activitys'),
       '#submit' => $submit + array('thumbwhere_activity_form_submit_delete'),
       '#weight' => 45,
     );
@@ -676,7 +787,7 @@ function thumbwhere_activity_edit_form_submit(&$form, &$form_state) {
   $thumbwhere_activity->changed = time();
 
   $thumbwhere_activity->save();
-  $form_state['redirect'] = 'admin/content/thumbwhere_activitys';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_activitys';
 }
 
 /**
@@ -685,7 +796,7 @@ function thumbwhere_activity_edit_form_submit(&$form, &$form_state) {
  * @todo Remove hard-coded path
  */
 function thumbwhere_activity_form_submit_delete(&$form, &$form_state) {
-  $form_state['redirect'] = 'admin/content/thumbwhere_activitys/thumbwhere_activity/' . $form_state['thumbwhere_activity']->pk_activity . '/delete';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_activitys/thumbwhere_activity/' . $form_state['thumbwhere_activity']->pk_activity . '/delete';
 }
 
 
@@ -707,7 +818,7 @@ function thumbwhere_activity_delete_form($form, &$form_state, $thumbwhere_activi
 
   $form = confirm_form($form,
     t('Are you sure you want to delete thumbwhere_activity %name?', array('%name' => $thumbwhere_activity->pk_activity)),
-    'admin/content/thumbwhere_activitys/thumbwhere_activity',
+    'admin/thumbwhere/thumbwhere_activitys/thumbwhere_activity',
     '<p>' . t('This action cannot be undone.') . '</p>',
     t('Delete'),
     t('Cancel'),
@@ -728,7 +839,7 @@ function thumbwhere_activity_delete_form_submit($form, &$form_state) {
   drupal_set_message(t('The thumbwhere_activity %name has been deleted.', array('%name' => $thumbwhere_activity->pk_activity)));
   watchdog('thumbwhere_activity', 'Deleted thumbwhere_activity %name.', array('%name' => $thumbwhere_activity->pk_activity));
 
-  $form_state['redirect'] = 'admin/content/thumbwhere_activitys';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_activitys';
 }
 
 
@@ -787,7 +898,7 @@ function thumbwhere_activity_set_breadcrumb() {
     l(t('Home'), '<front>'),
     l(t('Administration'), 'admin'),
     l(t('Activity'), 'admin/content'),
-    l(t('ThumbWhereActivitys'), 'admin/content/thumbwhere_activitys'),
+    l(t('Activity'), 'admin/thumbwhere/thumbwhere_activitys'),
   );
 
   drupal_set_breadcrumb($breadcrumb);

@@ -26,7 +26,7 @@ class thumbwhere_activity_handler_thumbwhere_activity_operations_field extends v
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_activity', 'admin/content/thumbwhere_activitys/thumbwhere_activity', array($this->get_value($values, 'pk_activity')));
+    $links = menu_contextual_links('thumbwhere_activity', 'admin/thumbwhere/thumbwhere_activitys/thumbwhere_activity', array($this->get_value($values, 'pk_activity')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

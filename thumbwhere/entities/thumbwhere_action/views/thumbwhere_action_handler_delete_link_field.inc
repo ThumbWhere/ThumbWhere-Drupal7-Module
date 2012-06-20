@@ -19,6 +19,6 @@ class thumbwhere_action_handler_delete_link_field extends thumbwhere_action_hand
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_action_id = $values->{$this->aliases['pk_action']};
 
-    return l($text, 'admin/content/thumbwhere_actions/thumbwhere_action/' . $pk_action . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_actions/thumbwhere_action/' . $pk_action . '/delete');
   }
 }

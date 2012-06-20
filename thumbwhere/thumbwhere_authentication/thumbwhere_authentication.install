@@ -3,7 +3,6 @@
 // Include the ThumbWhere SDK
 require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'dependencies' . DIRECTORY_SEPARATOR . 'tw' . DIRECTORY_SEPARATOR . 'sdk.class.php');
 
-
 /**
  * @file
  *
@@ -53,7 +52,8 @@ function thumbwhere_authentication_requirements($phase) {
     if (!isset($user_loaded->pk_member[$user_loaded->language][0])) {
       $requirements['thumbwhere_authentication_admin_memberid'] = array(
           'title' => $t('ThumbWhere Authentication'),
-          'description' => $t('The site admin needs to be allocated a ThumbWhere Member id if you want to be able to use the site as admin. <p/> Go to the Configuration for <b>People</b> and edit the Admin user and allocate them a valid ThumbWhere member.'),
+          'description' => $t(
+              'The site admin needs to be allocated a ThumbWhere Member id if you want to be able to use the site as admin. <p/> Go to the Configuration for <b>People</b> and edit the Admin user and allocate them a valid ThumbWhere member.'),
           'severity' => REQUIREMENT_ERROR,
           'value' => $t('Required configuration'),
       );
@@ -91,11 +91,9 @@ function thumbwhere_authentication_install() {
   // http://api.drupal.org/api/function/field_purge_batch/7
   field_purge_batch(1000);
 
-
   //
   // Now go off and get the current user....
   //
-
 
   //
   // Load the admin user,,,
@@ -108,7 +106,9 @@ function thumbwhere_authentication_install() {
   $user_fields = user_load(1);
   $user_fields->language = 'und';
 
-  debug('CREATE NEW THUMBWHERE MEMBER');
+  if (twCanDebug()) {
+    debug('CREATE NEW THUMBWHERE MEMBER');
+  }
 
   // Get a handle on the web service library provider for 'identity v1.1'
   $twIdentityAPI = new ThumbWhereAPIIdentity();
@@ -131,10 +131,10 @@ function thumbwhere_authentication_install() {
 
   $requestResponse = $twIdentityAPI->call_request($parameters);
 
-  debug('REQUEST');
-
-  //if (twCanDebug())
-  debug($requestResponse);
+  if (twCanDebug()) {
+    debug('REQUEST');
+    debug($requestResponse);
+  }
 
   //
   // Then authenticate the request...
@@ -147,9 +147,10 @@ function thumbwhere_authentication_install() {
 
   $authenticateRequestResponse = $twIdentityAPI->call_authenticate_request($parameters);
 
-  debug('AUTHENTICATEREQUEST');
-  //if (twCanDebug())
-  debug($authenticateRequestResponse);
+  if (twCanDebug()) {
+    debug('AUTHENTICATEREQUEST');
+    debug($authenticateRequestResponse);
+  }
 
   $memberToken = $authenticateRequestResponse->body->authenticate_request->member;
   $identityToken = $authenticateRequestResponse->body->authenticate_request->identity;
@@ -168,7 +169,7 @@ function thumbwhere_authentication_install() {
   $parameters['member'] = $memberToken;
   $parameters['name'] = $username;
 
-  $registerConsumerResponse =  $twContentAPI->call_register_consumer($parameters);
+  $registerConsumerResponse = $twContentAPI->call_register_consumer($parameters);
 
   watchdog('thumbwhere_authenticate', 'REGISTERCONSUMER');
 
@@ -180,22 +181,21 @@ function thumbwhere_authentication_install() {
   // Primary id we want to use...
   $_tw_pk_consumer = $registerConsumerResponse->body->register_consumer->consumer;
 
-
   //debug($user_fields);
 
-  _set_pk_consumer(&$user_fields,$_tw_pk_consumer);
+  _set_pk_consumer($user_fields, $_tw_pk_consumer);
 
   //watchdog('thumbwhere_authenticate', $user_fields);
 
   //$user_fields->pk_consumer = $_tw_pk_consumer;
 
   watchdog('thumbwhere_authenticate', 'REGISTERCONSUMER');
-  debug('SAVING USER');
+
+  if (twCanDebug()) debug('SAVING USER');
+
   user_save($user_fields);
 
 }
-
-
 
 /**
  * Implements hook_uninstall().
@@ -237,31 +237,6 @@ function _thumbwhere_authentication_installed_fields() {
   $t = get_t();
 
   return array(
-
-      /*
-      'pk_member' => array(
-          'field_name' => 'pk_member',
-          'cardinality' => 1,
-          'type' => 'thumbwhere_id',
-          'default_value' => array(
-              array(
-                  'value' => -1
-              )
-          ),
-      ),
-
-      'pk_identity' => array(
-          'field_name' => 'pk_identity',
-          'cardinality' => 1,
-          'type' => 'thumbwhere_id',
-          'default_value' => array(
-              array(
-                  'value' => -1
-              )
-          ),
-      ),
-      */
-
       'field_pk_consumer' => array(
           'field_name' => 'field_pk_consumer',
           'cardinality' => 1,
@@ -272,7 +247,6 @@ function _thumbwhere_authentication_installed_fields() {
               )
           ),
       )
-
   );
 }
 
@@ -289,36 +263,6 @@ function _thumbwhere_authentication_installed_instances() {
 
   $t = get_t();
   return array(
-      /*
-      'pk_member' => array(
-          'field_name' => 'pk_member',
-          'label' => $t('Member Id'),
-          'widget' => array(
-              'type' => 'thumbwhere_id',
-          ),
-          'display' => array(
-              'default' => array(
-                  'label' => 'above',
-                  'type' => 'thumbwhere_id_formatter',
-              ),
-          ),
-          'description' => 'The id of the ThumbWhere member associated with this user.',
-      ),
-      'pk_identity' => array(
-          'field_name' => 'pk_identity',
-          'label' => $t('Identity Id'),
-          'widget' => array(
-              'type' => 'thumbwhere_id',
-          ),
-          'display' => array(
-              'default' => array(
-                  'label' => 'above',
-                  'type' => 'thumbwhere_id_formatter',
-              ),
-          ),
-          'description' => 'The id of the ThumbWhere identity associated with this user.',
-      ),
-      */
       'field_pk_consumer' => array(
           'field_name' => 'field_pk_consumer',
           'label' => $t('Consumer Id'),
@@ -333,7 +277,6 @@ function _thumbwhere_authentication_installed_instances() {
           ),
           'description' => 'The id of the ThumbWhere consumer associated with this user.',
       ),
-
   );
 }
 

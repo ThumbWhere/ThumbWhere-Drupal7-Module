@@ -88,6 +88,15 @@ function thumbwhere_admin_settings() {
       '#description' => t('The API Key for a specific campaign.')
   );
 
+
+  $form['thumbwhere_machine_id'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Machine ID'),
+      '#default_value' => variable_get('thumbwhere_machine_id', 1),
+      '#description' => t('The machine id allocated to this system.')
+  );
+
+
   $form['thumbwhere_master_console'] = array(
       '#type' => 'fieldset',
       '#title' => t('Master Consile')

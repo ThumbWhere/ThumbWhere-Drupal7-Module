@@ -26,7 +26,7 @@ class thumbwhere_consumermember_handler_thumbwhere_consumermember_operations_fie
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_consumermember', 'admin/content/thumbwhere_consumermembers/thumbwhere_consumermember', array($this->get_value($values, 'pk_consumermember')));
+    $links = menu_contextual_links('thumbwhere_consumermember', 'admin/thumbwhere/thumbwhere_consumermembers/thumbwhere_consumermember', array($this->get_value($values, 'pk_consumermember')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

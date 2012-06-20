@@ -29,6 +29,6 @@ class thumbwhere_mediaitem_handler_edit_link_field extends thumbwhere_mediaitem_
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $thumbwhere_mediaitem_id = $values->{$this->aliases['pk_mediaitem']};
 
-    return l($text, 'admin/content/thumbwhere_mediaitems/thumbwhere_mediaitem/' . $thumbwhere_mediaitem_id . '/edit');
+    return l($text, 'admin/thumbwhere/thumbwhere_mediaitems/thumbwhere_mediaitem/' . $thumbwhere_mediaitem_id . '/edit');
   }
 }

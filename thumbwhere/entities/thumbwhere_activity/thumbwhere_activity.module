@@ -70,7 +70,7 @@ function thumbwhere_activity_entity_info() {
 
     // The information below is used by the ThumbWhereActivityUIController (which extends the EntityDefaultUIController)
     'admin ui' => array(
-      'path' => 'admin/content/thumbwhere_activitys',
+      'path' => 'admin/thumbwhere/thumbwhere_activitys',
       'file' => 'thumbwhere_activity.admin.inc',
       'controller class' => 'ThumbWhereActivityUIController',
       'menu wildcard' => '%thumbwhere_activity',
@@ -146,42 +146,11 @@ function thumbwhere_activity_access($op, $thumbwhere_activity = NULL, $account =
  */
 function thumbwhere_activity_load($thumbwhere_activity_id, $reset = FALSE) {
 
-  //
-
   $thumbwhere_activitys = entity_load('thumbwhere_activity', array($thumbwhere_activity_id), array(), $reset);
 
   return reset($thumbwhere_activitys);
 }
 
-
-
-
-
-/**
- * Load multiple thumbwhere_activitys based on certain conditions.
- *
- * @param $thumbwhere_activity_ids
- *   An array of thumbwhere_activity IDs.
- * @param $conditions
- *   An array of conditions to match against the {thumbwhere_activity} table.
- * @param $reset
- *   A boolean indicating that the internal cache should be reset.
- * @return
- *   An array of thumbwhere_activity objects, indexed by thumbwhere_activity_id.
- *
- * @see entity_load()
- * @see thumbwhere_activity_load()
- */
-/*
-function thumbwhere_activity_load_multiple($thumbwhere_activity_ids = array(), $conditions = array(), $reset = FALSE) {
-
-
-
-  $loaded = entity_load('thumbwhere_activity', $thumbwhere_activity_ids, $conditions, $reset);
-
-  return $loaded;
-}
-*/
 
 /**
  * Deletes a thumbwhere_activity.
@@ -190,22 +159,6 @@ function thumbwhere_activity_delete(ThumbWhereActivity $thumbwhere_activity) {
 
   $thumbwhere_activity->delete();
 }
-
-
-/**
- * Delete multiple thumbwhere_activitys.
- *
- * @param $thumbwhere_activity_ids
- *   An array of thumbwhere_activity IDs.
- */
-/*
-function thumbwhere_activity_delete_multiple(array $thumbwhere_activity_ids) {
-
-
-
-  entity_get_controller('thumbwhere_activity')->delete($thumbwhere_activity_ids);
-}
-*/
 
 /**
  * Create a thumbwhere_activity object.
@@ -217,48 +170,9 @@ function thumbwhere_activity_create($values = array()) {
 
 
 /**
- * Saves a thumbwhere_activity to the database.
- *
- * @param $thumbwhere_activity
- *   The thumbwhere_activity object.
- */
-/*
-function thumbwhere_activity_save(ThumbWhereActivity $thumbwhere_activity) {
-
-
-
-  return $thumbwhere_activity->save();
-}*/
-
-
-
-/**
- * Insert a thumbwhere_activity
- *
- * @param $thumbwhere_activity
- *   The thumbwhere_activity object.
- */
-/*
-function thumbwhere_activity_insert(array $values = array()) {
-
-
-
-  //return $thumbwhere_activity->create($values);
-  return entity_get_controller('thumbwhere_activity')->insert($values);
-}
-*/
-
-
-
-
-
-
-/**
  * URI callback for thumbwhere_activitys
  */
 function thumbwhere_activity_uri(ThumbWhereActivity $thumbwhere_activity) {
-
-
 
   return array(
     'path' => 'thumbwhere_activity/' . $thumbwhere_activity->pk_activity,
@@ -271,9 +185,7 @@ function thumbwhere_activity_uri(ThumbWhereActivity $thumbwhere_activity) {
  */
 function thumbwhere_activity_page_title(ThumbWhereActivity $thumbwhere_activity) {
 
-  
-
-  return $thumbwhere_activity->pk_activity;
+	return $thumbwhere_activity->pk_activity;
 }
 
 
@@ -332,8 +244,8 @@ function thumbwhere_activity_theme() {
 function thumbwhere_activity_menu_local_tasks_alter(&$data, $router_item, $root_path) {
 
   // Add action link 'admin/structure/thumbwhere_activitys/add' on 'admin/structure/thumbwhere_activitys'.
-  if ($root_path == 'admin/content/thumbwhere_activitys') {
-    $item = menu_get_item('admin/content/thumbwhere_activitys/add');
+  if ($root_path == 'admin/thumbwhere/thumbwhere_activitys') {
+    $item = menu_get_item('admin/thumbwhere/thumbwhere_activitys/add');
     if ($item['access']) {
       $data['actions']['output'][] = array(
         '#theme' => 'menu_local_action',
@@ -373,227 +285,7 @@ class ThumbWhereActivityController extends EntityAPIController {
   public function __construct($entityType) {
     parent::__construct($entityType);
   }
-
-
-  /**
-   * Create a thumbwhere_activity - we first set up the values that are specific
-   * to our thumbwhere_activity schema but then also go through the EntityAPIController
-   * function.
-   *
-   * @param $type
-   *   The machine-readable type of the thumbwhere_activity.
-   *
-   * @return
-   *   A thumbwhere_activity object with all default fields initialized.
-   */
-  /*
-  public function create(array $values = array()) {
-
-
-
-    //$values += array(
-    //  'thumbwhere_id' => -1,
-    //);
-
-    return parent::create($values);
-  }
-  */
-
-
-  /**
-  * view
-  * to our thumbwhere_activity schema but then also go through the EntityAPIController
-  * function.
-  *
-  * @param $type
-  *   The machine-readable type of the thumbwhere_activity.
-  *
-  * @return
-  *   A thumbwhere_activity object with all default fields initialized.
-  */
-  /*
-  public function view($entities, $view_mode = 'full', $langcode = NULL, $page = NULL) {
-
-
-
-    $view = parent::view($entities, $view_mode, $langcode, $page);
-
-    return $view;
-  }
-  */
-
-
-
-
-  /**
-  * query - Builds and executes the query for loading.
-  *
-  * @param $ids
-  *   Array of ids
-  *
-  * @param $conditions
-  *
-  *
-  *
-  * @return
-  *   A thumbwhere_activity object with all default fields initialized.
-  */
-  /*
-  public function load($ids = array(), $conditions = array()) {
-
-
-
-    $result = parent::load($ids, $conditions);
-
-    //$result[1]->token = "my token";
-
-    return $result;
-  }
-  */
-
-  /**
-  * Invoke
-  *
-  * @param $ids
-  *   Array of ids
-  *
-  * @param $transaction
-  *   If not null then the transaction this is taking part in
-  *
-  * @return
-  *   A thumbwhere_activity object with all default fields initialized.
-  */
-  /*
-  public function invoke($hook, $entity) {
-
-
-
-    parent::invoke($hook, $entity);
-
-  }
-  */
-
-
-  /**
-  * Delete a thumbwhere_activity.
-  *
-  * @param $ids
-  *   Array of ids
-  *
-  * @param $transaction
-  *   If not null then the transaction this is taking part in
-  *
-  * @return
-  *   A thumbwhere_activity object with all default fields initialized.
-  */
-  /*
-  public function delete($ids, DatabaseTransaction $transaction = NULL) {
-
-
-
-    parent::delete($ids, $transaction);
-
-  }
-  */
-
-
-  /**
-  * Save a thumbwhere_activity.
-  *
-  * @param $thumbwhere_activity
-  *   The thumbwhere_activity being saved
-  *
-  * @param $transaction
-  *   If not null then the transaction this is taking part in
-  *
-  * @return
-  *   A thumbwhere_activity object with all default fields initialized.
-  */
-  /*
-  public function save($thumbwhere_activity, DatabaseTransaction $transaction = NULL) {
-
-
-
-    return parent::save($thumbwhere_activity, $transaction);
-  }
-  */
-
-
-  /**
-  * resetCache - Called when the cache is
-  *
-  * @param $ids
-  *   Array of ids
-  *
-  * @return
-  *   void
-  */
-  /*
-  public function resetCache(array $ids = NULL) {
-
-
-
-    parent::resetCache($ids);
-  }
-  */
-
-
-  /**
-  * query - Builds and executes the query for loading.
-  *
-  * @param $ids
-  *   Array of ids
-  *
-  * @param $conditions
-  *
-  * @param $revision_id
-  *
-  *
-  * @return
-  *   A thumbwhere_activity object with all default fields initialized.
-  */
-  /*
-  public function query($ids, $conditions, $revision_id = FALSE) {
-
-
-
-    $result= parent::query($ids, $conditions, $revision_id);
-
-    return $result;
-  }
-  */
-
-
-  /**
-   * Overriding the buldActivity function to add entity specific fields
-   */
-  /*
-  public function buildActivity($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
-
-    $content = parent::buildActivity($entity, $view_mode, $langcode, $content);
-
-    $content['thumbwhere_activity_sample_data'] =  array(
-      '#markup' => theme('thumbwhere_activity_sample_data', array('thumbwhere_activity_sample_data' => check_plain($entity->data['sample_data']), 'thumbwhere_activity' => $entity)),
-    );
-
-    return $content;
-  }*/
 }
-
-
-/**
- * Implements hook_field_storage_load().
- *
- * Load field from storage
- *
- * @todo This needs to be improved
- */
-/*
-function thumbwhere_activity_field_storage_load($entity_type, $entities, $age, $fields, $options) {
-
-
-}
-*/
 
 
 
@@ -611,54 +303,89 @@ function thumbwhere_activity_entity_presave($entity, $entity_type) {
 
   // We only look after what we want...
   if ($entity_type == 'thumbwhere_activity')  {
+  	
+  	
+  	
+ 	/////////////////////////////////////////////////////
+    //
+    // Should we not propagate this to ThumbWhere? 
+    //
+    if (isset($entity->do_not_propagate)) {
+      if ($entity->do_not_propagate) {
+        if (twCanDebug()) {
+          if ($entity->is_new) {
+            debug("DO NOT PROPAGATE 'activity' presave *CREATE*");
+          }
+          else {
+            debug("DO NOT PROPAGATE 'activity' presave *UPDATE*");
+          }
+        }
 
-    // If this is new
-    if ($entity->is_new) {
+        // To cause an infinite loop of updates, comment out this line.
+        return;
+      }
+      else if (twCanDebug()) {
+        debug("OK PROAOGATE 'activity' presave to ThumbWhere Server");
+      }
+    }
+    else if (twCanDebug()) {
+      debug("DO NOT PROPAGATE IS NOT SET");
+    }
+    //
+    //
+    ////////////////////////////////////////////////////////  	
+
   
-      // .. then we create a new thumbwhere_activity entity...
-      // .. then we create a new thumbwhere_Activity entity...
+    // .. then we create a new thumbwhere_activity entity...
       // Instantiate the ThumbWhereContent class
 
-      $twContentAPI = new ThumbWhereAPIContent();
+    $twContentAPI = new ThumbWhereAPIContent();
 
-      //if (twCanDebug()) debug($twContentAPI);
+    //if (twCanDebug()) debug($twContentAPI);
 
-      //if (twCanDebug()) debug($entity);
+    //if (twCanDebug()) debug($entity);
+
+    //
+    // Collate and validate our fields
+    //
+
+    $fields = array();
+    // Compulsory so..
+    if (empty($entity->fk_actor)) {
+      throw new Exception('actor is compulsory.');
+    }
+    else {
+      $fields['actor'] = $entity->fk_actor;
+    }
+    // Compulsory so..
+    if (empty($entity->fk_action)) {
+      throw new Exception('action is compulsory.');
+    }
+    else {
+      $fields['action'] = $entity->fk_action;
+    }
+    // Compulsory so..
+    if (empty($entity->fk_subject)) {
+      throw new Exception('subject is compulsory.');
+    }
+    else {
+      $fields['subject'] = $entity->fk_subject;
+    }
+
+    // Nullable so we only pass it through to create_activity if we have it..
+    if (!empty($entity->fk_place)) {
+      $fields['place'] = $entity->fk_place;
+    }
+    
+    //
+    // If this activity entity is new....
+    //
+    
+    if ($entity->is_new) {
+                
 
       //
-      // Collate and validate our fields
-      //
-
-      $fields = array();
-      // Compulsory so..
-      if (empty($entity->fk_actor)) {
-        throw new Exception('actor is compulsory.');
-      }
-      else {
-        $fields['actor'] = $entity->fk_actor;
-      }
-      // Compulsory so..
-      if (empty($entity->fk_action)) {
-        throw new Exception('action is compulsory.');
-      }
-      else {
-        $fields['action'] = $entity->fk_action;
-      }
-      // Compulsory so..
-      if (empty($entity->fk_subject)) {
-        throw new Exception('subject is compulsory.');
-      }
-      else {
-        $fields['subject'] = $entity->fk_subject;
-      }
-
-      // Nullable so we only pass it through to create_activity if we have it..
-      if (!empty($entity->fk_place)) {
-        $fields['place'] = $entity->fk_place;
-      }
-
-      //
-      // Now create the Entity in ThumbWhere
+      // ... then we create the activity entity in ThumbWhere
       //
 
       $activity = $twContentAPI->create_activity($context = array(
@@ -680,8 +407,20 @@ function thumbwhere_activity_entity_presave($entity, $entity_type) {
     }
     else
     {
-        // .. otherwise we calculate the changes and ship them off to thumbwhere
+          	
+
+      //
+      // .. otherwise we update the activity entity in ThumbWhere
+      //
+
+      $activity = $twContentAPI->update_activity($id=$entity->pk_activity,$context = array(
+                  'key' => variable_get('thumbwhere_api_key')
+          ), $fields);
+            
+        
     }
+          	
+    
   }
 }
 

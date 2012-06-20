@@ -26,7 +26,7 @@ class thumbwhere_fan_handler_thumbwhere_fan_operations_field extends views_handl
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_fan', 'admin/content/thumbwhere_fans/thumbwhere_fan', array($this->get_value($values, 'pk_fan')));
+    $links = menu_contextual_links('thumbwhere_fan', 'admin/thumbwhere/thumbwhere_fans/thumbwhere_fan', array($this->get_value($values, 'pk_fan')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

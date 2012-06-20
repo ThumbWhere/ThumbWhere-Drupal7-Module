@@ -26,7 +26,7 @@ class thumbwhere_actor_handler_thumbwhere_actor_operations_field extends views_h
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_actor', 'admin/content/thumbwhere_actors/thumbwhere_actor', array($this->get_value($values, 'pk_actor')));
+    $links = menu_contextual_links('thumbwhere_actor', 'admin/thumbwhere/thumbwhere_actors/thumbwhere_actor', array($this->get_value($values, 'pk_actor')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

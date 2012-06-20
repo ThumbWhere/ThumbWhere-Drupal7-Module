@@ -29,6 +29,6 @@ class thumbwhere_producermember_handler_edit_link_field extends thumbwhere_produ
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $thumbwhere_producermember_id = $values->{$this->aliases['pk_producermember']};
 
-    return l($text, 'admin/content/thumbwhere_producermembers/thumbwhere_producermember/' . $thumbwhere_producermember_id . '/edit');
+    return l($text, 'admin/thumbwhere/thumbwhere_producermembers/thumbwhere_producermember/' . $thumbwhere_producermember_id . '/edit');
   }
 }

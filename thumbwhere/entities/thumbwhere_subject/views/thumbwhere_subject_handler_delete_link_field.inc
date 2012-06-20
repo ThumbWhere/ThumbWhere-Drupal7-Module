@@ -19,6 +19,6 @@ class thumbwhere_subject_handler_delete_link_field extends thumbwhere_subject_ha
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_subject_id = $values->{$this->aliases['pk_subject']};
 
-    return l($text, 'admin/content/thumbwhere_subjects/thumbwhere_subject/' . $pk_subject . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_subjects/thumbwhere_subject/' . $pk_subject . '/delete');
   }
 }

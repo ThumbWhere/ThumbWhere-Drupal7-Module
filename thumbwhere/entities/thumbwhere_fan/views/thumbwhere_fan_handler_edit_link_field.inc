@@ -29,6 +29,6 @@ class thumbwhere_fan_handler_edit_link_field extends thumbwhere_fan_handler_link
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $thumbwhere_fan_id = $values->{$this->aliases['pk_fan']};
 
-    return l($text, 'admin/content/thumbwhere_fans/thumbwhere_fan/' . $thumbwhere_fan_id . '/edit');
+    return l($text, 'admin/thumbwhere/thumbwhere_fans/thumbwhere_fan/' . $thumbwhere_fan_id . '/edit');
   }
 }

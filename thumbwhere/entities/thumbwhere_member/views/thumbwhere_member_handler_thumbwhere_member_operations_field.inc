@@ -26,7 +26,7 @@ class thumbwhere_member_handler_thumbwhere_member_operations_field extends views
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_member', 'admin/content/thumbwhere_members/thumbwhere_member', array($this->get_value($values, 'pk_member')));
+    $links = menu_contextual_links('thumbwhere_member', 'admin/thumbwhere/thumbwhere_members/thumbwhere_member', array($this->get_value($values, 'pk_member')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

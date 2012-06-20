@@ -19,6 +19,6 @@ class thumbwhere_contentingest_handler_delete_link_field extends thumbwhere_cont
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_contentingest_id = $values->{$this->aliases['pk_contentingest']};
 
-    return l($text, 'admin/content/thumbwhere_contentingests/thumbwhere_contentingest/' . $pk_contentingest . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_contentingests/thumbwhere_contentingest/' . $pk_contentingest . '/delete');
   }
 }

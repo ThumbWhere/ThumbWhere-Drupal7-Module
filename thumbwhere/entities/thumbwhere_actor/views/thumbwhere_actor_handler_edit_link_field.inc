@@ -29,6 +29,6 @@ class thumbwhere_actor_handler_edit_link_field extends thumbwhere_actor_handler_
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $thumbwhere_actor_id = $values->{$this->aliases['pk_actor']};
 
-    return l($text, 'admin/content/thumbwhere_actors/thumbwhere_actor/' . $thumbwhere_actor_id . '/edit');
+    return l($text, 'admin/thumbwhere/thumbwhere_actors/thumbwhere_actor/' . $thumbwhere_actor_id . '/edit');
   }
 }

@@ -70,7 +70,7 @@ function thumbwhere_contentcollection_entity_info() {
 
     // The information below is used by the ThumbWhereContentCollectionUIController (which extends the EntityDefaultUIController)
     'admin ui' => array(
-      'path' => 'admin/content/thumbwhere_contentcollections',
+      'path' => 'admin/thumbwhere/thumbwhere_contentcollections',
       'file' => 'thumbwhere_contentcollection.admin.inc',
       'controller class' => 'ThumbWhereContentCollectionUIController',
       'menu wildcard' => '%thumbwhere_contentcollection',
@@ -146,42 +146,11 @@ function thumbwhere_contentcollection_access($op, $thumbwhere_contentcollection 
  */
 function thumbwhere_contentcollection_load($thumbwhere_contentcollection_id, $reset = FALSE) {
 
-  //
-
   $thumbwhere_contentcollections = entity_load('thumbwhere_contentcollection', array($thumbwhere_contentcollection_id), array(), $reset);
 
   return reset($thumbwhere_contentcollections);
 }
 
-
-
-
-
-/**
- * Load multiple thumbwhere_contentcollections based on certain conditions.
- *
- * @param $thumbwhere_contentcollection_ids
- *   An array of thumbwhere_contentcollection IDs.
- * @param $conditions
- *   An array of conditions to match against the {thumbwhere_contentcollection} table.
- * @param $reset
- *   A boolean indicating that the internal cache should be reset.
- * @return
- *   An array of thumbwhere_contentcollection objects, indexed by thumbwhere_contentcollection_id.
- *
- * @see entity_load()
- * @see thumbwhere_contentcollection_load()
- */
-/*
-function thumbwhere_contentcollection_load_multiple($thumbwhere_contentcollection_ids = array(), $conditions = array(), $reset = FALSE) {
-
-
-
-  $loaded = entity_load('thumbwhere_contentcollection', $thumbwhere_contentcollection_ids, $conditions, $reset);
-
-  return $loaded;
-}
-*/
 
 /**
  * Deletes a thumbwhere_contentcollection.
@@ -190,22 +159,6 @@ function thumbwhere_contentcollection_delete(ThumbWhereContentCollection $thumbw
 
   $thumbwhere_contentcollection->delete();
 }
-
-
-/**
- * Delete multiple thumbwhere_contentcollections.
- *
- * @param $thumbwhere_contentcollection_ids
- *   An array of thumbwhere_contentcollection IDs.
- */
-/*
-function thumbwhere_contentcollection_delete_multiple(array $thumbwhere_contentcollection_ids) {
-
-
-
-  entity_get_controller('thumbwhere_contentcollection')->delete($thumbwhere_contentcollection_ids);
-}
-*/
 
 /**
  * Create a thumbwhere_contentcollection object.
@@ -217,48 +170,9 @@ function thumbwhere_contentcollection_create($values = array()) {
 
 
 /**
- * Saves a thumbwhere_contentcollection to the database.
- *
- * @param $thumbwhere_contentcollection
- *   The thumbwhere_contentcollection object.
- */
-/*
-function thumbwhere_contentcollection_save(ThumbWhereContentCollection $thumbwhere_contentcollection) {
-
-
-
-  return $thumbwhere_contentcollection->save();
-}*/
-
-
-
-/**
- * Insert a thumbwhere_contentcollection
- *
- * @param $thumbwhere_contentcollection
- *   The thumbwhere_contentcollection object.
- */
-/*
-function thumbwhere_contentcollection_insert(array $values = array()) {
-
-
-
-  //return $thumbwhere_contentcollection->create($values);
-  return entity_get_controller('thumbwhere_contentcollection')->insert($values);
-}
-*/
-
-
-
-
-
-
-/**
  * URI callback for thumbwhere_contentcollections
  */
 function thumbwhere_contentcollection_uri(ThumbWhereContentCollection $thumbwhere_contentcollection) {
-
-
 
   return array(
     'path' => 'thumbwhere_contentcollection/' . $thumbwhere_contentcollection->pk_contentcollection,
@@ -271,9 +185,7 @@ function thumbwhere_contentcollection_uri(ThumbWhereContentCollection $thumbwher
  */
 function thumbwhere_contentcollection_page_title(ThumbWhereContentCollection $thumbwhere_contentcollection) {
 
-  
-
-  return $thumbwhere_contentcollection->title;
+	return $thumbwhere_contentcollection->title;
 }
 
 
@@ -332,8 +244,8 @@ function thumbwhere_contentcollection_theme() {
 function thumbwhere_contentcollection_menu_local_tasks_alter(&$data, $router_item, $root_path) {
 
   // Add action link 'admin/structure/thumbwhere_contentcollections/add' on 'admin/structure/thumbwhere_contentcollections'.
-  if ($root_path == 'admin/content/thumbwhere_contentcollections') {
-    $item = menu_get_item('admin/content/thumbwhere_contentcollections/add');
+  if ($root_path == 'admin/thumbwhere/thumbwhere_contentcollections') {
+    $item = menu_get_item('admin/thumbwhere/thumbwhere_contentcollections/add');
     if ($item['access']) {
       $data['actions']['output'][] = array(
         '#theme' => 'menu_local_action',
@@ -373,227 +285,7 @@ class ThumbWhereContentCollectionController extends EntityAPIController {
   public function __construct($entityType) {
     parent::__construct($entityType);
   }
-
-
-  /**
-   * Create a thumbwhere_contentcollection - we first set up the values that are specific
-   * to our thumbwhere_contentcollection schema but then also go through the EntityAPIController
-   * function.
-   *
-   * @param $type
-   *   The machine-readable type of the thumbwhere_contentcollection.
-   *
-   * @return
-   *   A thumbwhere_contentcollection object with all default fields initialized.
-   */
-  /*
-  public function create(array $values = array()) {
-
-
-
-    //$values += array(
-    //  'thumbwhere_id' => -1,
-    //);
-
-    return parent::create($values);
-  }
-  */
-
-
-  /**
-  * view
-  * to our thumbwhere_contentcollection schema but then also go through the EntityAPIController
-  * function.
-  *
-  * @param $type
-  *   The machine-readable type of the thumbwhere_contentcollection.
-  *
-  * @return
-  *   A thumbwhere_contentcollection object with all default fields initialized.
-  */
-  /*
-  public function view($entities, $view_mode = 'full', $langcode = NULL, $page = NULL) {
-
-
-
-    $view = parent::view($entities, $view_mode, $langcode, $page);
-
-    return $view;
-  }
-  */
-
-
-
-
-  /**
-  * query - Builds and executes the query for loading.
-  *
-  * @param $ids
-  *   Array of ids
-  *
-  * @param $conditions
-  *
-  *
-  *
-  * @return
-  *   A thumbwhere_contentcollection object with all default fields initialized.
-  */
-  /*
-  public function load($ids = array(), $conditions = array()) {
-
-
-
-    $result = parent::load($ids, $conditions);
-
-    //$result[1]->token = "my token";
-
-    return $result;
-  }
-  */
-
-  /**
-  * Invoke
-  *
-  * @param $ids
-  *   Array of ids
-  *
-  * @param $transaction
-  *   If not null then the transaction this is taking part in
-  *
-  * @return
-  *   A thumbwhere_contentcollection object with all default fields initialized.
-  */
-  /*
-  public function invoke($hook, $entity) {
-
-
-
-    parent::invoke($hook, $entity);
-
-  }
-  */
-
-
-  /**
-  * Delete a thumbwhere_contentcollection.
-  *
-  * @param $ids
-  *   Array of ids
-  *
-  * @param $transaction
-  *   If not null then the transaction this is taking part in
-  *
-  * @return
-  *   A thumbwhere_contentcollection object with all default fields initialized.
-  */
-  /*
-  public function delete($ids, DatabaseTransaction $transaction = NULL) {
-
-
-
-    parent::delete($ids, $transaction);
-
-  }
-  */
-
-
-  /**
-  * Save a thumbwhere_contentcollection.
-  *
-  * @param $thumbwhere_contentcollection
-  *   The thumbwhere_contentcollection being saved
-  *
-  * @param $transaction
-  *   If not null then the transaction this is taking part in
-  *
-  * @return
-  *   A thumbwhere_contentcollection object with all default fields initialized.
-  */
-  /*
-  public function save($thumbwhere_contentcollection, DatabaseTransaction $transaction = NULL) {
-
-
-
-    return parent::save($thumbwhere_contentcollection, $transaction);
-  }
-  */
-
-
-  /**
-  * resetCache - Called when the cache is
-  *
-  * @param $ids
-  *   Array of ids
-  *
-  * @return
-  *   void
-  */
-  /*
-  public function resetCache(array $ids = NULL) {
-
-
-
-    parent::resetCache($ids);
-  }
-  */
-
-
-  /**
-  * query - Builds and executes the query for loading.
-  *
-  * @param $ids
-  *   Array of ids
-  *
-  * @param $conditions
-  *
-  * @param $revision_id
-  *
-  *
-  * @return
-  *   A thumbwhere_contentcollection object with all default fields initialized.
-  */
-  /*
-  public function query($ids, $conditions, $revision_id = FALSE) {
-
-
-
-    $result= parent::query($ids, $conditions, $revision_id);
-
-    return $result;
-  }
-  */
-
-
-  /**
-   * Overriding the buldContentCollection function to add entity specific fields
-   */
-  /*
-  public function buildContentCollection($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
-
-    $content = parent::buildContentCollection($entity, $view_mode, $langcode, $content);
-
-    $content['thumbwhere_contentcollection_sample_data'] =  array(
-      '#markup' => theme('thumbwhere_contentcollection_sample_data', array('thumbwhere_contentcollection_sample_data' => check_plain($entity->data['sample_data']), 'thumbwhere_contentcollection' => $entity)),
-    );
-
-    return $content;
-  }*/
 }
-
-
-/**
- * Implements hook_field_storage_load().
- *
- * Load field from storage
- *
- * @todo This needs to be improved
- */
-/*
-function thumbwhere_contentcollection_field_storage_load($entity_type, $entities, $age, $fields, $options) {
-
-
-}
-*/
 
 
 
@@ -611,43 +303,78 @@ function thumbwhere_contentcollection_entity_presave($entity, $entity_type) {
 
   // We only look after what we want...
   if ($entity_type == 'thumbwhere_contentcollection')  {
+  	
+  	
+  	
+ 	/////////////////////////////////////////////////////
+    //
+    // Should we not propagate this to ThumbWhere? 
+    //
+    if (isset($entity->do_not_propagate)) {
+      if ($entity->do_not_propagate) {
+        if (twCanDebug()) {
+          if ($entity->is_new) {
+            debug("DO NOT PROPAGATE 'contentcollection' presave *CREATE*");
+          }
+          else {
+            debug("DO NOT PROPAGATE 'contentcollection' presave *UPDATE*");
+          }
+        }
 
-    // If this is new
-    if ($entity->is_new) {
+        // To cause an infinite loop of updates, comment out this line.
+        return;
+      }
+      else if (twCanDebug()) {
+        debug("OK PROAOGATE 'contentcollection' presave to ThumbWhere Server");
+      }
+    }
+    else if (twCanDebug()) {
+      debug("DO NOT PROPAGATE IS NOT SET");
+    }
+    //
+    //
+    ////////////////////////////////////////////////////////  	
+
   
-      // .. then we create a new thumbwhere_contentcollection entity...
-      // .. then we create a new thumbwhere_ContentCollection entity...
+    // .. then we create a new thumbwhere_contentcollection entity...
       // Instantiate the ThumbWhereContent class
 
-      $twContentAPI = new ThumbWhereAPIContent();
+    $twContentAPI = new ThumbWhereAPIContent();
 
-      //if (twCanDebug()) debug($twContentAPI);
+    //if (twCanDebug()) debug($twContentAPI);
 
-      //if (twCanDebug()) debug($entity);
+    //if (twCanDebug()) debug($entity);
+
+    //
+    // Collate and validate our fields
+    //
+
+    $fields = array();
+    // Compulsory so..
+    if (empty($entity->fk_actor)) {
+      throw new Exception('actor is compulsory.');
+    }
+    else {
+      $fields['actor'] = $entity->fk_actor;
+    }
+
+    // Not nullable but we have a default value
+    if (empty($entity->title)) {
+      $fields['title'] = $entity->title = 'Hello';
+    }
+    else {
+      $fields['title'] = $entity->title;
+    }
+    
+    //
+    // If this contentcollection entity is new....
+    //
+    
+    if ($entity->is_new) {
+                
 
       //
-      // Collate and validate our fields
-      //
-
-      $fields = array();
-      // Compulsory so..
-      if (empty($entity->fk_actor)) {
-        throw new Exception('actor is compulsory.');
-      }
-      else {
-        $fields['actor'] = $entity->fk_actor;
-      }
-
-      // Not nullable but we have a default value
-      if (empty($entity->title)) {
-        $fields['title'] = $entity->title = 'Hello';
-      }
-      else {
-        $fields['title'] = $entity->title;
-      }
-
-      //
-      // Now create the Entity in ThumbWhere
+      // ... then we create the contentcollection entity in ThumbWhere
       //
 
       $contentcollection = $twContentAPI->create_content_collection($context = array(
@@ -669,8 +396,20 @@ function thumbwhere_contentcollection_entity_presave($entity, $entity_type) {
     }
     else
     {
-        // .. otherwise we calculate the changes and ship them off to thumbwhere
+          	
+
+      //
+      // .. otherwise we update the contentcollection entity in ThumbWhere
+      //
+
+      $contentcollection = $twContentAPI->update_content_collection($id=$entity->pk_contentcollection,$context = array(
+                  'key' => variable_get('thumbwhere_api_key')
+          ), $fields);
+            
+        
     }
+          	
+    
   }
 }
 

@@ -26,7 +26,7 @@ class thumbwhere_mediaitem_handler_thumbwhere_mediaitem_operations_field extends
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_mediaitem', 'admin/content/thumbwhere_mediaitems/thumbwhere_mediaitem', array($this->get_value($values, 'pk_mediaitem')));
+    $links = menu_contextual_links('thumbwhere_mediaitem', 'admin/thumbwhere/thumbwhere_mediaitems/thumbwhere_mediaitem', array($this->get_value($values, 'pk_mediaitem')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

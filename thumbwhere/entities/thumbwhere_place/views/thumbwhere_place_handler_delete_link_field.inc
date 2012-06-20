@@ -19,6 +19,6 @@ class thumbwhere_place_handler_delete_link_field extends thumbwhere_place_handle
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_place_id = $values->{$this->aliases['pk_place']};
 
-    return l($text, 'admin/content/thumbwhere_places/thumbwhere_place/' . $pk_place . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_places/thumbwhere_place/' . $pk_place . '/delete');
   }
 }

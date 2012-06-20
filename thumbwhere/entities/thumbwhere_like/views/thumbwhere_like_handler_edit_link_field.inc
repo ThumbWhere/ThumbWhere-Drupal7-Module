@@ -29,6 +29,6 @@ class thumbwhere_like_handler_edit_link_field extends thumbwhere_like_handler_li
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $thumbwhere_like_id = $values->{$this->aliases['pk_like']};
 
-    return l($text, 'admin/content/thumbwhere_likes/thumbwhere_like/' . $thumbwhere_like_id . '/edit');
+    return l($text, 'admin/thumbwhere/thumbwhere_likes/thumbwhere_like/' . $thumbwhere_like_id . '/edit');
   }
 }

@@ -26,7 +26,7 @@ class thumbwhere_thing_handler_thumbwhere_thing_operations_field extends views_h
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_thing', 'admin/content/thumbwhere_things/thumbwhere_thing', array($this->get_value($values, 'pk_thing')));
+    $links = menu_contextual_links('thumbwhere_thing', 'admin/thumbwhere/thumbwhere_things/thumbwhere_thing', array($this->get_value($values, 'pk_thing')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

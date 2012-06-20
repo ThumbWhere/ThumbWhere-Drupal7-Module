@@ -29,6 +29,6 @@ class thumbwhere_awardedtrophy_handler_edit_link_field extends thumbwhere_awarde
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $thumbwhere_awardedtrophy_id = $values->{$this->aliases['pk_awardedtrophy']};
 
-    return l($text, 'admin/content/thumbwhere_awardedtrophys/thumbwhere_awardedtrophy/' . $thumbwhere_awardedtrophy_id . '/edit');
+    return l($text, 'admin/thumbwhere/thumbwhere_awardedtrophys/thumbwhere_awardedtrophy/' . $thumbwhere_awardedtrophy_id . '/edit');
   }
 }

@@ -29,6 +29,6 @@ class thumbwhere_metadata_handler_edit_link_field extends thumbwhere_metadata_ha
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $thumbwhere_metadata_id = $values->{$this->aliases['pk_metadata']};
 
-    return l($text, 'admin/content/thumbwhere_metadatas/thumbwhere_metadata/' . $thumbwhere_metadata_id . '/edit');
+    return l($text, 'admin/thumbwhere/thumbwhere_metadatas/thumbwhere_metadata/' . $thumbwhere_metadata_id . '/edit');
   }
 }

@@ -42,7 +42,7 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
   //
 
   if (!isset($notification->attributes()->key)) {
-    drupal_add_http_header('Status', '501 unable to fulfull request..');
+    drupal_add_http_header('Status', '412 unable to fulfull request..');
     $err = 'We were expecting a \'key\', attribute on the \'content_ingest\', element.';
     print($err);
     watchdog('thumbwhere_contentingest', $err ,array(), WATCHDOG_ERROR);
@@ -57,6 +57,186 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
   switch($op)
   {
+  
+  
+      case 'create':
+      {
+        //
+        // What resource are we creating?
+        //
+      
+        //
+        // Get the id
+        //
+		
+        if (!isset($notification->attributes()->id)) {
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
+          $err = 'We were expecting an \'id\', attribute on the \'content_ingest\', element when we are performing an \'update\' notification..';
+          print($err);
+          watchdog('thumbwhere_contentingest', $err ,array(), WATCHDOG_ERROR);
+          exit(0);
+        }
+
+        $id = intval($notification->attributes()->id);
+		
+
+        if (twCanDebug()) debug('id');
+        if (twCanDebug()) debug($id);
+
+      
+        //
+        // Get the fields
+        //
+          
+        $entities = entity_load('thumbwhere_contentingest', array($id));
+
+        if (twCanDebug()) debug('$entities');
+        if (twCanDebug()) debug($entities);
+
+        if (count($entities) != 0) {
+          //drupal_add_http_header('Status', '409 Resource already exists.');
+          $err = '\'content_ingest\' resource already exists with an id of \'' . $id . '\'.';
+           //print($err);
+          watchdog('thumbwhere_contentingest', $err ,array(), WATCHDOG_ERROR);
+          //exit(0);	
+          	
+		drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<content_ingest op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</content_ingest>');
+        print('</response>');
+        exit(0);          	
+          
+        }
+
+        // Getting a reference to the entity we asked for
+        $entityfields = array();
+
+        //
+        // We are only updating what has been passed through.
+        // No test for missing values.
+        // TODO: Validate incoming values.
+        //
+
+
+        $entityfields['pk_contentingest'] = $id;	
+
+        if (isset($notification->mediaitem)) {
+          $entityfields['fk_mediaitem'] = intval($notification->mediaitem);
+        }
+
+        if (isset($notification->content)) {
+          $entityfields['fk_content'] = intval($notification->content);
+        }
+
+        if (isset($notification->member)) {
+          $entityfields['fk_member'] = intval($notification->member);
+        }
+
+        if (isset($notification->identity)) {
+          $entityfields['fk_identity'] = intval($notification->identity);
+        }
+
+        if (isset($notification->producer)) {
+          $entityfields['fk_producer'] = intval($notification->producer);
+        }
+
+        if (isset($notification->consumer)) {
+          $entityfields['fk_consumer'] = intval($notification->consumer);
+        }
+
+        if (isset($notification->url)) {
+          $entityfields['url'] = (string)($notification->url);
+        }
+
+        if (isset($notification->size)) {
+
+        }
+
+        if (isset($notification->uploaded)) {
+          if ((string)($notification->uploaded) == 'true') {
+            $entityfields['uploaded'] = '1';
+          }
+          else {
+            $entityfields['uploaded'] = '0';
+          }
+        }
+
+        if (isset($notification->transcoded)) {
+          if ((string)($notification->transcoded) == 'true') {
+            $entityfields['transcoded'] = '1';
+          }
+          else {
+            $entityfields['transcoded'] = '0';
+          }
+        }
+
+        if (isset($notification->encrypted)) {
+          if ((string)($notification->encrypted) == 'true') {
+            $entityfields['encrypted'] = '1';
+          }
+          else {
+            $entityfields['encrypted'] = '0';
+          }
+        }
+
+        if (isset($notification->deployed)) {
+          if ((string)($notification->deployed) == 'true') {
+            $entityfields['deployed'] = '1';
+          }
+          else {
+            $entityfields['deployed'] = '0';
+          }
+        }
+
+        if (isset($notification->ready)) {
+          if ((string)($notification->ready) == 'true') {
+            $entityfields['ready'] = '1';
+          }
+          else {
+            $entityfields['ready'] = '0';
+          }
+        }
+
+        if (isset($notification->error)) {
+          if ((string)($notification->error) == 'true') {
+            $entityfields['error'] = '1';
+          }
+          else {
+            $entityfields['error'] = '0';
+          }
+        }
+
+        if (isset($notification->status)) {
+          $entityfields['status'] = (string)($notification->status);
+        }
+
+        if (!isset($notification->attributes()->key)) {
+          if (twCanDebug()) debug('$entities');
+          if (twCanDebug()) debug($entities);
+        }
+
+        // We are being notified, so we do not want to ship this out again as a notification...
+        // Finally write the entity.
+        $entity = entity_create('thumbwhere_contentingest', $entityfields);
+        $entity->do_not_propagate = TRUE;
+        $entity->save();
+
+        //
+        // Send the final response
+        //
+
+        drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<content_ingest op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</content_ingest>');
+        print('</response>');
+        exit(0);
+      }
+  
+  
     case 'update':
       {
         //
@@ -68,7 +248,7 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         //
 		
         if (!isset($notification->attributes()->id)) {
-          drupal_add_http_header('Status', '501 unable to fulfull request.');
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
           $err = 'We were expecting an \'id\', attribute on the \'content_ingest\', element when we are performing an \'update\' notification..';
           print($err);
           watchdog('thumbwhere_contentingest', $err ,array(), WATCHDOG_ERROR);
@@ -92,10 +272,10 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
-          drupal_add_http_header('Status', '404 No such resource exists.');
+          drupal_add_http_header('Status', '409 No such resource exists.');
           print('No such \'content_ingest\' resource exists with an id of \'' . $id . '\'.');
-	    		watchdog('thumbwhere_contentingest', 'No such \'content_ingest\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
-exit(0);
+          watchdog('thumbwhere_contentingest', 'No such \'content_ingest\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
+          exit(0);
         }
 
         // Getting a reference to the entity we asked for
@@ -203,6 +383,9 @@ exit(0);
           if (twCanDebug()) debug($entities);
         }
 
+        // We are being notified, so we do not want to ship this out again as a notification...
+        $entity->do_not_propagate = TRUE;
+
         // Finally write the entity.
         entity_save('thumbwhere_contentingest', $entity);
 
@@ -218,11 +401,13 @@ exit(0);
         print('</response>');
         exit(0);
       }
+      
+      
 
     default:
       {
         drupal_add_http_header('Status', '501 Unable to fulfull request..');
-        print('We were expecting a \'key\', attribute on the \'content_ingest\', element.');
+        print('We don\'t handle the \'' . $op . '\', notification operation on the \'content_ingest\', element.');
         exit(0);
 
       }
@@ -412,7 +597,7 @@ class ThumbWhereContentIngestUIController extends EntityDefaultUIController {
     $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
 
     $items[$this->path] = array(
-      'title' => 'ThumbWhereContentIngests',
+      'title' => 'ContentIngest',
       'description' => 'Add edit and update thumbwhere_contentingests.',
       'page callback' => 'system_admin_menu_block_page',
       'access arguments' => array('access administration pages'),
@@ -425,8 +610,8 @@ class ThumbWhereContentIngestUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a thumbwhere_contentingest',
-      'description' => 'Add a new thumbwhere_contentingest',
+      'title' => 'Add a ContentIngest',
+      'description' => 'Add a new ContentIngest',
       'page callback'  => 'thumbwhere_contentingest_add_page',
       'access callback'  => 'thumbwhere_contentingest_access',
       'access arguments' => array('edit'),
@@ -735,7 +920,7 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
     $form['actions']['delete'] = array(
       '#type' => 'submit',
       '#value' => t('Delete thumbwhere_contentingest'),
-      '#suffix' => l(t('Cancel'), 'admin/content/thumbwhere_contentingests'),
+      '#suffix' => l(t('Cancel'), 'admin/thumbwhere/thumbwhere_contentingests'),
       '#submit' => $submit + array('thumbwhere_contentingest_form_submit_delete'),
       '#weight' => 45,
     );
@@ -914,7 +1099,7 @@ function thumbwhere_contentingest_edit_form_submit(&$form, &$form_state) {
   $thumbwhere_contentingest->changed = time();
 
   $thumbwhere_contentingest->save();
-  $form_state['redirect'] = 'admin/content/thumbwhere_contentingests';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_contentingests';
 }
 
 /**
@@ -923,7 +1108,7 @@ function thumbwhere_contentingest_edit_form_submit(&$form, &$form_state) {
  * @todo Remove hard-coded path
  */
 function thumbwhere_contentingest_form_submit_delete(&$form, &$form_state) {
-  $form_state['redirect'] = 'admin/content/thumbwhere_contentingests/thumbwhere_contentingest/' . $form_state['thumbwhere_contentingest']->pk_contentingest . '/delete';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_contentingests/thumbwhere_contentingest/' . $form_state['thumbwhere_contentingest']->pk_contentingest . '/delete';
 }
 
 
@@ -945,7 +1130,7 @@ function thumbwhere_contentingest_delete_form($form, &$form_state, $thumbwhere_c
 
   $form = confirm_form($form,
     t('Are you sure you want to delete thumbwhere_contentingest %name?', array('%name' => $thumbwhere_contentingest->pk_contentingest)),
-    'admin/content/thumbwhere_contentingests/thumbwhere_contentingest',
+    'admin/thumbwhere/thumbwhere_contentingests/thumbwhere_contentingest',
     '<p>' . t('This action cannot be undone.') . '</p>',
     t('Delete'),
     t('Cancel'),
@@ -966,7 +1151,7 @@ function thumbwhere_contentingest_delete_form_submit($form, &$form_state) {
   drupal_set_message(t('The thumbwhere_contentingest %name has been deleted.', array('%name' => $thumbwhere_contentingest->pk_contentingest)));
   watchdog('thumbwhere_contentingest', 'Deleted thumbwhere_contentingest %name.', array('%name' => $thumbwhere_contentingest->pk_contentingest));
 
-  $form_state['redirect'] = 'admin/content/thumbwhere_contentingests';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_contentingests';
 }
 
 
@@ -1025,7 +1210,7 @@ function thumbwhere_contentingest_set_breadcrumb() {
     l(t('Home'), '<front>'),
     l(t('Administration'), 'admin'),
     l(t('ContentIngest'), 'admin/content'),
-    l(t('ThumbWhereContentIngests'), 'admin/content/thumbwhere_contentingests'),
+    l(t('ContentIngest'), 'admin/thumbwhere/thumbwhere_contentingests'),
   );
 
   drupal_set_breadcrumb($breadcrumb);

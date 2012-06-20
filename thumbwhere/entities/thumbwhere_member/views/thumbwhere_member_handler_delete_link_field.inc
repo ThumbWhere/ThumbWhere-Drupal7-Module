@@ -19,6 +19,6 @@ class thumbwhere_member_handler_delete_link_field extends thumbwhere_member_hand
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_member_id = $values->{$this->aliases['pk_member']};
 
-    return l($text, 'admin/content/thumbwhere_members/thumbwhere_member/' . $pk_member . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_members/thumbwhere_member/' . $pk_member . '/delete');
   }
 }

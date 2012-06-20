@@ -61,14 +61,14 @@ function thumbwhere_contentingest_views_default_views() {
   $view->description = 'A list of all thumbwhere_contentingests';
   $view->tag = 'thumbwhere_contentingests';
   $view->base_table = 'thumbwhere_contentingest';
-  $view->human_name = 'ThumbWhereContentIngests';
+  $view->human_name = 'ContentIngest';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'ThumbWhereContentIngests';
+  $handler->display->display_options['title'] = 'ContentIngest';
   $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -752,12 +752,12 @@ function thumbwhere_contentingest_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'thumbwhere_contentingests_admin_page');
-  $handler->display->display_options['path'] = 'admin/content/thumbwhere_contentingests/list';
+  $handler->display->display_options['path'] = 'admin/thumbwhere/thumbwhere_contentingests/list';
   $handler->display->display_options['menu']['type'] = 'default tab';
   $handler->display->display_options['menu']['title'] = 'List';
   $handler->display->display_options['menu']['weight'] = '-10';
   $handler->display->display_options['tab_options']['type'] = 'tab';
-  $handler->display->display_options['tab_options']['title'] = 'ThumbWhereContentIngests';
+  $handler->display->display_options['tab_options']['title'] = 'ContentIngest';
   $handler->display->display_options['tab_options']['description'] = 'Manage thumbwhere_contentingests';
   $handler->display->display_options['tab_options']['weight'] = '0';
   $handler->display->display_options['tab_options']['name'] = 'management';
@@ -770,7 +770,7 @@ function thumbwhere_contentingest_views_default_views() {
 
   $translatables['thumbwhere_contentingests'] = array(
       t('Master'),
-      t('ThumbWhereContentIngests'),
+      t('ContentIngest'),
       t('more'),
       t('Apply'),
       t('Reset'),

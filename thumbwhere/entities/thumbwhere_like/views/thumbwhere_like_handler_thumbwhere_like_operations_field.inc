@@ -26,7 +26,7 @@ class thumbwhere_like_handler_thumbwhere_like_operations_field extends views_han
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_like', 'admin/content/thumbwhere_likes/thumbwhere_like', array($this->get_value($values, 'pk_like')));
+    $links = menu_contextual_links('thumbwhere_like', 'admin/thumbwhere/thumbwhere_likes/thumbwhere_like', array($this->get_value($values, 'pk_like')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

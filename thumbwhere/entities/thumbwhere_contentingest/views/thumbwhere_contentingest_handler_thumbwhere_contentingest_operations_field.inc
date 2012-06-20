@@ -26,7 +26,7 @@ class thumbwhere_contentingest_handler_thumbwhere_contentingest_operations_field
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_contentingest', 'admin/content/thumbwhere_contentingests/thumbwhere_contentingest', array($this->get_value($values, 'pk_contentingest')));
+    $links = menu_contextual_links('thumbwhere_contentingest', 'admin/thumbwhere/thumbwhere_contentingests/thumbwhere_contentingest', array($this->get_value($values, 'pk_contentingest')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

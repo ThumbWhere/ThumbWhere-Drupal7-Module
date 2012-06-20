@@ -26,7 +26,7 @@ class thumbwhere_identity_handler_thumbwhere_identity_operations_field extends v
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_identity', 'admin/content/thumbwhere_identitys/thumbwhere_identity', array($this->get_value($values, 'pk_identity')));
+    $links = menu_contextual_links('thumbwhere_identity', 'admin/thumbwhere/thumbwhere_identitys/thumbwhere_identity', array($this->get_value($values, 'pk_identity')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

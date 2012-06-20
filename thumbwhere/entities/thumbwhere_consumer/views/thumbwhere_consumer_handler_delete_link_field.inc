@@ -19,6 +19,6 @@ class thumbwhere_consumer_handler_delete_link_field extends thumbwhere_consumer_
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_consumer_id = $values->{$this->aliases['pk_consumer']};
 
-    return l($text, 'admin/content/thumbwhere_consumers/thumbwhere_consumer/' . $pk_consumer . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_consumers/thumbwhere_consumer/' . $pk_consumer . '/delete');
   }
 }

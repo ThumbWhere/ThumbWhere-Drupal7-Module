@@ -42,7 +42,7 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
   //
 
   if (!isset($notification->attributes()->key)) {
-    drupal_add_http_header('Status', '501 unable to fulfull request..');
+    drupal_add_http_header('Status', '412 unable to fulfull request..');
     $err = 'We were expecting a \'key\', attribute on the \'identity\', element.';
     print($err);
     watchdog('thumbwhere_identity', $err ,array(), WATCHDOG_ERROR);
@@ -57,6 +57,136 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
 
   switch($op)
   {
+  
+  
+      case 'create':
+      {
+        //
+        // What resource are we creating?
+        //
+      
+        //
+        // Get the id
+        //
+		
+        if (!isset($notification->attributes()->id)) {
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
+          $err = 'We were expecting an \'id\', attribute on the \'identity\', element when we are performing an \'update\' notification..';
+          print($err);
+          watchdog('thumbwhere_identity', $err ,array(), WATCHDOG_ERROR);
+          exit(0);
+        }
+
+        $id = intval($notification->attributes()->id);
+		
+
+        if (twCanDebug()) debug('id');
+        if (twCanDebug()) debug($id);
+
+      
+        //
+        // Get the fields
+        //
+          
+        $entities = entity_load('thumbwhere_identity', array($id));
+
+        if (twCanDebug()) debug('$entities');
+        if (twCanDebug()) debug($entities);
+
+        if (count($entities) != 0) {
+          //drupal_add_http_header('Status', '409 Resource already exists.');
+          $err = '\'identity\' resource already exists with an id of \'' . $id . '\'.';
+           //print($err);
+          watchdog('thumbwhere_identity', $err ,array(), WATCHDOG_ERROR);
+          //exit(0);	
+          	
+		drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<identity op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</identity>');
+        print('</response>');
+        exit(0);          	
+          
+        }
+
+        // Getting a reference to the entity we asked for
+        $entityfields = array();
+
+        //
+        // We are only updating what has been passed through.
+        // No test for missing values.
+        // TODO: Validate incoming values.
+        //
+
+
+        $entityfields['pk_identity'] = $id;	
+
+        if (isset($notification->identitytype)) {
+          $entityfields['fk_identitytype'] = intval($notification->identitytype);
+        }
+
+        if (isset($notification->member)) {
+          $entityfields['fk_member'] = intval($notification->member);
+        }
+
+        if (isset($notification->id)) {
+          $entityfields['id'] = (string)($notification->id);
+        }
+
+        if (isset($notification->secret)) {
+
+        }
+
+        if (isset($notification->secret_hash)) {
+          $entityfields['secret_hash'] = (string)($notification->secret_hash);
+        }
+
+        if (isset($notification->secret_hash_salt)) {
+
+        }
+
+        if (isset($notification->secret_hash_itterations)) {
+
+        }
+
+        if (isset($notification->label)) {
+          $entityfields['label'] = (string)($notification->label);
+        }
+
+        if (isset($notification->last_login)) {
+
+        }
+
+        if (isset($notification->total_logins)) {
+
+        }
+
+        if (!isset($notification->attributes()->key)) {
+          if (twCanDebug()) debug('$entities');
+          if (twCanDebug()) debug($entities);
+        }
+
+        // We are being notified, so we do not want to ship this out again as a notification...
+        // Finally write the entity.
+        $entity = entity_create('thumbwhere_identity', $entityfields);
+        $entity->do_not_propagate = TRUE;
+        $entity->save();
+
+        //
+        // Send the final response
+        //
+
+        drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<identity op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</identity>');
+        print('</response>');
+        exit(0);
+      }
+  
+  
     case 'update':
       {
         //
@@ -68,7 +198,7 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
         //
 		
         if (!isset($notification->attributes()->id)) {
-          drupal_add_http_header('Status', '501 unable to fulfull request.');
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
           $err = 'We were expecting an \'id\', attribute on the \'identity\', element when we are performing an \'update\' notification..';
           print($err);
           watchdog('thumbwhere_identity', $err ,array(), WATCHDOG_ERROR);
@@ -92,10 +222,10 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
         if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
-          drupal_add_http_header('Status', '404 No such resource exists.');
+          drupal_add_http_header('Status', '409 No such resource exists.');
           print('No such \'identity\' resource exists with an id of \'' . $id . '\'.');
-	    		watchdog('thumbwhere_identity', 'No such \'identity\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
-exit(0);
+          watchdog('thumbwhere_identity', 'No such \'identity\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
+          exit(0);
         }
 
         // Getting a reference to the entity we asked for
@@ -153,6 +283,9 @@ exit(0);
           if (twCanDebug()) debug($entities);
         }
 
+        // We are being notified, so we do not want to ship this out again as a notification...
+        $entity->do_not_propagate = TRUE;
+
         // Finally write the entity.
         entity_save('thumbwhere_identity', $entity);
 
@@ -168,11 +301,13 @@ exit(0);
         print('</response>');
         exit(0);
       }
+      
+      
 
     default:
       {
         drupal_add_http_header('Status', '501 Unable to fulfull request..');
-        print('We were expecting a \'key\', attribute on the \'identity\', element.');
+        print('We don\'t handle the \'' . $op . '\', notification operation on the \'identity\', element.');
         exit(0);
 
       }
@@ -362,7 +497,7 @@ class ThumbWhereIdentityUIController extends EntityDefaultUIController {
     $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
 
     $items[$this->path] = array(
-      'title' => 'ThumbWhereIdentitys',
+      'title' => 'Identity',
       'description' => 'Add edit and update thumbwhere_identitys.',
       'page callback' => 'system_admin_menu_block_page',
       'access arguments' => array('access administration pages'),
@@ -375,8 +510,8 @@ class ThumbWhereIdentityUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a thumbwhere_identity',
-      'description' => 'Add a new thumbwhere_identity',
+      'title' => 'Add a Identity',
+      'description' => 'Add a new Identity',
       'page callback'  => 'thumbwhere_identity_add_page',
       'access callback'  => 'thumbwhere_identity_access',
       'access arguments' => array('edit'),
@@ -636,7 +771,7 @@ function thumbwhere_identity_edit_form($form, &$form_state, $thumbwhere_identity
     $form['actions']['delete'] = array(
       '#type' => 'submit',
       '#value' => t('Delete thumbwhere_identity'),
-      '#suffix' => l(t('Cancel'), 'admin/content/thumbwhere_identitys'),
+      '#suffix' => l(t('Cancel'), 'admin/thumbwhere/thumbwhere_identitys'),
       '#submit' => $submit + array('thumbwhere_identity_form_submit_delete'),
       '#weight' => 45,
     );
@@ -762,7 +897,7 @@ function thumbwhere_identity_edit_form_submit(&$form, &$form_state) {
   $thumbwhere_identity->changed = time();
 
   $thumbwhere_identity->save();
-  $form_state['redirect'] = 'admin/content/thumbwhere_identitys';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_identitys';
 }
 
 /**
@@ -771,7 +906,7 @@ function thumbwhere_identity_edit_form_submit(&$form, &$form_state) {
  * @todo Remove hard-coded path
  */
 function thumbwhere_identity_form_submit_delete(&$form, &$form_state) {
-  $form_state['redirect'] = 'admin/content/thumbwhere_identitys/thumbwhere_identity/' . $form_state['thumbwhere_identity']->pk_identity . '/delete';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_identitys/thumbwhere_identity/' . $form_state['thumbwhere_identity']->pk_identity . '/delete';
 }
 
 
@@ -793,7 +928,7 @@ function thumbwhere_identity_delete_form($form, &$form_state, $thumbwhere_identi
 
   $form = confirm_form($form,
     t('Are you sure you want to delete thumbwhere_identity %name?', array('%name' => $thumbwhere_identity->id)),
-    'admin/content/thumbwhere_identitys/thumbwhere_identity',
+    'admin/thumbwhere/thumbwhere_identitys/thumbwhere_identity',
     '<p>' . t('This action cannot be undone.') . '</p>',
     t('Delete'),
     t('Cancel'),
@@ -814,7 +949,7 @@ function thumbwhere_identity_delete_form_submit($form, &$form_state) {
   drupal_set_message(t('The thumbwhere_identity %name has been deleted.', array('%name' => $thumbwhere_identity->id)));
   watchdog('thumbwhere_identity', 'Deleted thumbwhere_identity %name.', array('%name' => $thumbwhere_identity->id));
 
-  $form_state['redirect'] = 'admin/content/thumbwhere_identitys';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_identitys';
 }
 
 
@@ -873,7 +1008,7 @@ function thumbwhere_identity_set_breadcrumb() {
     l(t('Home'), '<front>'),
     l(t('Administration'), 'admin'),
     l(t('Identity'), 'admin/content'),
-    l(t('ThumbWhereIdentitys'), 'admin/content/thumbwhere_identitys'),
+    l(t('Identity'), 'admin/thumbwhere/thumbwhere_identitys'),
   );
 
   drupal_set_breadcrumb($breadcrumb);

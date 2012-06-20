@@ -29,6 +29,6 @@ class thumbwhere_identity_handler_edit_link_field extends thumbwhere_identity_ha
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $thumbwhere_identity_id = $values->{$this->aliases['pk_identity']};
 
-    return l($text, 'admin/content/thumbwhere_identitys/thumbwhere_identity/' . $thumbwhere_identity_id . '/edit');
+    return l($text, 'admin/thumbwhere/thumbwhere_identitys/thumbwhere_identity/' . $thumbwhere_identity_id . '/edit');
   }
 }

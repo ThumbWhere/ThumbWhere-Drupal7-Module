@@ -61,14 +61,14 @@ function thumbwhere_place_views_default_views() {
   $view->description = 'A list of all thumbwhere_places';
   $view->tag = 'thumbwhere_places';
   $view->base_table = 'thumbwhere_place';
-  $view->human_name = 'ThumbWherePlaces';
+  $view->human_name = 'Place';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'ThumbWherePlaces';
+  $handler->display->display_options['title'] = 'Place';
   $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -331,12 +331,12 @@ function thumbwhere_place_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'thumbwhere_places_admin_page');
-  $handler->display->display_options['path'] = 'admin/content/thumbwhere_places/list';
+  $handler->display->display_options['path'] = 'admin/thumbwhere/thumbwhere_places/list';
   $handler->display->display_options['menu']['type'] = 'default tab';
   $handler->display->display_options['menu']['title'] = 'List';
   $handler->display->display_options['menu']['weight'] = '-10';
   $handler->display->display_options['tab_options']['type'] = 'tab';
-  $handler->display->display_options['tab_options']['title'] = 'ThumbWherePlaces';
+  $handler->display->display_options['tab_options']['title'] = 'Place';
   $handler->display->display_options['tab_options']['description'] = 'Manage thumbwhere_places';
   $handler->display->display_options['tab_options']['weight'] = '0';
   $handler->display->display_options['tab_options']['name'] = 'management';
@@ -349,7 +349,7 @@ function thumbwhere_place_views_default_views() {
 
   $translatables['thumbwhere_places'] = array(
       t('Master'),
-      t('ThumbWherePlaces'),
+      t('Place'),
       t('more'),
       t('Apply'),
       t('Reset'),

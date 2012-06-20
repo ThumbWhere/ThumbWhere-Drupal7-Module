@@ -61,14 +61,14 @@ function thumbwhere_awardedtrophy_views_default_views() {
   $view->description = 'A list of all thumbwhere_awardedtrophys';
   $view->tag = 'thumbwhere_awardedtrophys';
   $view->base_table = 'thumbwhere_awardedtrophy';
-  $view->human_name = 'ThumbWhereAwardedTrophys';
+  $view->human_name = 'AwardedTrophy';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'ThumbWhereAwardedTrophys';
+  $handler->display->display_options['title'] = 'AwardedTrophy';
   $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -424,12 +424,12 @@ function thumbwhere_awardedtrophy_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'thumbwhere_awardedtrophys_admin_page');
-  $handler->display->display_options['path'] = 'admin/content/thumbwhere_awardedtrophys/list';
+  $handler->display->display_options['path'] = 'admin/thumbwhere/thumbwhere_awardedtrophys/list';
   $handler->display->display_options['menu']['type'] = 'default tab';
   $handler->display->display_options['menu']['title'] = 'List';
   $handler->display->display_options['menu']['weight'] = '-10';
   $handler->display->display_options['tab_options']['type'] = 'tab';
-  $handler->display->display_options['tab_options']['title'] = 'ThumbWhereAwardedTrophys';
+  $handler->display->display_options['tab_options']['title'] = 'AwardedTrophy';
   $handler->display->display_options['tab_options']['description'] = 'Manage thumbwhere_awardedtrophys';
   $handler->display->display_options['tab_options']['weight'] = '0';
   $handler->display->display_options['tab_options']['name'] = 'management';
@@ -442,7 +442,7 @@ function thumbwhere_awardedtrophy_views_default_views() {
 
   $translatables['thumbwhere_awardedtrophys'] = array(
       t('Master'),
-      t('ThumbWhereAwardedTrophys'),
+      t('AwardedTrophy'),
       t('more'),
       t('Apply'),
       t('Reset'),

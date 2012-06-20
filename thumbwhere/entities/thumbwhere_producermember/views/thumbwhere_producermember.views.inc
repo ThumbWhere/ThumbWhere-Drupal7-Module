@@ -61,14 +61,14 @@ function thumbwhere_producermember_views_default_views() {
   $view->description = 'A list of all thumbwhere_producermembers';
   $view->tag = 'thumbwhere_producermembers';
   $view->base_table = 'thumbwhere_producermember';
-  $view->human_name = 'ThumbWhereProducerMembers';
+  $view->human_name = 'ProducerMember';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'ThumbWhereProducerMembers';
+  $handler->display->display_options['title'] = 'ProducerMember';
   $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -392,12 +392,12 @@ function thumbwhere_producermember_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'thumbwhere_producermembers_admin_page');
-  $handler->display->display_options['path'] = 'admin/content/thumbwhere_producermembers/list';
+  $handler->display->display_options['path'] = 'admin/thumbwhere/thumbwhere_producermembers/list';
   $handler->display->display_options['menu']['type'] = 'default tab';
   $handler->display->display_options['menu']['title'] = 'List';
   $handler->display->display_options['menu']['weight'] = '-10';
   $handler->display->display_options['tab_options']['type'] = 'tab';
-  $handler->display->display_options['tab_options']['title'] = 'ThumbWhereProducerMembers';
+  $handler->display->display_options['tab_options']['title'] = 'ProducerMember';
   $handler->display->display_options['tab_options']['description'] = 'Manage thumbwhere_producermembers';
   $handler->display->display_options['tab_options']['weight'] = '0';
   $handler->display->display_options['tab_options']['name'] = 'management';
@@ -410,7 +410,7 @@ function thumbwhere_producermember_views_default_views() {
 
   $translatables['thumbwhere_producermembers'] = array(
       t('Master'),
-      t('ThumbWhereProducerMembers'),
+      t('ProducerMember'),
       t('more'),
       t('Apply'),
       t('Reset'),

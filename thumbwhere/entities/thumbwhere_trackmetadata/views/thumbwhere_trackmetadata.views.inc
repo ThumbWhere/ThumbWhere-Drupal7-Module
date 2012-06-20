@@ -61,14 +61,14 @@ function thumbwhere_trackmetadata_views_default_views() {
   $view->description = 'A list of all thumbwhere_trackmetadatas';
   $view->tag = 'thumbwhere_trackmetadatas';
   $view->base_table = 'thumbwhere_trackmetadata';
-  $view->human_name = 'ThumbWhereTrackMetadatas';
+  $view->human_name = 'TrackMetadata';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'ThumbWhereTrackMetadatas';
+  $handler->display->display_options['title'] = 'TrackMetadata';
   $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -299,12 +299,12 @@ function thumbwhere_trackmetadata_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'thumbwhere_trackmetadatas_admin_page');
-  $handler->display->display_options['path'] = 'admin/content/thumbwhere_trackmetadatas/list';
+  $handler->display->display_options['path'] = 'admin/thumbwhere/thumbwhere_trackmetadatas/list';
   $handler->display->display_options['menu']['type'] = 'default tab';
   $handler->display->display_options['menu']['title'] = 'List';
   $handler->display->display_options['menu']['weight'] = '-10';
   $handler->display->display_options['tab_options']['type'] = 'tab';
-  $handler->display->display_options['tab_options']['title'] = 'ThumbWhereTrackMetadatas';
+  $handler->display->display_options['tab_options']['title'] = 'TrackMetadata';
   $handler->display->display_options['tab_options']['description'] = 'Manage thumbwhere_trackmetadatas';
   $handler->display->display_options['tab_options']['weight'] = '0';
   $handler->display->display_options['tab_options']['name'] = 'management';
@@ -317,7 +317,7 @@ function thumbwhere_trackmetadata_views_default_views() {
 
   $translatables['thumbwhere_trackmetadatas'] = array(
       t('Master'),
-      t('ThumbWhereTrackMetadatas'),
+      t('TrackMetadata'),
       t('more'),
       t('Apply'),
       t('Reset'),

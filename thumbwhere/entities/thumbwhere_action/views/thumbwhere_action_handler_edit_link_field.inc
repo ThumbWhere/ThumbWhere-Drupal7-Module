@@ -29,6 +29,6 @@ class thumbwhere_action_handler_edit_link_field extends thumbwhere_action_handle
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $thumbwhere_action_id = $values->{$this->aliases['pk_action']};
 
-    return l($text, 'admin/content/thumbwhere_actions/thumbwhere_action/' . $thumbwhere_action_id . '/edit');
+    return l($text, 'admin/thumbwhere/thumbwhere_actions/thumbwhere_action/' . $thumbwhere_action_id . '/edit');
   }
 }

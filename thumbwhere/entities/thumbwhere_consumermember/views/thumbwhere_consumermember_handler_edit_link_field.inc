@@ -29,6 +29,6 @@ class thumbwhere_consumermember_handler_edit_link_field extends thumbwhere_consu
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $thumbwhere_consumermember_id = $values->{$this->aliases['pk_consumermember']};
 
-    return l($text, 'admin/content/thumbwhere_consumermembers/thumbwhere_consumermember/' . $thumbwhere_consumermember_id . '/edit');
+    return l($text, 'admin/thumbwhere/thumbwhere_consumermembers/thumbwhere_consumermember/' . $thumbwhere_consumermember_id . '/edit');
   }
 }

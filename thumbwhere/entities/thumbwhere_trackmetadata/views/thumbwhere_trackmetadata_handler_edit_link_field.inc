@@ -29,6 +29,6 @@ class thumbwhere_trackmetadata_handler_edit_link_field extends thumbwhere_trackm
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $thumbwhere_trackmetadata_id = $values->{$this->aliases['pk_trackmetadata']};
 
-    return l($text, 'admin/content/thumbwhere_trackmetadatas/thumbwhere_trackmetadata/' . $thumbwhere_trackmetadata_id . '/edit');
+    return l($text, 'admin/thumbwhere/thumbwhere_trackmetadatas/thumbwhere_trackmetadata/' . $thumbwhere_trackmetadata_id . '/edit');
   }
 }

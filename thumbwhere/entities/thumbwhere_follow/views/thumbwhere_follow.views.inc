@@ -61,14 +61,14 @@ function thumbwhere_follow_views_default_views() {
   $view->description = 'A list of all thumbwhere_follows';
   $view->tag = 'thumbwhere_follows';
   $view->base_table = 'thumbwhere_follow';
-  $view->human_name = 'ThumbWhereFollows';
+  $view->human_name = 'Follow';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'ThumbWhereFollows';
+  $handler->display->display_options['title'] = 'Follow';
   $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -424,12 +424,12 @@ function thumbwhere_follow_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'thumbwhere_follows_admin_page');
-  $handler->display->display_options['path'] = 'admin/content/thumbwhere_follows/list';
+  $handler->display->display_options['path'] = 'admin/thumbwhere/thumbwhere_follows/list';
   $handler->display->display_options['menu']['type'] = 'default tab';
   $handler->display->display_options['menu']['title'] = 'List';
   $handler->display->display_options['menu']['weight'] = '-10';
   $handler->display->display_options['tab_options']['type'] = 'tab';
-  $handler->display->display_options['tab_options']['title'] = 'ThumbWhereFollows';
+  $handler->display->display_options['tab_options']['title'] = 'Follow';
   $handler->display->display_options['tab_options']['description'] = 'Manage thumbwhere_follows';
   $handler->display->display_options['tab_options']['weight'] = '0';
   $handler->display->display_options['tab_options']['name'] = 'management';
@@ -442,7 +442,7 @@ function thumbwhere_follow_views_default_views() {
 
   $translatables['thumbwhere_follows'] = array(
       t('Master'),
-      t('ThumbWhereFollows'),
+      t('Follow'),
       t('more'),
       t('Apply'),
       t('Reset'),

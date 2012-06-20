@@ -61,14 +61,14 @@ function thumbwhere_consumermember_views_default_views() {
   $view->description = 'A list of all thumbwhere_consumermembers';
   $view->tag = 'thumbwhere_consumermembers';
   $view->base_table = 'thumbwhere_consumermember';
-  $view->human_name = 'ThumbWhereConsumerMembers';
+  $view->human_name = 'ConsumerMember';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'ThumbWhereConsumerMembers';
+  $handler->display->display_options['title'] = 'ConsumerMember';
   $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -392,12 +392,12 @@ function thumbwhere_consumermember_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'thumbwhere_consumermembers_admin_page');
-  $handler->display->display_options['path'] = 'admin/content/thumbwhere_consumermembers/list';
+  $handler->display->display_options['path'] = 'admin/thumbwhere/thumbwhere_consumermembers/list';
   $handler->display->display_options['menu']['type'] = 'default tab';
   $handler->display->display_options['menu']['title'] = 'List';
   $handler->display->display_options['menu']['weight'] = '-10';
   $handler->display->display_options['tab_options']['type'] = 'tab';
-  $handler->display->display_options['tab_options']['title'] = 'ThumbWhereConsumerMembers';
+  $handler->display->display_options['tab_options']['title'] = 'ConsumerMember';
   $handler->display->display_options['tab_options']['description'] = 'Manage thumbwhere_consumermembers';
   $handler->display->display_options['tab_options']['weight'] = '0';
   $handler->display->display_options['tab_options']['name'] = 'management';
@@ -410,7 +410,7 @@ function thumbwhere_consumermember_views_default_views() {
 
   $translatables['thumbwhere_consumermembers'] = array(
       t('Master'),
-      t('ThumbWhereConsumerMembers'),
+      t('ConsumerMember'),
       t('more'),
       t('Apply'),
       t('Reset'),

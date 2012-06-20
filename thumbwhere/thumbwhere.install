@@ -41,6 +41,18 @@ function thumbwhere_requirements($phase) {
   // Handle runtime check
   if ($phase == 'runtime') {
 
+
+    if (variable_get('thumbwhere_machine_id') == '') {
+
+      $requirements['thumbwhere_machine_id'] = array(
+          'title' => $t('ThumbWhere API'),
+          'description' => $t(' The configuration variable "thumbwhere_machine_id" should be configured. <p/> Go to the Configuration for <b>ThumbWhere Settings</b> and enter the correct value.'),
+          'severity' => REQUIREMENT_ERROR,
+          'value' => $t('Required configuration'),
+      );
+    }
+
+
     if (variable_get('thumbwhere_api_url') == '') {
 
       $requirements['thumbwhere_api_url'] = array(

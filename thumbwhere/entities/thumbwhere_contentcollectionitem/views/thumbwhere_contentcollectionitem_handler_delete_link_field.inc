@@ -19,6 +19,6 @@ class thumbwhere_contentcollectionitem_handler_delete_link_field extends thumbwh
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_contentcollectionitem_id = $values->{$this->aliases['pk_contentcollectionitem']};
 
-    return l($text, 'admin/content/thumbwhere_contentcollectionitems/thumbwhere_contentcollectionitem/' . $pk_contentcollectionitem . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_contentcollectionitems/thumbwhere_contentcollectionitem/' . $pk_contentcollectionitem . '/delete');
   }
 }

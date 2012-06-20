@@ -26,7 +26,7 @@ class thumbwhere_metadata_handler_thumbwhere_metadata_operations_field extends v
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_metadata', 'admin/content/thumbwhere_metadatas/thumbwhere_metadata', array($this->get_value($values, 'pk_metadata')));
+    $links = menu_contextual_links('thumbwhere_metadata', 'admin/thumbwhere/thumbwhere_metadatas/thumbwhere_metadata', array($this->get_value($values, 'pk_metadata')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

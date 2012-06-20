@@ -19,6 +19,6 @@ class thumbwhere_producer_handler_delete_link_field extends thumbwhere_producer_
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_producer_id = $values->{$this->aliases['pk_producer']};
 
-    return l($text, 'admin/content/thumbwhere_producers/thumbwhere_producer/' . $pk_producer . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_producers/thumbwhere_producer/' . $pk_producer . '/delete');
   }
 }

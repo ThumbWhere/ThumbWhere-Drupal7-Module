@@ -42,7 +42,7 @@ function _thumbwhere_handle_producer_member_notify_xml($notification) {
   //
 
   if (!isset($notification->attributes()->key)) {
-    drupal_add_http_header('Status', '501 unable to fulfull request..');
+    drupal_add_http_header('Status', '412 unable to fulfull request..');
     $err = 'We were expecting a \'key\', attribute on the \'producer_member\', element.';
     print($err);
     watchdog('thumbwhere_producermember', $err ,array(), WATCHDOG_ERROR);
@@ -57,6 +57,113 @@ function _thumbwhere_handle_producer_member_notify_xml($notification) {
 
   switch($op)
   {
+  
+  
+      case 'create':
+      {
+        //
+        // What resource are we creating?
+        //
+      
+        //
+        // Get the id
+        //
+		
+        if (!isset($notification->attributes()->id)) {
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
+          $err = 'We were expecting an \'id\', attribute on the \'producer_member\', element when we are performing an \'update\' notification..';
+          print($err);
+          watchdog('thumbwhere_producermember', $err ,array(), WATCHDOG_ERROR);
+          exit(0);
+        }
+
+        $id = intval($notification->attributes()->id);
+		
+
+        if (twCanDebug()) debug('id');
+        if (twCanDebug()) debug($id);
+
+      
+        //
+        // Get the fields
+        //
+          
+        $entities = entity_load('thumbwhere_producermember', array($id));
+
+        if (twCanDebug()) debug('$entities');
+        if (twCanDebug()) debug($entities);
+
+        if (count($entities) != 0) {
+          //drupal_add_http_header('Status', '409 Resource already exists.');
+          $err = '\'producer_member\' resource already exists with an id of \'' . $id . '\'.';
+           //print($err);
+          watchdog('thumbwhere_producermember', $err ,array(), WATCHDOG_ERROR);
+          //exit(0);	
+          	
+		drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<producer_member op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</producer_member>');
+        print('</response>');
+        exit(0);          	
+          
+        }
+
+        // Getting a reference to the entity we asked for
+        $entityfields = array();
+
+        //
+        // We are only updating what has been passed through.
+        // No test for missing values.
+        // TODO: Validate incoming values.
+        //
+
+
+        $entityfields['pk_producermember'] = $id;	
+
+        if (isset($notification->producer)) {
+          $entityfields['fk_producer'] = intval($notification->producer);
+        }
+
+        if (isset($notification->member)) {
+          $entityfields['fk_member'] = intval($notification->member);
+        }
+
+        if (isset($notification->admin)) {
+          if ((string)($notification->admin) == 'true') {
+            $entityfields['admin'] = '1';
+          }
+          else {
+            $entityfields['admin'] = '0';
+          }
+        }
+
+        if (!isset($notification->attributes()->key)) {
+          if (twCanDebug()) debug('$entities');
+          if (twCanDebug()) debug($entities);
+        }
+
+        // We are being notified, so we do not want to ship this out again as a notification...
+        // Finally write the entity.
+        $entity = entity_create('thumbwhere_producermember', $entityfields);
+        $entity->do_not_propagate = TRUE;
+        $entity->save();
+
+        //
+        // Send the final response
+        //
+
+        drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<producer_member op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</producer_member>');
+        print('</response>');
+        exit(0);
+      }
+  
+  
     case 'update':
       {
         //
@@ -68,7 +175,7 @@ function _thumbwhere_handle_producer_member_notify_xml($notification) {
         //
 		
         if (!isset($notification->attributes()->id)) {
-          drupal_add_http_header('Status', '501 unable to fulfull request.');
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
           $err = 'We were expecting an \'id\', attribute on the \'producer_member\', element when we are performing an \'update\' notification..';
           print($err);
           watchdog('thumbwhere_producermember', $err ,array(), WATCHDOG_ERROR);
@@ -92,10 +199,10 @@ function _thumbwhere_handle_producer_member_notify_xml($notification) {
         if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
-          drupal_add_http_header('Status', '404 No such resource exists.');
+          drupal_add_http_header('Status', '409 No such resource exists.');
           print('No such \'producer_member\' resource exists with an id of \'' . $id . '\'.');
-	    		watchdog('thumbwhere_producermember', 'No such \'producer_member\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
-exit(0);
+          watchdog('thumbwhere_producermember', 'No such \'producer_member\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
+          exit(0);
         }
 
         // Getting a reference to the entity we asked for
@@ -130,6 +237,9 @@ exit(0);
           if (twCanDebug()) debug($entities);
         }
 
+        // We are being notified, so we do not want to ship this out again as a notification...
+        $entity->do_not_propagate = TRUE;
+
         // Finally write the entity.
         entity_save('thumbwhere_producermember', $entity);
 
@@ -145,11 +255,13 @@ exit(0);
         print('</response>');
         exit(0);
       }
+      
+      
 
     default:
       {
         drupal_add_http_header('Status', '501 Unable to fulfull request..');
-        print('We were expecting a \'key\', attribute on the \'producer_member\', element.');
+        print('We don\'t handle the \'' . $op . '\', notification operation on the \'producer_member\', element.');
         exit(0);
 
       }
@@ -339,7 +451,7 @@ class ThumbWhereProducerMemberUIController extends EntityDefaultUIController {
     $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
 
     $items[$this->path] = array(
-      'title' => 'ThumbWhereProducerMembers',
+      'title' => 'ProducerMember',
       'description' => 'Add edit and update thumbwhere_producermembers.',
       'page callback' => 'system_admin_menu_block_page',
       'access arguments' => array('access administration pages'),
@@ -352,8 +464,8 @@ class ThumbWhereProducerMemberUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a thumbwhere_producermember',
-      'description' => 'Add a new thumbwhere_producermember',
+      'title' => 'Add a ProducerMember',
+      'description' => 'Add a new ProducerMember',
       'page callback'  => 'thumbwhere_producermember_add_page',
       'access callback'  => 'thumbwhere_producermember_access',
       'access arguments' => array('edit'),
@@ -550,7 +662,7 @@ function thumbwhere_producermember_edit_form($form, &$form_state, $thumbwhere_pr
     $form['actions']['delete'] = array(
       '#type' => 'submit',
       '#value' => t('Delete thumbwhere_producermember'),
-      '#suffix' => l(t('Cancel'), 'admin/content/thumbwhere_producermembers'),
+      '#suffix' => l(t('Cancel'), 'admin/thumbwhere/thumbwhere_producermembers'),
       '#submit' => $submit + array('thumbwhere_producermember_form_submit_delete'),
       '#weight' => 45,
     );
@@ -644,7 +756,7 @@ function thumbwhere_producermember_edit_form_submit(&$form, &$form_state) {
   $thumbwhere_producermember->changed = time();
 
   $thumbwhere_producermember->save();
-  $form_state['redirect'] = 'admin/content/thumbwhere_producermembers';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_producermembers';
 }
 
 /**
@@ -653,7 +765,7 @@ function thumbwhere_producermember_edit_form_submit(&$form, &$form_state) {
  * @todo Remove hard-coded path
  */
 function thumbwhere_producermember_form_submit_delete(&$form, &$form_state) {
-  $form_state['redirect'] = 'admin/content/thumbwhere_producermembers/thumbwhere_producermember/' . $form_state['thumbwhere_producermember']->pk_producermember . '/delete';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_producermembers/thumbwhere_producermember/' . $form_state['thumbwhere_producermember']->pk_producermember . '/delete';
 }
 
 
@@ -675,7 +787,7 @@ function thumbwhere_producermember_delete_form($form, &$form_state, $thumbwhere_
 
   $form = confirm_form($form,
     t('Are you sure you want to delete thumbwhere_producermember %name?', array('%name' => $thumbwhere_producermember->pk_producermember)),
-    'admin/content/thumbwhere_producermembers/thumbwhere_producermember',
+    'admin/thumbwhere/thumbwhere_producermembers/thumbwhere_producermember',
     '<p>' . t('This action cannot be undone.') . '</p>',
     t('Delete'),
     t('Cancel'),
@@ -696,7 +808,7 @@ function thumbwhere_producermember_delete_form_submit($form, &$form_state) {
   drupal_set_message(t('The thumbwhere_producermember %name has been deleted.', array('%name' => $thumbwhere_producermember->pk_producermember)));
   watchdog('thumbwhere_producermember', 'Deleted thumbwhere_producermember %name.', array('%name' => $thumbwhere_producermember->pk_producermember));
 
-  $form_state['redirect'] = 'admin/content/thumbwhere_producermembers';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_producermembers';
 }
 
 
@@ -755,7 +867,7 @@ function thumbwhere_producermember_set_breadcrumb() {
     l(t('Home'), '<front>'),
     l(t('Administration'), 'admin'),
     l(t('ProducerMember'), 'admin/content'),
-    l(t('ThumbWhereProducerMembers'), 'admin/content/thumbwhere_producermembers'),
+    l(t('ProducerMember'), 'admin/thumbwhere/thumbwhere_producermembers'),
   );
 
   drupal_set_breadcrumb($breadcrumb);

@@ -70,7 +70,7 @@ function thumbwhere_like_entity_info() {
 
     // The information below is used by the ThumbWhereLikeUIController (which extends the EntityDefaultUIController)
     'admin ui' => array(
-      'path' => 'admin/content/thumbwhere_likes',
+      'path' => 'admin/thumbwhere/thumbwhere_likes',
       'file' => 'thumbwhere_like.admin.inc',
       'controller class' => 'ThumbWhereLikeUIController',
       'menu wildcard' => '%thumbwhere_like',
@@ -146,42 +146,11 @@ function thumbwhere_like_access($op, $thumbwhere_like = NULL, $account = NULL) {
  */
 function thumbwhere_like_load($thumbwhere_like_id, $reset = FALSE) {
 
-  //
-
   $thumbwhere_likes = entity_load('thumbwhere_like', array($thumbwhere_like_id), array(), $reset);
 
   return reset($thumbwhere_likes);
 }
 
-
-
-
-
-/**
- * Load multiple thumbwhere_likes based on certain conditions.
- *
- * @param $thumbwhere_like_ids
- *   An array of thumbwhere_like IDs.
- * @param $conditions
- *   An array of conditions to match against the {thumbwhere_like} table.
- * @param $reset
- *   A boolean indicating that the internal cache should be reset.
- * @return
- *   An array of thumbwhere_like objects, indexed by thumbwhere_like_id.
- *
- * @see entity_load()
- * @see thumbwhere_like_load()
- */
-/*
-function thumbwhere_like_load_multiple($thumbwhere_like_ids = array(), $conditions = array(), $reset = FALSE) {
-
-
-
-  $loaded = entity_load('thumbwhere_like', $thumbwhere_like_ids, $conditions, $reset);
-
-  return $loaded;
-}
-*/
 
 /**
  * Deletes a thumbwhere_like.
@@ -190,22 +159,6 @@ function thumbwhere_like_delete(ThumbWhereLike $thumbwhere_like) {
 
   $thumbwhere_like->delete();
 }
-
-
-/**
- * Delete multiple thumbwhere_likes.
- *
- * @param $thumbwhere_like_ids
- *   An array of thumbwhere_like IDs.
- */
-/*
-function thumbwhere_like_delete_multiple(array $thumbwhere_like_ids) {
-
-
-
-  entity_get_controller('thumbwhere_like')->delete($thumbwhere_like_ids);
-}
-*/
 
 /**
  * Create a thumbwhere_like object.
@@ -217,48 +170,9 @@ function thumbwhere_like_create($values = array()) {
 
 
 /**
- * Saves a thumbwhere_like to the database.
- *
- * @param $thumbwhere_like
- *   The thumbwhere_like object.
- */
-/*
-function thumbwhere_like_save(ThumbWhereLike $thumbwhere_like) {
-
-
-
-  return $thumbwhere_like->save();
-}*/
-
-
-
-/**
- * Insert a thumbwhere_like
- *
- * @param $thumbwhere_like
- *   The thumbwhere_like object.
- */
-/*
-function thumbwhere_like_insert(array $values = array()) {
-
-
-
-  //return $thumbwhere_like->create($values);
-  return entity_get_controller('thumbwhere_like')->insert($values);
-}
-*/
-
-
-
-
-
-
-/**
  * URI callback for thumbwhere_likes
  */
 function thumbwhere_like_uri(ThumbWhereLike $thumbwhere_like) {
-
-
 
   return array(
     'path' => 'thumbwhere_like/' . $thumbwhere_like->pk_like,
@@ -271,9 +185,7 @@ function thumbwhere_like_uri(ThumbWhereLike $thumbwhere_like) {
  */
 function thumbwhere_like_page_title(ThumbWhereLike $thumbwhere_like) {
 
-  
-
-  return $thumbwhere_like->pk_like;
+	return $thumbwhere_like->pk_like;
 }
 
 
@@ -332,8 +244,8 @@ function thumbwhere_like_theme() {
 function thumbwhere_like_menu_local_tasks_alter(&$data, $router_item, $root_path) {
 
   // Add action link 'admin/structure/thumbwhere_likes/add' on 'admin/structure/thumbwhere_likes'.
-  if ($root_path == 'admin/content/thumbwhere_likes') {
-    $item = menu_get_item('admin/content/thumbwhere_likes/add');
+  if ($root_path == 'admin/thumbwhere/thumbwhere_likes') {
+    $item = menu_get_item('admin/thumbwhere/thumbwhere_likes/add');
     if ($item['access']) {
       $data['actions']['output'][] = array(
         '#theme' => 'menu_local_action',
@@ -373,227 +285,7 @@ class ThumbWhereLikeController extends EntityAPIController {
   public function __construct($entityType) {
     parent::__construct($entityType);
   }
-
-
-  /**
-   * Create a thumbwhere_like - we first set up the values that are specific
-   * to our thumbwhere_like schema but then also go through the EntityAPIController
-   * function.
-   *
-   * @param $type
-   *   The machine-readable type of the thumbwhere_like.
-   *
-   * @return
-   *   A thumbwhere_like object with all default fields initialized.
-   */
-  /*
-  public function create(array $values = array()) {
-
-
-
-    //$values += array(
-    //  'thumbwhere_id' => -1,
-    //);
-
-    return parent::create($values);
-  }
-  */
-
-
-  /**
-  * view
-  * to our thumbwhere_like schema but then also go through the EntityAPIController
-  * function.
-  *
-  * @param $type
-  *   The machine-readable type of the thumbwhere_like.
-  *
-  * @return
-  *   A thumbwhere_like object with all default fields initialized.
-  */
-  /*
-  public function view($entities, $view_mode = 'full', $langcode = NULL, $page = NULL) {
-
-
-
-    $view = parent::view($entities, $view_mode, $langcode, $page);
-
-    return $view;
-  }
-  */
-
-
-
-
-  /**
-  * query - Builds and executes the query for loading.
-  *
-  * @param $ids
-  *   Array of ids
-  *
-  * @param $conditions
-  *
-  *
-  *
-  * @return
-  *   A thumbwhere_like object with all default fields initialized.
-  */
-  /*
-  public function load($ids = array(), $conditions = array()) {
-
-
-
-    $result = parent::load($ids, $conditions);
-
-    //$result[1]->token = "my token";
-
-    return $result;
-  }
-  */
-
-  /**
-  * Invoke
-  *
-  * @param $ids
-  *   Array of ids
-  *
-  * @param $transaction
-  *   If not null then the transaction this is taking part in
-  *
-  * @return
-  *   A thumbwhere_like object with all default fields initialized.
-  */
-  /*
-  public function invoke($hook, $entity) {
-
-
-
-    parent::invoke($hook, $entity);
-
-  }
-  */
-
-
-  /**
-  * Delete a thumbwhere_like.
-  *
-  * @param $ids
-  *   Array of ids
-  *
-  * @param $transaction
-  *   If not null then the transaction this is taking part in
-  *
-  * @return
-  *   A thumbwhere_like object with all default fields initialized.
-  */
-  /*
-  public function delete($ids, DatabaseTransaction $transaction = NULL) {
-
-
-
-    parent::delete($ids, $transaction);
-
-  }
-  */
-
-
-  /**
-  * Save a thumbwhere_like.
-  *
-  * @param $thumbwhere_like
-  *   The thumbwhere_like being saved
-  *
-  * @param $transaction
-  *   If not null then the transaction this is taking part in
-  *
-  * @return
-  *   A thumbwhere_like object with all default fields initialized.
-  */
-  /*
-  public function save($thumbwhere_like, DatabaseTransaction $transaction = NULL) {
-
-
-
-    return parent::save($thumbwhere_like, $transaction);
-  }
-  */
-
-
-  /**
-  * resetCache - Called when the cache is
-  *
-  * @param $ids
-  *   Array of ids
-  *
-  * @return
-  *   void
-  */
-  /*
-  public function resetCache(array $ids = NULL) {
-
-
-
-    parent::resetCache($ids);
-  }
-  */
-
-
-  /**
-  * query - Builds and executes the query for loading.
-  *
-  * @param $ids
-  *   Array of ids
-  *
-  * @param $conditions
-  *
-  * @param $revision_id
-  *
-  *
-  * @return
-  *   A thumbwhere_like object with all default fields initialized.
-  */
-  /*
-  public function query($ids, $conditions, $revision_id = FALSE) {
-
-
-
-    $result= parent::query($ids, $conditions, $revision_id);
-
-    return $result;
-  }
-  */
-
-
-  /**
-   * Overriding the buldLike function to add entity specific fields
-   */
-  /*
-  public function buildLike($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
-
-    $content = parent::buildLike($entity, $view_mode, $langcode, $content);
-
-    $content['thumbwhere_like_sample_data'] =  array(
-      '#markup' => theme('thumbwhere_like_sample_data', array('thumbwhere_like_sample_data' => check_plain($entity->data['sample_data']), 'thumbwhere_like' => $entity)),
-    );
-
-    return $content;
-  }*/
 }
-
-
-/**
- * Implements hook_field_storage_load().
- *
- * Load field from storage
- *
- * @todo This needs to be improved
- */
-/*
-function thumbwhere_like_field_storage_load($entity_type, $entities, $age, $fields, $options) {
-
-
-}
-*/
 
 
 
@@ -611,54 +303,89 @@ function thumbwhere_like_entity_presave($entity, $entity_type) {
 
   // We only look after what we want...
   if ($entity_type == 'thumbwhere_like')  {
+  	
+  	
+  	
+ 	/////////////////////////////////////////////////////
+    //
+    // Should we not propagate this to ThumbWhere? 
+    //
+    if (isset($entity->do_not_propagate)) {
+      if ($entity->do_not_propagate) {
+        if (twCanDebug()) {
+          if ($entity->is_new) {
+            debug("DO NOT PROPAGATE 'like' presave *CREATE*");
+          }
+          else {
+            debug("DO NOT PROPAGATE 'like' presave *UPDATE*");
+          }
+        }
 
-    // If this is new
-    if ($entity->is_new) {
+        // To cause an infinite loop of updates, comment out this line.
+        return;
+      }
+      else if (twCanDebug()) {
+        debug("OK PROAOGATE 'like' presave to ThumbWhere Server");
+      }
+    }
+    else if (twCanDebug()) {
+      debug("DO NOT PROPAGATE IS NOT SET");
+    }
+    //
+    //
+    ////////////////////////////////////////////////////////  	
+
   
-      // .. then we create a new thumbwhere_like entity...
-      // .. then we create a new thumbwhere_Like entity...
+    // .. then we create a new thumbwhere_like entity...
       // Instantiate the ThumbWhereContent class
 
-      $twContentAPI = new ThumbWhereAPIContent();
+    $twContentAPI = new ThumbWhereAPIContent();
 
-      //if (twCanDebug()) debug($twContentAPI);
+    //if (twCanDebug()) debug($twContentAPI);
 
-      //if (twCanDebug()) debug($entity);
+    //if (twCanDebug()) debug($entity);
+
+    //
+    // Collate and validate our fields
+    //
+
+    $fields = array();
+    // Compulsory so..
+    if (empty($entity->fk_actor)) {
+      throw new Exception('actor is compulsory.');
+    }
+    else {
+      $fields['actor'] = $entity->fk_actor;
+    }
+    // Compulsory so..
+    if (empty($entity->fk_thing)) {
+      throw new Exception('thing is compulsory.');
+    }
+    else {
+      $fields['thing'] = $entity->fk_thing;
+    }
+
+    // Nullable so we only pass it through to create_like if we have it..
+    if (!empty($entity->fk_place)) {
+      $fields['place'] = $entity->fk_place;
+    }
+    // Compulsory so..
+    if (empty($entity->documentation)) {
+      throw new Exception('documentation is compulsory.');
+    }
+    else {
+      $fields['documentation'] = $entity->documentation;
+    }
+    
+    //
+    // If this like entity is new....
+    //
+    
+    if ($entity->is_new) {
+                
 
       //
-      // Collate and validate our fields
-      //
-
-      $fields = array();
-      // Compulsory so..
-      if (empty($entity->fk_actor)) {
-        throw new Exception('actor is compulsory.');
-      }
-      else {
-        $fields['actor'] = $entity->fk_actor;
-      }
-      // Compulsory so..
-      if (empty($entity->fk_thing)) {
-        throw new Exception('thing is compulsory.');
-      }
-      else {
-        $fields['thing'] = $entity->fk_thing;
-      }
-
-      // Nullable so we only pass it through to create_like if we have it..
-      if (!empty($entity->fk_place)) {
-        $fields['place'] = $entity->fk_place;
-      }
-      // Compulsory so..
-      if (empty($entity->documentation)) {
-        throw new Exception('documentation is compulsory.');
-      }
-      else {
-        $fields['documentation'] = $entity->documentation;
-      }
-
-      //
-      // Now create the Entity in ThumbWhere
+      // ... then we create the like entity in ThumbWhere
       //
 
       $like = $twContentAPI->create_like($context = array(
@@ -680,8 +407,20 @@ function thumbwhere_like_entity_presave($entity, $entity_type) {
     }
     else
     {
-        // .. otherwise we calculate the changes and ship them off to thumbwhere
+          	
+
+      //
+      // .. otherwise we update the like entity in ThumbWhere
+      //
+
+      $like = $twContentAPI->update_like($id=$entity->pk_like,$context = array(
+                  'key' => variable_get('thumbwhere_api_key')
+          ), $fields);
+            
+        
     }
+          	
+    
   }
 }
 

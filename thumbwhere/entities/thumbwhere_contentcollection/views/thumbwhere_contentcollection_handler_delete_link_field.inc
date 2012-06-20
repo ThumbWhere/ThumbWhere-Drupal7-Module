@@ -19,6 +19,6 @@ class thumbwhere_contentcollection_handler_delete_link_field extends thumbwhere_
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_contentcollection_id = $values->{$this->aliases['pk_contentcollection']};
 
-    return l($text, 'admin/content/thumbwhere_contentcollections/thumbwhere_contentcollection/' . $pk_contentcollection . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_contentcollections/thumbwhere_contentcollection/' . $pk_contentcollection . '/delete');
   }
 }

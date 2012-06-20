@@ -19,6 +19,6 @@ class thumbwhere_identity_handler_delete_link_field extends thumbwhere_identity_
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_identity_id = $values->{$this->aliases['pk_identity']};
 
-    return l($text, 'admin/content/thumbwhere_identitys/thumbwhere_identity/' . $pk_identity . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_identitys/thumbwhere_identity/' . $pk_identity . '/delete');
   }
 }

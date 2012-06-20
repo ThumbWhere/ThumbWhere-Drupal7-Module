@@ -29,6 +29,6 @@ class thumbwhere_contentcollectionitem_handler_edit_link_field extends thumbwher
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $thumbwhere_contentcollectionitem_id = $values->{$this->aliases['pk_contentcollectionitem']};
 
-    return l($text, 'admin/content/thumbwhere_contentcollectionitems/thumbwhere_contentcollectionitem/' . $thumbwhere_contentcollectionitem_id . '/edit');
+    return l($text, 'admin/thumbwhere/thumbwhere_contentcollectionitems/thumbwhere_contentcollectionitem/' . $thumbwhere_contentcollectionitem_id . '/edit');
   }
 }

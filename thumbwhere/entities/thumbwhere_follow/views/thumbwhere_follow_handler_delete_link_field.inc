@@ -19,6 +19,6 @@ class thumbwhere_follow_handler_delete_link_field extends thumbwhere_follow_hand
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_follow_id = $values->{$this->aliases['pk_follow']};
 
-    return l($text, 'admin/content/thumbwhere_follows/thumbwhere_follow/' . $pk_follow . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_follows/thumbwhere_follow/' . $pk_follow . '/delete');
   }
 }

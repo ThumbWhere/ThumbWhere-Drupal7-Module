@@ -19,6 +19,6 @@ class thumbwhere_awardedtrophy_handler_delete_link_field extends thumbwhere_awar
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_awardedtrophy_id = $values->{$this->aliases['pk_awardedtrophy']};
 
-    return l($text, 'admin/content/thumbwhere_awardedtrophys/thumbwhere_awardedtrophy/' . $pk_awardedtrophy . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_awardedtrophys/thumbwhere_awardedtrophy/' . $pk_awardedtrophy . '/delete');
   }
 }

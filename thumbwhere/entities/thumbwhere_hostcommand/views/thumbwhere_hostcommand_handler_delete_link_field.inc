@@ -19,6 +19,6 @@ class thumbwhere_hostcommand_handler_delete_link_field extends thumbwhere_hostco
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_hostcommand_id = $values->{$this->aliases['pk_hostcommand']};
 
-    return l($text, 'admin/content/thumbwhere_hostcommands/thumbwhere_hostcommand/' . $pk_hostcommand . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_hostcommands/thumbwhere_hostcommand/' . $pk_hostcommand . '/delete');
   }
 }

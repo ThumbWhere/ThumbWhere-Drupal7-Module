@@ -26,7 +26,7 @@ class thumbwhere_follow_handler_thumbwhere_follow_operations_field extends views
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_follow', 'admin/content/thumbwhere_follows/thumbwhere_follow', array($this->get_value($values, 'pk_follow')));
+    $links = menu_contextual_links('thumbwhere_follow', 'admin/thumbwhere/thumbwhere_follows/thumbwhere_follow', array($this->get_value($values, 'pk_follow')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

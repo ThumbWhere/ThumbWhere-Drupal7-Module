@@ -19,6 +19,6 @@ class thumbwhere_trackmetadata_handler_delete_link_field extends thumbwhere_trac
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_trackmetadata_id = $values->{$this->aliases['pk_trackmetadata']};
 
-    return l($text, 'admin/content/thumbwhere_trackmetadatas/thumbwhere_trackmetadata/' . $pk_trackmetadata . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_trackmetadatas/thumbwhere_trackmetadata/' . $pk_trackmetadata . '/delete');
   }
 }

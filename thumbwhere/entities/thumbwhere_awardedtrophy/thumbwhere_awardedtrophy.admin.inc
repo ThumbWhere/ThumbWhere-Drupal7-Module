@@ -42,7 +42,7 @@ function _thumbwhere_handle_awarded_trophy_notify_xml($notification) {
   //
 
   if (!isset($notification->attributes()->key)) {
-    drupal_add_http_header('Status', '501 unable to fulfull request..');
+    drupal_add_http_header('Status', '412 unable to fulfull request..');
     $err = 'We were expecting a \'key\', attribute on the \'awarded_trophy\', element.';
     print($err);
     watchdog('thumbwhere_awardedtrophy', $err ,array(), WATCHDOG_ERROR);
@@ -57,6 +57,112 @@ function _thumbwhere_handle_awarded_trophy_notify_xml($notification) {
 
   switch($op)
   {
+  
+  
+      case 'create':
+      {
+        //
+        // What resource are we creating?
+        //
+      
+        //
+        // Get the id
+        //
+		
+        if (!isset($notification->attributes()->id)) {
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
+          $err = 'We were expecting an \'id\', attribute on the \'awarded_trophy\', element when we are performing an \'update\' notification..';
+          print($err);
+          watchdog('thumbwhere_awardedtrophy', $err ,array(), WATCHDOG_ERROR);
+          exit(0);
+        }
+
+        $id = intval($notification->attributes()->id);
+		
+
+        if (twCanDebug()) debug('id');
+        if (twCanDebug()) debug($id);
+
+      
+        //
+        // Get the fields
+        //
+          
+        $entities = entity_load('thumbwhere_awardedtrophy', array($id));
+
+        if (twCanDebug()) debug('$entities');
+        if (twCanDebug()) debug($entities);
+
+        if (count($entities) != 0) {
+          //drupal_add_http_header('Status', '409 Resource already exists.');
+          $err = '\'awarded_trophy\' resource already exists with an id of \'' . $id . '\'.';
+           //print($err);
+          watchdog('thumbwhere_awardedtrophy', $err ,array(), WATCHDOG_ERROR);
+          //exit(0);	
+          	
+		drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<awarded_trophy op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</awarded_trophy>');
+        print('</response>');
+        exit(0);          	
+          
+        }
+
+        // Getting a reference to the entity we asked for
+        $entityfields = array();
+
+        //
+        // We are only updating what has been passed through.
+        // No test for missing values.
+        // TODO: Validate incoming values.
+        //
+
+
+        $entityfields['pk_awardedtrophy'] = $id;	
+
+        if (isset($notification->trophy)) {
+          $entityfields['fk_trophy'] = intval($notification->trophy);
+        }
+
+        if (isset($notification->actor)) {
+          $entityfields['fk_actor'] = intval($notification->actor);
+        }
+
+        if (isset($notification->thing)) {
+          $entityfields['fk_thing'] = intval($notification->thing);
+        }
+
+        if (isset($notification->documentation)) {
+          $entityfields['documentation'] = (string)($notification->documentation);
+        }
+
+        if (!isset($notification->attributes()->key)) {
+          if (twCanDebug()) debug('$entities');
+          if (twCanDebug()) debug($entities);
+        }
+
+        // We are being notified, so we do not want to ship this out again as a notification...
+        // Finally write the entity.
+        $entity = entity_create('thumbwhere_awardedtrophy', $entityfields);
+        $entity->do_not_propagate = TRUE;
+        $entity->save();
+
+        //
+        // Send the final response
+        //
+
+        drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<awarded_trophy op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</awarded_trophy>');
+        print('</response>');
+        exit(0);
+      }
+  
+  
     case 'update':
       {
         //
@@ -68,7 +174,7 @@ function _thumbwhere_handle_awarded_trophy_notify_xml($notification) {
         //
 		
         if (!isset($notification->attributes()->id)) {
-          drupal_add_http_header('Status', '501 unable to fulfull request.');
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
           $err = 'We were expecting an \'id\', attribute on the \'awarded_trophy\', element when we are performing an \'update\' notification..';
           print($err);
           watchdog('thumbwhere_awardedtrophy', $err ,array(), WATCHDOG_ERROR);
@@ -92,10 +198,10 @@ function _thumbwhere_handle_awarded_trophy_notify_xml($notification) {
         if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
-          drupal_add_http_header('Status', '404 No such resource exists.');
+          drupal_add_http_header('Status', '409 No such resource exists.');
           print('No such \'awarded_trophy\' resource exists with an id of \'' . $id . '\'.');
-	    		watchdog('thumbwhere_awardedtrophy', 'No such \'awarded_trophy\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
-exit(0);
+          watchdog('thumbwhere_awardedtrophy', 'No such \'awarded_trophy\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
+          exit(0);
         }
 
         // Getting a reference to the entity we asked for
@@ -129,6 +235,9 @@ exit(0);
           if (twCanDebug()) debug($entities);
         }
 
+        // We are being notified, so we do not want to ship this out again as a notification...
+        $entity->do_not_propagate = TRUE;
+
         // Finally write the entity.
         entity_save('thumbwhere_awardedtrophy', $entity);
 
@@ -144,11 +253,13 @@ exit(0);
         print('</response>');
         exit(0);
       }
+      
+      
 
     default:
       {
         drupal_add_http_header('Status', '501 Unable to fulfull request..');
-        print('We were expecting a \'key\', attribute on the \'awarded_trophy\', element.');
+        print('We don\'t handle the \'' . $op . '\', notification operation on the \'awarded_trophy\', element.');
         exit(0);
 
       }
@@ -338,7 +449,7 @@ class ThumbWhereAwardedTrophyUIController extends EntityDefaultUIController {
     $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
 
     $items[$this->path] = array(
-      'title' => 'ThumbWhereAwardedTrophys',
+      'title' => 'AwardedTrophy',
       'description' => 'Add edit and update thumbwhere_awardedtrophys.',
       'page callback' => 'system_admin_menu_block_page',
       'access arguments' => array('access administration pages'),
@@ -351,8 +462,8 @@ class ThumbWhereAwardedTrophyUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a thumbwhere_awardedtrophy',
-      'description' => 'Add a new thumbwhere_awardedtrophy',
+      'title' => 'Add a AwardedTrophy',
+      'description' => 'Add a new AwardedTrophy',
       'page callback'  => 'thumbwhere_awardedtrophy_add_page',
       'access callback'  => 'thumbwhere_awardedtrophy_access',
       'access arguments' => array('edit'),
@@ -559,7 +670,7 @@ function thumbwhere_awardedtrophy_edit_form($form, &$form_state, $thumbwhere_awa
     $form['actions']['delete'] = array(
       '#type' => 'submit',
       '#value' => t('Delete thumbwhere_awardedtrophy'),
-      '#suffix' => l(t('Cancel'), 'admin/content/thumbwhere_awardedtrophys'),
+      '#suffix' => l(t('Cancel'), 'admin/thumbwhere/thumbwhere_awardedtrophys'),
       '#submit' => $submit + array('thumbwhere_awardedtrophy_form_submit_delete'),
       '#weight' => 45,
     );
@@ -671,7 +782,7 @@ function thumbwhere_awardedtrophy_edit_form_submit(&$form, &$form_state) {
   $thumbwhere_awardedtrophy->changed = time();
 
   $thumbwhere_awardedtrophy->save();
-  $form_state['redirect'] = 'admin/content/thumbwhere_awardedtrophys';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_awardedtrophys';
 }
 
 /**
@@ -680,7 +791,7 @@ function thumbwhere_awardedtrophy_edit_form_submit(&$form, &$form_state) {
  * @todo Remove hard-coded path
  */
 function thumbwhere_awardedtrophy_form_submit_delete(&$form, &$form_state) {
-  $form_state['redirect'] = 'admin/content/thumbwhere_awardedtrophys/thumbwhere_awardedtrophy/' . $form_state['thumbwhere_awardedtrophy']->pk_awardedtrophy . '/delete';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_awardedtrophys/thumbwhere_awardedtrophy/' . $form_state['thumbwhere_awardedtrophy']->pk_awardedtrophy . '/delete';
 }
 
 
@@ -702,7 +813,7 @@ function thumbwhere_awardedtrophy_delete_form($form, &$form_state, $thumbwhere_a
 
   $form = confirm_form($form,
     t('Are you sure you want to delete thumbwhere_awardedtrophy %name?', array('%name' => $thumbwhere_awardedtrophy->pk_awardedtrophy)),
-    'admin/content/thumbwhere_awardedtrophys/thumbwhere_awardedtrophy',
+    'admin/thumbwhere/thumbwhere_awardedtrophys/thumbwhere_awardedtrophy',
     '<p>' . t('This action cannot be undone.') . '</p>',
     t('Delete'),
     t('Cancel'),
@@ -723,7 +834,7 @@ function thumbwhere_awardedtrophy_delete_form_submit($form, &$form_state) {
   drupal_set_message(t('The thumbwhere_awardedtrophy %name has been deleted.', array('%name' => $thumbwhere_awardedtrophy->pk_awardedtrophy)));
   watchdog('thumbwhere_awardedtrophy', 'Deleted thumbwhere_awardedtrophy %name.', array('%name' => $thumbwhere_awardedtrophy->pk_awardedtrophy));
 
-  $form_state['redirect'] = 'admin/content/thumbwhere_awardedtrophys';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_awardedtrophys';
 }
 
 
@@ -782,7 +893,7 @@ function thumbwhere_awardedtrophy_set_breadcrumb() {
     l(t('Home'), '<front>'),
     l(t('Administration'), 'admin'),
     l(t('AwardedTrophy'), 'admin/content'),
-    l(t('ThumbWhereAwardedTrophys'), 'admin/content/thumbwhere_awardedtrophys'),
+    l(t('AwardedTrophy'), 'admin/thumbwhere/thumbwhere_awardedtrophys'),
   );
 
   drupal_set_breadcrumb($breadcrumb);

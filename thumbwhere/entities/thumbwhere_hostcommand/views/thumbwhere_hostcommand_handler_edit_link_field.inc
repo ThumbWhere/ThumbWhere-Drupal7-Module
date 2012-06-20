@@ -29,6 +29,6 @@ class thumbwhere_hostcommand_handler_edit_link_field extends thumbwhere_hostcomm
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $thumbwhere_hostcommand_id = $values->{$this->aliases['pk_hostcommand']};
 
-    return l($text, 'admin/content/thumbwhere_hostcommands/thumbwhere_hostcommand/' . $thumbwhere_hostcommand_id . '/edit');
+    return l($text, 'admin/thumbwhere/thumbwhere_hostcommands/thumbwhere_hostcommand/' . $thumbwhere_hostcommand_id . '/edit');
   }
 }

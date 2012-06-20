@@ -42,7 +42,7 @@ function _thumbwhere_handle_consumer_notify_xml($notification) {
   //
 
   if (!isset($notification->attributes()->key)) {
-    drupal_add_http_header('Status', '501 unable to fulfull request..');
+    drupal_add_http_header('Status', '412 unable to fulfull request..');
     $err = 'We were expecting a \'key\', attribute on the \'consumer\', element.';
     print($err);
     watchdog('thumbwhere_consumer', $err ,array(), WATCHDOG_ERROR);
@@ -57,6 +57,108 @@ function _thumbwhere_handle_consumer_notify_xml($notification) {
 
   switch($op)
   {
+  
+  
+      case 'create':
+      {
+        //
+        // What resource are we creating?
+        //
+      
+        //
+        // Get the id
+        //
+		
+        if (!isset($notification->attributes()->id)) {
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
+          $err = 'We were expecting an \'id\', attribute on the \'consumer\', element when we are performing an \'update\' notification..';
+          print($err);
+          watchdog('thumbwhere_consumer', $err ,array(), WATCHDOG_ERROR);
+          exit(0);
+        }
+
+        $id = intval($notification->attributes()->id);
+		
+
+        if (twCanDebug()) debug('id');
+        if (twCanDebug()) debug($id);
+
+      
+        //
+        // Get the fields
+        //
+          
+        $entities = entity_load('thumbwhere_consumer', array($id));
+
+        if (twCanDebug()) debug('$entities');
+        if (twCanDebug()) debug($entities);
+
+        if (count($entities) != 0) {
+          //drupal_add_http_header('Status', '409 Resource already exists.');
+          $err = '\'consumer\' resource already exists with an id of \'' . $id . '\'.';
+           //print($err);
+          watchdog('thumbwhere_consumer', $err ,array(), WATCHDOG_ERROR);
+          //exit(0);	
+          	
+		drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<consumer op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</consumer>');
+        print('</response>');
+        exit(0);          	
+          
+        }
+
+        // Getting a reference to the entity we asked for
+        $entityfields = array();
+
+        //
+        // We are only updating what has been passed through.
+        // No test for missing values.
+        // TODO: Validate incoming values.
+        //
+
+
+        $entityfields['pk_consumer'] = $id;	
+
+        if (isset($notification->place)) {
+          $entityfields['fk_place'] = intval($notification->place);
+        }
+
+        if (isset($notification->reputation)) {
+          $entityfields['fk_reputation'] = intval($notification->reputation);
+        }
+
+        if (isset($notification->name)) {
+          $entityfields['name'] = (string)($notification->name);
+        }
+
+        if (!isset($notification->attributes()->key)) {
+          if (twCanDebug()) debug('$entities');
+          if (twCanDebug()) debug($entities);
+        }
+
+        // We are being notified, so we do not want to ship this out again as a notification...
+        // Finally write the entity.
+        $entity = entity_create('thumbwhere_consumer', $entityfields);
+        $entity->do_not_propagate = TRUE;
+        $entity->save();
+
+        //
+        // Send the final response
+        //
+
+        drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<consumer op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</consumer>');
+        print('</response>');
+        exit(0);
+      }
+  
+  
     case 'update':
       {
         //
@@ -68,7 +170,7 @@ function _thumbwhere_handle_consumer_notify_xml($notification) {
         //
 		
         if (!isset($notification->attributes()->id)) {
-          drupal_add_http_header('Status', '501 unable to fulfull request.');
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
           $err = 'We were expecting an \'id\', attribute on the \'consumer\', element when we are performing an \'update\' notification..';
           print($err);
           watchdog('thumbwhere_consumer', $err ,array(), WATCHDOG_ERROR);
@@ -92,10 +194,10 @@ function _thumbwhere_handle_consumer_notify_xml($notification) {
         if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
-          drupal_add_http_header('Status', '404 No such resource exists.');
+          drupal_add_http_header('Status', '409 No such resource exists.');
           print('No such \'consumer\' resource exists with an id of \'' . $id . '\'.');
-	    		watchdog('thumbwhere_consumer', 'No such \'consumer\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
-exit(0);
+          watchdog('thumbwhere_consumer', 'No such \'consumer\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
+          exit(0);
         }
 
         // Getting a reference to the entity we asked for
@@ -125,6 +227,9 @@ exit(0);
           if (twCanDebug()) debug($entities);
         }
 
+        // We are being notified, so we do not want to ship this out again as a notification...
+        $entity->do_not_propagate = TRUE;
+
         // Finally write the entity.
         entity_save('thumbwhere_consumer', $entity);
 
@@ -140,11 +245,13 @@ exit(0);
         print('</response>');
         exit(0);
       }
+      
+      
 
     default:
       {
         drupal_add_http_header('Status', '501 Unable to fulfull request..');
-        print('We were expecting a \'key\', attribute on the \'consumer\', element.');
+        print('We don\'t handle the \'' . $op . '\', notification operation on the \'consumer\', element.');
         exit(0);
 
       }
@@ -334,7 +441,7 @@ class ThumbWhereConsumerUIController extends EntityDefaultUIController {
     $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
 
     $items[$this->path] = array(
-      'title' => 'ThumbWhereConsumers',
+      'title' => 'Consumer',
       'description' => 'Add edit and update thumbwhere_consumers.',
       'page callback' => 'system_admin_menu_block_page',
       'access arguments' => array('access administration pages'),
@@ -347,8 +454,8 @@ class ThumbWhereConsumerUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a thumbwhere_consumer',
-      'description' => 'Add a new thumbwhere_consumer',
+      'title' => 'Add a Consumer',
+      'description' => 'Add a new Consumer',
       'page callback'  => 'thumbwhere_consumer_add_page',
       'access callback'  => 'thumbwhere_consumer_access',
       'access arguments' => array('edit'),
@@ -545,7 +652,7 @@ function thumbwhere_consumer_edit_form($form, &$form_state, $thumbwhere_consumer
     $form['actions']['delete'] = array(
       '#type' => 'submit',
       '#value' => t('Delete thumbwhere_consumer'),
-      '#suffix' => l(t('Cancel'), 'admin/content/thumbwhere_consumers'),
+      '#suffix' => l(t('Cancel'), 'admin/thumbwhere/thumbwhere_consumers'),
       '#submit' => $submit + array('thumbwhere_consumer_form_submit_delete'),
       '#weight' => 45,
     );
@@ -636,7 +743,7 @@ function thumbwhere_consumer_edit_form_submit(&$form, &$form_state) {
   $thumbwhere_consumer->changed = time();
 
   $thumbwhere_consumer->save();
-  $form_state['redirect'] = 'admin/content/thumbwhere_consumers';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_consumers';
 }
 
 /**
@@ -645,7 +752,7 @@ function thumbwhere_consumer_edit_form_submit(&$form, &$form_state) {
  * @todo Remove hard-coded path
  */
 function thumbwhere_consumer_form_submit_delete(&$form, &$form_state) {
-  $form_state['redirect'] = 'admin/content/thumbwhere_consumers/thumbwhere_consumer/' . $form_state['thumbwhere_consumer']->pk_consumer . '/delete';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_consumers/thumbwhere_consumer/' . $form_state['thumbwhere_consumer']->pk_consumer . '/delete';
 }
 
 
@@ -667,7 +774,7 @@ function thumbwhere_consumer_delete_form($form, &$form_state, $thumbwhere_consum
 
   $form = confirm_form($form,
     t('Are you sure you want to delete thumbwhere_consumer %name?', array('%name' => $thumbwhere_consumer->name)),
-    'admin/content/thumbwhere_consumers/thumbwhere_consumer',
+    'admin/thumbwhere/thumbwhere_consumers/thumbwhere_consumer',
     '<p>' . t('This action cannot be undone.') . '</p>',
     t('Delete'),
     t('Cancel'),
@@ -688,7 +795,7 @@ function thumbwhere_consumer_delete_form_submit($form, &$form_state) {
   drupal_set_message(t('The thumbwhere_consumer %name has been deleted.', array('%name' => $thumbwhere_consumer->name)));
   watchdog('thumbwhere_consumer', 'Deleted thumbwhere_consumer %name.', array('%name' => $thumbwhere_consumer->name));
 
-  $form_state['redirect'] = 'admin/content/thumbwhere_consumers';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_consumers';
 }
 
 
@@ -747,7 +854,7 @@ function thumbwhere_consumer_set_breadcrumb() {
     l(t('Home'), '<front>'),
     l(t('Administration'), 'admin'),
     l(t('Consumer'), 'admin/content'),
-    l(t('ThumbWhereConsumers'), 'admin/content/thumbwhere_consumers'),
+    l(t('Consumer'), 'admin/thumbwhere/thumbwhere_consumers'),
   );
 
   drupal_set_breadcrumb($breadcrumb);

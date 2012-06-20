@@ -29,6 +29,6 @@ class thumbwhere_contentingest_handler_edit_link_field extends thumbwhere_conten
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $thumbwhere_contentingest_id = $values->{$this->aliases['pk_contentingest']};
 
-    return l($text, 'admin/content/thumbwhere_contentingests/thumbwhere_contentingest/' . $thumbwhere_contentingest_id . '/edit');
+    return l($text, 'admin/thumbwhere/thumbwhere_contentingests/thumbwhere_contentingest/' . $thumbwhere_contentingest_id . '/edit');
   }
 }

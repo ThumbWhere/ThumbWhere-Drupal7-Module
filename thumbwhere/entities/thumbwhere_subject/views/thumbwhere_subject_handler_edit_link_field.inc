@@ -29,6 +29,6 @@ class thumbwhere_subject_handler_edit_link_field extends thumbwhere_subject_hand
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $thumbwhere_subject_id = $values->{$this->aliases['pk_subject']};
 
-    return l($text, 'admin/content/thumbwhere_subjects/thumbwhere_subject/' . $thumbwhere_subject_id . '/edit');
+    return l($text, 'admin/thumbwhere/thumbwhere_subjects/thumbwhere_subject/' . $thumbwhere_subject_id . '/edit');
   }
 }

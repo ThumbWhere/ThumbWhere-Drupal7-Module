@@ -160,6 +160,17 @@ function thumbwhere_modules_installed($modules) {
  */
 function thumbwhere_menu() {
 
+  $items['admin/thumbwhere'] = array(
+      'title' => 'ThumbWhere',
+      'description' => 'Find and manage ThumbWhere entities.',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('node_admin_content'),
+      'access arguments' => array('access content overview'),
+      'weight' => -10,
+      'file' => 'node.admin.inc',
+  );
+
+
   //
   // Config sections
   //

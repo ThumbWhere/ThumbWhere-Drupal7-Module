@@ -26,7 +26,7 @@ class thumbwhere_producer_handler_thumbwhere_producer_operations_field extends v
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_producer', 'admin/content/thumbwhere_producers/thumbwhere_producer', array($this->get_value($values, 'pk_producer')));
+    $links = menu_contextual_links('thumbwhere_producer', 'admin/thumbwhere/thumbwhere_producers/thumbwhere_producer', array($this->get_value($values, 'pk_producer')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

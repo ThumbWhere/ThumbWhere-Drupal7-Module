@@ -26,7 +26,7 @@ class thumbwhere_hostcommand_handler_thumbwhere_hostcommand_operations_field ext
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_hostcommand', 'admin/content/thumbwhere_hostcommands/thumbwhere_hostcommand', array($this->get_value($values, 'pk_hostcommand')));
+    $links = menu_contextual_links('thumbwhere_hostcommand', 'admin/thumbwhere/thumbwhere_hostcommands/thumbwhere_hostcommand', array($this->get_value($values, 'pk_hostcommand')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

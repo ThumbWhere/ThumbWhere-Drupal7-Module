@@ -26,7 +26,7 @@ class thumbwhere_consumer_handler_thumbwhere_consumer_operations_field extends v
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_consumer', 'admin/content/thumbwhere_consumers/thumbwhere_consumer', array($this->get_value($values, 'pk_consumer')));
+    $links = menu_contextual_links('thumbwhere_consumer', 'admin/thumbwhere/thumbwhere_consumers/thumbwhere_consumer', array($this->get_value($values, 'pk_consumer')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

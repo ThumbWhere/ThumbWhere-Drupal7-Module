@@ -26,7 +26,7 @@ class thumbwhere_content_handler_thumbwhere_content_operations_field extends vie
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_content', 'admin/content/thumbwhere_contents/thumbwhere_content', array($this->get_value($values, 'pk_content')));
+    $links = menu_contextual_links('thumbwhere_content', 'admin/thumbwhere/thumbwhere_contents/thumbwhere_content', array($this->get_value($values, 'pk_content')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

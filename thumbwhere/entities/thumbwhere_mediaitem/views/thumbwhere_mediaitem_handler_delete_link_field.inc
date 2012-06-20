@@ -19,6 +19,6 @@ class thumbwhere_mediaitem_handler_delete_link_field extends thumbwhere_mediaite
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_mediaitem_id = $values->{$this->aliases['pk_mediaitem']};
 
-    return l($text, 'admin/content/thumbwhere_mediaitems/thumbwhere_mediaitem/' . $pk_mediaitem . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_mediaitems/thumbwhere_mediaitem/' . $pk_mediaitem . '/delete');
   }
 }

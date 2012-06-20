@@ -29,6 +29,6 @@ class thumbwhere_follow_handler_edit_link_field extends thumbwhere_follow_handle
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $thumbwhere_follow_id = $values->{$this->aliases['pk_follow']};
 
-    return l($text, 'admin/content/thumbwhere_follows/thumbwhere_follow/' . $thumbwhere_follow_id . '/edit');
+    return l($text, 'admin/thumbwhere/thumbwhere_follows/thumbwhere_follow/' . $thumbwhere_follow_id . '/edit');
   }
 }

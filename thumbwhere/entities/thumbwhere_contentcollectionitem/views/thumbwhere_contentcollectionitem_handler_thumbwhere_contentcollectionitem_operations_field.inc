@@ -26,7 +26,7 @@ class thumbwhere_contentcollectionitem_handler_thumbwhere_contentcollectionitem_
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_contentcollectionitem', 'admin/content/thumbwhere_contentcollectionitems/thumbwhere_contentcollectionitem', array($this->get_value($values, 'pk_contentcollectionitem')));
+    $links = menu_contextual_links('thumbwhere_contentcollectionitem', 'admin/thumbwhere/thumbwhere_contentcollectionitems/thumbwhere_contentcollectionitem', array($this->get_value($values, 'pk_contentcollectionitem')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

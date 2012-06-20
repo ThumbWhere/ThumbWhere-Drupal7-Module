@@ -19,6 +19,6 @@ class thumbwhere_metadata_handler_delete_link_field extends thumbwhere_metadata_
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_metadata_id = $values->{$this->aliases['pk_metadata']};
 
-    return l($text, 'admin/content/thumbwhere_metadatas/thumbwhere_metadata/' . $pk_metadata . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_metadatas/thumbwhere_metadata/' . $pk_metadata . '/delete');
   }
 }

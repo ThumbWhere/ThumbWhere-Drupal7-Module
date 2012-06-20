@@ -19,6 +19,6 @@ class thumbwhere_actor_handler_delete_link_field extends thumbwhere_actor_handle
     $text = !empty($this->options['text']) ? $this->options['text'] : t('delete');
     $thumbwhere_actor_id = $values->{$this->aliases['pk_actor']};
 
-    return l($text, 'admin/content/thumbwhere_actors/thumbwhere_actor/' . $pk_actor . '/delete');
+    return l($text, 'admin/thumbwhere/thumbwhere_actors/thumbwhere_actor/' . $pk_actor . '/delete');
   }
 }

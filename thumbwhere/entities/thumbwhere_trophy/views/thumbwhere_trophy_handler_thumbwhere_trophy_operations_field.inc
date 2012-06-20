@@ -26,7 +26,7 @@ class thumbwhere_trophy_handler_thumbwhere_trophy_operations_field extends views
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_trophy', 'admin/content/thumbwhere_trophys/thumbwhere_trophy', array($this->get_value($values, 'pk_trophy')));
+    $links = menu_contextual_links('thumbwhere_trophy', 'admin/thumbwhere/thumbwhere_trophys/thumbwhere_trophy', array($this->get_value($values, 'pk_trophy')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

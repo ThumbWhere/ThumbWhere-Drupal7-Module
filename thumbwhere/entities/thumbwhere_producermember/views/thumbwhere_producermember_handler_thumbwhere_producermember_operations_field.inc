@@ -26,7 +26,7 @@ class thumbwhere_producermember_handler_thumbwhere_producermember_operations_fie
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_producermember', 'admin/content/thumbwhere_producermembers/thumbwhere_producermember', array($this->get_value($values, 'pk_producermember')));
+    $links = menu_contextual_links('thumbwhere_producermember', 'admin/thumbwhere/thumbwhere_producermembers/thumbwhere_producermember', array($this->get_value($values, 'pk_producermember')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

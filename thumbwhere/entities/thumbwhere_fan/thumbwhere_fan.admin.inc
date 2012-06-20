@@ -42,7 +42,7 @@ function _thumbwhere_handle_fan_notify_xml($notification) {
   //
 
   if (!isset($notification->attributes()->key)) {
-    drupal_add_http_header('Status', '501 unable to fulfull request..');
+    drupal_add_http_header('Status', '412 unable to fulfull request..');
     $err = 'We were expecting a \'key\', attribute on the \'fan\', element.';
     print($err);
     watchdog('thumbwhere_fan', $err ,array(), WATCHDOG_ERROR);
@@ -57,6 +57,112 @@ function _thumbwhere_handle_fan_notify_xml($notification) {
 
   switch($op)
   {
+  
+  
+      case 'create':
+      {
+        //
+        // What resource are we creating?
+        //
+      
+        //
+        // Get the id
+        //
+		
+        if (!isset($notification->attributes()->id)) {
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
+          $err = 'We were expecting an \'id\', attribute on the \'fan\', element when we are performing an \'update\' notification..';
+          print($err);
+          watchdog('thumbwhere_fan', $err ,array(), WATCHDOG_ERROR);
+          exit(0);
+        }
+
+        $id = intval($notification->attributes()->id);
+		
+
+        if (twCanDebug()) debug('id');
+        if (twCanDebug()) debug($id);
+
+      
+        //
+        // Get the fields
+        //
+          
+        $entities = entity_load('thumbwhere_fan', array($id));
+
+        if (twCanDebug()) debug('$entities');
+        if (twCanDebug()) debug($entities);
+
+        if (count($entities) != 0) {
+          //drupal_add_http_header('Status', '409 Resource already exists.');
+          $err = '\'fan\' resource already exists with an id of \'' . $id . '\'.';
+           //print($err);
+          watchdog('thumbwhere_fan', $err ,array(), WATCHDOG_ERROR);
+          //exit(0);	
+          	
+		drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<fan op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</fan>');
+        print('</response>');
+        exit(0);          	
+          
+        }
+
+        // Getting a reference to the entity we asked for
+        $entityfields = array();
+
+        //
+        // We are only updating what has been passed through.
+        // No test for missing values.
+        // TODO: Validate incoming values.
+        //
+
+
+        $entityfields['pk_fan'] = $id;	
+
+        if (isset($notification->actor)) {
+          $entityfields['fk_actor'] = intval($notification->actor);
+        }
+
+        if (isset($notification->thing)) {
+          $entityfields['fk_thing'] = intval($notification->thing);
+        }
+
+        if (isset($notification->place)) {
+          $entityfields['fk_place'] = intval($notification->place);
+        }
+
+        if (isset($notification->documentation)) {
+          $entityfields['documentation'] = (string)($notification->documentation);
+        }
+
+        if (!isset($notification->attributes()->key)) {
+          if (twCanDebug()) debug('$entities');
+          if (twCanDebug()) debug($entities);
+        }
+
+        // We are being notified, so we do not want to ship this out again as a notification...
+        // Finally write the entity.
+        $entity = entity_create('thumbwhere_fan', $entityfields);
+        $entity->do_not_propagate = TRUE;
+        $entity->save();
+
+        //
+        // Send the final response
+        //
+
+        drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<fan op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</fan>');
+        print('</response>');
+        exit(0);
+      }
+  
+  
     case 'update':
       {
         //
@@ -68,7 +174,7 @@ function _thumbwhere_handle_fan_notify_xml($notification) {
         //
 		
         if (!isset($notification->attributes()->id)) {
-          drupal_add_http_header('Status', '501 unable to fulfull request.');
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
           $err = 'We were expecting an \'id\', attribute on the \'fan\', element when we are performing an \'update\' notification..';
           print($err);
           watchdog('thumbwhere_fan', $err ,array(), WATCHDOG_ERROR);
@@ -92,10 +198,10 @@ function _thumbwhere_handle_fan_notify_xml($notification) {
         if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
-          drupal_add_http_header('Status', '404 No such resource exists.');
+          drupal_add_http_header('Status', '409 No such resource exists.');
           print('No such \'fan\' resource exists with an id of \'' . $id . '\'.');
-	    		watchdog('thumbwhere_fan', 'No such \'fan\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
-exit(0);
+          watchdog('thumbwhere_fan', 'No such \'fan\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
+          exit(0);
         }
 
         // Getting a reference to the entity we asked for
@@ -129,6 +235,9 @@ exit(0);
           if (twCanDebug()) debug($entities);
         }
 
+        // We are being notified, so we do not want to ship this out again as a notification...
+        $entity->do_not_propagate = TRUE;
+
         // Finally write the entity.
         entity_save('thumbwhere_fan', $entity);
 
@@ -144,11 +253,13 @@ exit(0);
         print('</response>');
         exit(0);
       }
+      
+      
 
     default:
       {
         drupal_add_http_header('Status', '501 Unable to fulfull request..');
-        print('We were expecting a \'key\', attribute on the \'fan\', element.');
+        print('We don\'t handle the \'' . $op . '\', notification operation on the \'fan\', element.');
         exit(0);
 
       }
@@ -338,7 +449,7 @@ class ThumbWhereFanUIController extends EntityDefaultUIController {
     $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
 
     $items[$this->path] = array(
-      'title' => 'ThumbWhereFans',
+      'title' => 'Fan',
       'description' => 'Add edit and update thumbwhere_fans.',
       'page callback' => 'system_admin_menu_block_page',
       'access arguments' => array('access administration pages'),
@@ -351,8 +462,8 @@ class ThumbWhereFanUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a thumbwhere_fan',
-      'description' => 'Add a new thumbwhere_fan',
+      'title' => 'Add a Fan',
+      'description' => 'Add a new Fan',
       'page callback'  => 'thumbwhere_fan_add_page',
       'access callback'  => 'thumbwhere_fan_access',
       'access arguments' => array('edit'),
@@ -559,7 +670,7 @@ function thumbwhere_fan_edit_form($form, &$form_state, $thumbwhere_fan) {
     $form['actions']['delete'] = array(
       '#type' => 'submit',
       '#value' => t('Delete thumbwhere_fan'),
-      '#suffix' => l(t('Cancel'), 'admin/content/thumbwhere_fans'),
+      '#suffix' => l(t('Cancel'), 'admin/thumbwhere/thumbwhere_fans'),
       '#submit' => $submit + array('thumbwhere_fan_form_submit_delete'),
       '#weight' => 45,
     );
@@ -668,7 +779,7 @@ function thumbwhere_fan_edit_form_submit(&$form, &$form_state) {
   $thumbwhere_fan->changed = time();
 
   $thumbwhere_fan->save();
-  $form_state['redirect'] = 'admin/content/thumbwhere_fans';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_fans';
 }
 
 /**
@@ -677,7 +788,7 @@ function thumbwhere_fan_edit_form_submit(&$form, &$form_state) {
  * @todo Remove hard-coded path
  */
 function thumbwhere_fan_form_submit_delete(&$form, &$form_state) {
-  $form_state['redirect'] = 'admin/content/thumbwhere_fans/thumbwhere_fan/' . $form_state['thumbwhere_fan']->pk_fan . '/delete';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_fans/thumbwhere_fan/' . $form_state['thumbwhere_fan']->pk_fan . '/delete';
 }
 
 
@@ -699,7 +810,7 @@ function thumbwhere_fan_delete_form($form, &$form_state, $thumbwhere_fan) {
 
   $form = confirm_form($form,
     t('Are you sure you want to delete thumbwhere_fan %name?', array('%name' => $thumbwhere_fan->pk_fan)),
-    'admin/content/thumbwhere_fans/thumbwhere_fan',
+    'admin/thumbwhere/thumbwhere_fans/thumbwhere_fan',
     '<p>' . t('This action cannot be undone.') . '</p>',
     t('Delete'),
     t('Cancel'),
@@ -720,7 +831,7 @@ function thumbwhere_fan_delete_form_submit($form, &$form_state) {
   drupal_set_message(t('The thumbwhere_fan %name has been deleted.', array('%name' => $thumbwhere_fan->pk_fan)));
   watchdog('thumbwhere_fan', 'Deleted thumbwhere_fan %name.', array('%name' => $thumbwhere_fan->pk_fan));
 
-  $form_state['redirect'] = 'admin/content/thumbwhere_fans';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_fans';
 }
 
 
@@ -779,7 +890,7 @@ function thumbwhere_fan_set_breadcrumb() {
     l(t('Home'), '<front>'),
     l(t('Administration'), 'admin'),
     l(t('Fan'), 'admin/content'),
-    l(t('ThumbWhereFans'), 'admin/content/thumbwhere_fans'),
+    l(t('Fan'), 'admin/thumbwhere/thumbwhere_fans'),
   );
 
   drupal_set_breadcrumb($breadcrumb);

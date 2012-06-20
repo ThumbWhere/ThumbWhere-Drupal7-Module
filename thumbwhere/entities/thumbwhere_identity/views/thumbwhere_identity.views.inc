@@ -61,14 +61,14 @@ function thumbwhere_identity_views_default_views() {
   $view->description = 'A list of all thumbwhere_identitys';
   $view->tag = 'thumbwhere_identitys';
   $view->base_table = 'thumbwhere_identity';
-  $view->human_name = 'ThumbWhereIdentitys';
+  $view->human_name = 'Identity';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'ThumbWhereIdentitys';
+  $handler->display->display_options['title'] = 'Identity';
   $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -595,12 +595,12 @@ function thumbwhere_identity_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'thumbwhere_identitys_admin_page');
-  $handler->display->display_options['path'] = 'admin/content/thumbwhere_identitys/list';
+  $handler->display->display_options['path'] = 'admin/thumbwhere/thumbwhere_identitys/list';
   $handler->display->display_options['menu']['type'] = 'default tab';
   $handler->display->display_options['menu']['title'] = 'List';
   $handler->display->display_options['menu']['weight'] = '-10';
   $handler->display->display_options['tab_options']['type'] = 'tab';
-  $handler->display->display_options['tab_options']['title'] = 'ThumbWhereIdentitys';
+  $handler->display->display_options['tab_options']['title'] = 'Identity';
   $handler->display->display_options['tab_options']['description'] = 'Manage thumbwhere_identitys';
   $handler->display->display_options['tab_options']['weight'] = '0';
   $handler->display->display_options['tab_options']['name'] = 'management';
@@ -613,7 +613,7 @@ function thumbwhere_identity_views_default_views() {
 
   $translatables['thumbwhere_identitys'] = array(
       t('Master'),
-      t('ThumbWhereIdentitys'),
+      t('Identity'),
       t('more'),
       t('Apply'),
       t('Reset'),

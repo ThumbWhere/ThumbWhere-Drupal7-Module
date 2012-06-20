@@ -26,7 +26,7 @@ class thumbwhere_trackmetadata_handler_thumbwhere_trackmetadata_operations_field
 
   function render($values) {
 
-    $links = menu_contextual_links('thumbwhere_trackmetadata', 'admin/content/thumbwhere_trackmetadatas/thumbwhere_trackmetadata', array($this->get_value($values, 'pk_trackmetadata')));
+    $links = menu_contextual_links('thumbwhere_trackmetadata', 'admin/thumbwhere/thumbwhere_trackmetadatas/thumbwhere_trackmetadata', array($this->get_value($values, 'pk_trackmetadata')));
 
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));

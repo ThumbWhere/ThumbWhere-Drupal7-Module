@@ -42,7 +42,7 @@ function _thumbwhere_handle_host_command_notify_xml($notification) {
   //
 
   if (!isset($notification->attributes()->key)) {
-    drupal_add_http_header('Status', '501 unable to fulfull request..');
+    drupal_add_http_header('Status', '412 unable to fulfull request..');
     $err = 'We were expecting a \'key\', attribute on the \'host_command\', element.';
     print($err);
     watchdog('thumbwhere_hostcommand', $err ,array(), WATCHDOG_ERROR);
@@ -57,6 +57,126 @@ function _thumbwhere_handle_host_command_notify_xml($notification) {
 
   switch($op)
   {
+  
+  
+      case 'create':
+      {
+        //
+        // What resource are we creating?
+        //
+      
+        //
+        // Get the id
+        //
+		
+        if (!isset($notification->attributes()->id)) {
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
+          $err = 'We were expecting an \'id\', attribute on the \'host_command\', element when we are performing an \'update\' notification..';
+          print($err);
+          watchdog('thumbwhere_hostcommand', $err ,array(), WATCHDOG_ERROR);
+          exit(0);
+        }
+
+        $id = intval($notification->attributes()->id);
+		
+
+        if (twCanDebug()) debug('id');
+        if (twCanDebug()) debug($id);
+
+      
+        //
+        // Get the fields
+        //
+          
+        $entities = entity_load('thumbwhere_hostcommand', array($id));
+
+        if (twCanDebug()) debug('$entities');
+        if (twCanDebug()) debug($entities);
+
+        if (count($entities) != 0) {
+          //drupal_add_http_header('Status', '409 Resource already exists.');
+          $err = '\'host_command\' resource already exists with an id of \'' . $id . '\'.';
+           //print($err);
+          watchdog('thumbwhere_hostcommand', $err ,array(), WATCHDOG_ERROR);
+          //exit(0);	
+          	
+		drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<host_command op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</host_command>');
+        print('</response>');
+        exit(0);          	
+          
+        }
+
+        // Getting a reference to the entity we asked for
+        $entityfields = array();
+
+        //
+        // We are only updating what has been passed through.
+        // No test for missing values.
+        // TODO: Validate incoming values.
+        //
+
+
+        $entityfields['pk_hostcommand'] = $id;	
+
+        if (isset($notification->host)) {
+          $entityfields['fk_host'] = intval($notification->host);
+        }
+
+        if (isset($notification->hostcommandtemplate)) {
+          $entityfields['fk_hostcommandtemplate'] = intval($notification->hostcommandtemplate);
+        }
+
+        if (isset($notification->command)) {
+
+        }
+
+        if (isset($notification->running)) {
+          if ((string)($notification->running) == 'true') {
+            $entityfields['running'] = '1';
+          }
+          else {
+            $entityfields['running'] = '0';
+          }
+        }
+
+        if (isset($notification->completed)) {
+          if ((string)($notification->completed) == 'true') {
+            $entityfields['completed'] = '1';
+          }
+          else {
+            $entityfields['completed'] = '0';
+          }
+        }
+
+        if (!isset($notification->attributes()->key)) {
+          if (twCanDebug()) debug('$entities');
+          if (twCanDebug()) debug($entities);
+        }
+
+        // We are being notified, so we do not want to ship this out again as a notification...
+        // Finally write the entity.
+        $entity = entity_create('thumbwhere_hostcommand', $entityfields);
+        $entity->do_not_propagate = TRUE;
+        $entity->save();
+
+        //
+        // Send the final response
+        //
+
+        drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<host_command op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</host_command>');
+        print('</response>');
+        exit(0);
+      }
+  
+  
     case 'update':
       {
         //
@@ -68,7 +188,7 @@ function _thumbwhere_handle_host_command_notify_xml($notification) {
         //
 		
         if (!isset($notification->attributes()->id)) {
-          drupal_add_http_header('Status', '501 unable to fulfull request.');
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
           $err = 'We were expecting an \'id\', attribute on the \'host_command\', element when we are performing an \'update\' notification..';
           print($err);
           watchdog('thumbwhere_hostcommand', $err ,array(), WATCHDOG_ERROR);
@@ -92,10 +212,10 @@ function _thumbwhere_handle_host_command_notify_xml($notification) {
         if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
-          drupal_add_http_header('Status', '404 No such resource exists.');
+          drupal_add_http_header('Status', '409 No such resource exists.');
           print('No such \'host_command\' resource exists with an id of \'' . $id . '\'.');
-	    		watchdog('thumbwhere_hostcommand', 'No such \'host_command\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
-exit(0);
+          watchdog('thumbwhere_hostcommand', 'No such \'host_command\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
+          exit(0);
         }
 
         // Getting a reference to the entity we asked for
@@ -143,6 +263,9 @@ exit(0);
           if (twCanDebug()) debug($entities);
         }
 
+        // We are being notified, so we do not want to ship this out again as a notification...
+        $entity->do_not_propagate = TRUE;
+
         // Finally write the entity.
         entity_save('thumbwhere_hostcommand', $entity);
 
@@ -158,11 +281,13 @@ exit(0);
         print('</response>');
         exit(0);
       }
+      
+      
 
     default:
       {
         drupal_add_http_header('Status', '501 Unable to fulfull request..');
-        print('We were expecting a \'key\', attribute on the \'host_command\', element.');
+        print('We don\'t handle the \'' . $op . '\', notification operation on the \'host_command\', element.');
         exit(0);
 
       }
@@ -352,7 +477,7 @@ class ThumbWhereHostCommandUIController extends EntityDefaultUIController {
     $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
 
     $items[$this->path] = array(
-      'title' => 'ThumbWhereHostCommands',
+      'title' => 'HostCommand',
       'description' => 'Add edit and update thumbwhere_hostcommands.',
       'page callback' => 'system_admin_menu_block_page',
       'access arguments' => array('access administration pages'),
@@ -365,8 +490,8 @@ class ThumbWhereHostCommandUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a thumbwhere_hostcommand',
-      'description' => 'Add a new thumbwhere_hostcommand',
+      'title' => 'Add a HostCommand',
+      'description' => 'Add a new HostCommand',
       'page callback'  => 'thumbwhere_hostcommand_add_page',
       'access callback'  => 'thumbwhere_hostcommand_access',
       'access arguments' => array('edit'),
@@ -581,7 +706,7 @@ function thumbwhere_hostcommand_edit_form($form, &$form_state, $thumbwhere_hostc
     $form['actions']['delete'] = array(
       '#type' => 'submit',
       '#value' => t('Delete thumbwhere_hostcommand'),
-      '#suffix' => l(t('Cancel'), 'admin/content/thumbwhere_hostcommands'),
+      '#suffix' => l(t('Cancel'), 'admin/thumbwhere/thumbwhere_hostcommands'),
       '#submit' => $submit + array('thumbwhere_hostcommand_form_submit_delete'),
       '#weight' => 45,
     );
@@ -694,7 +819,7 @@ function thumbwhere_hostcommand_edit_form_submit(&$form, &$form_state) {
   $thumbwhere_hostcommand->changed = time();
 
   $thumbwhere_hostcommand->save();
-  $form_state['redirect'] = 'admin/content/thumbwhere_hostcommands';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_hostcommands';
 }
 
 /**
@@ -703,7 +828,7 @@ function thumbwhere_hostcommand_edit_form_submit(&$form, &$form_state) {
  * @todo Remove hard-coded path
  */
 function thumbwhere_hostcommand_form_submit_delete(&$form, &$form_state) {
-  $form_state['redirect'] = 'admin/content/thumbwhere_hostcommands/thumbwhere_hostcommand/' . $form_state['thumbwhere_hostcommand']->pk_hostcommand . '/delete';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_hostcommands/thumbwhere_hostcommand/' . $form_state['thumbwhere_hostcommand']->pk_hostcommand . '/delete';
 }
 
 
@@ -725,7 +850,7 @@ function thumbwhere_hostcommand_delete_form($form, &$form_state, $thumbwhere_hos
 
   $form = confirm_form($form,
     t('Are you sure you want to delete thumbwhere_hostcommand %name?', array('%name' => $thumbwhere_hostcommand->pk_hostcommand)),
-    'admin/content/thumbwhere_hostcommands/thumbwhere_hostcommand',
+    'admin/thumbwhere/thumbwhere_hostcommands/thumbwhere_hostcommand',
     '<p>' . t('This action cannot be undone.') . '</p>',
     t('Delete'),
     t('Cancel'),
@@ -746,7 +871,7 @@ function thumbwhere_hostcommand_delete_form_submit($form, &$form_state) {
   drupal_set_message(t('The thumbwhere_hostcommand %name has been deleted.', array('%name' => $thumbwhere_hostcommand->pk_hostcommand)));
   watchdog('thumbwhere_hostcommand', 'Deleted thumbwhere_hostcommand %name.', array('%name' => $thumbwhere_hostcommand->pk_hostcommand));
 
-  $form_state['redirect'] = 'admin/content/thumbwhere_hostcommands';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_hostcommands';
 }
 
 
@@ -805,7 +930,7 @@ function thumbwhere_hostcommand_set_breadcrumb() {
     l(t('Home'), '<front>'),
     l(t('Administration'), 'admin'),
     l(t('HostCommand'), 'admin/content'),
-    l(t('ThumbWhereHostCommands'), 'admin/content/thumbwhere_hostcommands'),
+    l(t('HostCommand'), 'admin/thumbwhere/thumbwhere_hostcommands'),
   );
 
   drupal_set_breadcrumb($breadcrumb);
