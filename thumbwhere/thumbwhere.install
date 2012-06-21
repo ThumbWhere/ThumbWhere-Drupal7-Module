@@ -438,7 +438,7 @@ function thumbwhere_field_schema($field) {
         'type' => 'int',
         'size' => 'big',
         'not null' => FALSE,
-        //'default'  => -1,
+        'default'  => 0,
         ),
      ),
  );

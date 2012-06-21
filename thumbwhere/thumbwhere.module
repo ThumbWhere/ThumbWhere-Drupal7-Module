@@ -291,8 +291,16 @@ function thumbwhere_permission() {
 function thumbwhere_field_info() {
   return array(
       'thumbwhere_id' => array(
-          'label' => t('News  Date'),
-          'description' => t('A Date Time Period'),
+          'label' => t('ThumbWhere ID'),
+          'description' => t('A ThumbWhere ID'),
+          'instance_settings' => array(
+              'text_processing' => FALSE
+          ),
+          'default_value' => array(
+              0 => array(
+                  'value' => '0',
+              ),
+          ),
           'default_widget' => 'thumbwhere_id_widget',
           'default_formatter' => 'thumbwhere_id_formatter',
       ),
@@ -305,7 +313,7 @@ function thumbwhere_field_info() {
 function thumbwhere_field_formatter_info() {
   return array(
       'thumbwhere_id_formatter' => array(
-          'label' => t('Simple News Date formatter'),
+          'label' => t('ThumbWhere Entity ID Formatter'),
           'field types' => array(
               'thumbwhere_id'
           ),
@@ -323,7 +331,6 @@ function thumbwhere_field_formatter_view($entity_type, $entity, $field, $instanc
   case 'thumbwhere_id_formatter':
     foreach ($items as $delta => $item) {
       if ($item['thumbwhere_id']) {
-        //$formattedDate = _dateToString($item['thumbwhere']);
 
         $formattedDate = $item['thumbwhere_id'];
         $element[$delta]['#markup'] = '<span>' . $formattedDate . '</span>';
