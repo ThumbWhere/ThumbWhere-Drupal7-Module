@@ -240,7 +240,7 @@ function _thumbwhere_authentication_installed_fields() {
       'field_pk_consumer' => array(
           'field_name' => 'field_pk_consumer',
           'cardinality' => 1,
-          'type' => 'thumbwhere_id',
+          'type' => 'unearthed_thumbwhere_id',
           'default_value' => array(
               array(
                   'value' => -1
@@ -267,7 +267,7 @@ function _thumbwhere_authentication_installed_instances() {
           'field_name' => 'field_pk_consumer',
           'label' => $t('Consumer Id'),
           'widget' => array(
-              'type' => 'thumbwhere_id',
+              'type' => 'unearthed_thumbwhere_id',
           ),
           'display' => array(
               'default' => array(
