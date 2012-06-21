@@ -431,6 +431,20 @@ function thumbwhere_disable() {
 }
 
 
+function thumbwhere_field_schema($field) {
+   return array(
+     'columns' => array(
+     'thumbwhere_id' => array(
+        'type' => 'int',
+        'size' => 'big',
+        'not null' => FALSE,
+        //'default'  => -1,
+        ),
+     ),
+ );
+}
+
+
 /**
  * Returns a structured array defining the user roles.
  *
