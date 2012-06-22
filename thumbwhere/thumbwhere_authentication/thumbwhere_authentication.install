@@ -39,21 +39,21 @@ function thumbwhere_authentication_requirements($phase) {
       $requirements['thumbwhere_authentication_user_email_verification'] = array(
           'title' => $t('ThumbWhere Authentication'),
           'description' => $t(
-              'The site should be configured to allow users to automatically register.<p/> Go to the Configuration for <b>People/Account Settings</b> and for "<b>Who can register accounts?</b>" disable "<i>Require e-mail verification when a visitor creates an account</i>." '),
+              'The site should be configured to allow users to verify registration via email.<p/> Go to the Configuration for <b>People/Account Settings</b> and for "<b>Who can register accounts?</b>" disable "<i>Require e-mail verification when a visitor creates an account</i>." '),
           'severity' => REQUIREMENT_ERROR,
           'value' => $t('Required configuration'),
       );
     }
 
-    $user_loaded = user_load(1);
-    $user_loaded->language = 'und';
+    $user_fields = user_load(1);
+    $user_fields->language = 'und';
 
     // Make sure the Admin user has a member attached...
-    if (!isset($user_loaded->pk_member[$user_loaded->language][0])) {
+    if (!isset($user_fields->field_pk_consumer[$user_fields->language][0]['thumbwhere_id'])) {
       $requirements['thumbwhere_authentication_admin_memberid'] = array(
           'title' => $t('ThumbWhere Authentication'),
           'description' => $t(
-              'The site admin needs to be allocated a ThumbWhere Member id if you want to be able to use the site as admin. <p/> Go to the Configuration for <b>People</b> and edit the Admin user and allocate them a valid ThumbWhere member.'),
+              'The site admin needs to be allocated a ThumbWhere Consumer If if you want to be able to use the site as admin. <p/><b>This should have happened as part of the install of the \'thumbwhere_authentication\' module.</b><p/> Go to the Configuration for <b>People</b> and edit the Admin user and allocate them a valid ThumbWhere Consumer Id.'),
           'severity' => REQUIREMENT_ERROR,
           'value' => $t('Required configuration'),
       );
