@@ -351,18 +351,18 @@ function thumbwhere_hostcommand_entity_presave($entity, $entity_type) {
 
     $fields = array();
     // Compulsory so..
-    if (empty($entity->host)) {
+    if (empty($entity->fk_host)) {
       throw new Exception('host is compulsory.');
     }
     else {
-      $fields['host'] = $entity->host;
+      $fields['host'] = $entity->fk_host;
     }
     // Compulsory so..
-    if (empty($entity->hostcommandtemplate)) {
+    if (empty($entity->fk_hostcommandtemplate)) {
       throw new Exception('hostcommandtemplate is compulsory.');
     }
     else {
-      $fields['hostcommandtemplate'] = $entity->hostcommandtemplate;
+      $fields['hostcommandtemplate'] = $entity->fk_hostcommandtemplate;
     }
     // Compulsory so..
     if (empty($entity->command)) {
