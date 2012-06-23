@@ -462,8 +462,9 @@ class ThumbWhereAwardedTrophyUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a AwardedTrophy',
-      'description' => 'Add a new AwardedTrophy',
+      //'title' => 'Add a AwardedTrophy',
+      'title' => 'Add',
+	  'description' => 'Add a new AwardedTrophy',
       'page callback'  => 'thumbwhere_awardedtrophy_add_page',
       'access callback'  => 'thumbwhere_awardedtrophy_access',
       'access arguments' => array('edit'),
@@ -473,7 +474,7 @@ class ThumbWhereAwardedTrophyUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
-
+/*
     $items[$this->path . '/add/' . 'thumbwhere_awardedtrophy'] = array(
       'title' => 'Add ' . 'ThumbWhereAwardedTrophy',
       'page callback' => 'thumbwhere_awardedtrophy_form_wrapper',
@@ -483,7 +484,7 @@ class ThumbWhereAwardedTrophyUIController extends EntityDefaultUIController {
       'file' => 'thumbwhere_awardedtrophy.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
-
+*/
     // Loading and editing thumbwhere_awardedtrophy entities
     $items[$this->path . '/thumbwhere_awardedtrophy/' . $wildcard] = array(
       'page callback' => 'thumbwhere_awardedtrophy_form_wrapper',

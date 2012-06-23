@@ -462,8 +462,9 @@ class ThumbWhereActorUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a Actor',
-      'description' => 'Add a new Actor',
+      //'title' => 'Add a Actor',
+      'title' => 'Add',
+	  'description' => 'Add a new Actor',
       'page callback'  => 'thumbwhere_actor_add_page',
       'access callback'  => 'thumbwhere_actor_access',
       'access arguments' => array('edit'),
@@ -473,7 +474,7 @@ class ThumbWhereActorUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
-
+/*
     $items[$this->path . '/add/' . 'thumbwhere_actor'] = array(
       'title' => 'Add ' . 'ThumbWhereActor',
       'page callback' => 'thumbwhere_actor_form_wrapper',
@@ -483,7 +484,7 @@ class ThumbWhereActorUIController extends EntityDefaultUIController {
       'file' => 'thumbwhere_actor.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
-
+*/
     // Loading and editing thumbwhere_actor entities
     $items[$this->path . '/thumbwhere_actor/' . $wildcard] = array(
       'page callback' => 'thumbwhere_actor_form_wrapper',

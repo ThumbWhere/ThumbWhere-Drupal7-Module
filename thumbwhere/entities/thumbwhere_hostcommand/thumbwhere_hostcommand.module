@@ -339,7 +339,7 @@ function thumbwhere_hostcommand_entity_presave($entity, $entity_type) {
     // .. then we create a new thumbwhere_hostcommand entity...
       // Instantiate the ThumbWhereContent class
 
-    $twadminAPI = new ThumbWhereAPIadmin();
+    $twAdminAPI = new ThumbWhereAPIAdmin();
 
     //if (twCanDebug()) debug($twContentAPI);
 
@@ -350,6 +350,41 @@ function thumbwhere_hostcommand_entity_presave($entity, $entity_type) {
     //
 
     $fields = array();
+    // Compulsory so..
+    if (empty($entity->host)) {
+      throw new Exception('host is compulsory.');
+    }
+    else {
+      $fields['host'] = $entity->host;
+    }
+    // Compulsory so..
+    if (empty($entity->hostcommandtemplate)) {
+      throw new Exception('hostcommandtemplate is compulsory.');
+    }
+    else {
+      $fields['hostcommandtemplate'] = $entity->hostcommandtemplate;
+    }
+    // Compulsory so..
+    if (empty($entity->command)) {
+      throw new Exception('command is compulsory.');
+    }
+    else {
+      $fields['command'] = $entity->command;
+    }
+    // Compulsory so..
+    if (empty($entity->running)) {
+      throw new Exception('running is compulsory.');
+    }
+    else {
+      $fields['running'] = $entity->running;
+    }
+    // Compulsory so..
+    if (empty($entity->completed)) {
+      throw new Exception('completed is compulsory.');
+    }
+    else {
+      $fields['completed'] = $entity->completed;
+    }
     
     //
     // If this hostcommand entity is new....
@@ -362,14 +397,15 @@ function thumbwhere_hostcommand_entity_presave($entity, $entity_type) {
       // ... then we create the hostcommand entity in ThumbWhere
       //
 
-      $hostcommand = $twadminAPI->create_($context = array(
+      $hostcommand = $twAdminAPI->create_host_command($context = array(
+                  'key' => variable_get('thumbwhere_api_key')
           ), $fields);
             
        if (twCanDebug()) debug($hostcommand);
 
       //if (twCanDebug()) debug($host_command);
 
-      $attributes = $hostcommand->body->->attributes();
+      $attributes = $hostcommand->body->host_command->attributes();
 
       if (twCanDebug()) debug('newly created id = ' . $attributes['id']);
 
@@ -386,7 +422,8 @@ function thumbwhere_hostcommand_entity_presave($entity, $entity_type) {
       // .. otherwise we update the hostcommand entity in ThumbWhere
       //
 
-      $hostcommand = $twadminAPI->update_($id=$entity->pk_hostcommand,$context = array(
+      $hostcommand = $twAdminAPI->update_host_command($id=$entity->pk_hostcommand,$context = array(
+                  'key' => variable_get('thumbwhere_api_key')
           ), $fields);
             
         

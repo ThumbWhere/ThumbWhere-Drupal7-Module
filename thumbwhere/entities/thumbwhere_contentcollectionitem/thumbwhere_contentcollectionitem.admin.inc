@@ -454,8 +454,9 @@ class ThumbWhereContentCollectionItemUIController extends EntityDefaultUIControl
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a ContentCollectionItem',
-      'description' => 'Add a new ContentCollectionItem',
+      //'title' => 'Add a ContentCollectionItem',
+      'title' => 'Add',
+	  'description' => 'Add a new ContentCollectionItem',
       'page callback'  => 'thumbwhere_contentcollectionitem_add_page',
       'access callback'  => 'thumbwhere_contentcollectionitem_access',
       'access arguments' => array('edit'),
@@ -465,7 +466,7 @@ class ThumbWhereContentCollectionItemUIController extends EntityDefaultUIControl
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
-
+/*
     $items[$this->path . '/add/' . 'thumbwhere_contentcollectionitem'] = array(
       'title' => 'Add ' . 'ThumbWhereContentCollectionItem',
       'page callback' => 'thumbwhere_contentcollectionitem_form_wrapper',
@@ -475,7 +476,7 @@ class ThumbWhereContentCollectionItemUIController extends EntityDefaultUIControl
       'file' => 'thumbwhere_contentcollectionitem.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
-
+*/
     // Loading and editing thumbwhere_contentcollectionitem entities
     $items[$this->path . '/thumbwhere_contentcollectionitem/' . $wildcard] = array(
       'page callback' => 'thumbwhere_contentcollectionitem_form_wrapper',

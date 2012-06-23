@@ -167,7 +167,7 @@ function thumbwhere_menu() {
       'page arguments' => array('node_admin_content'),
       'access arguments' => array('access content overview'),
       'weight' => -10,
-      'file' => 'node.admin.inc',
+      'file' => 'thumbwhere_entity.admin.inc',
   );
 
 

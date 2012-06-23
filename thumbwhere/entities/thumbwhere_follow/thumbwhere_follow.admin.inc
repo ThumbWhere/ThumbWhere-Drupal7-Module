@@ -462,8 +462,9 @@ class ThumbWhereFollowUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a Follow',
-      'description' => 'Add a new Follow',
+      //'title' => 'Add a Follow',
+      'title' => 'Add',
+	  'description' => 'Add a new Follow',
       'page callback'  => 'thumbwhere_follow_add_page',
       'access callback'  => 'thumbwhere_follow_access',
       'access arguments' => array('edit'),
@@ -473,7 +474,7 @@ class ThumbWhereFollowUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
-
+/*
     $items[$this->path . '/add/' . 'thumbwhere_follow'] = array(
       'title' => 'Add ' . 'ThumbWhereFollow',
       'page callback' => 'thumbwhere_follow_form_wrapper',
@@ -483,7 +484,7 @@ class ThumbWhereFollowUIController extends EntityDefaultUIController {
       'file' => 'thumbwhere_follow.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
-
+*/
     // Loading and editing thumbwhere_follow entities
     $items[$this->path . '/thumbwhere_follow/' . $wildcard] = array(
       'page callback' => 'thumbwhere_follow_form_wrapper',

@@ -510,8 +510,9 @@ class ThumbWhereIdentityUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a Identity',
-      'description' => 'Add a new Identity',
+      //'title' => 'Add a Identity',
+      'title' => 'Add',
+	  'description' => 'Add a new Identity',
       'page callback'  => 'thumbwhere_identity_add_page',
       'access callback'  => 'thumbwhere_identity_access',
       'access arguments' => array('edit'),
@@ -521,7 +522,7 @@ class ThumbWhereIdentityUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
-
+/*
     $items[$this->path . '/add/' . 'thumbwhere_identity'] = array(
       'title' => 'Add ' . 'ThumbWhereIdentity',
       'page callback' => 'thumbwhere_identity_form_wrapper',
@@ -531,7 +532,7 @@ class ThumbWhereIdentityUIController extends EntityDefaultUIController {
       'file' => 'thumbwhere_identity.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
-
+*/
     // Loading and editing thumbwhere_identity entities
     $items[$this->path . '/thumbwhere_identity/' . $wildcard] = array(
       'page callback' => 'thumbwhere_identity_form_wrapper',

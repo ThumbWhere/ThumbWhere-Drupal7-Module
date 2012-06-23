@@ -470,8 +470,9 @@ class ThumbWhereMemberUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a Member',
-      'description' => 'Add a new Member',
+      //'title' => 'Add a Member',
+      'title' => 'Add',
+	  'description' => 'Add a new Member',
       'page callback'  => 'thumbwhere_member_add_page',
       'access callback'  => 'thumbwhere_member_access',
       'access arguments' => array('edit'),
@@ -481,7 +482,7 @@ class ThumbWhereMemberUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
-
+/*
     $items[$this->path . '/add/' . 'thumbwhere_member'] = array(
       'title' => 'Add ' . 'ThumbWhereMember',
       'page callback' => 'thumbwhere_member_form_wrapper',
@@ -491,7 +492,7 @@ class ThumbWhereMemberUIController extends EntityDefaultUIController {
       'file' => 'thumbwhere_member.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
-
+*/
     // Loading and editing thumbwhere_member entities
     $items[$this->path . '/thumbwhere_member/' . $wildcard] = array(
       'page callback' => 'thumbwhere_member_form_wrapper',

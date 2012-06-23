@@ -610,8 +610,9 @@ class ThumbWhereContentIngestUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a ContentIngest',
-      'description' => 'Add a new ContentIngest',
+      //'title' => 'Add a ContentIngest',
+      'title' => 'Add',
+	  'description' => 'Add a new ContentIngest',
       'page callback'  => 'thumbwhere_contentingest_add_page',
       'access callback'  => 'thumbwhere_contentingest_access',
       'access arguments' => array('edit'),
@@ -621,7 +622,7 @@ class ThumbWhereContentIngestUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
-
+/*
     $items[$this->path . '/add/' . 'thumbwhere_contentingest'] = array(
       'title' => 'Add ' . 'ThumbWhereContentIngest',
       'page callback' => 'thumbwhere_contentingest_form_wrapper',
@@ -631,7 +632,7 @@ class ThumbWhereContentIngestUIController extends EntityDefaultUIController {
       'file' => 'thumbwhere_contentingest.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
-
+*/
     // Loading and editing thumbwhere_contentingest entities
     $items[$this->path . '/thumbwhere_contentingest/' . $wildcard] = array(
       'page callback' => 'thumbwhere_contentingest_form_wrapper',

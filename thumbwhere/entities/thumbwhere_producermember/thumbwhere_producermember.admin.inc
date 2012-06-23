@@ -464,8 +464,9 @@ class ThumbWhereProducerMemberUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a ProducerMember',
-      'description' => 'Add a new ProducerMember',
+      //'title' => 'Add a ProducerMember',
+      'title' => 'Add',
+	  'description' => 'Add a new ProducerMember',
       'page callback'  => 'thumbwhere_producermember_add_page',
       'access callback'  => 'thumbwhere_producermember_access',
       'access arguments' => array('edit'),
@@ -475,7 +476,7 @@ class ThumbWhereProducerMemberUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
-
+/*
     $items[$this->path . '/add/' . 'thumbwhere_producermember'] = array(
       'title' => 'Add ' . 'ThumbWhereProducerMember',
       'page callback' => 'thumbwhere_producermember_form_wrapper',
@@ -485,7 +486,7 @@ class ThumbWhereProducerMemberUIController extends EntityDefaultUIController {
       'file' => 'thumbwhere_producermember.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
-
+*/
     // Loading and editing thumbwhere_producermember entities
     $items[$this->path . '/thumbwhere_producermember/' . $wildcard] = array(
       'page callback' => 'thumbwhere_producermember_form_wrapper',

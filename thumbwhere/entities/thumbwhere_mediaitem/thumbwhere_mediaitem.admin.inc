@@ -632,8 +632,9 @@ class ThumbWhereMediaItemUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a MediaItem',
-      'description' => 'Add a new MediaItem',
+      //'title' => 'Add a MediaItem',
+      'title' => 'Add',
+	  'description' => 'Add a new MediaItem',
       'page callback'  => 'thumbwhere_mediaitem_add_page',
       'access callback'  => 'thumbwhere_mediaitem_access',
       'access arguments' => array('edit'),
@@ -643,7 +644,7 @@ class ThumbWhereMediaItemUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
-
+/*
     $items[$this->path . '/add/' . 'thumbwhere_mediaitem'] = array(
       'title' => 'Add ' . 'ThumbWhereMediaItem',
       'page callback' => 'thumbwhere_mediaitem_form_wrapper',
@@ -653,7 +654,7 @@ class ThumbWhereMediaItemUIController extends EntityDefaultUIController {
       'file' => 'thumbwhere_mediaitem.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
-
+*/
     // Loading and editing thumbwhere_mediaitem entities
     $items[$this->path . '/thumbwhere_mediaitem/' . $wildcard] = array(
       'page callback' => 'thumbwhere_mediaitem_form_wrapper',

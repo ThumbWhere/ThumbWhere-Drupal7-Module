@@ -462,8 +462,9 @@ class ThumbWhereFanUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a Fan',
-      'description' => 'Add a new Fan',
+      //'title' => 'Add a Fan',
+      'title' => 'Add',
+	  'description' => 'Add a new Fan',
       'page callback'  => 'thumbwhere_fan_add_page',
       'access callback'  => 'thumbwhere_fan_access',
       'access arguments' => array('edit'),
@@ -473,7 +474,7 @@ class ThumbWhereFanUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
-
+/*
     $items[$this->path . '/add/' . 'thumbwhere_fan'] = array(
       'title' => 'Add ' . 'ThumbWhereFan',
       'page callback' => 'thumbwhere_fan_form_wrapper',
@@ -483,7 +484,7 @@ class ThumbWhereFanUIController extends EntityDefaultUIController {
       'file' => 'thumbwhere_fan.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
-
+*/
     // Loading and editing thumbwhere_fan entities
     $items[$this->path . '/thumbwhere_fan/' . $wildcard] = array(
       'page callback' => 'thumbwhere_fan_form_wrapper',

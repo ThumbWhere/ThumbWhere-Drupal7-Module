@@ -438,8 +438,9 @@ class ThumbWherePlaceUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a Place',
-      'description' => 'Add a new Place',
+      //'title' => 'Add a Place',
+      'title' => 'Add',
+	  'description' => 'Add a new Place',
       'page callback'  => 'thumbwhere_place_add_page',
       'access callback'  => 'thumbwhere_place_access',
       'access arguments' => array('edit'),
@@ -449,7 +450,7 @@ class ThumbWherePlaceUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
-
+/*
     $items[$this->path . '/add/' . 'thumbwhere_place'] = array(
       'title' => 'Add ' . 'ThumbWherePlace',
       'page callback' => 'thumbwhere_place_form_wrapper',
@@ -459,7 +460,7 @@ class ThumbWherePlaceUIController extends EntityDefaultUIController {
       'file' => 'thumbwhere_place.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
-
+*/
     // Loading and editing thumbwhere_place entities
     $items[$this->path . '/thumbwhere_place/' . $wildcard] = array(
       'page callback' => 'thumbwhere_place_form_wrapper',

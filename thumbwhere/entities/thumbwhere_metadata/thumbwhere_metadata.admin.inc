@@ -438,8 +438,9 @@ class ThumbWhereMetadataUIController extends EntityDefaultUIController {
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      'title' => 'Add a Metadata',
-      'description' => 'Add a new Metadata',
+      //'title' => 'Add a Metadata',
+      'title' => 'Add',
+	  'description' => 'Add a new Metadata',
       'page callback'  => 'thumbwhere_metadata_add_page',
       'access callback'  => 'thumbwhere_metadata_access',
       'access arguments' => array('edit'),
@@ -449,7 +450,7 @@ class ThumbWhereMetadataUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
-
+/*
     $items[$this->path . '/add/' . 'thumbwhere_metadata'] = array(
       'title' => 'Add ' . 'ThumbWhereMetadata',
       'page callback' => 'thumbwhere_metadata_form_wrapper',
@@ -459,7 +460,7 @@ class ThumbWhereMetadataUIController extends EntityDefaultUIController {
       'file' => 'thumbwhere_metadata.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
-
+*/
     // Loading and editing thumbwhere_metadata entities
     $items[$this->path . '/thumbwhere_metadata/' . $wildcard] = array(
       'page callback' => 'thumbwhere_metadata_form_wrapper',

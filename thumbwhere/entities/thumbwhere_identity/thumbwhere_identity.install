@@ -200,7 +200,7 @@ function thumbwhere_identity_schema() {
               'description' => 'The \'last_login\' date field of the \'Identity\' entity.',
               'type' => 'datetime',
               'size' => 'normal',
-              'not null' => FALSE,                  
+                  
           ),
           'total_logins' => array(
               'description' => 'The \'total_logins\' textfield field of the \'Identity\' entity.',
