@@ -16,11 +16,11 @@ IF NOT (%3)==("") SET BUILD=%3
 PUSHD ..\..\ThumbWhere-Drupal7-Module-Releases\release-history\
 
 @REM Make sure we have the feed (it will fail if it already exists - can be overidden by --force).
-..\..\ThumbWhere-Drupal7-Module\tools\DrupalUtil.exe new ThumbWhere ThumbWhere 7.x http://drupalmodules.thumbwhere.com/release-history/ --exitcleanonerror
+..\..\ThumbWhere-Drupal7-Module\tools\DrupalUtil.exe new thumbwhere thumbwhere 7.x http://drupalmodules.thumbwhere.com/release-history/ --exitcleanonerror
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 @REM Update the release
-..\..\ThumbWhere-Drupal7-Module\tools\DrupalUtil.exe add ..\..\ThumbWhere-Drupal7-Module\ThumbWhere ThumbWhere 7.x patch %MESSAGE% %STREAM% "" %4 %5 %6
+..\..\ThumbWhere-Drupal7-Module\tools\DrupalUtil.exe add ..\..\ThumbWhere-Drupal7-Module\thumbwhere thumbwhere 7.x patch %MESSAGE% %STREAM% "" %4 %5 %6
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Create Directories

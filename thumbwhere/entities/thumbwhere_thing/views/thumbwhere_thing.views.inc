@@ -11,7 +11,12 @@
 /**
  * Implements hook_views_data().
  */
-function thumbwhere_thing_views_data_alter(&$data) {
+ function thumbwhere_thing_views_data_alter(&$data) {
+ 	
+  /* Add any special formatters for special types */	
+ 	
+ 
+ 	
   $data['thumbwhere_thing']['link_thumbwhere_thing'] = array(
       'field' => array(
           'title' => t('Link'),

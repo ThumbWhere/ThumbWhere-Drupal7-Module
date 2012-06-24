@@ -12,7 +12,7 @@
  */
 
 
-
+	
 
  
 /**
@@ -61,6 +61,7 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
   
       case 'create':
       {
+      
         //
         // What resource are we creating?
         //
@@ -98,15 +99,16 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
           $err = '\'mediaitem\' resource already exists with an id of \'' . $id . '\'.';
            //print($err);
           watchdog('thumbwhere_mediaitem', $err ,array(), WATCHDOG_ERROR);
-          //exit(0);	
+          //exit(0);
+
           	
-		drupal_add_http_header('Content-Type', 'text/xml');
-        print('<response>');
-        print('<mediaitem op="' . $op . '" id="' . $id . '" >');
-        print('<status>success</status>');
-        print('</mediaitem>');
-        print('</response>');
-        exit(0);          	
+          drupal_add_http_header('Content-Type', 'text/xml');
+          print('<response>');
+          print('<mediaitem op="' . $op . '" id="' . $id . '" >');
+          print('<status>success</status>');
+          print('</mediaitem>');
+          print('</response>');
+          exit(0);          	
           
         }
 
@@ -182,7 +184,7 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
         }
 
         if (isset($notification->process_attempts)) {
-
+          $entityfields['process_attempts'] = (int)intval($notification->process_attempts);
         }
 
         if (isset($notification->censored)) {
@@ -204,23 +206,23 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
         }
 
         if (isset($notification->privacy)) {
-
+          $entityfields['privacy'] = (int)intval($notification->privacy);
         }
 
         if (isset($notification->viewcount)) {
-
+          $entityfields['viewcount'] = (int)intval($notification->viewcount);
         }
 
         if (isset($notification->ratingdividend)) {
-
+          $entityfields['ratingdividend'] = (int)intval($notification->ratingdividend);
         }
 
         if (isset($notification->ratingdivisor)) {
-
+          $entityfields['ratingdivisor'] = (int)intval($notification->ratingdivisor);
         }
 
         if (isset($notification->ratings)) {
-
+          $entityfields['ratings'] = (int)intval($notification->ratings);
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -244,7 +246,9 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
         print('<status>success</status>');
         print('</mediaitem>');
         print('</response>');
-        exit(0);
+        exit(0);			
+		
+      
       }
   
   
@@ -283,10 +287,208 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
         if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
-          drupal_add_http_header('Status', '409 No such resource exists.');
-          print('No such \'mediaitem\' resource exists with an id of \'' . $id . '\'.');
-          watchdog('thumbwhere_mediaitem', 'No such \'mediaitem\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
+          //drupal_add_http_header('Status', '409 No such resource exists.');
+          $err = 'No such \'mediaitem\' resource exists with an id of \'' . $id . '\'.';
+          //print($err);
+          watchdog('thumbwhere_mediaitem',$err,array(), WATCHDOG_ERROR);
+          //exit(0);
+
+////////////////////////////////////////////////////////////////////////
+//
+// ... for now we will just create the local copy
+//
+          watchdog('thumbwhere_mediaitem','creating local version of missing entity',array(), WATCHDOG_ERROR);
+
+        //
+        // What resource are we creating?
+        //
+      
+        //
+        // Get the id
+        //
+		
+        if (!isset($notification->attributes()->id)) {
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
+          $err = 'We were expecting an \'id\', attribute on the \'mediaitem\', element when we are performing an \'update\' notification..';
+          print($err);
+          watchdog('thumbwhere_mediaitem', $err ,array(), WATCHDOG_ERROR);
           exit(0);
+        }
+
+        $id = intval($notification->attributes()->id);
+		
+
+        if (twCanDebug()) debug('id');
+        if (twCanDebug()) debug($id);
+
+      
+        //
+        // Get the fields
+        //
+          
+        $entities = entity_load('thumbwhere_mediaitem', array($id));
+
+        if (twCanDebug()) debug('$entities');
+        if (twCanDebug()) debug($entities);
+
+        if (count($entities) != 0) {
+          //drupal_add_http_header('Status', '409 Resource already exists.');
+          $err = '\'mediaitem\' resource already exists with an id of \'' . $id . '\'.';
+           //print($err);
+          watchdog('thumbwhere_mediaitem', $err ,array(), WATCHDOG_ERROR);
+          //exit(0);
+
+          	
+          drupal_add_http_header('Content-Type', 'text/xml');
+          print('<response>');
+          print('<mediaitem op="' . $op . '" id="' . $id . '" >');
+          print('<status>success</status>');
+          print('</mediaitem>');
+          print('</response>');
+          exit(0);          	
+          
+        }
+
+        // Getting a reference to the entity we asked for
+        $entityfields = array();
+
+        //
+        // We are only updating what has been passed through.
+        // No test for missing values.
+        // TODO: Validate incoming values.
+        //
+
+
+        $entityfields['pk_mediaitem'] = $id;	
+
+        if (isset($notification->code)) {
+          $entityfields['fk_code'] = intval($notification->code);
+        }
+
+        if (isset($notification->identity)) {
+          $entityfields['fk_identity'] = intval($notification->identity);
+        }
+
+        if (isset($notification->format)) {
+          $entityfields['fk_format'] = intval($notification->format);
+        }
+
+        if (isset($notification->server)) {
+          $entityfields['fk_server'] = intval($notification->server);
+        }
+
+        if (isset($notification->license)) {
+          $entityfields['fk_license'] = intval($notification->license);
+        }
+
+        if (isset($notification->title)) {
+
+        }
+
+        if (isset($notification->body)) {
+
+        }
+
+        if (isset($notification->bodyonly)) {
+          if ((string)($notification->bodyonly) == 'true') {
+            $entityfields['bodyonly'] = '1';
+          }
+          else {
+            $entityfields['bodyonly'] = '0';
+          }
+        }
+
+        if (isset($notification->comment)) {
+          if ((string)($notification->comment) == 'true') {
+            $entityfields['comment'] = '1';
+          }
+          else {
+            $entityfields['comment'] = '0';
+          }
+        }
+
+        if (isset($notification->usergenerated)) {
+          if ((string)($notification->usergenerated) == 'true') {
+            $entityfields['usergenerated'] = '1';
+          }
+          else {
+            $entityfields['usergenerated'] = '0';
+          }
+        }
+
+        if (isset($notification->digest)) {
+          $entityfields['digest'] = (string)($notification->digest);
+        }
+
+        if (isset($notification->process_attempts)) {
+          $entityfields['process_attempts'] = (int)intval($notification->process_attempts);
+        }
+
+        if (isset($notification->censored)) {
+          if ((string)($notification->censored) == 'true') {
+            $entityfields['censored'] = '1';
+          }
+          else {
+            $entityfields['censored'] = '0';
+          }
+        }
+
+        if (isset($notification->reviewed)) {
+          if ((string)($notification->reviewed) == 'true') {
+            $entityfields['reviewed'] = '1';
+          }
+          else {
+            $entityfields['reviewed'] = '0';
+          }
+        }
+
+        if (isset($notification->privacy)) {
+          $entityfields['privacy'] = (int)intval($notification->privacy);
+        }
+
+        if (isset($notification->viewcount)) {
+          $entityfields['viewcount'] = (int)intval($notification->viewcount);
+        }
+
+        if (isset($notification->ratingdividend)) {
+          $entityfields['ratingdividend'] = (int)intval($notification->ratingdividend);
+        }
+
+        if (isset($notification->ratingdivisor)) {
+          $entityfields['ratingdivisor'] = (int)intval($notification->ratingdivisor);
+        }
+
+        if (isset($notification->ratings)) {
+          $entityfields['ratings'] = (int)intval($notification->ratings);
+        }
+
+        if (!isset($notification->attributes()->key)) {
+          if (twCanDebug()) debug('$entities');
+          if (twCanDebug()) debug($entities);
+        }
+
+        // We are being notified, so we do not want to ship this out again as a notification...
+        // Finally write the entity.
+        $entity = entity_create('thumbwhere_mediaitem', $entityfields);
+        $entity->do_not_propagate = TRUE;
+        $entity->save();
+
+        //
+        // Send the final response
+        //
+
+        drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<mediaitem op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</mediaitem>');
+        print('</response>');
+        exit(0);			
+		
+//
+//
+//
+////////////////////////////////////////////////////////////////////////
         }
 
         // Getting a reference to the entity we asked for
@@ -359,7 +561,7 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
         }
 
         if (isset($notification->process_attempts)) {
-
+          $entity->process_attempts = (int)intval($notification->process_attempts);
         }
 
         if (isset($notification->censored)) {
@@ -381,23 +583,23 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
         }
 
         if (isset($notification->privacy)) {
-
+          $entity->privacy = (int)intval($notification->privacy);
         }
 
         if (isset($notification->viewcount)) {
-
+          $entity->viewcount = (int)intval($notification->viewcount);
         }
 
         if (isset($notification->ratingdividend)) {
-
+          $entity->ratingdividend = (int)intval($notification->ratingdividend);
         }
 
         if (isset($notification->ratingdivisor)) {
-
+          $entity->ratingdivisor = (int)intval($notification->ratingdivisor);
         }
 
         if (isset($notification->ratings)) {
-
+          $entity->ratings = (int)intval($notification->ratings);
         }
 
         if (!isset($notification->attributes()->key)) {

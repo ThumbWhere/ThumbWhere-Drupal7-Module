@@ -11,7 +11,29 @@
 /**
  * Implements hook_views_data().
  */
-function thumbwhere_identity_views_data_alter(&$data) {
+ function thumbwhere_identity_views_data_alter(&$data) {
+ 	
+  /* Add any special formatters for special types */	
+ 	
+ 
+	
+  // Handle type DateTime
+  $data['thumbwhere_identity']['last_login'] = array(
+      'title' => t('identity'),
+      'field' => array(
+          'handler' => 'views_handler_field_date',
+          'click sortable' => TRUE,
+      ),
+      //'sort' => array(
+      //    'handler' => 'views_handler_sort_date',
+      //),
+      //'filter' => array(
+      //   'handler' => 'views_handler_filter_date',
+      //),
+  );	
+
+
+ 	
   $data['thumbwhere_identity']['link_thumbwhere_identity'] = array(
       'field' => array(
           'title' => t('Link'),

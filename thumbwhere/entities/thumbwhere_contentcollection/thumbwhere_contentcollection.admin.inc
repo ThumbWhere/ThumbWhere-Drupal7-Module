@@ -12,7 +12,7 @@
  */
 
 
-
+	
 
  
 /**
@@ -61,6 +61,7 @@ function _thumbwhere_handle_content_collection_notify_xml($notification) {
   
       case 'create':
       {
+      
         //
         // What resource are we creating?
         //
@@ -98,15 +99,16 @@ function _thumbwhere_handle_content_collection_notify_xml($notification) {
           $err = '\'content_collection\' resource already exists with an id of \'' . $id . '\'.';
            //print($err);
           watchdog('thumbwhere_contentcollection', $err ,array(), WATCHDOG_ERROR);
-          //exit(0);	
+          //exit(0);
+
           	
-		drupal_add_http_header('Content-Type', 'text/xml');
-        print('<response>');
-        print('<content_collection op="' . $op . '" id="' . $id . '" >');
-        print('<status>success</status>');
-        print('</content_collection>');
-        print('</response>');
-        exit(0);          	
+          drupal_add_http_header('Content-Type', 'text/xml');
+          print('<response>');
+          print('<content_collection op="' . $op . '" id="' . $id . '" >');
+          print('<status>success</status>');
+          print('</content_collection>');
+          print('</response>');
+          exit(0);          	
           
         }
 
@@ -151,7 +153,9 @@ function _thumbwhere_handle_content_collection_notify_xml($notification) {
         print('<status>success</status>');
         print('</content_collection>');
         print('</response>');
-        exit(0);
+        exit(0);			
+		
+      
       }
   
   
@@ -190,10 +194,115 @@ function _thumbwhere_handle_content_collection_notify_xml($notification) {
         if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
-          drupal_add_http_header('Status', '409 No such resource exists.');
-          print('No such \'content_collection\' resource exists with an id of \'' . $id . '\'.');
-          watchdog('thumbwhere_contentcollection', 'No such \'content_collection\' resource exists with an id of \'' . $id . '\'.' ,array(), WATCHDOG_ERROR);
+          //drupal_add_http_header('Status', '409 No such resource exists.');
+          $err = 'No such \'content_collection\' resource exists with an id of \'' . $id . '\'.';
+          //print($err);
+          watchdog('thumbwhere_contentcollection',$err,array(), WATCHDOG_ERROR);
+          //exit(0);
+
+////////////////////////////////////////////////////////////////////////
+//
+// ... for now we will just create the local copy
+//
+          watchdog('thumbwhere_contentcollection','creating local version of missing entity',array(), WATCHDOG_ERROR);
+
+        //
+        // What resource are we creating?
+        //
+      
+        //
+        // Get the id
+        //
+		
+        if (!isset($notification->attributes()->id)) {
+          drupal_add_http_header('Status', '412 Unable to fulfull request.');
+          $err = 'We were expecting an \'id\', attribute on the \'content_collection\', element when we are performing an \'update\' notification..';
+          print($err);
+          watchdog('thumbwhere_contentcollection', $err ,array(), WATCHDOG_ERROR);
           exit(0);
+        }
+
+        $id = intval($notification->attributes()->id);
+		
+
+        if (twCanDebug()) debug('id');
+        if (twCanDebug()) debug($id);
+
+      
+        //
+        // Get the fields
+        //
+          
+        $entities = entity_load('thumbwhere_contentcollection', array($id));
+
+        if (twCanDebug()) debug('$entities');
+        if (twCanDebug()) debug($entities);
+
+        if (count($entities) != 0) {
+          //drupal_add_http_header('Status', '409 Resource already exists.');
+          $err = '\'content_collection\' resource already exists with an id of \'' . $id . '\'.';
+           //print($err);
+          watchdog('thumbwhere_contentcollection', $err ,array(), WATCHDOG_ERROR);
+          //exit(0);
+
+          	
+          drupal_add_http_header('Content-Type', 'text/xml');
+          print('<response>');
+          print('<content_collection op="' . $op . '" id="' . $id . '" >');
+          print('<status>success</status>');
+          print('</content_collection>');
+          print('</response>');
+          exit(0);          	
+          
+        }
+
+        // Getting a reference to the entity we asked for
+        $entityfields = array();
+
+        //
+        // We are only updating what has been passed through.
+        // No test for missing values.
+        // TODO: Validate incoming values.
+        //
+
+
+        $entityfields['pk_contentcollection'] = $id;	
+
+        if (isset($notification->actor)) {
+          $entityfields['fk_actor'] = intval($notification->actor);
+        }
+
+        if (isset($notification->title)) {
+          $entityfields['title'] = (string)($notification->title);
+        }
+
+        if (!isset($notification->attributes()->key)) {
+          if (twCanDebug()) debug('$entities');
+          if (twCanDebug()) debug($entities);
+        }
+
+        // We are being notified, so we do not want to ship this out again as a notification...
+        // Finally write the entity.
+        $entity = entity_create('thumbwhere_contentcollection', $entityfields);
+        $entity->do_not_propagate = TRUE;
+        $entity->save();
+
+        //
+        // Send the final response
+        //
+
+        drupal_add_http_header('Content-Type', 'text/xml');
+        print('<response>');
+        print('<content_collection op="' . $op . '" id="' . $id . '" >');
+        print('<status>success</status>');
+        print('</content_collection>');
+        print('</response>');
+        exit(0);			
+		
+//
+//
+//
+////////////////////////////////////////////////////////////////////////
         }
 
         // Getting a reference to the entity we asked for

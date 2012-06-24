@@ -11,7 +11,12 @@
 /**
  * Implements hook_views_data().
  */
-function thumbwhere_awardedtrophy_views_data_alter(&$data) {
+ function thumbwhere_awardedtrophy_views_data_alter(&$data) {
+ 	
+  /* Add any special formatters for special types */	
+ 	
+ 
+ 	
   $data['thumbwhere_awardedtrophy']['link_thumbwhere_awardedtrophy'] = array(
       'field' => array(
           'title' => t('Link'),
