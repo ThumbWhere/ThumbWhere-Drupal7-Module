@@ -352,49 +352,49 @@ function thumbwhere_contentingest_entity_presave($entity, $entity_type) {
     $fields = array();
 
     // Nullable so we only pass it through to create_content_ingest if we have it..
-    if (!empty($entity->fk_mediaitem)) {
+    if (isset($entity->fk_mediaitem)) {
       $fields['mediaitem'] = $entity->fk_mediaitem;
     }
 
     // Nullable so we only pass it through to create_content_ingest if we have it..
-    if (!empty($entity->fk_content)) {
+    if (isset($entity->fk_content)) {
       $fields['content'] = $entity->fk_content;
     }
 
     // Nullable so we only pass it through to create_content_ingest if we have it..
-    if (!empty($entity->fk_member)) {
+    if (isset($entity->fk_member)) {
       $fields['member'] = $entity->fk_member;
     }
 
     // Nullable so we only pass it through to create_content_ingest if we have it..
-    if (!empty($entity->fk_identity)) {
+    if (isset($entity->fk_identity)) {
       $fields['identity'] = $entity->fk_identity;
     }
 
     // Nullable so we only pass it through to create_content_ingest if we have it..
-    if (!empty($entity->fk_producer)) {
+    if (isset($entity->fk_producer)) {
       $fields['producer'] = $entity->fk_producer;
     }
 
     // Nullable so we only pass it through to create_content_ingest if we have it..
-    if (!empty($entity->fk_consumer)) {
+    if (isset($entity->fk_consumer)) {
       $fields['consumer'] = $entity->fk_consumer;
     }
     // Compulsory so..
     if (empty($entity->url)) {
-      throw new Exception('url is compulsory.');
+      throw new Exception('url is mandatory.');
     }
     else {
       $fields['url'] = $entity->url;
     }
 
     // Nullable so we only pass it through to create_content_ingest if we have it..
-    if (!empty($entity->size)) {
+    if (isset($entity->size)) {
       $fields['size'] = $entity->size;
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->uploaded)) {
+    if (!isset($entity->uploaded)) {
       $fields['uploaded'] = $entity->uploaded = 0;
     }
     else {
@@ -402,7 +402,7 @@ function thumbwhere_contentingest_entity_presave($entity, $entity_type) {
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->transcoded)) {
+    if (!isset($entity->transcoded)) {
       $fields['transcoded'] = $entity->transcoded = 0;
     }
     else {
@@ -410,7 +410,7 @@ function thumbwhere_contentingest_entity_presave($entity, $entity_type) {
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->encrypted)) {
+    if (!isset($entity->encrypted)) {
       $fields['encrypted'] = $entity->encrypted = 0;
     }
     else {
@@ -418,7 +418,7 @@ function thumbwhere_contentingest_entity_presave($entity, $entity_type) {
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->deployed)) {
+    if (!isset($entity->deployed)) {
       $fields['deployed'] = $entity->deployed = 0;
     }
     else {
@@ -426,7 +426,7 @@ function thumbwhere_contentingest_entity_presave($entity, $entity_type) {
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->ready)) {
+    if (!isset($entity->ready)) {
       $fields['ready'] = $entity->ready = 0;
     }
     else {
@@ -434,7 +434,7 @@ function thumbwhere_contentingest_entity_presave($entity, $entity_type) {
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->error)) {
+    if (!isset($entity->error)) {
       $fields['error'] = $entity->error = 0;
     }
     else {
@@ -445,11 +445,19 @@ function thumbwhere_contentingest_entity_presave($entity, $entity_type) {
     if (!empty($entity->status)) {
       $fields['status'] = $entity->status;
     }
+		
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+    if (variable_get('thumbwhere_api_key') == '') {
+    	throw new Exception('ThumbWhere resource for \'ContentIngest\' requires that variable \'thumbwhere_api_key\' is set.');
+    }
     
+              		
     //
     // If this contentingest entity is new....
     //
-    
+               
     if ($entity->is_new) {
                 
 

@@ -351,8 +351,8 @@ function thumbwhere_contentcollection_entity_presave($entity, $entity_type) {
 
     $fields = array();
     // Compulsory so..
-    if (empty($entity->fk_actor)) {
-      throw new Exception('actor is compulsory.');
+    if (!isset($entity->fk_actor)) {
+      throw new Exception('actor is mandatory.');
     }
     else {
       $fields['actor'] = $entity->fk_actor;
@@ -365,11 +365,19 @@ function thumbwhere_contentcollection_entity_presave($entity, $entity_type) {
     else {
       $fields['title'] = $entity->title;
     }
+		
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+    if (variable_get('thumbwhere_api_key') == '') {
+    	throw new Exception('ThumbWhere resource for \'ContentCollection\' requires that variable \'thumbwhere_api_key\' is set.');
+    }
     
+              		
     //
     // If this contentcollection entity is new....
     //
-    
+               
     if ($entity->is_new) {
                 
 

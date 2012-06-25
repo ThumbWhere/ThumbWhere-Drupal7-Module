@@ -351,36 +351,36 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
 
     $fields = array();
     // Compulsory so..
-    if (empty($entity->fk_code)) {
-      throw new Exception('code is compulsory.');
+    if (!isset($entity->fk_code)) {
+      throw new Exception('code is mandatory.');
     }
     else {
       $fields['code'] = $entity->fk_code;
     }
     // Compulsory so..
-    if (empty($entity->fk_identity)) {
-      throw new Exception('identity is compulsory.');
+    if (!isset($entity->fk_identity)) {
+      throw new Exception('identity is mandatory.');
     }
     else {
       $fields['identity'] = $entity->fk_identity;
     }
     // Compulsory so..
-    if (empty($entity->fk_format)) {
-      throw new Exception('format is compulsory.');
+    if (!isset($entity->fk_format)) {
+      throw new Exception('format is mandatory.');
     }
     else {
       $fields['format'] = $entity->fk_format;
     }
     // Compulsory so..
-    if (empty($entity->fk_server)) {
-      throw new Exception('server is compulsory.');
+    if (!isset($entity->fk_server)) {
+      throw new Exception('server is mandatory.');
     }
     else {
       $fields['server'] = $entity->fk_server;
     }
 
     // Nullable so we only pass it through to create_mediaitem if we have it..
-    if (!empty($entity->fk_license)) {
+    if (isset($entity->fk_license)) {
       $fields['license'] = $entity->fk_license;
     }
 
@@ -395,7 +395,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->bodyonly)) {
+    if (!isset($entity->bodyonly)) {
       $fields['bodyonly'] = $entity->bodyonly = 0;
     }
     else {
@@ -403,7 +403,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->comment)) {
+    if (!isset($entity->comment)) {
       $fields['comment'] = $entity->comment = 0;
     }
     else {
@@ -411,7 +411,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->usergenerated)) {
+    if (!isset($entity->usergenerated)) {
       $fields['usergenerated'] = $entity->usergenerated = 0;
     }
     else {
@@ -419,14 +419,14 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
     }
     // Compulsory so..
     if (empty($entity->digest)) {
-      throw new Exception('digest is compulsory.');
+      throw new Exception('digest is mandatory.');
     }
     else {
       $fields['digest'] = $entity->digest;
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->process_attempts)) {
+    if (!isset($entity->process_attempts)) {
       $fields['process_attempts'] = $entity->process_attempts = 0;
     }
     else {
@@ -434,7 +434,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->censored)) {
+    if (!isset($entity->censored)) {
       $fields['censored'] = $entity->censored = 0;
     }
     else {
@@ -442,7 +442,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->reviewed)) {
+    if (!isset($entity->reviewed)) {
       $fields['reviewed'] = $entity->reviewed = 0;
     }
     else {
@@ -450,7 +450,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->privacy)) {
+    if (!isset($entity->privacy)) {
       $fields['privacy'] = $entity->privacy = 0;
     }
     else {
@@ -458,7 +458,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->viewcount)) {
+    if (!isset($entity->viewcount)) {
       $fields['viewcount'] = $entity->viewcount = 0;
     }
     else {
@@ -466,7 +466,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->ratingdividend)) {
+    if (!isset($entity->ratingdividend)) {
       $fields['ratingdividend'] = $entity->ratingdividend = 0;
     }
     else {
@@ -474,7 +474,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->ratingdivisor)) {
+    if (!isset($entity->ratingdivisor)) {
       $fields['ratingdivisor'] = $entity->ratingdivisor = 0;
     }
     else {
@@ -482,17 +482,25 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->ratings)) {
+    if (!isset($entity->ratings)) {
       $fields['ratings'] = $entity->ratings = 0;
     }
     else {
       $fields['ratings'] = $entity->ratings;
     }
+		
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+    if (variable_get('thumbwhere_api_key') == '') {
+    	throw new Exception('ThumbWhere resource for \'MediaItem\' requires that variable \'thumbwhere_api_key\' is set.');
+    }
     
+              		
     //
     // If this mediaitem entity is new....
     //
-    
+               
     if ($entity->is_new) {
                 
 

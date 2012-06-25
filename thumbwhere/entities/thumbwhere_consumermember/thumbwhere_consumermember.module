@@ -351,32 +351,40 @@ function thumbwhere_consumermember_entity_presave($entity, $entity_type) {
 
     $fields = array();
     // Compulsory so..
-    if (empty($entity->fk_consumer)) {
-      throw new Exception('consumer is compulsory.');
+    if (!isset($entity->fk_consumer)) {
+      throw new Exception('consumer is mandatory.');
     }
     else {
       $fields['consumer'] = $entity->fk_consumer;
     }
     // Compulsory so..
-    if (empty($entity->fk_member)) {
-      throw new Exception('member is compulsory.');
+    if (!isset($entity->fk_member)) {
+      throw new Exception('member is mandatory.');
     }
     else {
       $fields['member'] = $entity->fk_member;
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->admin)) {
+    if (!isset($entity->admin)) {
       $fields['admin'] = $entity->admin = 0;
     }
     else {
       $fields['admin'] = $entity->admin;
     }
+		
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+    if (variable_get('thumbwhere_api_key') == '') {
+    	throw new Exception('ThumbWhere resource for \'ConsumerMember\' requires that variable \'thumbwhere_api_key\' is set.');
+    }
     
+              		
     //
     // If this consumermember entity is new....
     //
-    
+               
     if ($entity->is_new) {
                 
 

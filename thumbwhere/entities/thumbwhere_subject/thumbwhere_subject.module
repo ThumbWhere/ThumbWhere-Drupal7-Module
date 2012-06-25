@@ -352,29 +352,37 @@ function thumbwhere_subject_entity_presave($entity, $entity_type) {
     $fields = array();
 
     // Nullable so we only pass it through to create_subject if we have it..
-    if (!empty($entity->fk_actor)) {
+    if (isset($entity->fk_actor)) {
       $fields['actor'] = $entity->fk_actor;
     }
 
     // Nullable so we only pass it through to create_subject if we have it..
-    if (!empty($entity->fk_thing)) {
+    if (isset($entity->fk_thing)) {
       $fields['thing'] = $entity->fk_thing;
     }
 
     // Nullable so we only pass it through to create_subject if we have it..
-    if (!empty($entity->fk_action)) {
+    if (isset($entity->fk_action)) {
       $fields['action'] = $entity->fk_action;
     }
 
     // Nullable so we only pass it through to create_subject if we have it..
-    if (!empty($entity->fk_place)) {
+    if (isset($entity->fk_place)) {
       $fields['place'] = $entity->fk_place;
     }
+		
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+    if (variable_get('thumbwhere_api_key') == '') {
+    	throw new Exception('ThumbWhere resource for \'Subject\' requires that variable \'thumbwhere_api_key\' is set.');
+    }
     
+              		
     //
     // If this subject entity is new....
     //
-    
+               
     if ($entity->is_new) {
                 
 

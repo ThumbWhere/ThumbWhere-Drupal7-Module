@@ -352,17 +352,17 @@ function thumbwhere_content_entity_presave($entity, $entity_type) {
     $fields = array();
 
     // Nullable so we only pass it through to create_content if we have it..
-    if (!empty($entity->fk_mediaitem)) {
+    if (isset($entity->fk_mediaitem)) {
       $fields['mediaitem'] = $entity->fk_mediaitem;
     }
 
     // Nullable so we only pass it through to create_content if we have it..
-    if (!empty($entity->fk_metadata)) {
+    if (isset($entity->fk_metadata)) {
       $fields['metadata'] = $entity->fk_metadata;
     }
 
     // Nullable so we only pass it through to create_content if we have it..
-    if (!empty($entity->fk_producer)) {
+    if (isset($entity->fk_producer)) {
       $fields['producer'] = $entity->fk_producer;
     }
 
@@ -373,11 +373,19 @@ function thumbwhere_content_entity_presave($entity, $entity_type) {
     else {
       $fields['title'] = $entity->title;
     }
+		
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+    if (variable_get('thumbwhere_api_key') == '') {
+    	throw new Exception('ThumbWhere resource for \'Content\' requires that variable \'thumbwhere_api_key\' is set.');
+    }
     
+              		
     //
     // If this content entity is new....
     //
-    
+               
     if ($entity->is_new) {
                 
 

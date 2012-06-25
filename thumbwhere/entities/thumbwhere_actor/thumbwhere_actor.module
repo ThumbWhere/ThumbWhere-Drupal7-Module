@@ -352,29 +352,37 @@ function thumbwhere_actor_entity_presave($entity, $entity_type) {
     $fields = array();
 
     // Nullable so we only pass it through to create_actor if we have it..
-    if (!empty($entity->fk_member)) {
+    if (isset($entity->fk_member)) {
       $fields['member'] = $entity->fk_member;
     }
 
     // Nullable so we only pass it through to create_actor if we have it..
-    if (!empty($entity->fk_identity)) {
+    if (isset($entity->fk_identity)) {
       $fields['identity'] = $entity->fk_identity;
     }
 
     // Nullable so we only pass it through to create_actor if we have it..
-    if (!empty($entity->fk_producer)) {
+    if (isset($entity->fk_producer)) {
       $fields['producer'] = $entity->fk_producer;
     }
 
     // Nullable so we only pass it through to create_actor if we have it..
-    if (!empty($entity->fk_consumer)) {
+    if (isset($entity->fk_consumer)) {
       $fields['consumer'] = $entity->fk_consumer;
     }
+		
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+    if (variable_get('thumbwhere_api_key') == '') {
+    	throw new Exception('ThumbWhere resource for \'Actor\' requires that variable \'thumbwhere_api_key\' is set.');
+    }
     
+              		
     //
     // If this actor entity is new....
     //
-    
+               
     if ($entity->is_new) {
                 
 

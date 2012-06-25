@@ -351,45 +351,53 @@ function thumbwhere_hostcommand_entity_presave($entity, $entity_type) {
 
     $fields = array();
     // Compulsory so..
-    if (empty($entity->fk_host)) {
-      throw new Exception('host is compulsory.');
+    if (!isset($entity->fk_host)) {
+      throw new Exception('host is mandatory.');
     }
     else {
       $fields['host'] = $entity->fk_host;
     }
     // Compulsory so..
-    if (empty($entity->fk_hostcommandtemplate)) {
-      throw new Exception('hostcommandtemplate is compulsory.');
+    if (!isset($entity->fk_hostcommandtemplate)) {
+      throw new Exception('hostcommandtemplate is mandatory.');
     }
     else {
       $fields['hostcommandtemplate'] = $entity->fk_hostcommandtemplate;
     }
     // Compulsory so..
     if (empty($entity->command)) {
-      throw new Exception('command is compulsory.');
+      throw new Exception('command is mandatory.');
     }
     else {
       $fields['command'] = $entity->command;
     }
     // Compulsory so..
-    if (empty($entity->running)) {
-      throw new Exception('running is compulsory.');
+    if (!isset($entity->running)) {
+      throw new Exception('running is mandatory.');
     }
     else {
       $fields['running'] = $entity->running;
     }
     // Compulsory so..
-    if (empty($entity->completed)) {
-      throw new Exception('completed is compulsory.');
+    if (!isset($entity->completed)) {
+      throw new Exception('completed is mandatory.');
     }
     else {
       $fields['completed'] = $entity->completed;
     }
+		
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+    if (variable_get('thumbwhere_api_key') == '') {
+    	throw new Exception('ThumbWhere resource for \'HostCommand\' requires that variable \'thumbwhere_api_key\' is set.');
+    }
     
+              		
     //
     // If this hostcommand entity is new....
     //
-    
+               
     if ($entity->is_new) {
                 
 

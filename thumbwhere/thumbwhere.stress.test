@@ -11,8 +11,8 @@ class ThumbWhereFeatureXYZStressTestCase extends DrupalWebTestCase {
 
   public function getInfo() {
     return array(
-        'name' => 'Feature XYZ Stress Test',
-        'description' => 'Stress tests for feature XYZ.',
+        'name' => 'ThumbWhere Core Stress',
+        'description' => 'ThumbWhere Core Stres',
         'group' => 'ThumbWhereStress',
     );
   }
@@ -22,6 +22,15 @@ class ThumbWhereFeatureXYZStressTestCase extends DrupalWebTestCase {
     // Make sure we are using the testing profile
     $this->profile = 'testing';
 
+    // Set the critial thumbwhere config
+    variable_set('thumbwhere_api_url', 'localhost.thumbwhere.com');
+    variable_set('thumbwhere_api_version', 'v1.1');
+    variable_set('thumbwhere_api_key', '80bb71a1-131c-43c2-9bac-e27006051cd0');
+    variable_set('thumbwhere_master_console', '0');
+    variable_set('thumbwhere_api_log_debug', '0');
+    variable_set('thumbwhere_api_log_trace', '0');
+    variable_set('thumbwhere_machine_id', 1);
+
     // Enable the module.
     parent::setUp('thumbwhere_producer');
 
@@ -30,9 +39,19 @@ class ThumbWhereFeatureXYZStressTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * Create 100 tracks..
+   * Create 100 producers..
    */
   function testStress100() {
+
+
+    // Set the critial thumbwhere config
+    variable_set('thumbwhere_api_url', 'localhost.thumbwhere.com');
+    variable_set('thumbwhere_api_version', 'v1.1');
+    variable_set('thumbwhere_api_key', '80bb71a1-131c-43c2-9bac-e27006051cd0');
+    variable_set('thumbwhere_master_console', '0');
+    variable_set('thumbwhere_api_log_debug', '0');
+    variable_set('thumbwhere_api_log_trace', '0');
+    variable_set('thumbwhere_machine_id', 1);
 
     $n = 100;
 
@@ -56,73 +75,11 @@ class ThumbWhereFeatureXYZStressTestCase extends DrupalWebTestCase {
     $message = t("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
     if (function_exists('drush_log')) {
       drush_log($message, 'metric');
+      drush_log("##teamcity[buildStatisticValue key='producerCreate" . $n . "' value='" . $n / $time . "']");
     }
     $this->assertTrue($result, $message);
 
   }
 
-  /**
-   * Create 1000 tracks..
-   */
-  function testStress1000() {
-
-    $n = 1000;
-
-    $time_start = microtime(TRUE);
-
-    for ($i = 0; $i < $n; $i++) {
-
-      $entity = entity_create('thumbwhere_producer', array(
-          'name' => $this->randomName(),
-          'uid' => $this->privileged_user->uid
-      ));
-
-      $entity->save();
-
-    }
-
-    $time_end = microtime(TRUE);
-    $time = $time_end - $time_start;
-
-    $result = TRUE;
-    $message = t("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
-    if (function_exists('drush_log')) {
-      drush_log($message, 'metric');
-    }
-    $this->assertTrue($result, $message);
-
-  }
-
-  /**
-   * Create 10000 tracks..
-   */
-  function testStress10000() {
-
-    $n = 10000;
-
-    $time_start = microtime(TRUE);
-
-    for ($i = 0; $i < $n; $i++) {
-
-      $entity = entity_create('thumbwhere_producer', array(
-          'name' => $this->randomName(),
-          'uid' => $this->privileged_user->uid
-      ));
-
-      $entity->save();
-
-    }
-
-    $time_end = microtime(TRUE);
-    $time = $time_end - $time_start;
-
-    $result = TRUE;
-    $message = t("Created $n Tracks in $time seconds = " . $n / $time . ' tracks per second.');
-    if (function_exists('drush_log')) {
-      drush_log($message, 'metric');
-    }
-    $this->assertTrue($result, $message);
-
-  }
 }
 

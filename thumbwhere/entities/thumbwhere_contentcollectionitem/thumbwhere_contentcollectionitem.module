@@ -351,32 +351,40 @@ function thumbwhere_contentcollectionitem_entity_presave($entity, $entity_type) 
 
     $fields = array();
     // Compulsory so..
-    if (empty($entity->fk_contentcollection)) {
-      throw new Exception('contentcollection is compulsory.');
+    if (!isset($entity->fk_contentcollection)) {
+      throw new Exception('contentcollection is mandatory.');
     }
     else {
       $fields['contentcollection'] = $entity->fk_contentcollection;
     }
     // Compulsory so..
-    if (empty($entity->fk_content)) {
-      throw new Exception('content is compulsory.');
+    if (!isset($entity->fk_content)) {
+      throw new Exception('content is mandatory.');
     }
     else {
       $fields['content'] = $entity->fk_content;
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->order)) {
+    if (!isset($entity->order)) {
       $fields['order'] = $entity->order = 1;
     }
     else {
       $fields['order'] = $entity->order;
     }
+		
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+    if (variable_get('thumbwhere_api_key') == '') {
+    	throw new Exception('ThumbWhere resource for \'ContentCollectionItem\' requires that variable \'thumbwhere_api_key\' is set.');
+    }
     
+              		
     //
     // If this contentcollectionitem entity is new....
     //
-    
+               
     if ($entity->is_new) {
                 
 

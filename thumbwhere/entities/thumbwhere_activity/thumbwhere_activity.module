@@ -351,36 +351,44 @@ function thumbwhere_activity_entity_presave($entity, $entity_type) {
 
     $fields = array();
     // Compulsory so..
-    if (empty($entity->fk_actor)) {
-      throw new Exception('actor is compulsory.');
+    if (!isset($entity->fk_actor)) {
+      throw new Exception('actor is mandatory.');
     }
     else {
       $fields['actor'] = $entity->fk_actor;
     }
     // Compulsory so..
-    if (empty($entity->fk_action)) {
-      throw new Exception('action is compulsory.');
+    if (!isset($entity->fk_action)) {
+      throw new Exception('action is mandatory.');
     }
     else {
       $fields['action'] = $entity->fk_action;
     }
     // Compulsory so..
-    if (empty($entity->fk_subject)) {
-      throw new Exception('subject is compulsory.');
+    if (!isset($entity->fk_subject)) {
+      throw new Exception('subject is mandatory.');
     }
     else {
       $fields['subject'] = $entity->fk_subject;
     }
 
     // Nullable so we only pass it through to create_activity if we have it..
-    if (!empty($entity->fk_place)) {
+    if (isset($entity->fk_place)) {
       $fields['place'] = $entity->fk_place;
     }
+		
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+    if (variable_get('thumbwhere_api_key') == '') {
+    	throw new Exception('ThumbWhere resource for \'Activity\' requires that variable \'thumbwhere_api_key\' is set.');
+    }
     
+              		
     //
     // If this activity entity is new....
     //
-    
+               
     if ($entity->is_new) {
                 
 

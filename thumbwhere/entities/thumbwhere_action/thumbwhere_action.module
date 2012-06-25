@@ -352,69 +352,77 @@ function thumbwhere_action_entity_presave($entity, $entity_type) {
     $fields = array();
 
     // Nullable so we only pass it through to create_action if we have it..
-    if (!empty($entity->fk_contentingest)) {
+    if (isset($entity->fk_contentingest)) {
       $fields['contentingest'] = $entity->fk_contentingest;
     }
 
     // Nullable so we only pass it through to create_action if we have it..
-    if (!empty($entity->fk_like)) {
+    if (isset($entity->fk_like)) {
       $fields['like'] = $entity->fk_like;
     }
 
     // Nullable so we only pass it through to create_action if we have it..
-    if (!empty($entity->fk_follow)) {
+    if (isset($entity->fk_follow)) {
       $fields['follow'] = $entity->fk_follow;
     }
 
     // Nullable so we only pass it through to create_action if we have it..
-    if (!empty($entity->fk_fan)) {
+    if (isset($entity->fk_fan)) {
       $fields['fan'] = $entity->fk_fan;
     }
 
     // Nullable so we only pass it through to create_action if we have it..
-    if (!empty($entity->fk_share)) {
+    if (isset($entity->fk_share)) {
       $fields['share'] = $entity->fk_share;
     }
 
     // Nullable so we only pass it through to create_action if we have it..
-    if (!empty($entity->fk_awardedtrophy)) {
+    if (isset($entity->fk_awardedtrophy)) {
       $fields['awardedtrophy'] = $entity->fk_awardedtrophy;
     }
 
     // Nullable so we only pass it through to create_action if we have it..
-    if (!empty($entity->fk_mediaitemrating)) {
+    if (isset($entity->fk_mediaitemrating)) {
       $fields['mediaitemrating'] = $entity->fk_mediaitemrating;
     }
 
     // Nullable so we only pass it through to create_action if we have it..
-    if (!empty($entity->fk_booking)) {
+    if (isset($entity->fk_booking)) {
       $fields['booking'] = $entity->fk_booking;
     }
 
     // Nullable so we only pass it through to create_action if we have it..
-    if (!empty($entity->fk_checkin)) {
+    if (isset($entity->fk_checkin)) {
       $fields['checkin'] = $entity->fk_checkin;
     }
 
     // Nullable so we only pass it through to create_action if we have it..
-    if (!empty($entity->fk_consume)) {
+    if (isset($entity->fk_consume)) {
       $fields['consume'] = $entity->fk_consume;
     }
 
     // Nullable so we only pass it through to create_action if we have it..
-    if (!empty($entity->fk_consumermember)) {
+    if (isset($entity->fk_consumermember)) {
       $fields['consumermember'] = $entity->fk_consumermember;
     }
 
     // Nullable so we only pass it through to create_action if we have it..
-    if (!empty($entity->fk_producermember)) {
+    if (isset($entity->fk_producermember)) {
       $fields['producermember'] = $entity->fk_producermember;
     }
+		
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+    if (variable_get('thumbwhere_api_key') == '') {
+    	throw new Exception('ThumbWhere resource for \'Action\' requires that variable \'thumbwhere_api_key\' is set.');
+    }
     
+              		
     //
     // If this action entity is new....
     //
-    
+               
     if ($entity->is_new) {
                 
 

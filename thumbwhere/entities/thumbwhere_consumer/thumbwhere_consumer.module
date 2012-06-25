@@ -352,26 +352,34 @@ function thumbwhere_consumer_entity_presave($entity, $entity_type) {
     $fields = array();
 
     // Nullable so we only pass it through to create_consumer if we have it..
-    if (!empty($entity->fk_place)) {
+    if (isset($entity->fk_place)) {
       $fields['place'] = $entity->fk_place;
     }
 
     // Nullable so we only pass it through to create_consumer if we have it..
-    if (!empty($entity->fk_reputation)) {
+    if (isset($entity->fk_reputation)) {
       $fields['reputation'] = $entity->fk_reputation;
     }
     // Compulsory so..
     if (empty($entity->name)) {
-      throw new Exception('name is compulsory.');
+      throw new Exception('name is mandatory.');
     }
     else {
       $fields['name'] = $entity->name;
     }
+		
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+    if (variable_get('thumbwhere_api_key') == '') {
+    	throw new Exception('ThumbWhere resource for \'Consumer\' requires that variable \'thumbwhere_api_key\' is set.');
+    }
     
+              		
     //
     // If this consumer entity is new....
     //
-    
+               
     if ($entity->is_new) {
                 
 

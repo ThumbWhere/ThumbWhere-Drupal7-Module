@@ -351,36 +351,44 @@ function thumbwhere_follow_entity_presave($entity, $entity_type) {
 
     $fields = array();
     // Compulsory so..
-    if (empty($entity->fk_actor)) {
-      throw new Exception('actor is compulsory.');
+    if (!isset($entity->fk_actor)) {
+      throw new Exception('actor is mandatory.');
     }
     else {
       $fields['actor'] = $entity->fk_actor;
     }
     // Compulsory so..
-    if (empty($entity->fk_thing)) {
-      throw new Exception('thing is compulsory.');
+    if (!isset($entity->fk_thing)) {
+      throw new Exception('thing is mandatory.');
     }
     else {
       $fields['thing'] = $entity->fk_thing;
     }
 
     // Nullable so we only pass it through to create_follow if we have it..
-    if (!empty($entity->fk_place)) {
+    if (isset($entity->fk_place)) {
       $fields['place'] = $entity->fk_place;
     }
     // Compulsory so..
     if (empty($entity->documentation)) {
-      throw new Exception('documentation is compulsory.');
+      throw new Exception('documentation is mandatory.');
     }
     else {
       $fields['documentation'] = $entity->documentation;
     }
+		
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+    if (variable_get('thumbwhere_api_key') == '') {
+    	throw new Exception('ThumbWhere resource for \'Follow\' requires that variable \'thumbwhere_api_key\' is set.');
+    }
     
+              		
     //
     // If this follow entity is new....
     //
-    
+               
     if ($entity->is_new) {
                 
 

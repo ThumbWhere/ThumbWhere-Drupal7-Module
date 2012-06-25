@@ -351,38 +351,46 @@ function thumbwhere_awardedtrophy_entity_presave($entity, $entity_type) {
 
     $fields = array();
     // Compulsory so..
-    if (empty($entity->fk_trophy)) {
-      throw new Exception('trophy is compulsory.');
+    if (!isset($entity->fk_trophy)) {
+      throw new Exception('trophy is mandatory.');
     }
     else {
       $fields['trophy'] = $entity->fk_trophy;
     }
     // Compulsory so..
-    if (empty($entity->fk_actor)) {
-      throw new Exception('actor is compulsory.');
+    if (!isset($entity->fk_actor)) {
+      throw new Exception('actor is mandatory.');
     }
     else {
       $fields['actor'] = $entity->fk_actor;
     }
     // Compulsory so..
-    if (empty($entity->fk_thing)) {
-      throw new Exception('thing is compulsory.');
+    if (!isset($entity->fk_thing)) {
+      throw new Exception('thing is mandatory.');
     }
     else {
       $fields['thing'] = $entity->fk_thing;
     }
     // Compulsory so..
     if (empty($entity->documentation)) {
-      throw new Exception('documentation is compulsory.');
+      throw new Exception('documentation is mandatory.');
     }
     else {
       $fields['documentation'] = $entity->documentation;
     }
+		
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+    if (variable_get('thumbwhere_api_key') == '') {
+    	throw new Exception('ThumbWhere resource for \'AwardedTrophy\' requires that variable \'thumbwhere_api_key\' is set.');
+    }
     
+              		
     //
     // If this awardedtrophy entity is new....
     //
-    
+               
     if ($entity->is_new) {
                 
 

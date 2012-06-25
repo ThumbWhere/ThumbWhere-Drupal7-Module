@@ -351,15 +351,15 @@ function thumbwhere_identity_entity_presave($entity, $entity_type) {
 
     $fields = array();
     // Compulsory so..
-    if (empty($entity->fk_identitytype)) {
-      throw new Exception('identitytype is compulsory.');
+    if (!isset($entity->fk_identitytype)) {
+      throw new Exception('identitytype is mandatory.');
     }
     else {
       $fields['identitytype'] = $entity->fk_identitytype;
     }
 
     // Nullable so we only pass it through to create_identity if we have it..
-    if (!empty($entity->fk_member)) {
+    if (isset($entity->fk_member)) {
       $fields['member'] = $entity->fk_member;
     }
 
@@ -384,7 +384,7 @@ function thumbwhere_identity_entity_presave($entity, $entity_type) {
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->secret_hash_itterations)) {
+    if (!isset($entity->secret_hash_itterations)) {
       $fields['secret_hash_itterations'] = $entity->secret_hash_itterations = 1;
     }
     else {
@@ -397,22 +397,30 @@ function thumbwhere_identity_entity_presave($entity, $entity_type) {
     }
 
     // Nullable so we only pass it through to create_identity if we have it..
-    if (!empty($entity->last_login)) {
+    if (isset($entity->last_login)) {
       $fields['last_login'] = $entity->last_login;
     }
 
     // Not nullable but we have a default value
-    if (empty($entity->total_logins)) {
+    if (!isset($entity->total_logins)) {
       $fields['total_logins'] = $entity->total_logins = 0;
     }
     else {
       $fields['total_logins'] = $entity->total_logins;
     }
+		
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+    if (variable_get('thumbwhere_api_key') == '') {
+    	throw new Exception('ThumbWhere resource for \'Identity\' requires that variable \'thumbwhere_api_key\' is set.');
+    }
     
+              		
     //
     // If this identity entity is new....
     //
-    
+               
     if ($entity->is_new) {
                 
 

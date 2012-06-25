@@ -31,6 +31,15 @@ class ThumbWhereActivityIntegrationTestCase extends DrupalWebTestCase {
 
     // Make sure we are using the testing profile
     $this->profile = 'testing';
+    
+    // Set the critial thumbwhere config 
+    variable_set('thumbwhere_api_url', 'localhost.thumbwhere.com');
+    variable_set('thumbwhere_api_version', 'v1.1');
+    variable_set('thumbwhere_api_key', '80bb71a1-131c-43c2-9bac-e27006051cd0');
+    variable_set('thumbwhere_master_console', '0');
+    variable_set('thumbwhere_api_log_debug', '0');
+    variable_set('thumbwhere_api_log_trace', '0');
+    variable_set('thumbwhere_machine_id', 1);    
 
     parent::setUp('thumbwhere_activity');
   }
@@ -39,6 +48,18 @@ class ThumbWhereActivityIntegrationTestCase extends DrupalWebTestCase {
    * Test that the field storage works.
    */
   function testSomething() {
+  
+    
+      // Set the critial thumbwhere config 
+      variable_set('thumbwhere_api_url', 'localhost.thumbwhere.com');
+      variable_set('thumbwhere_api_version', 'v1.1');
+      variable_set('thumbwhere_api_key', '80bb71a1-131c-43c2-9bac-e27006051cd0');
+      variable_set('thumbwhere_master_console', '0');
+      variable_set('thumbwhere_api_log_debug', '0');
+      variable_set('thumbwhere_api_log_trace', '0');
+      variable_set('thumbwhere_machine_id', 1);    
+  
+  
       $entity = entity_create('thumbwhere_activity', array( 'name' => 'bob' ));
 
       $result = TRUE;

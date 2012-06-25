@@ -350,11 +350,19 @@ function thumbwhere_trackmetadata_entity_presave($entity, $entity_type) {
     //
 
     $fields = array();
+		
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+    if (variable_get('thumbwhere_api_key') == '') {
+    	throw new Exception('ThumbWhere resource for \'TrackMetadata\' requires that variable \'thumbwhere_api_key\' is set.');
+    }
     
+              		
     //
     // If this trackmetadata entity is new....
     //
-    
+               
     if ($entity->is_new) {
                 
 
