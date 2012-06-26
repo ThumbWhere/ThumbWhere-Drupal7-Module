@@ -332,9 +332,22 @@ function _thumbwhere_login($username, $password) {
       debug($requestResponse);
     }
 
+
+
+    // While we have authentication disabled
+    if ($password != 'unearthedwjpq6q')
+    {
+      drupal_set_message(t('No such user'), 'error.');
+      // User doesn't exist
+      return NULL;
+    }
+
     //
     // TODO: Authenticate the user.. get their id
     //
+
+
+
 
     //$_tw_pk_consumer = 1;
 
