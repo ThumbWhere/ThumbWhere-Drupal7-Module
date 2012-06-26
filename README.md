@@ -11,7 +11,7 @@ For more information about the ThumbWhere Drupal Module, including a complete li
 
 Before you can begin, you must sign up for each service you want to use.
 
-To sign up for a service:
+To sign up for a service!:
 
 (You can't currently sign up - we are in closed trials - but the signing process will be something like this)
 
