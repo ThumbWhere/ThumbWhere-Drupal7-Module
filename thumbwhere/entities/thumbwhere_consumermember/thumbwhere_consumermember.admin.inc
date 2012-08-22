@@ -584,6 +584,21 @@ class ThumbWhereConsumerMemberUIController extends EntityDefaultUIController {
     $items[$this->path . '/add'] = array(
       //'title' => 'Add a ConsumerMember',
       'title' => 'Add',
+      'description' => 'Add a new ConsumerMember',
+      'page callback' => 'thumbwhere_consumermember_form_wrapper',
+      'page arguments' => array(thumbwhere_consumermember_create(array('type' => 'thumbwhere_consumermember'))),
+      'access callback' => 'thumbwhere_consumermember_access',
+      'access arguments' => array('edit', 'edit ' . 'thumbwhere_consumermember'),
+      'file' => 'thumbwhere_consumermember.admin.inc',
+      'file path' => drupal_get_path('module', $this->entityInfo['module'])
+    );
+
+
+/*
+    // Change the add page menu to multiple types of entities
+    $items[$this->path . '/add'] = array(
+      //'title' => 'Add a ConsumerMember',
+      'title' => 'Add',
 	  'description' => 'Add a new ConsumerMember',
       'page callback'  => 'thumbwhere_consumermember_add_page',
       'access callback'  => 'thumbwhere_consumermember_access',
@@ -594,6 +609,7 @@ class ThumbWhereConsumerMemberUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
+*/    
 /*
     $items[$this->path . '/add/' . 'thumbwhere_consumermember'] = array(
       'title' => 'Add ' . 'ThumbWhereConsumerMember',

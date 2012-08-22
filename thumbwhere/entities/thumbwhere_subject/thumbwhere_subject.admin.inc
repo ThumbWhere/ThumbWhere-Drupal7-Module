@@ -581,6 +581,21 @@ class ThumbWhereSubjectUIController extends EntityDefaultUIController {
     $items[$this->path . '/add'] = array(
       //'title' => 'Add a Subject',
       'title' => 'Add',
+      'description' => 'Add a new Subject',
+      'page callback' => 'thumbwhere_subject_form_wrapper',
+      'page arguments' => array(thumbwhere_subject_create(array('type' => 'thumbwhere_subject'))),
+      'access callback' => 'thumbwhere_subject_access',
+      'access arguments' => array('edit', 'edit ' . 'thumbwhere_subject'),
+      'file' => 'thumbwhere_subject.admin.inc',
+      'file path' => drupal_get_path('module', $this->entityInfo['module'])
+    );
+
+
+/*
+    // Change the add page menu to multiple types of entities
+    $items[$this->path . '/add'] = array(
+      //'title' => 'Add a Subject',
+      'title' => 'Add',
 	  'description' => 'Add a new Subject',
       'page callback'  => 'thumbwhere_subject_add_page',
       'access callback'  => 'thumbwhere_subject_access',
@@ -591,6 +606,7 @@ class ThumbWhereSubjectUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
+*/    
 /*
     $items[$this->path . '/add/' . 'thumbwhere_subject'] = array(
       'title' => 'Add ' . 'ThumbWhereSubject',

@@ -545,6 +545,21 @@ class ThumbWhereContentClassificationUIController extends EntityDefaultUIControl
     $items[$this->path . '/add'] = array(
       //'title' => 'Add a ContentClassification',
       'title' => 'Add',
+      'description' => 'Add a new ContentClassification',
+      'page callback' => 'thumbwhere_contentclassification_form_wrapper',
+      'page arguments' => array(thumbwhere_contentclassification_create(array('type' => 'thumbwhere_contentclassification'))),
+      'access callback' => 'thumbwhere_contentclassification_access',
+      'access arguments' => array('edit', 'edit ' . 'thumbwhere_contentclassification'),
+      'file' => 'thumbwhere_contentclassification.admin.inc',
+      'file path' => drupal_get_path('module', $this->entityInfo['module'])
+    );
+
+
+/*
+    // Change the add page menu to multiple types of entities
+    $items[$this->path . '/add'] = array(
+      //'title' => 'Add a ContentClassification',
+      'title' => 'Add',
 	  'description' => 'Add a new ContentClassification',
       'page callback'  => 'thumbwhere_contentclassification_add_page',
       'access callback'  => 'thumbwhere_contentclassification_access',
@@ -555,6 +570,7 @@ class ThumbWhereContentClassificationUIController extends EntityDefaultUIControl
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
+*/    
 /*
     $items[$this->path . '/add/' . 'thumbwhere_contentclassification'] = array(
       'title' => 'Add ' . 'ThumbWhereContentClassification',

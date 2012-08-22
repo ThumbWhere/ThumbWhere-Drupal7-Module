@@ -632,6 +632,21 @@ class ThumbWhereContentMetadataUIController extends EntityDefaultUIController {
     $items[$this->path . '/add'] = array(
       //'title' => 'Add a ContentMetadata',
       'title' => 'Add',
+      'description' => 'Add a new ContentMetadata',
+      'page callback' => 'thumbwhere_contentmetadata_form_wrapper',
+      'page arguments' => array(thumbwhere_contentmetadata_create(array('type' => 'thumbwhere_contentmetadata'))),
+      'access callback' => 'thumbwhere_contentmetadata_access',
+      'access arguments' => array('edit', 'edit ' . 'thumbwhere_contentmetadata'),
+      'file' => 'thumbwhere_contentmetadata.admin.inc',
+      'file path' => drupal_get_path('module', $this->entityInfo['module'])
+    );
+
+
+/*
+    // Change the add page menu to multiple types of entities
+    $items[$this->path . '/add'] = array(
+      //'title' => 'Add a ContentMetadata',
+      'title' => 'Add',
 	  'description' => 'Add a new ContentMetadata',
       'page callback'  => 'thumbwhere_contentmetadata_add_page',
       'access callback'  => 'thumbwhere_contentmetadata_access',
@@ -642,6 +657,7 @@ class ThumbWhereContentMetadataUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
+*/    
 /*
     $items[$this->path . '/add/' . 'thumbwhere_contentmetadata'] = array(
       'title' => 'Add ' . 'ThumbWhereContentMetadata',

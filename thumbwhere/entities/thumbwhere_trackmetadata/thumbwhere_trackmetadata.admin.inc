@@ -605,6 +605,21 @@ class ThumbWhereTrackMetadataUIController extends EntityDefaultUIController {
     $items[$this->path . '/add'] = array(
       //'title' => 'Add a TrackMetadata',
       'title' => 'Add',
+      'description' => 'Add a new TrackMetadata',
+      'page callback' => 'thumbwhere_trackmetadata_form_wrapper',
+      'page arguments' => array(thumbwhere_trackmetadata_create(array('type' => 'thumbwhere_trackmetadata'))),
+      'access callback' => 'thumbwhere_trackmetadata_access',
+      'access arguments' => array('edit', 'edit ' . 'thumbwhere_trackmetadata'),
+      'file' => 'thumbwhere_trackmetadata.admin.inc',
+      'file path' => drupal_get_path('module', $this->entityInfo['module'])
+    );
+
+
+/*
+    // Change the add page menu to multiple types of entities
+    $items[$this->path . '/add'] = array(
+      //'title' => 'Add a TrackMetadata',
+      'title' => 'Add',
 	  'description' => 'Add a new TrackMetadata',
       'page callback'  => 'thumbwhere_trackmetadata_add_page',
       'access callback'  => 'thumbwhere_trackmetadata_access',
@@ -615,6 +630,7 @@ class ThumbWhereTrackMetadataUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
+*/    
 /*
     $items[$this->path . '/add/' . 'thumbwhere_trackmetadata'] = array(
       'title' => 'Add ' . 'ThumbWhereTrackMetadata',

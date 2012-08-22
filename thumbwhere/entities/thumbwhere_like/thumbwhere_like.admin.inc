@@ -581,6 +581,21 @@ class ThumbWhereLikeUIController extends EntityDefaultUIController {
     $items[$this->path . '/add'] = array(
       //'title' => 'Add a Like',
       'title' => 'Add',
+      'description' => 'Add a new Like',
+      'page callback' => 'thumbwhere_like_form_wrapper',
+      'page arguments' => array(thumbwhere_like_create(array('type' => 'thumbwhere_like'))),
+      'access callback' => 'thumbwhere_like_access',
+      'access arguments' => array('edit', 'edit ' . 'thumbwhere_like'),
+      'file' => 'thumbwhere_like.admin.inc',
+      'file path' => drupal_get_path('module', $this->entityInfo['module'])
+    );
+
+
+/*
+    // Change the add page menu to multiple types of entities
+    $items[$this->path . '/add'] = array(
+      //'title' => 'Add a Like',
+      'title' => 'Add',
 	  'description' => 'Add a new Like',
       'page callback'  => 'thumbwhere_like_add_page',
       'access callback'  => 'thumbwhere_like_access',
@@ -591,6 +606,7 @@ class ThumbWhereLikeUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
+*/    
 /*
     $items[$this->path . '/add/' . 'thumbwhere_like'] = array(
       'title' => 'Add ' . 'ThumbWhereLike',

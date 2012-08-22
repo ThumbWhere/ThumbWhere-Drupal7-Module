@@ -623,6 +623,21 @@ class ThumbWhereHostCommandUIController extends EntityDefaultUIController {
     $items[$this->path . '/add'] = array(
       //'title' => 'Add a HostCommand',
       'title' => 'Add',
+      'description' => 'Add a new HostCommand',
+      'page callback' => 'thumbwhere_hostcommand_form_wrapper',
+      'page arguments' => array(thumbwhere_hostcommand_create(array('type' => 'thumbwhere_hostcommand'))),
+      'access callback' => 'thumbwhere_hostcommand_access',
+      'access arguments' => array('edit', 'edit ' . 'thumbwhere_hostcommand'),
+      'file' => 'thumbwhere_hostcommand.admin.inc',
+      'file path' => drupal_get_path('module', $this->entityInfo['module'])
+    );
+
+
+/*
+    // Change the add page menu to multiple types of entities
+    $items[$this->path . '/add'] = array(
+      //'title' => 'Add a HostCommand',
+      'title' => 'Add',
 	  'description' => 'Add a new HostCommand',
       'page callback'  => 'thumbwhere_hostcommand_add_page',
       'access callback'  => 'thumbwhere_hostcommand_access',
@@ -633,6 +648,7 @@ class ThumbWhereHostCommandUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
+*/    
 /*
     $items[$this->path . '/add/' . 'thumbwhere_hostcommand'] = array(
       'title' => 'Add ' . 'ThumbWhereHostCommand',

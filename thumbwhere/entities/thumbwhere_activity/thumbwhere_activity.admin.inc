@@ -581,6 +581,21 @@ class ThumbWhereActivityUIController extends EntityDefaultUIController {
     $items[$this->path . '/add'] = array(
       //'title' => 'Add a Activity',
       'title' => 'Add',
+      'description' => 'Add a new Activity',
+      'page callback' => 'thumbwhere_activity_form_wrapper',
+      'page arguments' => array(thumbwhere_activity_create(array('type' => 'thumbwhere_activity'))),
+      'access callback' => 'thumbwhere_activity_access',
+      'access arguments' => array('edit', 'edit ' . 'thumbwhere_activity'),
+      'file' => 'thumbwhere_activity.admin.inc',
+      'file path' => drupal_get_path('module', $this->entityInfo['module'])
+    );
+
+
+/*
+    // Change the add page menu to multiple types of entities
+    $items[$this->path . '/add'] = array(
+      //'title' => 'Add a Activity',
+      'title' => 'Add',
 	  'description' => 'Add a new Activity',
       'page callback'  => 'thumbwhere_activity_add_page',
       'access callback'  => 'thumbwhere_activity_access',
@@ -591,6 +606,7 @@ class ThumbWhereActivityUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
+*/    
 /*
     $items[$this->path . '/add/' . 'thumbwhere_activity'] = array(
       'title' => 'Add ' . 'ThumbWhereActivity',

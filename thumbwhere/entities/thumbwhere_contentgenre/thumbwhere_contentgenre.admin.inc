@@ -545,6 +545,21 @@ class ThumbWhereContentGenreUIController extends EntityDefaultUIController {
     $items[$this->path . '/add'] = array(
       //'title' => 'Add a ContentGenre',
       'title' => 'Add',
+      'description' => 'Add a new ContentGenre',
+      'page callback' => 'thumbwhere_contentgenre_form_wrapper',
+      'page arguments' => array(thumbwhere_contentgenre_create(array('type' => 'thumbwhere_contentgenre'))),
+      'access callback' => 'thumbwhere_contentgenre_access',
+      'access arguments' => array('edit', 'edit ' . 'thumbwhere_contentgenre'),
+      'file' => 'thumbwhere_contentgenre.admin.inc',
+      'file path' => drupal_get_path('module', $this->entityInfo['module'])
+    );
+
+
+/*
+    // Change the add page menu to multiple types of entities
+    $items[$this->path . '/add'] = array(
+      //'title' => 'Add a ContentGenre',
+      'title' => 'Add',
 	  'description' => 'Add a new ContentGenre',
       'page callback'  => 'thumbwhere_contentgenre_add_page',
       'access callback'  => 'thumbwhere_contentgenre_access',
@@ -555,6 +570,7 @@ class ThumbWhereContentGenreUIController extends EntityDefaultUIController {
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
+*/    
 /*
     $items[$this->path . '/add/' . 'thumbwhere_contentgenre'] = array(
       'title' => 'Add ' . 'ThumbWhereContentGenre',
