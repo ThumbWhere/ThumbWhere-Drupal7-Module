@@ -2,7 +2,7 @@
 
 /**
  * @file
- * ThumbWhereMetadata editing UI.
+ * ThumbWhereContentGenre editing UI.
  *
  * We make very little use of the EntityAPI interface for this - preferring instead to use
  * views. That offers more flexibility to change a UI that will, more often than not,
@@ -18,7 +18,7 @@
 /**
  * Handle the notification for content_ingext
  */
-function _thumbwhere_handle_metadata_notify_xml($notification) {
+function _thumbwhere_handle_content_genre_notify_xml($notification) {
 
   //
   // Get the operation
@@ -26,9 +26,9 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
 
   if (!isset($notification->attributes()->op)) {
     drupal_add_http_header('Status', '501 unable to fulfull request..');
-    $err = 'We were expecting an \'op\', attribute on the \'metadata\', element.';
+    $err = 'We were expecting an \'op\', attribute on the \'content_genre\', element.';
     print($err);
-   	watchdog('thumbwhere_metadata', $err ,array(), WATCHDOG_ERROR);
+   	watchdog('thumbwhere_contentgenre', $err ,array(), WATCHDOG_ERROR);
     exit(0);
   }
 
@@ -43,9 +43,9 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
 
   if (!isset($notification->attributes()->key)) {
     drupal_add_http_header('Status', '412 unable to fulfull request..');
-    $err = 'We were expecting a \'key\', attribute on the \'metadata\', element.';
+    $err = 'We were expecting a \'key\', attribute on the \'content_genre\', element.';
     print($err);
-    watchdog('thumbwhere_metadata', $err ,array(), WATCHDOG_ERROR);
+    watchdog('thumbwhere_contentgenre', $err ,array(), WATCHDOG_ERROR);
     exit(0);
   }
 
@@ -72,9 +72,9 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
 		
         if (!isset($notification->attributes()->id)) {
           drupal_add_http_header('Status', '412 Unable to fulfull request.');
-          $err = 'We were expecting an \'id\', attribute on the \'metadata\', element when we are performing an \'update\' notification..';
+          $err = 'We were expecting an \'id\', attribute on the \'content_genre\', element when we are performing an \'update\' notification..';
           print($err);
-          watchdog('thumbwhere_metadata', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_contentgenre', $err ,array(), WATCHDOG_ERROR);
           exit(0);
         }
 
@@ -89,24 +89,24 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
         // Get the fields
         //
           
-        $entities = entity_load('thumbwhere_metadata', array($id));
+        $entities = entity_load('thumbwhere_contentgenre', array($id));
 
         if (twCanDebug()) debug('$entities');
         if (twCanDebug()) debug($entities);
 
         if (count($entities) != 0) {
           //drupal_add_http_header('Status', '409 Resource already exists.');
-          $err = '\'metadata\' resource already exists with an id of \'' . $id . '\'.';
+          $err = '\'content_genre\' resource already exists with an id of \'' . $id . '\'.';
            //print($err);
-          watchdog('thumbwhere_metadata', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_contentgenre', $err ,array(), WATCHDOG_ERROR);
           //exit(0);
 
           	
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<metadata op="' . $op . '" id="' . $id . '" >');
+          print('<content_genre op="' . $op . '" id="' . $id . '" >');
           print('<status>success</status>');
-          print('</metadata>');
+          print('</content_genre>');
           print('</response>');
           exit(0);          	
           
@@ -122,14 +122,10 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
         //
 
 
-        $entityfields['pk_metadata'] = $id;	
+        $entityfields['pk_contentgenre'] = $id;	
 
-        if (isset($notification->contentmetadata)) {
-          $entityfields['fk_contentmetadata'] = intval($notification->contentmetadata);
-        }
-
-        if (isset($notification->trackmetadata)) {
-          $entityfields['fk_trackmetadata'] = intval($notification->trackmetadata);
+        if (isset($notification->name)) {
+          $entityfields['name'] = (string)($notification->name);
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -139,7 +135,7 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
 
         // We are being notified, so we do not want to ship this out again as a notification...
         // Finally write the entity.
-        $entity = entity_create('thumbwhere_metadata', $entityfields);
+        $entity = entity_create('thumbwhere_contentgenre', $entityfields);
         $entity->do_not_propagate = TRUE;
         $entity->save();
 
@@ -149,9 +145,9 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response>');
-        print('<metadata op="' . $op . '" id="' . $id . '" >');
+        print('<content_genre op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
-        print('</metadata>');
+        print('</content_genre>');
         print('</response>');
         exit(0);			
 		
@@ -171,9 +167,9 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
 		
         if (!isset($notification->attributes()->id)) {
           drupal_add_http_header('Status', '412 Unable to fulfull request.');
-          $err = 'We were expecting an \'id\', attribute on the \'metadata\', element when we are performing an \'update\' notification..';
+          $err = 'We were expecting an \'id\', attribute on the \'content_genre\', element when we are performing an \'update\' notification..';
           print($err);
-          watchdog('thumbwhere_metadata', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_contentgenre', $err ,array(), WATCHDOG_ERROR);
           exit(0);
         }
 
@@ -188,23 +184,23 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
         // Get the fields
         //
           
-        $entities = entity_load('thumbwhere_metadata', array($id));
+        $entities = entity_load('thumbwhere_contentgenre', array($id));
 
         if (twCanDebug()) debug('$entities');
         if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
           //drupal_add_http_header('Status', '409 No such resource exists.');
-          $err = 'No such \'metadata\' resource exists with an id of \'' . $id . '\'.';
+          $err = 'No such \'content_genre\' resource exists with an id of \'' . $id . '\'.';
           //print($err);
-          watchdog('thumbwhere_metadata',$err,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_contentgenre',$err,array(), WATCHDOG_ERROR);
           //exit(0);
 
 ////////////////////////////////////////////////////////////////////////
 //
 // ... for now we will just create the local copy
 //
-          watchdog('thumbwhere_metadata','creating local version of missing entity',array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_contentgenre','creating local version of missing entity',array(), WATCHDOG_ERROR);
 
         //
         // What resource are we creating?
@@ -216,9 +212,9 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
 		
         if (!isset($notification->attributes()->id)) {
           drupal_add_http_header('Status', '412 Unable to fulfull request.');
-          $err = 'We were expecting an \'id\', attribute on the \'metadata\', element when we are performing an \'update\' notification..';
+          $err = 'We were expecting an \'id\', attribute on the \'content_genre\', element when we are performing an \'update\' notification..';
           print($err);
-          watchdog('thumbwhere_metadata', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_contentgenre', $err ,array(), WATCHDOG_ERROR);
           exit(0);
         }
 
@@ -233,24 +229,24 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
         // Get the fields
         //
           
-        $entities = entity_load('thumbwhere_metadata', array($id));
+        $entities = entity_load('thumbwhere_contentgenre', array($id));
 
         if (twCanDebug()) debug('$entities');
         if (twCanDebug()) debug($entities);
 
         if (count($entities) != 0) {
           //drupal_add_http_header('Status', '409 Resource already exists.');
-          $err = '\'metadata\' resource already exists with an id of \'' . $id . '\'.';
+          $err = '\'content_genre\' resource already exists with an id of \'' . $id . '\'.';
            //print($err);
-          watchdog('thumbwhere_metadata', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_contentgenre', $err ,array(), WATCHDOG_ERROR);
           //exit(0);
 
           	
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<metadata op="' . $op . '" id="' . $id . '" >');
+          print('<content_genre op="' . $op . '" id="' . $id . '" >');
           print('<status>success</status>');
-          print('</metadata>');
+          print('</content_genre>');
           print('</response>');
           exit(0);          	
           
@@ -266,14 +262,10 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
         //
 
 
-        $entityfields['pk_metadata'] = $id;	
+        $entityfields['pk_contentgenre'] = $id;	
 
-        if (isset($notification->contentmetadata)) {
-          $entityfields['fk_contentmetadata'] = intval($notification->contentmetadata);
-        }
-
-        if (isset($notification->trackmetadata)) {
-          $entityfields['fk_trackmetadata'] = intval($notification->trackmetadata);
+        if (isset($notification->name)) {
+          $entityfields['name'] = (string)($notification->name);
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -283,7 +275,7 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
 
         // We are being notified, so we do not want to ship this out again as a notification...
         // Finally write the entity.
-        $entity = entity_create('thumbwhere_metadata', $entityfields);
+        $entity = entity_create('thumbwhere_contentgenre', $entityfields);
         $entity->do_not_propagate = TRUE;
         $entity->save();
 
@@ -293,9 +285,9 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response>');
-        print('<metadata op="' . $op . '" id="' . $id . '" >');
+        print('<content_genre op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
-        print('</metadata>');
+        print('</content_genre>');
         print('</response>');
         exit(0);			
 		
@@ -315,12 +307,8 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
         //
 
 
-        if (isset($notification->contentmetadata)) {
-          $entity->fk_contentmetadata = intval($notification->contentmetadata);
-        }
-
-        if (isset($notification->trackmetadata)) {
-          $entity->fk_trackmetadata = intval($notification->trackmetadata);
+        if (isset($notification->name)) {
+          $entity->name = (string)($notification->name);
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -332,7 +320,7 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
         $entity->do_not_propagate = TRUE;
 
         // Finally write the entity.
-        entity_save('thumbwhere_metadata', $entity);
+        entity_save('thumbwhere_contentgenre', $entity);
 
         //
         // Send the final response
@@ -340,9 +328,9 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response>');
-        print('<metadata op="' . $op . '" id="' . $id . '" >');
+        print('<content_genre op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
-        print('</metadata>');
+        print('</content_genre>');
         print('</response>');
         exit(0);
       }
@@ -352,7 +340,7 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
     default:
       {
         drupal_add_http_header('Status', '501 Unable to fulfull request..');
-        print('We don\'t handle the \'' . $op . '\', notification operation on the \'metadata\', element.');
+        print('We don\'t handle the \'' . $op . '\', notification operation on the \'content_genre\', element.');
         exit(0);
 
       }
@@ -364,10 +352,10 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
 /**
  * Menu callback: React to a notifications for ContentIngest.
  */
-function _thumbwhere_metadata_notify() {
+function _thumbwhere_content_genre_notify() {
 
   if (variable_get('thumbwhere_api_log_debug', 0) == 1) {
-    watchdog('thumbwhere_metadata', 'incoming notification.');
+    watchdog('thumbwhere_content_genre', 'incoming notification.');
   }
 
   $numargs = func_num_args();
@@ -413,7 +401,7 @@ function _thumbwhere_metadata_notify() {
 
     case 'POST': {
         if ($numargs == 1) {
-          if ($arg_list[0] == 'metadata') {
+          if ($arg_list[0] == 'content_genre') {
 
             //
             // Get the POST data as XML
@@ -435,7 +423,7 @@ function _thumbwhere_metadata_notify() {
 
             /*
              *  SimpleXMLElement::__set_state(array(
-             *      'metadata' =>
+             *      'content_genre' =>
              *      SimpleXMLElement::__set_state(array(
              *       '@attributes' =>
              *      array (
@@ -448,14 +436,14 @@ function _thumbwhere_metadata_notify() {
 
 
             // We expect 'action' as the root element.
-            if (!isset($post_xml->metadata)) {
+            if (!isset($post_xml->content_genre)) {
               drupal_add_http_header('Status', '404 not found.');
-              print('We were expecting a \'metadata\', element in the action payload.');
+              print('We were expecting a \'content_genre\', element in the action payload.');
               exit(0);
             }
 
             // Handle the incoming notification for content ingest
-            _thumbwhere_handle_metadata_notify_xml($post_xml->metadata);
+            _thumbwhere_handle_content_genre_notify_xml($post_xml->content_genre);
 
           }
           else {
@@ -515,9 +503,9 @@ function _thumbwhere_metadata_notify() {
 
 
 /**
- * Metadata UI controller.
+ * ContentGenre UI controller.
  */
-class ThumbWhereMetadataUIController extends EntityDefaultUIController {
+class ThumbWhereContentGenreUIController extends EntityDefaultUIController {
 
   /**
    * Overrides hook_menu() defaults. Main reason for doing this is that
@@ -528,13 +516,13 @@ class ThumbWhereMetadataUIController extends EntityDefaultUIController {
     $items = array();
     
     // Add a notification page...
-    $items['thumbwhere/metadata/notify'] = array(
-        'title' => 'Notifications Callback for "Metadata" Entity',
-        'page callback' => '_thumbwhere_metadata_notify',
+    $items['thumbwhere/content_genre/notify'] = array(
+        'title' => 'Notifications Callback for "ContentGenre" Entity',
+        'page callback' => '_thumbwhere_content_genre_notify',
         'access arguments' => array(
-            'send thumbwhere metadata notifications'
+            'send thumbwhere contentgenre notifications'
         ),
-        'file' => 'thumbwhere_metadata.admin.inc',
+        'file' => 'thumbwhere_contentgenre.admin.inc',
         'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );    
     
@@ -542,81 +530,81 @@ class ThumbWhereMetadataUIController extends EntityDefaultUIController {
     $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
 
     $items[$this->path] = array(
-      'title' => 'Metadata',
-      'description' => 'Add edit and update thumbwhere_metadatas.',
+      'title' => 'ContentGenre',
+      'description' => 'Add edit and update thumbwhere_contentgenres.',
       'page callback' => 'system_admin_menu_block_page',
       'access arguments' => array('access administration pages'),
       'file path' => drupal_get_path('module', 'system'),
       'file' => 'system.admin.inc',
     );
 
-    // Change the overview menu type for the list of thumbwhere_metadatas.
+    // Change the overview menu type for the list of thumbwhere_contentgenres.
     $items[$this->path]['type'] = MENU_LOCAL_TASK;
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      //'title' => 'Add a Metadata',
+      //'title' => 'Add a ContentGenre',
       'title' => 'Add',
-	  'description' => 'Add a new Metadata',
-      'page callback'  => 'thumbwhere_metadata_add_page',
-      'access callback'  => 'thumbwhere_metadata_access',
+	  'description' => 'Add a new ContentGenre',
+      'page callback'  => 'thumbwhere_contentgenre_add_page',
+      'access callback'  => 'thumbwhere_contentgenre_access',
       'access arguments' => array('edit'),
       'type' => MENU_NORMAL_ITEM,
       'weight' => 20,
-      'file' => 'thumbwhere_metadata.admin.inc',
+      'file' => 'thumbwhere_contentgenre.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
 /*
-    $items[$this->path . '/add/' . 'thumbwhere_metadata'] = array(
-      'title' => 'Add ' . 'ThumbWhereMetadata',
-      'page callback' => 'thumbwhere_metadata_form_wrapper',
-      'page arguments' => array(thumbwhere_metadata_create(array('type' => 'thumbwhere_metadata'))),
-      'access callback' => 'thumbwhere_metadata_access',
-      'access arguments' => array('edit', 'edit ' . 'thumbwhere_metadata'),
-      'file' => 'thumbwhere_metadata.admin.inc',
+    $items[$this->path . '/add/' . 'thumbwhere_contentgenre'] = array(
+      'title' => 'Add ' . 'ThumbWhereContentGenre',
+      'page callback' => 'thumbwhere_contentgenre_form_wrapper',
+      'page arguments' => array(thumbwhere_contentgenre_create(array('type' => 'thumbwhere_contentgenre'))),
+      'access callback' => 'thumbwhere_contentgenre_access',
+      'access arguments' => array('edit', 'edit ' . 'thumbwhere_contentgenre'),
+      'file' => 'thumbwhere_contentgenre.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
 */
-    // Loading and editing thumbwhere_metadata entities
-    $items[$this->path . '/thumbwhere_metadata/' . $wildcard] = array(
-      'page callback' => 'thumbwhere_metadata_form_wrapper',
+    // Loading and editing thumbwhere_contentgenre entities
+    $items[$this->path . '/thumbwhere_contentgenre/' . $wildcard] = array(
+      'page callback' => 'thumbwhere_contentgenre_form_wrapper',
       'page arguments' => array($id_count + 1),
-      'access callback' => 'thumbwhere_metadata_access',
+      'access callback' => 'thumbwhere_contentgenre_access',
       'access arguments' => array('edit', $id_count + 1),
       'weight' => 0,
       'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
-      'file' => 'thumbwhere_metadata.admin.inc',
+      'file' => 'thumbwhere_contentgenre.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
-    $items[$this->path . '/thumbwhere_metadata/' . $wildcard . '/edit'] = array(
+    $items[$this->path . '/thumbwhere_contentgenre/' . $wildcard . '/edit'] = array(
       'title' => 'Edit',
       'type' => MENU_DEFAULT_LOCAL_TASK,
       'weight' => -10,
       'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
     );
 
-    $items[$this->path . '/thumbwhere_metadata/' . $wildcard . '/delete'] = array(
+    $items[$this->path . '/thumbwhere_contentgenre/' . $wildcard . '/delete'] = array(
       'title' => 'Delete',
-      'page callback' => 'thumbwhere_metadata_delete_form_wrapper',
+      'page callback' => 'thumbwhere_contentgenre_delete_form_wrapper',
       'page arguments' => array($id_count + 1),
-      'access callback' => 'thumbwhere_metadata_access',
+      'access callback' => 'thumbwhere_contentgenre_access',
       'access arguments' => array('edit', $id_count + 1),
       'type' => MENU_LOCAL_TASK,
       'context' => MENU_CONTEXT_INLINE,
       'weight' => 10,
-      'file' => 'thumbwhere_metadata.admin.inc',
+      'file' => 'thumbwhere_contentgenre.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
 
-    // Menu item for viewing thumbwhere_metadatas
-    $items['thumbwhere_metadata/' . $wildcard] = array(
+    // Menu item for viewing thumbwhere_contentgenres
+    $items['thumbwhere_contentgenre/' . $wildcard] = array(
       //'title' => 'Title',
-      'title callback' => 'thumbwhere_metadata_page_title',
+      'title callback' => 'thumbwhere_contentgenre_page_title',
       'title arguments' => array(1),
-      'page callback' => 'thumbwhere_metadata_page_view',
+      'page callback' => 'thumbwhere_contentgenre_page_view',
       'page arguments' => array(1),
-      'access callback' => 'thumbwhere_metadata_access',
+      'access callback' => 'thumbwhere_contentgenre_access',
       'access arguments' => array('view', 1),
       'type' => MENU_CALLBACK,
     );
@@ -625,7 +613,7 @@ class ThumbWhereMetadataUIController extends EntityDefaultUIController {
 
 
   /**
-   * Create the markup for the add ThumbWhereMetadata Entities page within the class
+   * Create the markup for the add ThumbWhereContentGenre Entities page within the class
    * so it can easily be extended/overriden.
    */
   public function addPage() {
@@ -637,70 +625,59 @@ class ThumbWhereMetadataUIController extends EntityDefaultUIController {
       drupal_goto($item['href']);
     }
 
-    return theme('thumbwhere_metadata_add_list', array('content' => $content));
+    return theme('thumbwhere_contentgenre_add_list', array('content' => $content));
   }
 
 }
 
 
 /**
- * Form callback wrapper: create or edit a thumbwhere_metadata.
+ * Form callback wrapper: create or edit a thumbwhere_contentgenre.
  *
- * @param $thumbwhere_metadata
- *   The thumbwhere_metadata object being edited by this form.
+ * @param $thumbwhere_contentgenre
+ *   The thumbwhere_contentgenre object being edited by this form.
  *
- * @see thumbwhere_metadata_edit_form()
+ * @see thumbwhere_contentgenre_edit_form()
  */
-function thumbwhere_metadata_form_wrapper($thumbwhere_metadata) {
+function thumbwhere_contentgenre_form_wrapper($thumbwhere_contentgenre) {
   // Add the breadcrumb for the form's location.
-  thumbwhere_metadata_set_breadcrumb();
-  return drupal_get_form('thumbwhere_metadata_edit_form', $thumbwhere_metadata);
+  thumbwhere_contentgenre_set_breadcrumb();
+  return drupal_get_form('thumbwhere_contentgenre_edit_form', $thumbwhere_contentgenre);
 }
 
 
 /**
- * Form callback wrapper: delete a thumbwhere_metadata.
+ * Form callback wrapper: delete a thumbwhere_contentgenre.
  *
- * @param $thumbwhere_metadata
- *   The thumbwhere_metadata object being edited by this form.
+ * @param $thumbwhere_contentgenre
+ *   The thumbwhere_contentgenre object being edited by this form.
  *
- * @see thumbwhere_metadata_edit_form()
+ * @see thumbwhere_contentgenre_edit_form()
  */
-function thumbwhere_metadata_delete_form_wrapper($thumbwhere_metadata) {
+function thumbwhere_contentgenre_delete_form_wrapper($thumbwhere_contentgenre) {
   // Add the breadcrumb for the form's location.
-  //thumbwhere_metadata_set_breadcrumb();
-  return drupal_get_form('thumbwhere_metadata_delete_form', $thumbwhere_metadata);
+  //thumbwhere_contentgenre_set_breadcrumb();
+  return drupal_get_form('thumbwhere_contentgenre_delete_form', $thumbwhere_contentgenre);
 }
 
 
 /**
- * Form callback: create or edit a thumbwhere_metadata.
+ * Form callback: create or edit a thumbwhere_contentgenre.
  *
- * @param $thumbwhere_metadata
- *   The thumbwhere_metadata object to edit or for a create form an empty thumbwhere_metadata object
- *     with only a thumbwhere_metadata type defined.
+ * @param $thumbwhere_contentgenre
+ *   The thumbwhere_contentgenre object to edit or for a create form an empty thumbwhere_contentgenre object
+ *     with only a thumbwhere_contentgenre type defined.
  */
-function thumbwhere_metadata_edit_form($form, &$form_state, $thumbwhere_metadata) {
+function thumbwhere_contentgenre_edit_form($form, &$form_state, $thumbwhere_contentgenre) {
 
   // Add the default field elements.
-  $form['fk_contentmetadata'] = array(
+    $form['name'] = array(
     '#type' => 'textfield',
-    '#title' => t('ThumbWhereMetadata fk_contentmetadata'),
-    '#default_value' => isset($thumbwhere_metadata->fk_contentmetadata) ? $thumbwhere_metadata->fk_contentmetadata : '',
-    //'#maxlength' => 255,
-   /// '#required' => TRUE,
+    '#title' => t('ThumbWhereContentGenre name'),
+
+    // '#maxlength' => 255,
+   // '#required' => TRUE,
     '#weight' => -5,
-    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_contentmetadata',
-  );
-  // Add the default field elements.
-  $form['fk_trackmetadata'] = array(
-    '#type' => 'textfield',
-    '#title' => t('ThumbWhereMetadata fk_trackmetadata'),
-    '#default_value' => isset($thumbwhere_metadata->fk_trackmetadata) ? $thumbwhere_metadata->fk_trackmetadata : '',
-    //'#maxlength' => 255,
-   /// '#required' => TRUE,
-    '#weight' => -5,
-    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_trackmetadata',
   );
 
 
@@ -710,15 +687,15 @@ function thumbwhere_metadata_edit_form($form, &$form_state, $thumbwhere_metadata
   /*
   $form['data']['sample_data'] = array(
     '#type' => 'checkbox',
-    '#title' => t('An interesting thumbwhere_metadata switch'),
-    '#default_value' => isset($thumbwhere_metadata->data['sample_data']) ? $thumbwhere_metadata->data['sample_data'] : 1,
+    '#title' => t('An interesting thumbwhere_contentgenre switch'),
+    '#default_value' => isset($thumbwhere_contentgenre->data['sample_data']) ? $thumbwhere_contentgenre->data['sample_data'] : 1,
   );
   */
 
 
   // Add the field related form elements.
-  $form_state['thumbwhere_metadata'] = $thumbwhere_metadata;
-  field_attach_form('thumbwhere_metadata', $thumbwhere_metadata, $form, $form_state);
+  $form_state['thumbwhere_contentgenre'] = $thumbwhere_contentgenre;
+  field_attach_form('thumbwhere_contentgenre', $thumbwhere_contentgenre, $form, $form_state);
 
   $form['actions'] = array(
     '#type' => 'container',
@@ -736,32 +713,32 @@ function thumbwhere_metadata_edit_form($form, &$form_state, $thumbwhere_metadata
 
   $form['actions']['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Save thumbwhere_metadata'),
-    '#submit' => $submit + array('thumbwhere_metadata_edit_form_submit'),
+    '#value' => t('Save thumbwhere_contentgenre'),
+    '#submit' => $submit + array('thumbwhere_contentgenre_edit_form_submit'),
   );
 
   // Do we show the delete button?
-  if (!empty($thumbwhere_metadata->pk_metadata)) {
+  if (!empty($thumbwhere_contentgenre->pk_contentgenre)) {
     $form['actions']['delete'] = array(
       '#type' => 'submit',
-      '#value' => t('Delete thumbwhere_metadata'),
-      '#suffix' => l(t('Cancel'), 'admin/thumbwhere/thumbwhere_metadatas'),
-      '#submit' => $submit + array('thumbwhere_metadata_form_submit_delete'),
+      '#value' => t('Delete thumbwhere_contentgenre'),
+      '#suffix' => l(t('Cancel'), 'admin/thumbwhere/thumbwhere_contentgenres'),
+      '#submit' => $submit + array('thumbwhere_contentgenre_form_submit_delete'),
       '#weight' => 45,
     );
   }
 
   // We append the validate handler to #validate in case a form callback_wrapper
   // is used to add validate handlers earlier.
-  $form['#validate'][] = 'thumbwhere_metadata_edit_form_validate';
+  $form['#validate'][] = 'thumbwhere_contentgenre_edit_form_validate';
   return $form;
 }
 
 
 /**
- * Form API validate callback for the thumbwhere_metadata form
+ * Form API validate callback for the thumbwhere_contentgenre form
  */
-function thumbwhere_metadata_edit_form_validate(&$form, &$form_state) {
+function thumbwhere_contentgenre_edit_form_validate(&$form, &$form_state) {
    
   //if (twCanDebug()) debug($form);   
   //if (twCanDebug()) debug($form_state);
@@ -770,29 +747,13 @@ function thumbwhere_metadata_edit_form_validate(&$form, &$form_state) {
   // No validation for pk
 
 
-  // Convert fk autocomplete for fk_contentmetadata
-  $value = $form['fk_contentmetadata']['#value'];
-  // If we have something, escape the auto-completion encoding.
-  if (!empty($value)) { 
-    $value = entity_autocomplete_get_id($value);
-    form_set_value($form['fk_contentmetadata'], $value,$form_state);
+  // Validate normalname
+  $value = $form['name']['#value'];
+  // If we have no default value then we don't care much for checking for emptyness.
+  if (empty($value)) {
+    form_set_error('name', t('Validation error, \'name\' is mandatory2.'));
+    //throw new Exception('Field \'name\' in is mandatory.');
   }
-  //if (twCanDebug()) debug($form['fk_contentmetadata']);
-   if (twCanDebug()) debug('fk_contentmetadata = ' . $value);
-  // Validate fk fk_contentmetadata
-
-
-  // Convert fk autocomplete for fk_trackmetadata
-  $value = $form['fk_trackmetadata']['#value'];
-  // If we have something, escape the auto-completion encoding.
-  if (!empty($value)) { 
-    $value = entity_autocomplete_get_id($value);
-    form_set_value($form['fk_trackmetadata'], $value,$form_state);
-  }
-  //if (twCanDebug()) debug($form['fk_trackmetadata']);
-   if (twCanDebug()) debug('fk_trackmetadata = ' . $value);
-  // Validate fk fk_trackmetadata
-
 
               
 
@@ -800,10 +761,10 @@ function thumbwhere_metadata_edit_form_validate(&$form, &$form_state) {
 
    
    
-  $thumbwhere_metadata = $form_state['thumbwhere_metadata'];
+  $thumbwhere_contentgenre = $form_state['thumbwhere_contentgenre'];
 
   // Notify field widgets to validate their data.
-  field_attach_form_validate('thumbwhere_metadata', $thumbwhere_metadata, $form, $form_state);
+  field_attach_form_validate('thumbwhere_contentgenre', $thumbwhere_contentgenre, $form, $form_state);
     
     
   
@@ -811,24 +772,24 @@ function thumbwhere_metadata_edit_form_validate(&$form, &$form_state) {
 
 
 /**
- * Form API submit callback for the thumbwhere_metadata form.
+ * Form API submit callback for the thumbwhere_contentgenre form.
  *
  * @todo remove hard-coded link
  */
-function thumbwhere_metadata_edit_form_submit(&$form, &$form_state) {
+function thumbwhere_contentgenre_edit_form_submit(&$form, &$form_state) {
 
-  $thumbwhere_metadata = entity_ui_controller('thumbwhere_metadata')->entityFormSubmitBuildEntity($form, $form_state);
-  // Save the thumbwhere_metadata and go back to the list of thumbwhere_metadatas
+  $thumbwhere_contentgenre = entity_ui_controller('thumbwhere_contentgenre')->entityFormSubmitBuildEntity($form, $form_state);
+  // Save the thumbwhere_contentgenre and go back to the list of thumbwhere_contentgenres
 
   // Add in created and changed times.
-  if ($thumbwhere_metadata->is_new = isset($thumbwhere_metadata->is_new) ? $thumbwhere_metadata->is_new : 0) {
-    $thumbwhere_metadata->created = time();
+  if ($thumbwhere_contentgenre->is_new = isset($thumbwhere_contentgenre->is_new) ? $thumbwhere_contentgenre->is_new : 0) {
+    $thumbwhere_contentgenre->created = time();
   }
 
-  $thumbwhere_metadata->changed = time();
+  $thumbwhere_contentgenre->changed = time();
 
-  $thumbwhere_metadata->save();
-  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_metadatas';
+  $thumbwhere_contentgenre->save();
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_contentgenres';
 }
 
 /**
@@ -836,8 +797,8 @@ function thumbwhere_metadata_edit_form_submit(&$form, &$form_state) {
  *
  * @todo Remove hard-coded path
  */
-function thumbwhere_metadata_form_submit_delete(&$form, &$form_state) {
-  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_metadatas/thumbwhere_metadata/' . $form_state['thumbwhere_metadata']->pk_metadata . '/delete';
+function thumbwhere_contentgenre_form_submit_delete(&$form, &$form_state) {
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_contentgenres/thumbwhere_contentgenre/' . $form_state['thumbwhere_contentgenre']->pk_contentgenre . '/delete';
 }
 
 
@@ -845,21 +806,21 @@ function thumbwhere_metadata_form_submit_delete(&$form, &$form_state) {
 
 
 /**
- * Form callback: confirmation form for deleting a thumbwhere_metadata.
+ * Form callback: confirmation form for deleting a thumbwhere_contentgenre.
  *
- * @param $thumbwhere_metadata
- *   The thumbwhere_metadata to delete
+ * @param $thumbwhere_contentgenre
+ *   The thumbwhere_contentgenre to delete
  *
  * @see confirm_form()
  */
-function thumbwhere_metadata_delete_form($form, &$form_state, $thumbwhere_metadata) {
-  $form_state['thumbwhere_metadata'] = $thumbwhere_metadata;
+function thumbwhere_contentgenre_delete_form($form, &$form_state, $thumbwhere_contentgenre) {
+  $form_state['thumbwhere_contentgenre'] = $thumbwhere_contentgenre;
 
-  $form['#submit'][] = 'thumbwhere_metadata_delete_form_submit';
+  $form['#submit'][] = 'thumbwhere_contentgenre_delete_form_submit';
 
   $form = confirm_form($form,
-    t('Are you sure you want to delete thumbwhere_metadata %name?', array('%name' => $thumbwhere_metadata->pk_metadata)),
-    'admin/thumbwhere/thumbwhere_metadatas/thumbwhere_metadata',
+    t('Are you sure you want to delete thumbwhere_contentgenre %name?', array('%name' => $thumbwhere_contentgenre->name)),
+    'admin/thumbwhere/thumbwhere_contentgenres/thumbwhere_contentgenre',
     '<p>' . t('This action cannot be undone.') . '</p>',
     t('Delete'),
     t('Cancel'),
@@ -870,45 +831,45 @@ function thumbwhere_metadata_delete_form($form, &$form_state, $thumbwhere_metada
 }
 
 /**
- * Submit callback for thumbwhere_metadata_delete_form
+ * Submit callback for thumbwhere_contentgenre_delete_form
  */
-function thumbwhere_metadata_delete_form_submit($form, &$form_state) {
-  $thumbwhere_metadata = $form_state['thumbwhere_metadata'];
+function thumbwhere_contentgenre_delete_form_submit($form, &$form_state) {
+  $thumbwhere_contentgenre = $form_state['thumbwhere_contentgenre'];
 
-  thumbwhere_metadata_delete($thumbwhere_metadata);
+  thumbwhere_contentgenre_delete($thumbwhere_contentgenre);
 
-  drupal_set_message(t('The thumbwhere_metadata %name has been deleted.', array('%name' => $thumbwhere_metadata->pk_metadata)));
-  watchdog('thumbwhere_metadata', 'Deleted thumbwhere_metadata %name.', array('%name' => $thumbwhere_metadata->pk_metadata));
+  drupal_set_message(t('The thumbwhere_contentgenre %name has been deleted.', array('%name' => $thumbwhere_contentgenre->name)));
+  watchdog('thumbwhere_contentgenre', 'Deleted thumbwhere_contentgenre %name.', array('%name' => $thumbwhere_contentgenre->name));
 
-  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_metadatas';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_contentgenres';
 }
 
 
 
 /**
- * Page to add ThumbWhereMetadata Entities.
+ * Page to add ThumbWhereContentGenre Entities.
  *
  * @todo Pass this through a proper theme function
  */
-function thumbwhere_metadata_add_page() {
-  $controller = entity_ui_controller('thumbwhere_metadata');
+function thumbwhere_contentgenre_add_page() {
+  $controller = entity_ui_controller('thumbwhere_contentgenre');
   return $controller->addPage();
 }
 
 
 /**
- * Displays the list of available thumbwhere_metadata types for thumbwhere_metadata creation.
+ * Displays the list of available thumbwhere_contentgenre types for thumbwhere_contentgenre creation.
  *
  * @ingroup themeable
  */
-function theme_thumbwhere_metadata_add_list($variables) {
+function theme_thumbwhere_contentgenre_add_list($variables) {
 
 
   //$content = $variables['content'];
   $output = '';
   /*
   if ($content) {
-    $output = '<dl class="thumbwhere_metadata-type-list">';
+    $output = '<dl class="thumbwhere_contentgenre-type-list">';
     foreach ($content as $item) {
       $output .= '<dt>' . l($item['title'], $item['href']) . '</dt>';
       $output .= '<dd>' . filter_xss_admin($item['description']) . '</dd>';
@@ -916,11 +877,11 @@ function theme_thumbwhere_metadata_add_list($variables) {
     $output .= '</dl>';
   }
   else {
-    if (user_access('administer thumbwhere_metadata types')) {
-      $output = '<p>' . t('ThumbWhereMetadata Entities cannot be added because you have not created any thumbwhere_metadata types yet. Go to the <a href="@create-thumbwhere_metadata-type">thumbwhere_metadata type creation page</a> to add a new thumbwhere_metadata type.', array('@create-thumbwhere_metadata-type' => url('admin/structure/thumbwhere_metadata_types/add'))) . '</p>';
+    if (user_access('administer thumbwhere_contentgenre types')) {
+      $output = '<p>' . t('ThumbWhereContentGenre Entities cannot be added because you have not created any thumbwhere_contentgenre types yet. Go to the <a href="@create-thumbwhere_contentgenre-type">thumbwhere_contentgenre type creation page</a> to add a new thumbwhere_contentgenre type.', array('@create-thumbwhere_contentgenre-type' => url('admin/structure/thumbwhere_contentgenre_types/add'))) . '</p>';
     }
     else {
-      $output = '<p>' . t('No thumbwhere_metadata types have been created yet for you to use.') . '</p>';
+      $output = '<p>' . t('No thumbwhere_contentgenre types have been created yet for you to use.') . '</p>';
     }
   }
   */
@@ -932,14 +893,14 @@ function theme_thumbwhere_metadata_add_list($variables) {
 
 
 /**
- * Sets the breadcrumb for administrative thumbwhere_metadata pages.
+ * Sets the breadcrumb for administrative thumbwhere_contentgenre pages.
  */
-function thumbwhere_metadata_set_breadcrumb() {
+function thumbwhere_contentgenre_set_breadcrumb() {
   $breadcrumb = array(
     l(t('Home'), '<front>'),
     l(t('Administration'), 'admin'),
-    l(t('Metadata'), 'admin/content'),
-    l(t('Metadata'), 'admin/thumbwhere/thumbwhere_metadatas'),
+    l(t('ContentGenre'), 'admin/content'),
+    l(t('ContentGenre'), 'admin/thumbwhere/thumbwhere_contentgenres'),
   );
 
   drupal_set_breadcrumb($breadcrumb);

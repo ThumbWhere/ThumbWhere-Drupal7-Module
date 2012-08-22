@@ -17,15 +17,12 @@
     <type name="datetime" implemented_by="DateTime" />
   </types>
   <resources version="V1.1" service="Content">
-    <resource name="metadata" type="Metadata" runat="server" enabled="true" object="Metadata" create="true" subscribe="true">
+    <resource name="content_genre" type="ContentGenre" runat="server" enabled="true" object="ContentGenre" create="true" subscribe="true">
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>
-      <field name="contentmetadata" type="ContentMetadata" optional="true">
-        <doc>'contentmetadata' field, which is an embedded 'ContentMetadata' resource.</doc>
-      </field>
-      <field name="trackmetadata" type="TrackMetadata" optional="true">
-        <doc>'trackmetadata' field, which is an embedded 'TrackMetadata' resource.</doc>
+      <field name="name" type="string">
+        <doc>'name' field, which is a 'string' type.</doc>
       </field>
     </resource>
   </resources>

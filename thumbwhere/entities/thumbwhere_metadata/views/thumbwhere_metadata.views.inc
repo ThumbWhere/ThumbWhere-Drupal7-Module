@@ -85,6 +85,7 @@ function thumbwhere_metadata_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
     'pk_metadata' => 'pk_metadata',
+    'fk_contentmetadata' => 'fk_contentmetadata',
     'fk_trackmetadata' => 'fk_trackmetadata',
     'link_thumbwhere_metadata' => 'link_thumbwhere_metadata',
     'operations' => 'operations',
@@ -92,6 +93,13 @@ function thumbwhere_metadata_views_default_views() {
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
       'pk_metadata' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'fk_contentmetadata' => array(
           'sortable' => 0,
           'default_sort_order' => 'asc',
           'align' => '',
@@ -239,6 +247,30 @@ function thumbwhere_metadata_views_default_views() {
   $handler->display->display_options['fields']['pk_metadata']['hide_empty'] = 0;
   $handler->display->display_options['fields']['pk_metadata']['empty_zero'] = 0;
   
+  /* Field: ThumbWhereMetadata: fk_contentmetadata */
+  $handler->display->display_options['fields']['fk_contentmetadata']['id'] = 'fk_contentmetadata';
+  $handler->display->display_options['fields']['fk_contentmetadata']['table'] = 'thumbwhere_metadata';
+  $handler->display->display_options['fields']['fk_contentmetadata']['field'] = 'fk_contentmetadata';
+  $handler->display->display_options['fields']['fk_contentmetadata']['label'] = 'fk_contentmetadata';
+  $handler->display->display_options['fields']['fk_contentmetadata']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['fk_contentmetadata']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['fk_contentmetadata']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['fk_contentmetadata']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['fk_contentmetadata']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['fk_contentmetadata']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['fk_contentmetadata']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['fk_contentmetadata']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['fk_contentmetadata']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['fk_contentmetadata']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['fk_contentmetadata']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['fk_contentmetadata']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['fk_contentmetadata']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['fk_contentmetadata']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['fk_contentmetadata']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['fk_contentmetadata']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['fk_contentmetadata']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['fk_contentmetadata']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['fk_contentmetadata']['format_plural'] = 0;
   /* Field: ThumbWhereMetadata: fk_trackmetadata */
   $handler->display->display_options['fields']['fk_trackmetadata']['id'] = 'fk_trackmetadata';
   $handler->display->display_options['fields']['fk_trackmetadata']['table'] = 'thumbwhere_metadata';

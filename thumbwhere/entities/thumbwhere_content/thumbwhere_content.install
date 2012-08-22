@@ -169,7 +169,7 @@ function thumbwhere_content_schema() {
               'size' => 'normal',
               'length' => 128,
               'not null' => FALSE,
-              'default' => 'Hello',                  
+              'default' => 'Untitled',                  
           ),      
       ),
       'primary key' => array(

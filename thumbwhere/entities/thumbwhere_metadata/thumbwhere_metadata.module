@@ -352,6 +352,11 @@ function thumbwhere_metadata_entity_presave($entity, $entity_type) {
     $fields = array();
 
     // Nullable so we only pass it through to create_metadata if we have it..
+    if (isset($entity->fk_contentmetadata)) {
+      $fields['contentmetadata'] = $entity->fk_contentmetadata;
+    }
+
+    // Nullable so we only pass it through to create_metadata if we have it..
     if (isset($entity->fk_trackmetadata)) {
       $fields['trackmetadata'] = $entity->fk_trackmetadata;
     }

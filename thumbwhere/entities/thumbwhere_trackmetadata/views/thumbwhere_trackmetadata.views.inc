@@ -85,12 +85,60 @@ function thumbwhere_trackmetadata_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
     'pk_trackmetadata' => 'pk_trackmetadata',
+    'track' => 'track',
+    'album' => 'album',
+    'disk' => 'disk',
+    'bpm' => 'bpm',
+    'lyrics' => 'lyrics',
+    'composer' => 'composer',
     'link_thumbwhere_trackmetadata' => 'link_thumbwhere_trackmetadata',
     'operations' => 'operations',
   );
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
       'pk_trackmetadata' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'track' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'album' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'disk' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'bpm' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'lyrics' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'composer' => array(
           'sortable' => 0,
           'default_sort_order' => 'asc',
           'align' => '',
@@ -231,6 +279,132 @@ function thumbwhere_trackmetadata_views_default_views() {
   $handler->display->display_options['fields']['pk_trackmetadata']['hide_empty'] = 0;
   $handler->display->display_options['fields']['pk_trackmetadata']['empty_zero'] = 0;
   
+  /* Field: ThumbWhereTrackMetadata: track */
+  $handler->display->display_options['fields']['track']['id'] = 'track';
+  $handler->display->display_options['fields']['track']['table'] = 'thumbwhere_trackmetadata';
+  $handler->display->display_options['fields']['track']['field'] = 'track';
+  $handler->display->display_options['fields']['track']['label'] = 'track';
+  $handler->display->display_options['fields']['track']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['track']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['track']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['track']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['track']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['track']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['track']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['track']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['track']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['track']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['track']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['track']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['track']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['track']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['track']['empty_zero'] = 0;
+
+  /* Field: ThumbWhereTrackMetadata: album */
+  $handler->display->display_options['fields']['album']['id'] = 'album';
+  $handler->display->display_options['fields']['album']['table'] = 'thumbwhere_trackmetadata';
+  $handler->display->display_options['fields']['album']['field'] = 'album';
+  $handler->display->display_options['fields']['album']['label'] = 'album';
+  $handler->display->display_options['fields']['album']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['album']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['album']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['album']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['album']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['album']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['album']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['album']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['album']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['album']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['album']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['album']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['album']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['album']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['album']['empty_zero'] = 0;
+
+  /* Field: ThumbWhereTrackMetadata: disk */
+  $handler->display->display_options['fields']['disk']['id'] = 'disk';
+  $handler->display->display_options['fields']['disk']['table'] = 'thumbwhere_trackmetadata';
+  $handler->display->display_options['fields']['disk']['field'] = 'disk';
+  $handler->display->display_options['fields']['disk']['label'] = 'disk';
+  $handler->display->display_options['fields']['disk']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['disk']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['disk']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['disk']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['disk']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['disk']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['disk']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['disk']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['disk']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['disk']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['disk']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['disk']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['disk']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['disk']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['disk']['empty_zero'] = 0;
+
+  /* Field: ThumbWhereTrackMetadata: bpm */
+  $handler->display->display_options['fields']['bpm']['id'] = 'bpm';
+  $handler->display->display_options['fields']['bpm']['table'] = 'thumbwhere_trackmetadata';
+  $handler->display->display_options['fields']['bpm']['field'] = 'bpm';
+  $handler->display->display_options['fields']['bpm']['label'] = 'bpm';
+  $handler->display->display_options['fields']['bpm']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['bpm']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['bpm']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['bpm']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['bpm']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['bpm']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['bpm']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['bpm']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['bpm']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['bpm']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['bpm']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['bpm']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['bpm']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['bpm']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['bpm']['empty_zero'] = 0;
+
+  /* Field: ThumbWhereTrackMetadata: lyrics */
+  $handler->display->display_options['fields']['lyrics']['id'] = 'lyrics';
+  $handler->display->display_options['fields']['lyrics']['table'] = 'thumbwhere_trackmetadata';
+  $handler->display->display_options['fields']['lyrics']['field'] = 'lyrics';
+  $handler->display->display_options['fields']['lyrics']['label'] = 'lyrics';
+  $handler->display->display_options['fields']['lyrics']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['lyrics']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['lyrics']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['lyrics']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['lyrics']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['lyrics']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['lyrics']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['lyrics']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['lyrics']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['lyrics']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['lyrics']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['lyrics']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['lyrics']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['lyrics']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['lyrics']['empty_zero'] = 0;
+
+  /* Field: ThumbWhereTrackMetadata: composer */
+  $handler->display->display_options['fields']['composer']['id'] = 'composer';
+  $handler->display->display_options['fields']['composer']['table'] = 'thumbwhere_trackmetadata';
+  $handler->display->display_options['fields']['composer']['field'] = 'composer';
+  $handler->display->display_options['fields']['composer']['label'] = 'composer';
+  $handler->display->display_options['fields']['composer']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['composer']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['composer']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['composer']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['composer']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['composer']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['composer']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['composer']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['composer']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['composer']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['composer']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['composer']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['composer']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['composer']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['composer']['empty_zero'] = 0;
+
     
     
     

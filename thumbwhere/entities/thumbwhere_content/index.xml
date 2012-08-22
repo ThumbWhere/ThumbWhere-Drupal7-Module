@@ -30,7 +30,7 @@
       <field name="producer" type="Producer" optional="true">
         <doc>'producer' field, which is an embedded 'Producer' resource.</doc>
       </field>
-      <field name="title" type="string" optional="true" default="Hello">
+      <field name="title" type="string" optional="true" default="Untitled">
         <doc>'title' field, which is a 'string' type.</doc>
       </field>
     </resource>

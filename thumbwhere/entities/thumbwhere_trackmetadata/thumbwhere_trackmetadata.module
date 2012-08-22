@@ -350,6 +350,36 @@ function thumbwhere_trackmetadata_entity_presave($entity, $entity_type) {
     //
 
     $fields = array();
+
+    // Nullable so we only pass it through to create_track_metadata if we have it..
+    if (!empty($entity->track)) {
+      $fields['track'] = $entity->track;
+    }
+
+    // Nullable so we only pass it through to create_track_metadata if we have it..
+    if (!empty($entity->album)) {
+      $fields['album'] = $entity->album;
+    }
+
+    // Nullable so we only pass it through to create_track_metadata if we have it..
+    if (!empty($entity->disk)) {
+      $fields['disk'] = $entity->disk;
+    }
+
+    // Nullable so we only pass it through to create_track_metadata if we have it..
+    if (!empty($entity->bpm)) {
+      $fields['bpm'] = $entity->bpm;
+    }
+
+    // Nullable so we only pass it through to create_track_metadata if we have it..
+    if (!empty($entity->lyrics)) {
+      $fields['lyrics'] = $entity->lyrics;
+    }
+
+    // Nullable so we only pass it through to create_track_metadata if we have it..
+    if (!empty($entity->composer)) {
+      $fields['composer'] = $entity->composer;
+    }
 		
 	//
 	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context

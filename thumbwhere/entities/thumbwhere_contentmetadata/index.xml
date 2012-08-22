@@ -17,15 +17,30 @@
     <type name="datetime" implemented_by="DateTime" />
   </types>
   <resources version="V1.1" service="Content">
-    <resource name="metadata" type="Metadata" runat="server" enabled="true" object="Metadata" create="true" subscribe="true">
+    <resource name="content_metadata" type="ContentMetadata" runat="server" enabled="true" object="ContentMetadata" create="true" subscribe="true">
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>
-      <field name="contentmetadata" type="ContentMetadata" optional="true">
-        <doc>'contentmetadata' field, which is an embedded 'ContentMetadata' resource.</doc>
+      <field name="contentgenre" type="ContentGenre" optional="true">
+        <doc>'contentgenre' field, which is an embedded 'ContentGenre' resource.</doc>
       </field>
-      <field name="trackmetadata" type="TrackMetadata" optional="true">
-        <doc>'trackmetadata' field, which is an embedded 'TrackMetadata' resource.</doc>
+      <field name="contentclassification" type="ContentClassification" optional="true">
+        <doc>'contentclassification' field, which is an embedded 'ContentClassification' resource.</doc>
+      </field>
+      <field name="description" type="string" optional="true">
+        <doc>'description' field, which is a 'string' type.</doc>
+      </field>
+      <field name="comment" type="string" optional="true">
+        <doc>'comment' field, which is a 'string' type.</doc>
+      </field>
+      <field name="year" type="string" optional="true">
+        <doc>'year' field, which is a 'string' type.</doc>
+      </field>
+      <field name="compilation" type="boolean" optional="true">
+        <doc>'compilation' field, which is a 'boolean' type.</doc>
+      </field>
+      <field name="advisory" type="string" optional="true" default="false">
+        <doc>'advisory' field, which is a 'string' type.</doc>
       </field>
     </resource>
   </resources>

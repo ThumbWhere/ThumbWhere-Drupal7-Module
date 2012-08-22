@@ -124,6 +124,30 @@ function _thumbwhere_handle_track_metadata_notify_xml($notification) {
 
         $entityfields['pk_trackmetadata'] = $id;	
 
+        if (isset($notification->track)) {
+          $entityfields['track'] = (string)($notification->track);
+        }
+
+        if (isset($notification->album)) {
+          $entityfields['album'] = (string)($notification->album);
+        }
+
+        if (isset($notification->disk)) {
+          $entityfields['disk'] = (string)($notification->disk);
+        }
+
+        if (isset($notification->bpm)) {
+          $entityfields['bpm'] = (string)($notification->bpm);
+        }
+
+        if (isset($notification->lyrics)) {
+          $entityfields['lyrics'] = (string)($notification->lyrics);
+        }
+
+        if (isset($notification->composer)) {
+          $entityfields['composer'] = (string)($notification->composer);
+        }
+
         if (!isset($notification->attributes()->key)) {
           if (twCanDebug()) debug('$entities');
           if (twCanDebug()) debug($entities);
@@ -260,6 +284,30 @@ function _thumbwhere_handle_track_metadata_notify_xml($notification) {
 
         $entityfields['pk_trackmetadata'] = $id;	
 
+        if (isset($notification->track)) {
+          $entityfields['track'] = (string)($notification->track);
+        }
+
+        if (isset($notification->album)) {
+          $entityfields['album'] = (string)($notification->album);
+        }
+
+        if (isset($notification->disk)) {
+          $entityfields['disk'] = (string)($notification->disk);
+        }
+
+        if (isset($notification->bpm)) {
+          $entityfields['bpm'] = (string)($notification->bpm);
+        }
+
+        if (isset($notification->lyrics)) {
+          $entityfields['lyrics'] = (string)($notification->lyrics);
+        }
+
+        if (isset($notification->composer)) {
+          $entityfields['composer'] = (string)($notification->composer);
+        }
+
         if (!isset($notification->attributes()->key)) {
           if (twCanDebug()) debug('$entities');
           if (twCanDebug()) debug($entities);
@@ -298,6 +346,30 @@ function _thumbwhere_handle_track_metadata_notify_xml($notification) {
         // TODO: Validate incoming values.
         //
 
+
+        if (isset($notification->track)) {
+          $entity->track = (string)($notification->track);
+        }
+
+        if (isset($notification->album)) {
+          $entity->album = (string)($notification->album);
+        }
+
+        if (isset($notification->disk)) {
+          $entity->disk = (string)($notification->disk);
+        }
+
+        if (isset($notification->bpm)) {
+          $entity->bpm = (string)($notification->bpm);
+        }
+
+        if (isset($notification->lyrics)) {
+          $entity->lyrics = (string)($notification->lyrics);
+        }
+
+        if (isset($notification->composer)) {
+          $entity->composer = (string)($notification->composer);
+        }
 
         if (!isset($notification->attributes()->key)) {
           if (twCanDebug()) debug('$entities');
@@ -658,6 +730,60 @@ function thumbwhere_trackmetadata_delete_form_wrapper($thumbwhere_trackmetadata)
  */
 function thumbwhere_trackmetadata_edit_form($form, &$form_state, $thumbwhere_trackmetadata) {
 
+  // Add the default field elements.
+    $form['track'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereTrackMetadata track'),
+
+    // '#maxlength' => 255,
+   // '#required' => TRUE,
+    '#weight' => -5,
+  );
+  // Add the default field elements.
+    $form['album'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereTrackMetadata album'),
+
+    // '#maxlength' => 255,
+   // '#required' => TRUE,
+    '#weight' => -5,
+  );
+  // Add the default field elements.
+    $form['disk'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereTrackMetadata disk'),
+
+    // '#maxlength' => 255,
+   // '#required' => TRUE,
+    '#weight' => -5,
+  );
+  // Add the default field elements.
+    $form['bpm'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereTrackMetadata bpm'),
+
+    // '#maxlength' => 255,
+   // '#required' => TRUE,
+    '#weight' => -5,
+  );
+  // Add the default field elements.
+    $form['lyrics'] = array(
+    '#type' => 'textarea',
+    '#title' => t('ThumbWhereTrackMetadata lyrics'),
+
+    // '#maxlength' => 255,
+   // '#required' => TRUE,
+    '#weight' => -5,
+  );
+  // Add the default field elements.
+    $form['composer'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereTrackMetadata composer'),
+
+    // '#maxlength' => 255,
+   // '#required' => TRUE,
+    '#weight' => -5,
+  );
 
 
 
@@ -724,6 +850,36 @@ function thumbwhere_trackmetadata_edit_form_validate(&$form, &$form_state) {
 
 
   // No validation for pk
+
+
+  // Validate normaltrack
+  $value = $form['track']['#value'];
+  // If we have no default value then we don't care much for checking for emptyness.
+
+
+  // Validate normalalbum
+  $value = $form['album']['#value'];
+  // If we have no default value then we don't care much for checking for emptyness.
+
+
+  // Validate normaldisk
+  $value = $form['disk']['#value'];
+  // If we have no default value then we don't care much for checking for emptyness.
+
+
+  // Validate normalbpm
+  $value = $form['bpm']['#value'];
+  // If we have no default value then we don't care much for checking for emptyness.
+
+
+  // Validate normallyrics
+  $value = $form['lyrics']['#value'];
+  // If we have no default value then we don't care much for checking for emptyness.
+
+
+  // Validate normalcomposer
+  $value = $form['composer']['#value'];
+  // If we have no default value then we don't care much for checking for emptyness.
 
 
               

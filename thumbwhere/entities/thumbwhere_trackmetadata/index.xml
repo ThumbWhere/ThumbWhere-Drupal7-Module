@@ -21,6 +21,24 @@
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>
+      <field name="track" type="string" optional="true">
+        <doc>'track' field, which is a 'string' type.</doc>
+      </field>
+      <field name="album" type="string" optional="true">
+        <doc>'album' field, which is a 'string' type.</doc>
+      </field>
+      <field name="disk" type="string" optional="true">
+        <doc>'disk' field, which is a 'string' type.</doc>
+      </field>
+      <field name="bpm" type="string" optional="true">
+        <doc>'bpm' field, which is a 'string' type.</doc>
+      </field>
+      <field name="lyrics" type="string" optional="true">
+        <doc>'lyrics' field, which is a 'string' type.</doc>
+      </field>
+      <field name="composer" type="string" optional="true">
+        <doc>'composer' field, which is a 'string' type.</doc>
+      </field>
     </resource>
   </resources>
 </metawrap>

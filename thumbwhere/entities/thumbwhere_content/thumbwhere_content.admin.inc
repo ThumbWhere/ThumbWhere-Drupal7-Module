@@ -740,7 +740,7 @@ function thumbwhere_content_edit_form($form, &$form_state, $thumbwhere_content) 
     $form['title'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereContent title'),
-    '#default_value' => isset($thumbwhere_content->title) ? $thumbwhere_content->title : 'Hello',
+    '#default_value' => isset($thumbwhere_content->title) ? $thumbwhere_content->title : 'Untitled',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
