@@ -5,22 +5,28 @@ SET HOME=\home
 "C:\Program Files\Git\bin\git.exe" config --global user.email "build@thumbwhere.com"
 
 SET BUILD=0
-SET STREAM=dev
-SET MESSAGE=dev
+SET STREAM="dev"
+SET MESSAGE="dev"
+SET F1="--recommended"
+SET F2="--supported"
+SET F3="--default"
 
-IF NOT (%1)==("") SET MESSAGE=%1
-IF NOT (%2)==("") SET STREAM=%2
-IF NOT (%3)==("") SET BUILD=%3
+IF NOT ("%1")==("") SET MESSAGE=%1
+IF NOT ("%2")==("") SET STREAM=%2
+IF NOT ("%3")==("") SET BUILD=%3
+IF NOT ("%4")==("") SET F1=%4
+IF NOT ("%5")==("") SET F2=%5
+IF NOT ("%6")==("") SET F3=%6
 
 @REM Change to the release folder
 PUSHD ..\..\ThumbWhere-Drupal7-Module-Releases\release-history\
 
 @REM Make sure we have the feed (it will fail if it already exists - can be overidden by --force).
-..\..\ThumbWhere-Drupal7-Module\tools\DrupalUtil.exe new thumbwhere thumbwhere 7.x http://drupalmodules.thumbwhere.com/release-history/ --exitcleanonerror
+..\..\ThumbWhere-Drupal7-Module\tools\DrupalUtil.exe new thumbwhere "ThumbWhere" ThumbWhere 7.x http://drupalmodules.thumbwhere.com/release-history/ --exitcleanonerror
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 @REM Update the release
-..\..\ThumbWhere-Drupal7-Module\tools\DrupalUtil.exe add ..\..\ThumbWhere-Drupal7-Module\thumbwhere thumbwhere 7.x patch %MESSAGE% %STREAM% "" %4 %5 %6
+..\..\ThumbWhere-Drupal7-Module\tools\DrupalUtil.exe add ..\..\ThumbWhere-Drupal7-Module\thumbwhere thumbwhere 7.x patch %MESSAGE% %STREAM% "" %F1% %F2% %F3%
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Create Directories

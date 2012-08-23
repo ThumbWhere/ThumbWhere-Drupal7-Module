@@ -49,8 +49,15 @@
         {
             Console.WriteLine("");
             Console.WriteLine("Known options: --recommended --supported --default --exitcleanonerror");
+            Console.WriteLine("  --recommended: Sets the current MAJOR version to be recommended.");
+            Console.WriteLine("  --supported: Sets the current MAJOR version to be supported.");
+            Console.WriteLine("  --default: Sets the current MAJOR version as the default.");
             Console.WriteLine("");
-
+            Console.WriteLine("  Warning: These can only be used to select a major build, not a minor specific build.");
+            Console.WriteLine("");
+            Console.WriteLine("  --exitcleanonerror: Even if we throw an exception, we will not return an error code ");
+            Console.WriteLine("                      break a build script");
+            Console.WriteLine("");
         }
 
 
@@ -79,9 +86,9 @@
                     {
                         Console.WriteLine("new - Creates a new module");
                         Console.WriteLine("");
-                        Console.WriteLine("new name maintainer api description");
+                        Console.WriteLine("Eg: new name title maintainer api description");
                         Console.WriteLine("");
-                        Console.WriteLine("eg: new guitar memyselfandi 7.x http://example.com/release-history/");
+                        Console.WriteLine("eg: new guitar Guitar memyselfandi 7.x http://example.com/release-history/");
                     }
                 break;
 
@@ -645,7 +652,7 @@
                     case "new":
                         {
 
-                            if (Args.Length < 5)
+                            if (Args.Length < 6)
                             {
                                 NotEnoughArguments(command);
                                 Environment.Exit(2);
@@ -660,15 +667,17 @@
                             //
 
                             string name = Args[1].Trim();
-                            string maintainer = Args[2].Trim();
-                            string api = Args[3].Trim();
-                            string url = Args[4].Trim();
+                            string title = Args[2].Trim();
+                            string maintainer = Args[3].Trim();
+                            string api = Args[4].Trim();
+                            string url = Args[5].Trim();
 
                             if (url.EndsWith("/")) url = url.Substring(0, url.Length - 1);
 
 
                             Console.WriteLine("");
                             Console.WriteLine("name       = '{0}'", name);
+                            Console.WriteLine("title      = '{0}'", title);
                             Console.WriteLine("maintainer = '{0}'", maintainer);
                             Console.WriteLine("api        = '{0}'", api);
                             Console.WriteLine("url        = '{0}'", url);
@@ -688,7 +697,7 @@
                             xmlnsManager.AddNamespace("dc", "http://purl.org/dc/elements/1.1/");
 
 
-                            xmlTemplate.SelectSingleNode("project/title").InnerText = name;
+                            xmlTemplate.SelectSingleNode("project/title").InnerText = title;
                             xmlTemplate.SelectSingleNode("project/short_name").InnerText = name;
                             xmlTemplate.SelectSingleNode("project/dc:creator", xmlnsManager).InnerText = maintainer;
                             xmlTemplate.SelectSingleNode("project/link").InnerText = url + "/" + name + "/";
@@ -708,10 +717,10 @@
 
                             if (File.Exists(xmlPath))
                             {
-                                Console.WriteLine("There is already a manifest file at '{0}'", xmlPath);
+                                Console.WriteLine("There is already a manifest.xml file at '{0}'", xmlPath);
                                 if (!Force)
                                 {
-                                    throw new ArgumentException("Safety feature - we don't let you overwrite if yuu don't specify --force");
+                                    throw new ArgumentException("Safety feature - we don't let you overwrite if you don't specify --force");
                                 }
                                 else
                                 {
@@ -724,6 +733,35 @@
 
                             // Save the XML
                             xmlTemplate.Save(xmlPath);
+
+                            
+                            //
+                            // Now save the XSL
+                            //
+
+                            XmlDocument xslTemplate = new XmlDocument();
+                            xslTemplate.LoadXml(Resources.manifest);
+
+                            string xslPath = name + "/" + api + "/manifest.xsl";
+
+                            if (File.Exists(xslPath))
+                            {
+                                Console.WriteLine("There is already a manifest.xsl file at '{0}'", xslPath);
+                                if (!Force)
+                                {
+                                    throw new ArgumentException("Safety feature - we don't let you overwrite if you don't specify --force");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("... but you specified --force, and we all know what that means.");
+                                }
+                            }
+
+                            Console.WriteLine("");
+                            Console.WriteLine("Saving new XSL to '{0}'", xslPath);
+
+                            // Save the XML
+                            xslTemplate.Save(xslPath);
 
 
                         }
@@ -784,6 +822,7 @@
                             Console.WriteLine("api       = '{0}'", api);
                             Console.WriteLine("increment = '{0}'", increment);
                             Console.WriteLine("type      = '{0}'", type);
+                            Console.WriteLine("stream    = '{0}'", stream);
                             Console.WriteLine("");
 
                             string xmlPath = name + "/" + api + "/manifest.xml";
