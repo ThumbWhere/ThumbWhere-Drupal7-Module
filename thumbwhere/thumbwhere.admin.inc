@@ -56,6 +56,9 @@ function thumbwhere_admin_settings_validator($form, &$form_state) {
 
   }
 
+  variable_set('thumbwhere_api_log_debug', $form_state['values']['thumbwhere_api_log_debug']);
+  variable_set('thumbwhere_api_log_trace', $form_state['values']['thumbwhere_api_log_trace']);
+
 }
 
 /**
