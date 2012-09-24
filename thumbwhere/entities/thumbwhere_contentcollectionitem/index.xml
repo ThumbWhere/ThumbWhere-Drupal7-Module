@@ -27,8 +27,8 @@
       <field name="content" type="Content">
         <doc>'content' field, which is an embedded 'Content' resource.</doc>
       </field>
-      <field name="order" type="int" optional="true" default="1">
-        <doc>'order' field, which is a 'int' type.</doc>
+      <field name="weight" type="int" optional="true" default="1">
+        <doc>'weight' field, which is a 'int' type.</doc>
       </field>
     </resource>
   </resources>

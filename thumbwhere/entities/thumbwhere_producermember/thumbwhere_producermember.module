@@ -314,10 +314,14 @@ function thumbwhere_producermember_entity_presave($entity, $entity_type) {
       if ($entity->do_not_propagate) {
         if (twCanDebug()) {
           if ($entity->is_new) {
-            debug("DO NOT PROPAGATE 'producermember' presave *CREATE*");
+            if (twCanDebug()){
+              debug("DO NOT PROPAGATE 'producermember' presave *CREATE*");
+          	}
           }
           else {
-            debug("DO NOT PROPAGATE 'producermember' presave *UPDATE*");
+            if (twCanDebug()) {
+              debug("DO NOT PROPAGATE 'producermember' presave *UPDATE*");
+            }
           }
         }
 

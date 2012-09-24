@@ -378,7 +378,7 @@ function _thumbwhere_handle_thing_notify_xml($notification) {
  */
 function _thumbwhere_thing_notify() {
 
-  if (variable_get('thumbwhere_api_log_debug', 0) == 1) {
+  if (twCanDebug()) {
     watchdog('thumbwhere_thing', 'incoming notification.');
   }
 

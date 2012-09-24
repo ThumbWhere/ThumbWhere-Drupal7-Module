@@ -441,7 +441,7 @@ function _thumbwhere_handle_content_metadata_notify_xml($notification) {
  */
 function _thumbwhere_content_metadata_notify() {
 
-  if (variable_get('thumbwhere_api_log_debug', 0) == 1) {
+  if (twCanDebug()) {
     watchdog('thumbwhere_content_metadata', 'incoming notification.');
   }
 

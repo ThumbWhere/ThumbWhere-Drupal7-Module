@@ -87,7 +87,7 @@ function thumbwhere_contentcollectionitem_views_default_views() {
     'pk_contentcollectionitem' => 'pk_contentcollectionitem',
     'fk_contentcollection' => 'fk_contentcollection',
     'fk_content' => 'fk_content',
-    'order' => 'order',
+    'weight' => 'weight',
     'link_thumbwhere_contentcollectionitem' => 'link_thumbwhere_contentcollectionitem',
     'operations' => 'operations',
   );
@@ -114,7 +114,7 @@ function thumbwhere_contentcollectionitem_views_default_views() {
           'separator' => '',
           'empty_column' => 0,
       ),
-      'order' => array(
+      'weight' => array(
           'sortable' => 0,
           'default_sort_order' => 'asc',
           'align' => '',
@@ -303,26 +303,26 @@ function thumbwhere_contentcollectionitem_views_default_views() {
   $handler->display->display_options['fields']['fk_content']['empty_zero'] = 0;
   $handler->display->display_options['fields']['fk_content']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['fk_content']['format_plural'] = 0;
-  /* Field: ThumbWhereContentCollectionItem: order */
-  $handler->display->display_options['fields']['order']['id'] = 'order';
-  $handler->display->display_options['fields']['order']['table'] = 'thumbwhere_contentcollectionitem';
-  $handler->display->display_options['fields']['order']['field'] = 'order';
-  $handler->display->display_options['fields']['order']['label'] = 'order';
-  $handler->display->display_options['fields']['order']['alter']['alter_text'] = 0;
-  $handler->display->display_options['fields']['order']['alter']['make_link'] = 0;
-  $handler->display->display_options['fields']['order']['alter']['absolute'] = 0;
-  $handler->display->display_options['fields']['order']['alter']['external'] = 0;
-  $handler->display->display_options['fields']['order']['alter']['replace_spaces'] = 0;
-  $handler->display->display_options['fields']['order']['alter']['nl2br'] = 0;
-  $handler->display->display_options['fields']['order']['alter']['word_boundary'] = 1;
-  $handler->display->display_options['fields']['order']['alter']['ellipsis'] = 1;
-  $handler->display->display_options['fields']['order']['alter']['strip_tags'] = 0;
-  $handler->display->display_options['fields']['order']['alter']['trim'] = 0;
-  $handler->display->display_options['fields']['order']['alter']['html'] = 0;
-  $handler->display->display_options['fields']['order']['element_label_colon'] = 1;
-  $handler->display->display_options['fields']['order']['element_default_classes'] = 1;
-  $handler->display->display_options['fields']['order']['hide_empty'] = 0;
-  $handler->display->display_options['fields']['order']['empty_zero'] = 0;
+  /* Field: ThumbWhereContentCollectionItem: weight */
+  $handler->display->display_options['fields']['weight']['id'] = 'weight';
+  $handler->display->display_options['fields']['weight']['table'] = 'thumbwhere_contentcollectionitem';
+  $handler->display->display_options['fields']['weight']['field'] = 'weight';
+  $handler->display->display_options['fields']['weight']['label'] = 'weight';
+  $handler->display->display_options['fields']['weight']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['weight']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['weight']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['weight']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['weight']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['weight']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['weight']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['weight']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['weight']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['weight']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['weight']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['weight']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['weight']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['weight']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['weight']['empty_zero'] = 0;
 
     
     

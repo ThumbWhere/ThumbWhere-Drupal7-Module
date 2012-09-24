@@ -144,6 +144,10 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
           $entityfields['fk_license'] = intval($notification->license);
         }
 
+        if (isset($notification->content)) {
+          $entityfields['fk_content'] = intval($notification->content);
+        }
+
         if (isset($notification->title)) {
 
         }
@@ -381,6 +385,10 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
           $entityfields['fk_license'] = intval($notification->license);
         }
 
+        if (isset($notification->content)) {
+          $entityfields['fk_content'] = intval($notification->content);
+        }
+
         if (isset($notification->title)) {
 
         }
@@ -521,6 +529,10 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
           $entity->fk_license = intval($notification->license);
         }
 
+        if (isset($notification->content)) {
+          $entity->fk_content = intval($notification->content);
+        }
+
         if (isset($notification->title)) {
 
         }
@@ -645,7 +657,7 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
  */
 function _thumbwhere_mediaitem_notify() {
 
-  if (variable_get('thumbwhere_api_log_debug', 0) == 1) {
+  if (twCanDebug()) {
     watchdog('thumbwhere_mediaitem', 'incoming notification.');
   }
 
@@ -1028,6 +1040,16 @@ function thumbwhere_mediaitem_edit_form($form, &$form_state, $thumbwhere_mediait
     '#autocomplete_path' => 'entity-autocomplete/thumbwhere_license',
   );
   // Add the default field elements.
+  $form['fk_content'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereMediaItem fk_content'),
+    '#default_value' => isset($thumbwhere_mediaitem->fk_content) ? $thumbwhere_mediaitem->fk_content : '',
+    //'#maxlength' => 255,
+   /// '#required' => TRUE,
+    '#weight' => -5,
+    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_content',
+  );
+  // Add the default field elements.
     $form['title'] = array(
     '#type' => 'textarea',
     '#title' => t('ThumbWhereMediaItem title'),
@@ -1291,6 +1313,18 @@ function thumbwhere_mediaitem_edit_form_validate(&$form, &$form_state) {
   //if (twCanDebug()) debug($form['fk_license']);
    if (twCanDebug()) debug('fk_license = ' . $value);
   // Validate fk fk_license
+
+
+  // Convert fk autocomplete for fk_content
+  $value = $form['fk_content']['#value'];
+  // If we have something, escape the auto-completion encoding.
+  if (!empty($value)) { 
+    $value = entity_autocomplete_get_id($value);
+    form_set_value($form['fk_content'], $value,$form_state);
+  }
+  //if (twCanDebug()) debug($form['fk_content']);
+   if (twCanDebug()) debug('fk_content = ' . $value);
+  // Validate fk fk_content
 
 
   // Validate normaltitle

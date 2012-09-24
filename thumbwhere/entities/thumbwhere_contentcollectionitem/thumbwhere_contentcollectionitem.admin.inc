@@ -132,8 +132,8 @@ function _thumbwhere_handle_content_collection_item_notify_xml($notification) {
           $entityfields['fk_content'] = intval($notification->content);
         }
 
-        if (isset($notification->order)) {
-          $entityfields['order'] = (int)intval($notification->order);
+        if (isset($notification->weight)) {
+          $entityfields['weight'] = (int)intval($notification->weight);
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -280,8 +280,8 @@ function _thumbwhere_handle_content_collection_item_notify_xml($notification) {
           $entityfields['fk_content'] = intval($notification->content);
         }
 
-        if (isset($notification->order)) {
-          $entityfields['order'] = (int)intval($notification->order);
+        if (isset($notification->weight)) {
+          $entityfields['weight'] = (int)intval($notification->weight);
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -331,8 +331,8 @@ function _thumbwhere_handle_content_collection_item_notify_xml($notification) {
           $entity->fk_content = intval($notification->content);
         }
 
-        if (isset($notification->order)) {
-          $entity->order = (int)intval($notification->order);
+        if (isset($notification->weight)) {
+          $entity->weight = (int)intval($notification->weight);
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -378,7 +378,7 @@ function _thumbwhere_handle_content_collection_item_notify_xml($notification) {
  */
 function _thumbwhere_content_collection_item_notify() {
 
-  if (variable_get('thumbwhere_api_log_debug', 0) == 1) {
+  if (twCanDebug()) {
     watchdog('thumbwhere_content_collection_item', 'incoming notification.');
   }
 
@@ -731,10 +731,10 @@ function thumbwhere_contentcollectionitem_edit_form($form, &$form_state, $thumbw
     '#autocomplete_path' => 'entity-autocomplete/thumbwhere_content',
   );
   // Add the default field elements.
-    $form['order'] = array(
+    $form['weight'] = array(
     '#type' => 'textfield',
-    '#title' => t('ThumbWhereContentCollectionItem order'),
-    '#default_value' => isset($thumbwhere_contentcollectionitem->order) ? $thumbwhere_contentcollectionitem->order : 1,
+    '#title' => t('ThumbWhereContentCollectionItem weight'),
+    '#default_value' => isset($thumbwhere_contentcollectionitem->weight) ? $thumbwhere_contentcollectionitem->weight : 1,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -837,8 +837,8 @@ function thumbwhere_contentcollectionitem_edit_form_validate(&$form, &$form_stat
     // throw new Exception('Field \'fk_content\' in is mandatory');
   }
 
-  // Validate normalorder
-  $value = $form['order']['#value'];
+  // Validate normalweight
+  $value = $form['weight']['#value'];
   // If we have no default value then we don't care much for checking for emptyness.
 
 

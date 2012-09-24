@@ -124,16 +124,16 @@ function _thumbwhere_handle_content_notify_xml($notification) {
 
         $entityfields['pk_content'] = $id;	
 
-        if (isset($notification->mediaitem)) {
-          $entityfields['fk_mediaitem'] = intval($notification->mediaitem);
-        }
-
         if (isset($notification->metadata)) {
           $entityfields['fk_metadata'] = intval($notification->metadata);
         }
 
         if (isset($notification->producer)) {
           $entityfields['fk_producer'] = intval($notification->producer);
+        }
+
+        if (isset($notification->external_id)) {
+          $entityfields['external_id'] = (string)($notification->external_id);
         }
 
         if (isset($notification->title)) {
@@ -276,16 +276,16 @@ function _thumbwhere_handle_content_notify_xml($notification) {
 
         $entityfields['pk_content'] = $id;	
 
-        if (isset($notification->mediaitem)) {
-          $entityfields['fk_mediaitem'] = intval($notification->mediaitem);
-        }
-
         if (isset($notification->metadata)) {
           $entityfields['fk_metadata'] = intval($notification->metadata);
         }
 
         if (isset($notification->producer)) {
           $entityfields['fk_producer'] = intval($notification->producer);
+        }
+
+        if (isset($notification->external_id)) {
+          $entityfields['external_id'] = (string)($notification->external_id);
         }
 
         if (isset($notification->title)) {
@@ -331,16 +331,16 @@ function _thumbwhere_handle_content_notify_xml($notification) {
         //
 
 
-        if (isset($notification->mediaitem)) {
-          $entity->fk_mediaitem = intval($notification->mediaitem);
-        }
-
         if (isset($notification->metadata)) {
           $entity->fk_metadata = intval($notification->metadata);
         }
 
         if (isset($notification->producer)) {
           $entity->fk_producer = intval($notification->producer);
+        }
+
+        if (isset($notification->external_id)) {
+          $entity->external_id = (string)($notification->external_id);
         }
 
         if (isset($notification->title)) {
@@ -390,7 +390,7 @@ function _thumbwhere_handle_content_notify_xml($notification) {
  */
 function _thumbwhere_content_notify() {
 
-  if (variable_get('thumbwhere_api_log_debug', 0) == 1) {
+  if (twCanDebug()) {
     watchdog('thumbwhere_content', 'incoming notification.');
   }
 
@@ -723,16 +723,6 @@ function thumbwhere_content_delete_form_wrapper($thumbwhere_content) {
 function thumbwhere_content_edit_form($form, &$form_state, $thumbwhere_content) {
 
   // Add the default field elements.
-  $form['fk_mediaitem'] = array(
-    '#type' => 'textfield',
-    '#title' => t('ThumbWhereContent fk_mediaitem'),
-    '#default_value' => isset($thumbwhere_content->fk_mediaitem) ? $thumbwhere_content->fk_mediaitem : '',
-    //'#maxlength' => 255,
-   /// '#required' => TRUE,
-    '#weight' => -5,
-    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_mediaitem',
-  );
-  // Add the default field elements.
   $form['fk_metadata'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereContent fk_metadata'),
@@ -751,6 +741,15 @@ function thumbwhere_content_edit_form($form, &$form_state, $thumbwhere_content) 
    /// '#required' => TRUE,
     '#weight' => -5,
     '#autocomplete_path' => 'entity-autocomplete/thumbwhere_producer',
+  );
+  // Add the default field elements.
+    $form['external_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereContent external_id'),
+
+    // '#maxlength' => 255,
+   // '#required' => TRUE,
+    '#weight' => -5,
   );
   // Add the default field elements.
     $form['title'] = array(
@@ -829,18 +828,6 @@ function thumbwhere_content_edit_form_validate(&$form, &$form_state) {
   // No validation for pk
 
 
-  // Convert fk autocomplete for fk_mediaitem
-  $value = $form['fk_mediaitem']['#value'];
-  // If we have something, escape the auto-completion encoding.
-  if (!empty($value)) { 
-    $value = entity_autocomplete_get_id($value);
-    form_set_value($form['fk_mediaitem'], $value,$form_state);
-  }
-  //if (twCanDebug()) debug($form['fk_mediaitem']);
-   if (twCanDebug()) debug('fk_mediaitem = ' . $value);
-  // Validate fk fk_mediaitem
-
-
   // Convert fk autocomplete for fk_metadata
   $value = $form['fk_metadata']['#value'];
   // If we have something, escape the auto-completion encoding.
@@ -863,6 +850,11 @@ function thumbwhere_content_edit_form_validate(&$form, &$form_state) {
   //if (twCanDebug()) debug($form['fk_producer']);
    if (twCanDebug()) debug('fk_producer = ' . $value);
   // Validate fk fk_producer
+
+
+  // Validate normalexternal_id
+  $value = $form['external_id']['#value'];
+  // If we have no default value then we don't care much for checking for emptyness.
 
 
   // Validate normaltitle

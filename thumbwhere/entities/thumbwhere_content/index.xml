@@ -21,14 +21,14 @@
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>
-      <field name="mediaitem" type="MediaItem" optional="true">
-        <doc>'mediaitem' field, which is an embedded 'MediaItem' resource.</doc>
-      </field>
       <field name="metadata" type="Metadata" optional="true">
         <doc>'metadata' field, which is an embedded 'Metadata' resource.</doc>
       </field>
       <field name="producer" type="Producer" optional="true">
         <doc>'producer' field, which is an embedded 'Producer' resource.</doc>
+      </field>
+      <field name="external_id" type="string" optional="true">
+        <doc>'external_id' field, which is a 'string' type.</doc>
       </field>
       <field name="title" type="string" optional="true" default="Untitled">
         <doc>'title' field, which is a 'string' type.</doc>

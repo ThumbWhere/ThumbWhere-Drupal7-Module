@@ -314,10 +314,14 @@ function thumbwhere_contentcollectionitem_entity_presave($entity, $entity_type) 
       if ($entity->do_not_propagate) {
         if (twCanDebug()) {
           if ($entity->is_new) {
-            debug("DO NOT PROPAGATE 'contentcollectionitem' presave *CREATE*");
+            if (twCanDebug()){
+              debug("DO NOT PROPAGATE 'contentcollectionitem' presave *CREATE*");
+          	}
           }
           else {
-            debug("DO NOT PROPAGATE 'contentcollectionitem' presave *UPDATE*");
+            if (twCanDebug()) {
+              debug("DO NOT PROPAGATE 'contentcollectionitem' presave *UPDATE*");
+            }
           }
         }
 
@@ -366,11 +370,11 @@ function thumbwhere_contentcollectionitem_entity_presave($entity, $entity_type) 
     }
 
     // Not nullable but we have a default value
-    if (!isset($entity->order)) {
-      $fields['order'] = $entity->order = 1;
+    if (!isset($entity->weight)) {
+      $fields['weight'] = $entity->weight = 1;
     }
     else {
-      $fields['order'] = $entity->order;
+      $fields['weight'] = $entity->weight;
     }
 		
 	//

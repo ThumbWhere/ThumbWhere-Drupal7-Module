@@ -156,8 +156,8 @@ function thumbwhere_contentcollectionitem_schema() {
               'not null' => FALSE,
               //'default' => -1,
           ),
-          'order' => array(
-              'description' => 'The \'order\' textfield field of the \'ContentCollectionItem\' entity.',
+          'weight' => array(
+              'description' => 'The \'weight\' textfield field of the \'ContentCollectionItem\' entity.',
               'type' => 'int',
               'size' => 'normal',
               'not null' => FALSE,

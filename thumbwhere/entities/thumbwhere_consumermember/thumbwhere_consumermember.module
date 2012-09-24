@@ -314,10 +314,14 @@ function thumbwhere_consumermember_entity_presave($entity, $entity_type) {
       if ($entity->do_not_propagate) {
         if (twCanDebug()) {
           if ($entity->is_new) {
-            debug("DO NOT PROPAGATE 'consumermember' presave *CREATE*");
+            if (twCanDebug()){
+              debug("DO NOT PROPAGATE 'consumermember' presave *CREATE*");
+          	}
           }
           else {
-            debug("DO NOT PROPAGATE 'consumermember' presave *UPDATE*");
+            if (twCanDebug()) {
+              debug("DO NOT PROPAGATE 'consumermember' presave *UPDATE*");
+            }
           }
         }
 

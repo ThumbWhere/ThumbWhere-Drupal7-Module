@@ -314,10 +314,14 @@ function thumbwhere_trackmetadata_entity_presave($entity, $entity_type) {
       if ($entity->do_not_propagate) {
         if (twCanDebug()) {
           if ($entity->is_new) {
-            debug("DO NOT PROPAGATE 'trackmetadata' presave *CREATE*");
+            if (twCanDebug()){
+              debug("DO NOT PROPAGATE 'trackmetadata' presave *CREATE*");
+          	}
           }
           else {
-            debug("DO NOT PROPAGATE 'trackmetadata' presave *UPDATE*");
+            if (twCanDebug()) {
+              debug("DO NOT PROPAGATE 'trackmetadata' presave *UPDATE*");
+            }
           }
         }
 

@@ -133,7 +133,7 @@ function thumbwhere_mediaitem_schema() {
   $schema = array();
 
   $schema['thumbwhere_mediaitem'] = array(
-  'description' => 'The base table for thumbwhere_mediaitem entities.' . 'Contains all the information for a media item. fk_server is the server where this has been uploaded to using the pk_mediaitem as an ID. if censored is true then someone has complained about it and the admins have censored it. if censored is true then someone has complained about it and the admins have reviewed it and deemed it OK. At the moment fk_identity signifies the identity that uploaded the content - this *MAY* be phased out so that fk_identity will be moved into the table \&apos;IdentityMediaItems\&apos; ratingdividend is the total aggregagated actual ratings eg (if a rating is 1 out of 5 then 1 is added to this). ratingdivisor is the total aggergated maximum ratings eg (if a rating is 1 out of 5 then 5 is added to this). Rating is the actual rating = ratingdividend/ratingdivisor ratings is the total number of ratings. TODO: Get rid of fk_identity',
+  'description' => 'The base table for thumbwhere_mediaitem entities.' . 'Contains all the information for a media item. fk_server is the server where this has been uploaded to using the pk_mediaitem as an ID. if censored is true then someone has complained about it and the admins have censored it. if censored is true then someone has complained about it and the admins have reviewed it and deemed it OK. At the moment fk_identity signifies the identity that uploaded the content - this *MAY* be phased out so that fk_identity will be moved into the table \&apos;IdentityMediaItems\&apos; ratingdividend is the total aggregagated actual ratings eg (if a rating is 1 out of 5 then 1 is added to this). ratingdivisor is the total aggergated maximum ratings eg (if a rating is 1 out of 5 then 5 is added to this). Rating is the actual rating = ratingdividend/ratingdivisor ratings is the total number of ratings. TODO: Get rid of fk_identity fk_content is content that has been created out of this mediaitem.',
     'fields' => array(
           'pk_mediaitem' => array(
               'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereMediaItems\' entity.',
@@ -172,6 +172,13 @@ function thumbwhere_mediaitem_schema() {
           ),
           'fk_license' => array(
           'description' => 'ThumbWhere Id: Optional reference to a \'License\' Entity.',
+              'type' => 'int',
+              'size' => 'big',
+              'not null' => FALSE,
+              //'default' => -1,
+          ),
+          'fk_content' => array(
+          'description' => 'ThumbWhere Id: Optional reference to a \'Content\' Entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => FALSE,
@@ -295,6 +302,9 @@ function thumbwhere_mediaitem_schema() {
           ),
           'fk_license' => array(
               'fk_license'
+          ),
+          'fk_content' => array(
+              'fk_content'
           ),
       
       ),

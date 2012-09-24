@@ -366,7 +366,7 @@ function _thumbwhere_handle_content_collection_notify_xml($notification) {
  */
 function _thumbwhere_content_collection_notify() {
 
-  if (variable_get('thumbwhere_api_log_debug', 0) == 1) {
+  if (twCanDebug()) {
     watchdog('thumbwhere_content_collection', 'incoming notification.');
   }
 

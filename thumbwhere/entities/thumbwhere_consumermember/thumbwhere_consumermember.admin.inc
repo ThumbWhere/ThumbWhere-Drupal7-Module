@@ -393,7 +393,7 @@ function _thumbwhere_handle_consumer_member_notify_xml($notification) {
  */
 function _thumbwhere_consumer_member_notify() {
 
-  if (variable_get('thumbwhere_api_log_debug', 0) == 1) {
+  if (twCanDebug()) {
     watchdog('thumbwhere_consumer_member', 'incoming notification.');
   }
 

@@ -432,7 +432,7 @@ function _thumbwhere_handle_host_command_notify_xml($notification) {
  */
 function _thumbwhere_host_command_notify() {
 
-  if (variable_get('thumbwhere_api_log_debug', 0) == 1) {
+  if (twCanDebug()) {
     watchdog('thumbwhere_host_command', 'incoming notification.');
   }
 

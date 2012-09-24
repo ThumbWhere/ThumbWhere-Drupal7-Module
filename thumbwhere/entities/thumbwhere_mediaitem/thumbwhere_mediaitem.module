@@ -314,10 +314,14 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
       if ($entity->do_not_propagate) {
         if (twCanDebug()) {
           if ($entity->is_new) {
-            debug("DO NOT PROPAGATE 'mediaitem' presave *CREATE*");
+            if (twCanDebug()){
+              debug("DO NOT PROPAGATE 'mediaitem' presave *CREATE*");
+          	}
           }
           else {
-            debug("DO NOT PROPAGATE 'mediaitem' presave *UPDATE*");
+            if (twCanDebug()) {
+              debug("DO NOT PROPAGATE 'mediaitem' presave *UPDATE*");
+            }
           }
         }
 
@@ -382,6 +386,11 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
     // Nullable so we only pass it through to create_mediaitem if we have it..
     if (isset($entity->fk_license)) {
       $fields['license'] = $entity->fk_license;
+    }
+
+    // Nullable so we only pass it through to create_mediaitem if we have it..
+    if (isset($entity->fk_content)) {
+      $fields['content'] = $entity->fk_content;
     }
 
     // Nullable so we only pass it through to create_mediaitem if we have it..

@@ -133,7 +133,7 @@ function thumbwhere_content_schema() {
   $schema = array();
 
   $schema['thumbwhere_content'] = array(
-  'description' => 'The base table for thumbwhere_content entities.' . 'Content... A more advanced wrapper for MediaItem mediatem: The raw media that makes up this content. metadata: The data describes the mediaitem. producer: The producer of the content. contentingest: The ingestion that created this content.',
+  'description' => 'The base table for thumbwhere_content entities.' . 'Content... A more advanced wrapper for MediaItem metadata: The data describes the mediaitem. producer: The producer of the content. external_id: Used to track this back to an external content catalogue.',
     'fields' => array(
           'pk_content' => array(
               'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereContents\' entity.',
@@ -141,13 +141,6 @@ function thumbwhere_content_schema() {
               'size' => 'big',
               'not null' => TRUE,
               'default' => -1,
-          ),
-          'fk_mediaitem' => array(
-          'description' => 'ThumbWhere Id: Optional reference to a \'MediaItem\' Entity.',
-              'type' => 'int',
-              'size' => 'big',
-              'not null' => FALSE,
-              //'default' => -1,
           ),
           'fk_metadata' => array(
           'description' => 'ThumbWhere Id: Optional reference to a \'Metadata\' Entity.',
@@ -162,6 +155,13 @@ function thumbwhere_content_schema() {
               'size' => 'big',
               'not null' => FALSE,
               //'default' => -1,
+          ),
+          'external_id' => array(
+              'description' => 'The \'external_id\' textfield field of the \'Content\' entity.',
+              'type' => 'varchar',
+              'size' => 'normal',
+              'length' => 128,
+              'not null' => FALSE,                  
           ),
           'title' => array(
               'description' => 'The \'title\' textfield field of the \'Content\' entity.',
@@ -178,9 +178,6 @@ function thumbwhere_content_schema() {
       'indexes' => array(
           'pk_content' => array(
               'pk_content'
-          ),
-          'fk_mediaitem' => array(
-              'fk_mediaitem'
           ),
           'fk_metadata' => array(
               'fk_metadata'

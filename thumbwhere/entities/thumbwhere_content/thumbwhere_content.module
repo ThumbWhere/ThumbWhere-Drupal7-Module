@@ -314,10 +314,14 @@ function thumbwhere_content_entity_presave($entity, $entity_type) {
       if ($entity->do_not_propagate) {
         if (twCanDebug()) {
           if ($entity->is_new) {
-            debug("DO NOT PROPAGATE 'content' presave *CREATE*");
+            if (twCanDebug()){
+              debug("DO NOT PROPAGATE 'content' presave *CREATE*");
+          	}
           }
           else {
-            debug("DO NOT PROPAGATE 'content' presave *UPDATE*");
+            if (twCanDebug()) {
+              debug("DO NOT PROPAGATE 'content' presave *UPDATE*");
+            }
           }
         }
 
@@ -352,11 +356,6 @@ function thumbwhere_content_entity_presave($entity, $entity_type) {
     $fields = array();
 
     // Nullable so we only pass it through to create_content if we have it..
-    if (isset($entity->fk_mediaitem)) {
-      $fields['mediaitem'] = $entity->fk_mediaitem;
-    }
-
-    // Nullable so we only pass it through to create_content if we have it..
     if (isset($entity->fk_metadata)) {
       $fields['metadata'] = $entity->fk_metadata;
     }
@@ -364,6 +363,11 @@ function thumbwhere_content_entity_presave($entity, $entity_type) {
     // Nullable so we only pass it through to create_content if we have it..
     if (isset($entity->fk_producer)) {
       $fields['producer'] = $entity->fk_producer;
+    }
+
+    // Nullable so we only pass it through to create_content if we have it..
+    if (!empty($entity->external_id)) {
+      $fields['external_id'] = $entity->external_id;
     }
 
     // Not nullable but we have a default value
