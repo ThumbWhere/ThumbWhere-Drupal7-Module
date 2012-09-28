@@ -371,7 +371,7 @@ function thumbwhere_consumermember_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->admin)) {
-      $fields['admin'] = $entity->admin = 0;
+      $fields['admin'] = 0;
     }
     else {
       $fields['admin'] = $entity->admin;

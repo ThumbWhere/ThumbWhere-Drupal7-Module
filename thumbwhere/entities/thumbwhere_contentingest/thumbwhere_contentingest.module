@@ -399,7 +399,7 @@ function thumbwhere_contentingest_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->uploaded)) {
-      $fields['uploaded'] = $entity->uploaded = 0;
+      $fields['uploaded'] = 0;
     }
     else {
       $fields['uploaded'] = $entity->uploaded;
@@ -407,7 +407,7 @@ function thumbwhere_contentingest_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->transcoded)) {
-      $fields['transcoded'] = $entity->transcoded = 0;
+      $fields['transcoded'] = 0;
     }
     else {
       $fields['transcoded'] = $entity->transcoded;
@@ -415,7 +415,7 @@ function thumbwhere_contentingest_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->encrypted)) {
-      $fields['encrypted'] = $entity->encrypted = 0;
+      $fields['encrypted'] = 0;
     }
     else {
       $fields['encrypted'] = $entity->encrypted;
@@ -423,7 +423,7 @@ function thumbwhere_contentingest_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->deployed)) {
-      $fields['deployed'] = $entity->deployed = 0;
+      $fields['deployed'] = 0;
     }
     else {
       $fields['deployed'] = $entity->deployed;
@@ -431,7 +431,7 @@ function thumbwhere_contentingest_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->ready)) {
-      $fields['ready'] = $entity->ready = 0;
+      $fields['ready'] = 0;
     }
     else {
       $fields['ready'] = $entity->ready;
@@ -439,7 +439,7 @@ function thumbwhere_contentingest_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->error)) {
-      $fields['error'] = $entity->error = 0;
+      $fields['error'] = 0;
     }
     else {
       $fields['error'] = $entity->error;

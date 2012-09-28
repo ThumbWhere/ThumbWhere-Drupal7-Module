@@ -389,7 +389,7 @@ function thumbwhere_identity_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->secret_hash_itterations)) {
-      $fields['secret_hash_itterations'] = $entity->secret_hash_itterations = 1;
+      $fields['secret_hash_itterations'] = 1;
     }
     else {
       $fields['secret_hash_itterations'] = $entity->secret_hash_itterations;
@@ -407,7 +407,7 @@ function thumbwhere_identity_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->total_logins)) {
-      $fields['total_logins'] = $entity->total_logins = 0;
+      $fields['total_logins'] = 0;
     }
     else {
       $fields['total_logins'] = $entity->total_logins;

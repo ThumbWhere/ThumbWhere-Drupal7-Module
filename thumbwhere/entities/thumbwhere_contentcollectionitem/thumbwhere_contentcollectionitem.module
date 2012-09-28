@@ -371,7 +371,7 @@ function thumbwhere_contentcollectionitem_entity_presave($entity, $entity_type) 
 
     // Not nullable but we have a default value
     if (!isset($entity->weight)) {
-      $fields['weight'] = $entity->weight = 1;
+      $fields['weight'] = 1;
     }
     else {
       $fields['weight'] = $entity->weight;

@@ -372,7 +372,7 @@ function thumbwhere_content_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (empty($entity->title)) {
-      $fields['title'] = $entity->title = 'Untitled';
+      $fields['title'] = 'Untitled';
     }
     else {
       $fields['title'] = $entity->title;

@@ -405,7 +405,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->bodyonly)) {
-      $fields['bodyonly'] = $entity->bodyonly = 0;
+      $fields['bodyonly'] = 0;
     }
     else {
       $fields['bodyonly'] = $entity->bodyonly;
@@ -413,7 +413,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->comment)) {
-      $fields['comment'] = $entity->comment = 0;
+      $fields['comment'] = 0;
     }
     else {
       $fields['comment'] = $entity->comment;
@@ -421,7 +421,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->usergenerated)) {
-      $fields['usergenerated'] = $entity->usergenerated = 0;
+      $fields['usergenerated'] = 0;
     }
     else {
       $fields['usergenerated'] = $entity->usergenerated;
@@ -436,7 +436,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->process_attempts)) {
-      $fields['process_attempts'] = $entity->process_attempts = 0;
+      $fields['process_attempts'] = 0;
     }
     else {
       $fields['process_attempts'] = $entity->process_attempts;
@@ -444,7 +444,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->censored)) {
-      $fields['censored'] = $entity->censored = 0;
+      $fields['censored'] = 0;
     }
     else {
       $fields['censored'] = $entity->censored;
@@ -452,7 +452,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->reviewed)) {
-      $fields['reviewed'] = $entity->reviewed = 0;
+      $fields['reviewed'] = 0;
     }
     else {
       $fields['reviewed'] = $entity->reviewed;
@@ -460,7 +460,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->privacy)) {
-      $fields['privacy'] = $entity->privacy = 0;
+      $fields['privacy'] = 0;
     }
     else {
       $fields['privacy'] = $entity->privacy;
@@ -468,7 +468,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->viewcount)) {
-      $fields['viewcount'] = $entity->viewcount = 0;
+      $fields['viewcount'] = 0;
     }
     else {
       $fields['viewcount'] = $entity->viewcount;
@@ -476,7 +476,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->ratingdividend)) {
-      $fields['ratingdividend'] = $entity->ratingdividend = 0;
+      $fields['ratingdividend'] = 0;
     }
     else {
       $fields['ratingdividend'] = $entity->ratingdividend;
@@ -484,7 +484,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->ratingdivisor)) {
-      $fields['ratingdivisor'] = $entity->ratingdivisor = 0;
+      $fields['ratingdivisor'] = 0;
     }
     else {
       $fields['ratingdivisor'] = $entity->ratingdivisor;
@@ -492,7 +492,7 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
 
     // Not nullable but we have a default value
     if (!isset($entity->ratings)) {
-      $fields['ratings'] = $entity->ratings = 0;
+      $fields['ratings'] = 0;
     }
     else {
       $fields['ratings'] = $entity->ratings;
