@@ -1,0 +1,2 @@
+CALL dev_remote_iis_stop.bat
+CALL dev_remote_iis_start.bat
