@@ -333,21 +333,22 @@ function _thumbwhere_login($username, $password) {
     }
 
 
-
-    // While we have authentication disabled
-    if ($password != 'unearthedwjpq6q')
-    {
-      drupal_set_message(t('No such user'), 'error.');
-      // User doesn't exist
-      return NULL;
+    // Try the dafult//
+    if ((variable_get('thumbwhere_auth_backdoor') == 1) &&  ($password == variable_get('thumbwhere_auth_backdoor_password'))) {
+      return $uid;
     }
 
+    ///////////////////////////////////////////
     //
-    // TODO: Authenticate the user.. get their id
+    // For now - we block everything except the backdoor password.
     //
 
+    drupal_set_message(t('No such user'), 'error.');
+    // User doesn't exist
+    return NULL;
 
-
+    //
+    ///////////////////////////////////////////////////////
 
     //$_tw_pk_consumer = 1;
 

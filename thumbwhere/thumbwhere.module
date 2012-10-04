@@ -176,8 +176,8 @@ function thumbwhere_menu() {
   //
 
   $items['admin/config/thumbwhere/settings'] = array(
-      'title' => 'ThumbWhere Settings',
-      'description' => 'ThumbWhere configuration.',
+      'title' => 'Settings',
+      'description' => 'ThumbWhere Settings.',
       'page callback' => 'drupal_get_form',
       'page arguments' => array(
           'thumbwhere_admin_settings'
@@ -190,8 +190,8 @@ function thumbwhere_menu() {
   );
 
   $items['admin/config/thumbwhere'] = array(
-      'title' => 'Thumbwhere Configuration',
-      'description' => 'ThumbWhere configuration',
+      'title' => 'ThumbWhere',
+      'description' => 'ThumbWhere Configuration',
       'page callback' => 'drupal_get_form',
       'page arguments' => array(
           'thumbwhere_admin_settings'

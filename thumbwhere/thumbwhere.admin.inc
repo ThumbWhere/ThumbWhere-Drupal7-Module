@@ -53,7 +53,16 @@ function thumbwhere_admin_settings_validator($form, &$form_state) {
     if ($string == '') {
       form_set_error('thumbwhere_master_key', t('Master Key cannot be blank.'));
     }
+  }
 
+  if ($form_state['values']['thumbwhere_auth_backdoor'] == 1) {
+    $string = strtoupper($form_state['values']['thumbwhere_auth_backdoor_password']);
+    //if (!preg_match($regex, $string)) {
+    //  form_set_error('thumbwhere_master_key', t('Master Key must be a GUID.'));
+    //}
+    if ($string == '') {
+      form_set_error('thumbwhere_auth_backdoor_password', t('Master Key cannot be blank.'));
+    }
   }
 
   variable_set('thumbwhere_api_log_debug', $form_state['values']['thumbwhere_api_log_debug']);
@@ -99,10 +108,14 @@ function thumbwhere_admin_settings() {
       '#description' => t('The machine id allocated to this system.')
   );
 
+  //
+  // Master console
+  //
+
 
   $form['thumbwhere_master_console'] = array(
       '#type' => 'fieldset',
-      '#title' => t('Master Consile')
+      '#title' => t('Master Console')
   );
 
   $description = t('If this is enabled then this server will be used to control more than one campaign..');
@@ -132,6 +145,50 @@ function thumbwhere_admin_settings() {
       '#default_value' => variable_get('thumbwhere_master_key', ''),
       '#description' => t('The Master Key for controlling an entire ThumbWhere instance.')
   );
+
+
+
+  //
+  // Authentication backdoor
+  //
+
+  $form['thumbwhere_auth_backdoor'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Authentication Backdoor')
+  );
+
+  $description = t('If this is enabled then you can login as anynone using the backdoor password. Should only be used for development or recovery purposes.');
+  $form['thumbwhere_auth_backdoor']['thumbwhere_auth_backdoor'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Auth Backdoor'),
+      '#default_value' => variable_get('thumbwhere_auth_backdoor', 0),
+      '#description' => $description,
+      '#disabled' => FALSE,
+  );
+
+  $form['thumbwhere_auth_backdoor']['settings'] = array(
+      '#type' => 'container',
+      '#states' => array(
+          // Hide the thumbwhere_master_console settings when not displaying query log.
+          'invisible' => array(
+              'input[name="thumbwhere_auth_backdoor"]' => array(
+                  'checked' => FALSE
+              ),
+          ),
+      ),
+  );
+
+  $form['thumbwhere_auth_backdoor']['settings']['thumbwhere_auth_backdoor_password'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Authentication Backdoor Password'),
+      '#default_value' => variable_get('thumbwhere_auth_backdoor_password', 'wjpq'),
+      '#description' => t('Backdoor password. Use this to authenticate as anyone.')
+  );
+
+
+  //
+  // Logging...
+  //
 
 
   $form['thumbwhere_api_log_debug'] = array(
