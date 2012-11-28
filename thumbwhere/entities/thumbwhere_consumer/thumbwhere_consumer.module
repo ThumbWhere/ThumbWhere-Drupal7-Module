@@ -371,6 +371,11 @@ function thumbwhere_consumer_entity_presave($entity, $entity_type) {
     else {
       $fields['name'] = $entity->name;
     }
+
+    // Nullable so we only pass it through to create_consumer if we have it..
+    if (!empty($entity->external_id)) {
+      $fields['external_id'] = $entity->external_id;
+    }
 		
 	//
 	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context

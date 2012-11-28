@@ -24,6 +24,9 @@
       <field name="name" type="string">
         <doc>'name' field, which is a 'string' type.</doc>
       </field>
+      <field name="config_xsl" type="string" optional="true">
+        <doc>'config_xsl' field, which is a 'string' type.</doc>
+      </field>
     </resource>
   </resources>
 </metawrap>

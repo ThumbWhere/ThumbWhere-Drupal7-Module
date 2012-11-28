@@ -186,8 +186,7 @@ function thumbwhere_contentmetadata_schema() {
               'type' => 'varchar',
               'size' => 'normal',
               'length' => 128,
-              'not null' => FALSE,
-              'default' => 'false',                  
+              'not null' => FALSE,                  
           ),      
       ),
       'primary key' => array(

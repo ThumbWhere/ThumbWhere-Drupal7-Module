@@ -1,1 +1,0 @@
-Implements the ThumbWhere 'ThumbWhereProducer' Entity.

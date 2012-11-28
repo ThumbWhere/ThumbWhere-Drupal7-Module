@@ -39,7 +39,7 @@
       <field name="compilation" type="boolean" optional="true">
         <doc>'compilation' field, which is a 'boolean' type.</doc>
       </field>
-      <field name="advisory" type="string" optional="true" default="false">
+      <field name="advisory" type="string" optional="true" default="">
         <doc>'advisory' field, which is a 'string' type.</doc>
       </field>
     </resource>

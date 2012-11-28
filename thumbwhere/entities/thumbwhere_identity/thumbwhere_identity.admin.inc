@@ -61,7 +61,14 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
   
       case 'create':
       {
-      
+      		
+		
+		//
+		// We want to time this
+		//
+			
+		$start_time = microtime(TRUE);
+			
         //
         // What resource are we creating?
         //
@@ -136,6 +143,10 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
           $entityfields['id'] = (string)($notification->id);
         }
 
+        if (isset($notification->external_id)) {
+          $entityfields['external_id'] = (string)($notification->external_id);
+        }
+
         if (isset($notification->secret)) {
           $entityfields['secret'] = (string)($notification->secret);
         }
@@ -178,9 +189,11 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
         //
         // Send the final response
         //
+        
+        $duration = round(((microtime(TRUE) - $start_time) * 1000.0),3); 
 
         drupal_add_http_header('Content-Type', 'text/xml');
-        print('<response>');
+        print('<response duration="' . $duration . 'ms">');
         print('<identity op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
         print('</identity>');
@@ -193,9 +206,17 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
   
     case 'update':
       {
+      
+		//
+		// We want to time this
+		//
+			
+		$start_time = microtime(TRUE);
+      
         //
         // What resource are we updating?
         //
+        
       
         //
         // Get the id
@@ -237,7 +258,14 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
 // ... for now we will just create the local copy
 //
           watchdog('thumbwhere_identity','creating local version of missing entity',array(), WATCHDOG_ERROR);
-
+		
+		
+		//
+		// We want to time this
+		//
+			
+		$start_time = microtime(TRUE);
+			
         //
         // What resource are we creating?
         //
@@ -312,6 +340,10 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
           $entityfields['id'] = (string)($notification->id);
         }
 
+        if (isset($notification->external_id)) {
+          $entityfields['external_id'] = (string)($notification->external_id);
+        }
+
         if (isset($notification->secret)) {
           $entityfields['secret'] = (string)($notification->secret);
         }
@@ -354,9 +386,11 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
         //
         // Send the final response
         //
+        
+        $duration = round(((microtime(TRUE) - $start_time) * 1000.0),3); 
 
         drupal_add_http_header('Content-Type', 'text/xml');
-        print('<response>');
+        print('<response duration="' . $duration . 'ms">');
         print('<identity op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
         print('</identity>');
@@ -389,6 +423,10 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
 
         if (isset($notification->id)) {
           $entity->id = (string)($notification->id);
+        }
+
+        if (isset($notification->external_id)) {
+          $entity->external_id = (string)($notification->external_id);
         }
 
         if (isset($notification->secret)) {
@@ -433,9 +471,11 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
         //
         // Send the final response
         //
+        
+        $duration = round(((microtime(TRUE) - $start_time) * 1000.0),3);
 
         drupal_add_http_header('Content-Type', 'text/xml');
-        print('<response>');
+        print('<response  duration="' . $duration . '" >');
         print('<identity op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
         print('</identity>');
@@ -447,7 +487,7 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
 
     default:
       {
-        drupal_add_http_header('Status', '501 Unable to fulfull request..');
+        drupal_add_http_header('Status', '501 Unable to fulfull request. Unhandled operation \'' . $op . '\'.');
         print('We don\'t handle the \'' . $op . '\', notification operation on the \'identity\', element.');
         exit(0);
 
@@ -824,6 +864,15 @@ function thumbwhere_identity_edit_form($form, &$form_state, $thumbwhere_identity
     '#weight' => -5,
   );
   // Add the default field elements.
+    $form['external_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereIdentity external_id'),
+
+    // '#maxlength' => 255,
+   // '#required' => TRUE,
+    '#weight' => -5,
+  );
+  // Add the default field elements.
     $form['secret'] = array(
     '#type' => 'textarea',
     '#title' => t('ThumbWhereIdentity secret'),
@@ -983,6 +1032,11 @@ function thumbwhere_identity_edit_form_validate(&$form, &$form_state) {
 
   // Validate normalid
   $value = $form['id']['#value'];
+  // If we have no default value then we don't care much for checking for emptyness.
+
+
+  // Validate normalexternal_id
+  $value = $form['external_id']['#value'];
   // If we have no default value then we don't care much for checking for emptyness.
 
 

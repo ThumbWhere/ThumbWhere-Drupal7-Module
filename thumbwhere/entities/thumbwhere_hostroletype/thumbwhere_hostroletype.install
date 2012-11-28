@@ -133,7 +133,7 @@ function thumbwhere_hostroletype_schema() {
   $schema = array();
 
   $schema['thumbwhere_hostroletype'] = array(
-  'description' => 'The base table for thumbwhere_hostroletype entities.' . 'A role for a given host type that can be assigned. eg. IRC',
+  'description' => 'The base table for thumbwhere_hostroletype entities.' . 'A role for a given host type that can be assigned. config_xsl is the xsl that is used is executed against the host xml manifest that is used to generate the config files for this host. eg. IRC',
     'fields' => array(
           'pk_hostroletype' => array(
               'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereHostRoleTypes\' entity.',
@@ -147,6 +147,12 @@ function thumbwhere_hostroletype_schema() {
               'type' => 'varchar',
               'size' => 'normal',
               'length' => 128,
+              'not null' => FALSE,                  
+          ),
+          'config_xsl' => array(
+              'description' => 'The \'config_xsl\' textarea field of the \'HostRoleType\' entity.',
+              'type' => 'text',
+              'size' => 'big',
               'not null' => FALSE,                  
           ),      
       ),

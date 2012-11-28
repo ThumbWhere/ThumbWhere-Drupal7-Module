@@ -361,6 +361,11 @@ function thumbwhere_hostroletype_entity_presave($entity, $entity_type) {
     else {
       $fields['name'] = $entity->name;
     }
+
+    // Nullable so we only pass it through to create_host_role_type if we have it..
+    if (!empty($entity->config_xsl)) {
+      $fields['config_xsl'] = $entity->config_xsl;
+    }
 		
 	//
 	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context

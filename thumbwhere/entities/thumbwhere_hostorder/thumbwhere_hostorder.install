@@ -133,7 +133,7 @@ function thumbwhere_hostorder_schema() {
   $schema = array();
 
   $schema['thumbwhere_hostorder'] = array(
-  'description' => 'The base table for thumbwhere_hostorder entities.' . 'Order for a host to be created ny a host provider. If the address is not null, then we are saying that the host already exists. processing : if this is true then we are currently making this order.. completed: if this is true then we have completed creating this host and fk_host should be not null',
+  'description' => 'The base table for thumbwhere_hostorder entities.' . 'Order for a host to be created by a host provider. If the address is not null, then we are saying that the host already exists. processing : if this is true then we are currently making this order.. completed: if this is true then we have completed creating this host and fk_host should be not null',
     'fields' => array(
           'pk_hostorder' => array(
               'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereHostOrders\' entity.',

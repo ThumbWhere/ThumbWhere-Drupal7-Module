@@ -86,6 +86,7 @@ function thumbwhere_hostroletype_views_default_views() {
   $handler->display->display_options['style_options']['columns'] = array(
     'pk_hostroletype' => 'pk_hostroletype',
     'name' => 'name',
+    'config_xsl' => 'config_xsl',
     'link_thumbwhere_hostroletype' => 'link_thumbwhere_hostroletype',
     'operations' => 'operations',
   );
@@ -99,6 +100,13 @@ function thumbwhere_hostroletype_views_default_views() {
           'empty_column' => 0,
       ),
       'name' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'config_xsl' => array(
           'sortable' => 0,
           'default_sort_order' => 'asc',
           'align' => '',
@@ -259,6 +267,27 @@ function thumbwhere_hostroletype_views_default_views() {
   $handler->display->display_options['fields']['name']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['name']['hide_empty'] = 0;
   $handler->display->display_options['fields']['name']['empty_zero'] = 0;
+
+  /* Field: ThumbWhereHostRoleType: config_xsl */
+  $handler->display->display_options['fields']['config_xsl']['id'] = 'config_xsl';
+  $handler->display->display_options['fields']['config_xsl']['table'] = 'thumbwhere_hostroletype';
+  $handler->display->display_options['fields']['config_xsl']['field'] = 'config_xsl';
+  $handler->display->display_options['fields']['config_xsl']['label'] = 'config_xsl';
+  $handler->display->display_options['fields']['config_xsl']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['config_xsl']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['config_xsl']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['config_xsl']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['config_xsl']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['config_xsl']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['config_xsl']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['config_xsl']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['config_xsl']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['config_xsl']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['config_xsl']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['config_xsl']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['config_xsl']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['config_xsl']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['config_xsl']['empty_zero'] = 0;
 
     
     

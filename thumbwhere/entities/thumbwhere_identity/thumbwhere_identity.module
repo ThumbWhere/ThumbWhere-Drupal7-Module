@@ -373,6 +373,11 @@ function thumbwhere_identity_entity_presave($entity, $entity_type) {
     }
 
     // Nullable so we only pass it through to create_identity if we have it..
+    if (!empty($entity->external_id)) {
+      $fields['external_id'] = $entity->external_id;
+    }
+
+    // Nullable so we only pass it through to create_identity if we have it..
     if (!empty($entity->secret)) {
       $fields['secret'] = $entity->secret;
     }

@@ -61,7 +61,14 @@ function _thumbwhere_handle_trophy_notify_xml($notification) {
   
       case 'create':
       {
-      
+      		
+		
+		//
+		// We want to time this
+		//
+			
+		$start_time = microtime(TRUE);
+			
         //
         // What resource are we creating?
         //
@@ -151,9 +158,11 @@ function _thumbwhere_handle_trophy_notify_xml($notification) {
         //
         // Send the final response
         //
+        
+        $duration = round(((microtime(TRUE) - $start_time) * 1000.0),3); 
 
         drupal_add_http_header('Content-Type', 'text/xml');
-        print('<response>');
+        print('<response duration="' . $duration . 'ms">');
         print('<trophy op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
         print('</trophy>');
@@ -166,9 +175,17 @@ function _thumbwhere_handle_trophy_notify_xml($notification) {
   
     case 'update':
       {
+      
+		//
+		// We want to time this
+		//
+			
+		$start_time = microtime(TRUE);
+      
         //
         // What resource are we updating?
         //
+        
       
         //
         // Get the id
@@ -210,7 +227,14 @@ function _thumbwhere_handle_trophy_notify_xml($notification) {
 // ... for now we will just create the local copy
 //
           watchdog('thumbwhere_trophy','creating local version of missing entity',array(), WATCHDOG_ERROR);
-
+		
+		
+		//
+		// We want to time this
+		//
+			
+		$start_time = microtime(TRUE);
+			
         //
         // What resource are we creating?
         //
@@ -300,9 +324,11 @@ function _thumbwhere_handle_trophy_notify_xml($notification) {
         //
         // Send the final response
         //
+        
+        $duration = round(((microtime(TRUE) - $start_time) * 1000.0),3); 
 
         drupal_add_http_header('Content-Type', 'text/xml');
-        print('<response>');
+        print('<response duration="' . $duration . 'ms">');
         print('<trophy op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
         print('</trophy>');
@@ -352,9 +378,11 @@ function _thumbwhere_handle_trophy_notify_xml($notification) {
         //
         // Send the final response
         //
+        
+        $duration = round(((microtime(TRUE) - $start_time) * 1000.0),3);
 
         drupal_add_http_header('Content-Type', 'text/xml');
-        print('<response>');
+        print('<response  duration="' . $duration . '" >');
         print('<trophy op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
         print('</trophy>');
@@ -366,7 +394,7 @@ function _thumbwhere_handle_trophy_notify_xml($notification) {
 
     default:
       {
-        drupal_add_http_header('Status', '501 Unable to fulfull request..');
+        drupal_add_http_header('Status', '501 Unable to fulfull request. Unhandled operation \'' . $op . '\'.');
         print('We don\'t handle the \'' . $op . '\', notification operation on the \'trophy\', element.');
         exit(0);
 

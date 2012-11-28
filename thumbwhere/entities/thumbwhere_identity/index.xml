@@ -30,6 +30,9 @@
       <field name="id" type="string" optional="true">
         <doc>'id' field, which is a 'string' type.</doc>
       </field>
+      <field name="external_id" type="string" optional="true">
+        <doc>'external_id' field, which is a 'string' type.</doc>
+      </field>
       <field name="secret" type="string" optional="true">
         <doc>'secret' field, which is a 'string' type.</doc>
       </field>

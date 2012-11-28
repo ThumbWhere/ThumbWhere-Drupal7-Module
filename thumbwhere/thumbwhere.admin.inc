@@ -186,6 +186,13 @@ function thumbwhere_admin_settings() {
   );
 
 
+  $form['thumbwhere_auth_drupal'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Authenticate With Drupal'),
+      '#default_value' => variable_get('thumbwhere_auth_drupal', 1),
+      '#description' => t('If this is checked then we authenticate with Drupal\'s internal account repository instead of the external ThumbWhere repository.')
+  );
+
   //
   // Logging...
   //

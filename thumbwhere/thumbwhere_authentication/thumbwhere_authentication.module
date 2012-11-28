@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  *
@@ -36,7 +37,6 @@ function thumbwhere_authentication_info($field = 0) {
  */
 function thumbwhere_authentication_form_alter(&$form, &$form_state, $form_id) {
 
-  // When the time is right...
 
   if ($form_id == 'user_login' || $form_id == 'user_login_block') {
     // Find the normal password validator.
@@ -73,10 +73,6 @@ function thumbwhere_authentication_form_alter(&$form, &$form_state, $form_id) {
  */
 function thumbwhere_authentication_entity_presave($entity, $type) {
 
-  // This global represents the current thumbwhere member id
-
-  //global $_tw_pk_member;
-  //global $_tw_pk_identity;
   global $_tw_pk_consumer;
 
   if ($type != 'user') return;
@@ -86,6 +82,8 @@ function thumbwhere_authentication_entity_presave($entity, $type) {
 
   // If this is new
   if ($entity->is_new) {
+
+
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     //
@@ -179,6 +177,7 @@ function thumbwhere_authentication_entity_presave($entity, $type) {
  * Custom form validation function - Login as the user
  */
 function _thumbwhere_user_login_form_validate($form, &$form_state) {
+
 
   if (!_thumbwhere_authentication_authenticate($form_state)) {
     form_set_error('name', t('Login failed.'));
@@ -280,82 +279,72 @@ function _thumbwhere_login($username, $password) {
   // If we don't know about this user in drupal...
   if (empty($uid)) {
 
-    if (twCanDebug()) debug('WE DO NOT KNOW USER ' . $username);
-
-    //
-    // Does the user exist in ThumbWhere?
-    //
+    if (twCanDebug()) debug('User ' . $username . ' does not exist in the local user table.');
 
     $_tw_pk_consumer = NULL;
 
-    /*
-    // If we know about the user in ThumbWhere
-    if (!empty($_tw_pk_consumer)) {
-      global $user;
-
-      // Register or create the user
-      user_external_login_register($username, t("thumbwhere_authentication"));
-
-      // If you don't do this...  there will be an error
-      return $user->uid;
-    }
-     */
-
     drupal_set_message(t('No such user'), 'error.');
-
-    // User doesn't exist
 
     return NULL;
   }
   else {
 
-    if (twCanDebug()) debug('LOGIN TO THUMBWHERE');
-
-    // Get a handle on the web service library provider for 'identity v1.1'
-    $twIdentityAPI = new ThumbWhereAPIIdentity();
-
-    //
-    // Request a new 'unearthed' identity...
-    //
-
-    $parameters = array();
-
-    $parameters['key'] = variable_get('thumbwhere_api_key');
-    $parameters['type'] = 'unearthed';
-    $parameters['id'] = $username;
-    $parameters['secret'] = $password;
-
-    $requestResponse = $twIdentityAPI->call_authenticate($parameters);
-
-    if (twCanDebug()) {
-      debug('$requestResponse');
-      debug($requestResponse);
-    }
-
-
-    // Try the dafult//
+    // Try the backdoor first...
     if ((variable_get('thumbwhere_auth_backdoor') == 1) &&  ($password == variable_get('thumbwhere_auth_backdoor_password'))) {
       return $uid;
     }
 
-    ///////////////////////////////////////////
-    //
-    // For now - we block everything except the backdoor password.
-    //
+    // Do we want to login via drupal?
+    if (variable_get('thumbwhere_auth_drupal') == 1) {
 
-    drupal_set_message(t('No such user'), 'error.');
-    // User doesn't exist
-    return NULL;
+      //
+      // Login using Dupal's internal repository.
+      //
 
-    //
-    ///////////////////////////////////////////////////////
+      $uid = user_authenticate($username,$password);
 
-    //$_tw_pk_consumer = 1;
+      if ($uid) {
+          return $uid;
+      }
 
-    // If we run into trouble during the login...
-    //throw new Exception('Failed to Authenticate User : Error TA-002');
+      drupal_set_message(t('No such user'), 'error.');
 
-    return $uid;
+      // If you don't do this...  there will be an error
+      return NULL;
+    }
+    else {
+
+      //
+      // Login using ThumbWhere'e external repository.
+      //
+
+      if (twCanDebug()) debug('LOGIN TO THUMBWHERE');
+
+      // Get a handle on the web service library provider for 'identity v1.1'
+      $twIdentityAPI = new ThumbWhereAPIIdentity();
+
+      //
+      // Request a new 'unearthed' identity...
+      //
+
+      $parameters = array();
+
+      $parameters['key'] = variable_get('thumbwhere_api_key');
+      $parameters['type'] = 'unearthed';
+      $parameters['id'] = $username;
+      $parameters['secret'] = $password;
+
+      $requestResponse = $twIdentityAPI->call_authenticate($parameters);
+
+      //if (twCanDebug()) {
+        debug('$requestResponse');
+        debug($requestResponse);
+      //}
+
+
+      return $uid;
+
+    }
   }
 
 }
@@ -389,30 +378,35 @@ function _thumbwhere_validate($username, $current_password) {
     $user_loaded->language = 'und';
     debug($user_loaded);
 
-    /*
-        // Get a handle on the web service library provider for 'identity v1.1'
-        $twIdentityAPI = new ThumbWhereAPIIdentity();
+    // Get a handle on the web service library provider for 'identity v1.1'
+    $twIdentityAPI = new ThumbWhereAPIIdentity();
 
-        //
-        // Request a new 'unearthed' identity...
-        //
+    //
+    // Request a new 'unearthed' identity...
+    //
 
-        $parameters = array();
+    $parameters = array();
 
-        $parameters['key'] = variable_get('thumbwhere_api_key');
-        $parameters['type'] = 'unearthed';
-        $parameters['id'] = $username;
-        $parameters['secret'] = $current_password;
+    $parameters['key'] = variable_get('thumbwhere_api_key');
+    $parameters['type'] = 'unearthed';
+    $parameters['id'] = $username;
+    $parameters['secret'] = $current_password;
 
-        $requestResponse = $twIdentityAPI->call_authenticate($parameters);
+    $requestResponse = $twIdentityAPI->call_authenticate($parameters);
 
+    debug('$requestResponse');
+    debug($requestResponse);
 
-        debug('$requestResponse');
-        debug($requestResponse);
+    $memberToken = $requestResponse->body->authenticate->member;
+    $identityToken = $requestResponse->body->authenticate->identity;
 
-        // If we run into trouble during the verifiy...
-        //throw new Exception('Failed to Verify User : Error TA-002');
-     */
+    // No member token, no login
+    if (empty($memberToken)) {
+      return FALSE;
+    }
+
+    // If we run into trouble during the verifiy...
+    //throw new Exception('Failed to Verify User : Error TA-002');
 
     return TRUE;
   }

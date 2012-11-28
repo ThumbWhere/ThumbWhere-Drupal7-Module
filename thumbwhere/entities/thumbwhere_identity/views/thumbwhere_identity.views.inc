@@ -105,6 +105,7 @@ function thumbwhere_identity_views_default_views() {
     'fk_identitytype' => 'fk_identitytype',
     'fk_member' => 'fk_member',
     'id' => 'id',
+    'external_id' => 'external_id',
     'secret' => 'secret',
     'secret_hash' => 'secret_hash',
     'secret_hash_salt' => 'secret_hash_salt',
@@ -139,6 +140,13 @@ function thumbwhere_identity_views_default_views() {
           'empty_column' => 0,
       ),
       'id' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'external_id' => array(
           'sortable' => 0,
           'default_sort_order' => 'asc',
           'align' => '',
@@ -396,6 +404,27 @@ function thumbwhere_identity_views_default_views() {
   $handler->display->display_options['fields']['id']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['id']['hide_empty'] = 0;
   $handler->display->display_options['fields']['id']['empty_zero'] = 0;
+
+  /* Field: ThumbWhereIdentity: external_id */
+  $handler->display->display_options['fields']['external_id']['id'] = 'external_id';
+  $handler->display->display_options['fields']['external_id']['table'] = 'thumbwhere_identity';
+  $handler->display->display_options['fields']['external_id']['field'] = 'external_id';
+  $handler->display->display_options['fields']['external_id']['label'] = 'external_id';
+  $handler->display->display_options['fields']['external_id']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['external_id']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['external_id']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['external_id']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['external_id']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['external_id']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['external_id']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['external_id']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['external_id']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['external_id']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['external_id']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['external_id']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['external_id']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['external_id']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['external_id']['empty_zero'] = 0;
 
   /* Field: ThumbWhereIdentity: secret */
   $handler->display->display_options['fields']['secret']['id'] = 'secret';

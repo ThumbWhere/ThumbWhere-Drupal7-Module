@@ -36,6 +36,9 @@
       <field name="password" type="string" optional="true">
         <doc>'password' field, which is a 'string' type.</doc>
       </field>
+      <field name="external_id" type="string" optional="true">
+        <doc>'external_id' field, which is a 'string' type.</doc>
+      </field>
     </resource>
   </resources>
 </metawrap>

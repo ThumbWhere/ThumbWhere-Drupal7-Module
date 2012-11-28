@@ -61,7 +61,14 @@ function _thumbwhere_handle_track_metadata_notify_xml($notification) {
   
       case 'create':
       {
-      
+      		
+		
+		//
+		// We want to time this
+		//
+			
+		$start_time = microtime(TRUE);
+			
         //
         // What resource are we creating?
         //
@@ -162,9 +169,11 @@ function _thumbwhere_handle_track_metadata_notify_xml($notification) {
         //
         // Send the final response
         //
+        
+        $duration = round(((microtime(TRUE) - $start_time) * 1000.0),3); 
 
         drupal_add_http_header('Content-Type', 'text/xml');
-        print('<response>');
+        print('<response duration="' . $duration . 'ms">');
         print('<track_metadata op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
         print('</track_metadata>');
@@ -177,9 +186,17 @@ function _thumbwhere_handle_track_metadata_notify_xml($notification) {
   
     case 'update':
       {
+      
+		//
+		// We want to time this
+		//
+			
+		$start_time = microtime(TRUE);
+      
         //
         // What resource are we updating?
         //
+        
       
         //
         // Get the id
@@ -221,7 +238,14 @@ function _thumbwhere_handle_track_metadata_notify_xml($notification) {
 // ... for now we will just create the local copy
 //
           watchdog('thumbwhere_trackmetadata','creating local version of missing entity',array(), WATCHDOG_ERROR);
-
+		
+		
+		//
+		// We want to time this
+		//
+			
+		$start_time = microtime(TRUE);
+			
         //
         // What resource are we creating?
         //
@@ -322,9 +346,11 @@ function _thumbwhere_handle_track_metadata_notify_xml($notification) {
         //
         // Send the final response
         //
+        
+        $duration = round(((microtime(TRUE) - $start_time) * 1000.0),3); 
 
         drupal_add_http_header('Content-Type', 'text/xml');
-        print('<response>');
+        print('<response duration="' . $duration . 'ms">');
         print('<track_metadata op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
         print('</track_metadata>');
@@ -385,9 +411,11 @@ function _thumbwhere_handle_track_metadata_notify_xml($notification) {
         //
         // Send the final response
         //
+        
+        $duration = round(((microtime(TRUE) - $start_time) * 1000.0),3);
 
         drupal_add_http_header('Content-Type', 'text/xml');
-        print('<response>');
+        print('<response  duration="' . $duration . '" >');
         print('<track_metadata op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
         print('</track_metadata>');
@@ -399,7 +427,7 @@ function _thumbwhere_handle_track_metadata_notify_xml($notification) {
 
     default:
       {
-        drupal_add_http_header('Status', '501 Unable to fulfull request..');
+        drupal_add_http_header('Status', '501 Unable to fulfull request. Unhandled operation \'' . $op . '\'.');
         print('We don\'t handle the \'' . $op . '\', notification operation on the \'track_metadata\', element.');
         exit(0);
 

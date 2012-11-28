@@ -162,6 +162,13 @@ function thumbwhere_consumer_schema() {
               'size' => 'normal',
               'length' => 128,
               'not null' => FALSE,                  
+          ),
+          'external_id' => array(
+              'description' => 'The \'external_id\' textfield field of the \'Consumer\' entity.',
+              'type' => 'varchar',
+              'size' => 'normal',
+              'length' => 128,
+              'not null' => FALSE,                  
           ),      
       ),
       'primary key' => array(
