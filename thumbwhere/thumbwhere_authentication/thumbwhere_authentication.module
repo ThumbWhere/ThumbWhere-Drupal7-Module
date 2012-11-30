@@ -37,32 +37,29 @@ function thumbwhere_authentication_info($field = 0) {
  */
 function thumbwhere_authentication_form_alter(&$form, &$form_state, $form_id) {
 
+	// Depending on the form id we decide and the block, we decide 	
+	if ($form_id == 'user_login' || $form_id == 'user_login_block') {    
+		// Find the normal password validator.
+		$key = array_search('user_login_authenticate_validate', $form['#validate']);
 
-  if ($form_id == 'user_login' || $form_id == 'user_login_block') {
-    // Find the normal password validator.
-    $key = array_search('user_login_authenticate_validate', $form['#validate']);
+		// And if it exists,
+		if ($key !== FALSE) {
+		  // Replace it with out own..
+		  $form['#validate'][$key] = '_thumbwhere_user_login_form_validate';
+		}
+	}
+	elseif ($form_id == 'user_profile_form') {
 
-    // And if it exists,
-    if ($key !== FALSE) {
-      // Replace it with out own..
-      $form['#validate'][$key] = '_thumbwhere_user_login_form_validate';
-    }
-  }
-  elseif ($form_id == 'user_profile_form') {
-    // Find the normal password validator.
+		// Find the normal password validator.
+		$key = array_search('user_validate_current_pass', $form['#validate']);
 
-    // Find the normal password validator.
-    $key = array_search('user_validate_current_pass', $form['#validate']);
-
-    // And if it exists,
-    if ($key !== FALSE) {
-      // Replace it with out own..
-      $form['#validate'][$key] = '_thumbwhere_validate_current_pass';
-      //unset($form['#validate'][$key]);
-    }
-
-  }
-
+		// And if it exists,
+		if ($key !== FALSE) {
+		  // Replace it with out own..
+		  $form['#validate'][$key] = '_thumbwhere_validate_current_pass';
+		  //unset($form['#validate'][$key]);
+		}
+	}
 }
 
 /**
@@ -189,9 +186,25 @@ function _thumbwhere_user_login_form_validate($form, &$form_state) {
  */
 function _thumbwhere_validate_current_pass($form, &$form_state) {
 
-  if (!_thumbwhere_authentication_validate_and_changepassword($form_state)) {
-    form_set_error('current_pass', t('Password failed to validate.'));
-  }
+	if (twCanDebug()) debug('_thumbwhere_validate_current_pass');
+ 
+	global $user;
+ 
+	// Work out  if we we performing a password reset
+	$uid = $user->uid; 
+	$pass_reset = isset($_SESSION['pass_reset_' . $uid]) && isset($_GET['pass-reset-token']) && ($_GET['pass-reset-token'] == $_SESSION['pass_reset_' . $uid]);
+
+	// Bacause if we are...
+	if ($pass_reset) {
+		// We just want to change the password...
+		if (!_thumbwhere_authentication_changepassword($form_state)) {
+			form_set_error('pass', t('Need a password.'));
+		}
+	} else
+	// Otherwise we need to validate the old password before we set the new one.
+	if (!_thumbwhere_authentication_validate_and_changepassword($form_state)) {
+		form_set_error('current_pass', t('Password failed to validate.'));
+	}
 }
 
 //
@@ -234,24 +247,44 @@ function _thumbwhere_authentication_authenticate(&$form_state) {
  */
 function _thumbwhere_authentication_validate_and_changepassword(&$form_state) {
 
-  global $user;
-
-  //debug($form_state['values']);
-
-  // get the first four characters of the users name
+  if (twCanDebug()) debug('_thumbwhere_authentication_validate_and_changepassword');
+    
   $username = trim($form_state['values']['name']);
   $new_password = trim($form_state['values']['pass']);
   $current_password = trim($form_state['values']['current_pass']);
 
-
-  // If we are changing the password?
-  if (!empty($new_password)) {
+   // If we are changing the password?
+   if (!empty($new_password)) {  
+      
+	if (twCanDebug()) debug('CALL _thumbwhere_validate_and_change_password');  
     // ... yes.. then validate and change the password
     return _thumbwhere_validate_and_change_password($username, $current_password, $new_password);
   }
   else {
+	if (twCanDebug()) debug('CALL _thumbwhere_validate');  
     // .. no just validate the password
     return _thumbwhere_validate($username, $current_password);
+  }
+
+}
+
+/**
+ * Just change the password
+ */
+ function _thumbwhere_authentication_changepassword(&$form_state) {
+
+  if (twCanDebug()) debug('_thumbwhere_authentication_changepassword');
+    
+  $username = trim($form_state['values']['name']);
+  $new_password = trim($form_state['values']['pass']);
+
+  // If we are changing the password - we need one..
+   if (!empty($new_password)) {  
+      if (twCanDebug()) debug('CHANGE PASSWORD to ' . $new_password);
+	  return _thumbwhere_change_password($username, $new_password);
+   }
+  else {
+	return FALSE;
   }
 
 }
@@ -286,7 +319,7 @@ function _thumbwhere_login($username, $password) {
 
     $_tw_pk_consumer = NULL;
 
-    drupal_set_message(t('No such user'), 'error.');
+    drupal_set_message(t('No such user.'), 'error.');
 
     return NULL;
   }
@@ -310,7 +343,7 @@ function _thumbwhere_login($username, $password) {
           return $uid;
       }
 
-      drupal_set_message(t('No such user'), 'error.');
+      drupal_set_message(t('Login with supplied password failed.'), 'error.');
 
       // If you don't do this...  there will be an error
       return NULL;
@@ -395,7 +428,7 @@ function _thumbwhere_validate($username, $current_password) {
       // TODO: Authenticate the user
       //
 
-      debug('VALIDATE WITH THUMBWHERE');
+      if (twCanDebug()) debug('VALIDATE WITH THUMBWHERE');
 
       // DEBUG USER!
       global $user;
@@ -444,15 +477,17 @@ function _thumbwhere_validate($username, $current_password) {
  */
 function _thumbwhere_validate_and_change_password($username, $current_password, $new_password) {
 
-  //debug('_thumbwhere_validate_and_change_password ' . $username);
-  //debug('_thumbwhere_validate_and_change_password ' . $current_password);
-  //debug('_thumbwhere_validate_and_change_password ' . $new_password);
+  if (twCanDebug())debug('_thumbwhere_validate_and_change_password ' . $username);
+  if (twCanDebug())debug('_thumbwhere_validate_and_change_password ' . $current_password);
+  if (twCanDebug())debug('_thumbwhere_validate_and_change_password ' . $new_password);
 
 
   // Do we have a uid for this user
   $uid = db_query("SELECT uid FROM {users} WHERE name = :name", array(
       ':name' => $username
   ))->fetchField();
+  
+  
 
   // If we dom't know about this user in drupal...
   if (empty($uid)) {
@@ -460,7 +495,7 @@ function _thumbwhere_validate_and_change_password($username, $current_password, 
     return FALSE;
   }
   else {
-
+  
 
     // Do we want to login via drupal?
     if (variable_get('thumbwhere_auth_drupal') == 1) {
@@ -510,6 +545,58 @@ function _thumbwhere_validate_and_change_password($username, $current_password, 
 
 }
 
+
+
+/**
+ * Return true if the user is authenticates with ThumbWhere
+ */
+function _thumbwhere_change_password($username, $new_password) {
+
+  if (twCanDebug()) debug('_thumbwhere_validate_and_change_password ' . $username);
+  if (twCanDebug()) debug('_thumbwhere_validate_and_change_password ' . $new_password);
+
+
+  // Do we have a uid for this user
+  $uid = db_query("SELECT uid FROM {users} WHERE name = :name", array(
+      ':name' => $username
+  ))->fetchField();
+  
+
+  // If we dom't know about this user in drupal...
+  if (empty($uid)) {
+
+    return FALSE;
+  }
+  else {
+
+    // Do we want to login via drupal?
+    if (variable_get('thumbwhere_auth_drupal') == 1) {
+
+        // Save the password
+        $account = user_load($uid); // Loading account
+        $edit = array(
+          'pass' =>  $new_password
+        );
+        user_save($account, $edit);
+        return TRUE;
+    } else
+    {
+
+      //
+      // TODO: Validate and change password.
+      //
+
+      //if (twCanDebug()) debug('VALIDATE AND CHANGE  THUMBWHERE');
+
+      //  If we run into trouble during the verifiy...
+      throw new Exception('ThumbWhere Failed to Update User Password : Error TA-005');
+
+      return TRUE;
+    }
+  }
+
+}
+
 /**
  * Return true if the user is authenticates with ThumbWhere
  */
@@ -520,12 +607,8 @@ function _thumbwhere_register($username, $password) {
       ':name' => $username
   ))->fetchField()) {
 
-    // This global represents the current thumbwhere member id
-    //global $_tw_member_token;
-    //global $_tw_identity_token;
-    //global $_tw_pk_member;
+    // This global represents the current thumbwhere consumer id
     global $_tw_pk_consumer;
-    //global $_tw_pk_identity;
 
     //
     // TODO: Create the user - get id
@@ -596,22 +679,10 @@ function _thumbwhere_register($username, $password) {
       debug('REGISTERCONSUMER');
       debug($registerConsumerResponse);
     }
-
-    // TODO: Get member id and
-
+    
     // Primary id we want to use...
     $_tw_pk_consumer = $registerConsumerResponse->body->register_consumer->consumer;
 
-    // May need this...
-    //$_tw_member_token = $memberToken;
-
-    // Maybe need these....
-    //$_tw_identity_token = $identityToken;
-    //$_tw_pk_member = 667;
-    //$_tw_pk_identity = 667;
-
-    // or if were not expecting an error..
-    //throw new Exception('Failed to Authenticate User : Error TA-001');
 
     return TRUE;
   }
