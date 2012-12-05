@@ -355,18 +355,11 @@ function thumbwhere_externalrepositorysync_entity_presave($entity, $entity_type)
 
     $fields = array();
     // Compulsory so..
-    if (!isset($entity->fk_externalrepository)) {
-      throw new Exception('externalrepository is mandatory.');
+    if (!isset($entity->fk_externalsubscription)) {
+      throw new Exception('externalsubscription is mandatory.');
     }
     else {
-      $fields['externalrepository'] = $entity->fk_externalrepository;
-    }
-    // Compulsory so..
-    if (empty($entity->resource)) {
-      throw new Exception('resource is mandatory.');
-    }
-    else {
-      $fields['resource'] = $entity->resource;
+      $fields['externalsubscription'] = $entity->fk_externalsubscription;
     }
     // Compulsory so..
     if (!isset($entity->last_sync)) {

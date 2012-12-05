@@ -17,21 +17,12 @@
     <type name="datetime" implemented_by="DateTime" />
   </types>
   <resources version="V1.1" service="Admin">
-    <resource name="external_repository_sync" type="ExternalRepositorySync" runat="server" enabled="true" object="ExternalRepositorySync" create="true" subscribe="true">
+    <resource name="external_repository_resource" type="RepositoryResource" runat="server" enabled="true" object="RepositoryResource" create="true" subscribe="true">
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>
-      <field name="externalsubscription" type="ExternalSubscription">
-        <doc>'externalsubscription' field, which is an embedded 'ExternalSubscription' resource.</doc>
-      </field>
-      <field name="last_sync" type="datetime">
-        <doc>'last_sync' field, which is a 'datetime' type.</doc>
-      </field>
-      <field name="max" type="long">
-        <doc>'max' field, which is a 'long' type.</doc>
-      </field>
-      <field name="complete" type="boolean" optional="true" default="false">
-        <doc>'complete' field, which is a 'boolean' type.</doc>
+      <field name="name" type="string">
+        <doc>'name' field, which is a 'string' type.</doc>
       </field>
     </resource>
   </resources>

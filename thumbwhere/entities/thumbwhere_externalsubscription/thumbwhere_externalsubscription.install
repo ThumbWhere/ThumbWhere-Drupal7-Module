@@ -13,12 +13,12 @@
  *
  * This hook is called when the module is installed.
  *
- * @ingroup thumbwhere_externalrepository
+ * @ingroup thumbwhere_externalsubscription
  */
-function thumbwhere_externalrepository_uninstall() {
+function thumbwhere_externalsubscription_uninstall() {
 
   // Delete the permissions
-  foreach (_thumbwhere_externalrepository_get_permissions() as $role_name => $permissions) {
+  foreach (_thumbwhere_externalsubscription_get_permissions() as $role_name => $permissions) {
     // Find the role ID for this role
     $role = user_role_load_by_name($role_name);
     if ($role != false) {
@@ -35,8 +35,8 @@ function thumbwhere_externalrepository_uninstall() {
 
   // Uninstall the Menu TODO: Do we even install a menu???
   if (module_exists('menu')) {
-    if ($thumbwhere_externalrepository_menu = menu_load('thumbwhere_externalrepository')) {
-      menu_delete($thumbwhere_externalrepository_menu);
+    if ($thumbwhere_externalsubscription_menu = menu_load('thumbwhere_externalsubscription')) {
+      menu_delete($thumbwhere_externalsubscription_menu);
     }
   }
 
@@ -53,12 +53,12 @@ function thumbwhere_externalrepository_uninstall() {
  *
  * This hook is called when the module is installed.
  *
- * @ingroup thumbwhere_externalrepository
+ * @ingroup thumbwhere_externalsubscription
  */
-function thumbwhere_externalrepository_install() {
+function thumbwhere_externalsubscription_install() {
 
  // Create the permissions
-  foreach (_thumbwhere_externalrepository_get_permissions() as $role_name => $permissions) {
+  foreach (_thumbwhere_externalsubscription_get_permissions() as $role_name => $permissions) {
     // Find the role ID for this role
     $role = user_role_load_by_name($role_name);
     if ($role != false) {
@@ -76,7 +76,7 @@ function thumbwhere_externalrepository_install() {
   menu_rebuild();
 
   // Entity provided by ThumbWhere gets a weight of 12. Storage = 11 and ThumbWere itself, 10
-  //db_query("UPDATE {system} SET weight = 12 WHERE name = 'thumbwhere_externalrepository'");
+  //db_query("UPDATE {system} SET weight = 12 WHERE name = 'thumbwhere_externalsubscription'");
 
 }
 
@@ -85,9 +85,9 @@ function thumbwhere_externalrepository_install() {
  *
  * Called when the module is enabled
  *
- * @ingroup thumbwhere_externalrepository
+ * @ingroup thumbwhere_externalsubscription
  */
-function thumbwhere_externalrepository_enable() {
+function thumbwhere_externalsubscription_enable() {
 
   // Clear the everything cache
   drupal_flush_all_caches();
@@ -102,9 +102,9 @@ function thumbwhere_externalrepository_enable() {
  *
  * Called when the module is disabled
  *
- * @ingroup thumbwhere_externalrepository
+ * @ingroup thumbwhere_externalsubscription
  */
-function thumbwhere_externalrepository_disable() {
+function thumbwhere_externalsubscription_disable() {
 
   // Clear the everything cache
   drupal_flush_all_caches();
@@ -119,73 +119,63 @@ function thumbwhere_externalrepository_disable() {
  *
  * This is where we define the schema for our entity.
  *
- * This results in a table being created called 'thumbwhere_externalrepository'
+ * This results in a table being created called 'thumbwhere_externalsubscription'
  *
- * thumbwhere_externalrepository_id
+ * thumbwhere_externalsubscription_id
  * The primary key used by
  *
- * pk_externalrepository
+ * pk_externalsubscription
  * Used to map to the actual object in ThumbWhere.
  */
-function thumbwhere_externalrepository_schema() {
+function thumbwhere_externalsubscription_schema() {
   $t = get_t();
 
   $schema = array();
 
-  $schema['thumbwhere_externalrepository'] = array(
-  'description' => 'The base table for thumbwhere_externalrepository entities.' . 'An machine that contains it\&apos;s own mirror of ThumbWhere \&apos;Resources\&apos; and can \&apos;originate\&apos; entities. host is the host information. apikey is the apikey we are going to use to authenticate with each other. url is the end point for the repository',
+  $schema['thumbwhere_externalsubscription'] = array(
+  'description' => 'The base table for thumbwhere_externalsubscription entities.' . 'Signifies that a repository has been subscribed to a particular resource.',
     'fields' => array(
-          'pk_externalrepository' => array(
-              'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereExternalRepositorys\' entity.',
+          'pk_externalsubscription' => array(
+              'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereExternalSubscriptions\' entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => TRUE,
               'default' => -1,
           ),
-          'fk_externalrepositorytype' => array(
-          'description' => 'ThumbWhere Id: References a \'ExternalRepositoryType\' Entity.',
+          'fk_externalrepository' => array(
+          'description' => 'ThumbWhere Id: References a \'ExternalRepository\' Entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => FALSE,
               //'default' => -1,
           ),
-          'fk_host' => array(
-          'description' => 'ThumbWhere Id: References a \'Host\' Entity.',
+          'fk_repositoryresource' => array(
+          'description' => 'ThumbWhere Id: References a \'RepositoryResource\' Entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => FALSE,
               //'default' => -1,
           ),
-          'fk_apikey' => array(
-          'description' => 'ThumbWhere Id: References a \'APIKey\' Entity.',
+          'active' => array(
+              'description' => 'The \'active\' checkbox field of the \'ExternalSubscription\' entity.',
               'type' => 'int',
-              'size' => 'big',
+              'size' => 'tiny',
               'not null' => FALSE,
-              //'default' => -1,
-          ),
-          'url' => array(
-              'description' => 'The \'url\' textfield field of the \'ExternalRepository\' entity.',
-              'type' => 'varchar',
-              'size' => 'normal',
-              'length' => 128,
-              'not null' => FALSE,                  
+              'default' => '1',                  
           ),      
       ),
       'primary key' => array(
-          'pk_externalrepository'      
+          'pk_externalsubscription'      
       ),      
       'indexes' => array(
-          'pk_externalrepository' => array(
-              'pk_externalrepository'
+          'pk_externalsubscription' => array(
+              'pk_externalsubscription'
           ),
-          'fk_externalrepositorytype' => array(
-              'fk_externalrepositorytype'
+          'fk_externalrepository' => array(
+              'fk_externalrepository'
           ),
-          'fk_host' => array(
-              'fk_host'
-          ),
-          'fk_apikey' => array(
-              'fk_apikey'
+          'fk_repositoryresource' => array(
+              'fk_repositoryresource'
           ),
       
       ),
@@ -203,16 +193,16 @@ function thumbwhere_externalrepository_schema() {
  *
  * @ingroup track
  */
-function _thumbwhere_externalrepository_get_permissions() {
+function _thumbwhere_externalsubscription_get_permissions() {
   return array(
       'anonymous user' => array(
-          'send thumbwhere externalrepository notifications',
+          'send thumbwhere externalsubscription notifications',
       ),
       'authenticated user' => array(
-          'send thumbwhere externalrepository notifications',
+          'send thumbwhere externalsubscription notifications',
       ),      
       'administrator' => array(
-          'send thumbwhere externalrepository notifications',
+          'send thumbwhere externalsubscription notifications',
       ),
   );
 }

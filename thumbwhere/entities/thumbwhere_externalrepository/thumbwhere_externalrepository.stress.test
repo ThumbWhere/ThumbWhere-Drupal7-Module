@@ -122,6 +122,16 @@ function _thumbwhere_stresstest_create_ExternalRepository($uid,$test) {
     // Global values that we will use...
     //
     
+    global $_global_thumbwhere_stresstest_ExternalRepositoryType;
+    if (!isset( $_global_thumbwhere_stresstest_ExternalRepositoryType)){
+      if (function_exists ('_thumbwhere_stresstest_create_ExternalRepositoryType')) {
+        $_global_thumbwhere_stresstest_ExternalRepositoryType = _thumbwhere_stresstest_create_ExternalRepositoryType($uid,$test);
+      }
+      else {
+        debug('bailing - function \'_thumbwhere_stresstest_create_ExternalRepositoryType\' is not loaded yet.');
+        return NULL;
+      }
+    }
     global $_global_thumbwhere_stresstest_Host;
     if (!isset( $_global_thumbwhere_stresstest_Host)){
       if (function_exists ('_thumbwhere_stresstest_create_Host')) {
@@ -132,11 +142,24 @@ function _thumbwhere_stresstest_create_ExternalRepository($uid,$test) {
         return NULL;
       }
     }
+    global $_global_thumbwhere_stresstest_APIKey;
+    if (!isset( $_global_thumbwhere_stresstest_APIKey)){
+      if (function_exists ('_thumbwhere_stresstest_create_APIKey')) {
+        $_global_thumbwhere_stresstest_APIKey = _thumbwhere_stresstest_create_APIKey($uid,$test);
+      }
+      else {
+        debug('bailing - function \'_thumbwhere_stresstest_create_APIKey\' is not loaded yet.');
+        return NULL;
+      }
+    }
           		
           		
     $entity = entity_create('thumbwhere_externalrepository', array(
         'uid' => $uid,
+        'externalrepositorytype' => $_global_thumbwhere_stresstest_ExternalRepositoryType,
         'host' => $_global_thumbwhere_stresstest_Host,
+        'apikey' => $_global_thumbwhere_stresstest_APIKey,
+    		'url' => $test->randomName(),
 
       ));  
       

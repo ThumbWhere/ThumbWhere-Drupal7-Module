@@ -135,8 +135,6 @@ function thumbwhere_install() {
     }
   }
 
-
-
   /*
   // We define the node type as an associative array.
   $twcontent = array(

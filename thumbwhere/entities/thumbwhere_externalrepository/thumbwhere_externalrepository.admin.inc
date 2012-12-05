@@ -131,8 +131,20 @@ function _thumbwhere_handle_external_repository_notify_xml($notification) {
 
         $entityfields['pk_externalrepository'] = $id;	
 
+        if (isset($notification->externalrepositorytype)) {
+          $entityfields['fk_externalrepositorytype'] = intval($notification->externalrepositorytype);
+        }
+
         if (isset($notification->host)) {
           $entityfields['fk_host'] = intval($notification->host);
+        }
+
+        if (isset($notification->apikey)) {
+          $entityfields['fk_apikey'] = intval($notification->apikey);
+        }
+
+        if (isset($notification->url)) {
+          $entityfields['url'] = (string)($notification->url);
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -288,8 +300,20 @@ function _thumbwhere_handle_external_repository_notify_xml($notification) {
 
         $entityfields['pk_externalrepository'] = $id;	
 
+        if (isset($notification->externalrepositorytype)) {
+          $entityfields['fk_externalrepositorytype'] = intval($notification->externalrepositorytype);
+        }
+
         if (isset($notification->host)) {
           $entityfields['fk_host'] = intval($notification->host);
+        }
+
+        if (isset($notification->apikey)) {
+          $entityfields['fk_apikey'] = intval($notification->apikey);
+        }
+
+        if (isset($notification->url)) {
+          $entityfields['url'] = (string)($notification->url);
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -333,8 +357,20 @@ function _thumbwhere_handle_external_repository_notify_xml($notification) {
         //
 
 
+        if (isset($notification->externalrepositorytype)) {
+          $entity->fk_externalrepositorytype = intval($notification->externalrepositorytype);
+        }
+
         if (isset($notification->host)) {
           $entity->fk_host = intval($notification->host);
+        }
+
+        if (isset($notification->apikey)) {
+          $entity->fk_apikey = intval($notification->apikey);
+        }
+
+        if (isset($notification->url)) {
+          $entity->url = (string)($notification->url);
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -715,6 +751,16 @@ function thumbwhere_externalrepository_delete_form_wrapper($thumbwhere_externalr
 function thumbwhere_externalrepository_edit_form($form, &$form_state, $thumbwhere_externalrepository) {
 
   // Add the default field elements.
+  $form['fk_externalrepositorytype'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereExternalRepository fk_externalrepositorytype'),
+    '#default_value' => isset($thumbwhere_externalrepository->fk_externalrepositorytype) ? $thumbwhere_externalrepository->fk_externalrepositorytype : '',
+    //'#maxlength' => 255,
+   /// '#required' => TRUE,
+    '#weight' => -5,
+    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_externalrepositorytype',
+  );
+  // Add the default field elements.
   $form['fk_host'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereExternalRepository fk_host'),
@@ -723,6 +769,25 @@ function thumbwhere_externalrepository_edit_form($form, &$form_state, $thumbwher
    /// '#required' => TRUE,
     '#weight' => -5,
     '#autocomplete_path' => 'entity-autocomplete/thumbwhere_host',
+  );
+  // Add the default field elements.
+  $form['fk_apikey'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereExternalRepository fk_apikey'),
+    '#default_value' => isset($thumbwhere_externalrepository->fk_apikey) ? $thumbwhere_externalrepository->fk_apikey : '',
+    //'#maxlength' => 255,
+   /// '#required' => TRUE,
+    '#weight' => -5,
+    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_apikey',
+  );
+  // Add the default field elements.
+    $form['url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereExternalRepository url'),
+
+    // '#maxlength' => 255,
+   // '#required' => TRUE,
+    '#weight' => -5,
   );
 
 
@@ -792,6 +857,21 @@ function thumbwhere_externalrepository_edit_form_validate(&$form, &$form_state) 
   // No validation for pk
 
 
+  // Convert fk autocomplete for fk_externalrepositorytype
+  $value = $form['fk_externalrepositorytype']['#value'];
+  // If we have something, escape the auto-completion encoding.
+  if (!empty($value)) { 
+    $value = entity_autocomplete_get_id($value);
+    form_set_value($form['fk_externalrepositorytype'], $value,$form_state);
+  }
+  //if (twCanDebug()) debug($form['fk_externalrepositorytype']);
+   if (twCanDebug()) debug('fk_externalrepositorytype = ' . $value);
+  // Validate fk fk_externalrepositorytype
+  if (empty($value)) {
+    form_set_error('fk_externalrepositorytype', t('Validation error, \'fk_externalrepositorytype\' is mandatory1.'));
+    // throw new Exception('Field \'fk_externalrepositorytype\' in is mandatory');
+  }
+
   // Convert fk autocomplete for fk_host
   $value = $form['fk_host']['#value'];
   // If we have something, escape the auto-completion encoding.
@@ -805,6 +885,29 @@ function thumbwhere_externalrepository_edit_form_validate(&$form, &$form_state) 
   if (empty($value)) {
     form_set_error('fk_host', t('Validation error, \'fk_host\' is mandatory1.'));
     // throw new Exception('Field \'fk_host\' in is mandatory');
+  }
+
+  // Convert fk autocomplete for fk_apikey
+  $value = $form['fk_apikey']['#value'];
+  // If we have something, escape the auto-completion encoding.
+  if (!empty($value)) { 
+    $value = entity_autocomplete_get_id($value);
+    form_set_value($form['fk_apikey'], $value,$form_state);
+  }
+  //if (twCanDebug()) debug($form['fk_apikey']);
+   if (twCanDebug()) debug('fk_apikey = ' . $value);
+  // Validate fk fk_apikey
+  if (empty($value)) {
+    form_set_error('fk_apikey', t('Validation error, \'fk_apikey\' is mandatory1.'));
+    // throw new Exception('Field \'fk_apikey\' in is mandatory');
+  }
+
+  // Validate normalurl
+  $value = $form['url']['#value'];
+  // If we have no default value then we don't care much for checking for emptyness.
+  if (empty($value)) {
+    form_set_error('url', t('Validation error, \'url\' is mandatory2.'));
+    //throw new Exception('Field \'url\' in is mandatory.');
   }
 
               

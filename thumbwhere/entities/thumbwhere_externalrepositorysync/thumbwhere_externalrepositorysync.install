@@ -142,19 +142,12 @@ function thumbwhere_externalrepositorysync_schema() {
               'not null' => TRUE,
               'default' => -1,
           ),
-          'fk_externalrepository' => array(
-          'description' => 'ThumbWhere Id: References a \'ExternalRepository\' Entity.',
+          'fk_externalsubscription' => array(
+          'description' => 'ThumbWhere Id: References a \'ExternalSubscription\' Entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => FALSE,
               //'default' => -1,
-          ),
-          'resource' => array(
-              'description' => 'The \'resource\' textfield field of the \'ExternalRepositorySync\' entity.',
-              'type' => 'varchar',
-              'size' => 'normal',
-              'length' => 128,
-              'not null' => FALSE,                  
           ),
           'last_sync' => array(
               'description' => 'The \'last_sync\' date field of the \'ExternalRepositorySync\' entity.',
@@ -183,8 +176,8 @@ function thumbwhere_externalrepositorysync_schema() {
           'pk_externalrepositorysync' => array(
               'pk_externalrepositorysync'
           ),
-          'fk_externalrepository' => array(
-              'fk_externalrepository'
+          'fk_externalsubscription' => array(
+              'fk_externalsubscription'
           ),
       
       ),

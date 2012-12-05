@@ -21,8 +21,17 @@
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>
+      <field name="externalrepositorytype" type="ExternalRepositoryType">
+        <doc>'externalrepositorytype' field, which is an embedded 'ExternalRepositoryType' resource.</doc>
+      </field>
       <field name="host" type="Host">
         <doc>'host' field, which is an embedded 'Host' resource.</doc>
+      </field>
+      <field name="apikey" type="APIKey">
+        <doc>'apikey' field, which is an embedded 'APIKey' resource.</doc>
+      </field>
+      <field name="url" type="string">
+        <doc>'url' field, which is a 'string' type.</doc>
       </field>
     </resource>
   </resources>

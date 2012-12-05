@@ -13,12 +13,12 @@
  *
  * This hook is called when the module is installed.
  *
- * @ingroup thumbwhere_host
+ * @ingroup thumbwhere_externalrepositorytype
  */
-function thumbwhere_host_uninstall() {
+function thumbwhere_externalrepositorytype_uninstall() {
 
   // Delete the permissions
-  foreach (_thumbwhere_host_get_permissions() as $role_name => $permissions) {
+  foreach (_thumbwhere_externalrepositorytype_get_permissions() as $role_name => $permissions) {
     // Find the role ID for this role
     $role = user_role_load_by_name($role_name);
     if ($role != false) {
@@ -35,8 +35,8 @@ function thumbwhere_host_uninstall() {
 
   // Uninstall the Menu TODO: Do we even install a menu???
   if (module_exists('menu')) {
-    if ($thumbwhere_host_menu = menu_load('thumbwhere_host')) {
-      menu_delete($thumbwhere_host_menu);
+    if ($thumbwhere_externalrepositorytype_menu = menu_load('thumbwhere_externalrepositorytype')) {
+      menu_delete($thumbwhere_externalrepositorytype_menu);
     }
   }
 
@@ -53,12 +53,12 @@ function thumbwhere_host_uninstall() {
  *
  * This hook is called when the module is installed.
  *
- * @ingroup thumbwhere_host
+ * @ingroup thumbwhere_externalrepositorytype
  */
-function thumbwhere_host_install() {
+function thumbwhere_externalrepositorytype_install() {
 
  // Create the permissions
-  foreach (_thumbwhere_host_get_permissions() as $role_name => $permissions) {
+  foreach (_thumbwhere_externalrepositorytype_get_permissions() as $role_name => $permissions) {
     // Find the role ID for this role
     $role = user_role_load_by_name($role_name);
     if ($role != false) {
@@ -76,7 +76,7 @@ function thumbwhere_host_install() {
   menu_rebuild();
 
   // Entity provided by ThumbWhere gets a weight of 12. Storage = 11 and ThumbWere itself, 10
-  //db_query("UPDATE {system} SET weight = 12 WHERE name = 'thumbwhere_host'");
+  //db_query("UPDATE {system} SET weight = 12 WHERE name = 'thumbwhere_externalrepositorytype'");
 
 }
 
@@ -85,9 +85,9 @@ function thumbwhere_host_install() {
  *
  * Called when the module is enabled
  *
- * @ingroup thumbwhere_host
+ * @ingroup thumbwhere_externalrepositorytype
  */
-function thumbwhere_host_enable() {
+function thumbwhere_externalrepositorytype_enable() {
 
   // Clear the everything cache
   drupal_flush_all_caches();
@@ -102,9 +102,9 @@ function thumbwhere_host_enable() {
  *
  * Called when the module is disabled
  *
- * @ingroup thumbwhere_host
+ * @ingroup thumbwhere_externalrepositorytype
  */
-function thumbwhere_host_disable() {
+function thumbwhere_externalrepositorytype_disable() {
 
   // Clear the everything cache
   drupal_flush_all_caches();
@@ -119,70 +119,43 @@ function thumbwhere_host_disable() {
  *
  * This is where we define the schema for our entity.
  *
- * This results in a table being created called 'thumbwhere_host'
+ * This results in a table being created called 'thumbwhere_externalrepositorytype'
  *
- * thumbwhere_host_id
+ * thumbwhere_externalrepositorytype_id
  * The primary key used by
  *
- * pk_host
+ * pk_externalrepositorytype
  * Used to map to the actual object in ThumbWhere.
  */
-function thumbwhere_host_schema() {
+function thumbwhere_externalrepositorytype_schema() {
   $t = get_t();
 
   $schema = array();
 
-  $schema['thumbwhere_host'] = array(
-  'description' => 'The base table for thumbwhere_host entities.' . 'A host machine that sits on the edge of the ThumbWhere network. address we use to manage the host.',
+  $schema['thumbwhere_externalrepositorytype'] = array(
+  'description' => 'The base table for thumbwhere_externalrepositorytype entities.' . 'The type of external subscriber.. eg . \&apos;Drupal\&apos; \&apos;Redis\&apos;.',
     'fields' => array(
-          'pk_host' => array(
-              'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereHosts\' entity.',
+          'pk_externalrepositorytype' => array(
+              'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereExternalRepositoryTypes\' entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => TRUE,
               'default' => -1,
           ),
-          'fk_hosttype' => array(
-          'description' => 'ThumbWhere Id: References a \'HostType\' Entity.',
-              'type' => 'int',
-              'size' => 'big',
-              'not null' => FALSE,
-              //'default' => -1,
-          ),
-          'fk_hostcredential' => array(
-          'description' => 'ThumbWhere Id: References a \'HostCredential\' Entity.',
-              'type' => 'int',
-              'size' => 'big',
-              'not null' => FALSE,
-              //'default' => -1,
-          ),
-          'address' => array(
-              'description' => 'The \'address\' textfield field of the \'Host\' entity.',
+          'name' => array(
+              'description' => 'The \'name\' textfield field of the \'ExternalRepositoryType\' entity.',
               'type' => 'varchar',
               'size' => 'normal',
               'length' => 128,
               'not null' => FALSE,                  
-          ),
-          'online' => array(
-              'description' => 'The \'online\' checkbox field of the \'Host\' entity.',
-              'type' => 'int',
-              'size' => 'tiny',
-              'not null' => FALSE,
-              'default' => '0',                  
           ),      
       ),
       'primary key' => array(
-          'pk_host'      
+          'pk_externalrepositorytype'      
       ),      
       'indexes' => array(
-          'pk_host' => array(
-              'pk_host'
-          ),
-          'fk_hosttype' => array(
-              'fk_hosttype'
-          ),
-          'fk_hostcredential' => array(
-              'fk_hostcredential'
+          'pk_externalrepositorytype' => array(
+              'pk_externalrepositorytype'
           ),
       
       ),
@@ -200,16 +173,16 @@ function thumbwhere_host_schema() {
  *
  * @ingroup track
  */
-function _thumbwhere_host_get_permissions() {
+function _thumbwhere_externalrepositorytype_get_permissions() {
   return array(
       'anonymous user' => array(
-          'send thumbwhere host notifications',
+          'send thumbwhere externalrepositorytype notifications',
       ),
       'authenticated user' => array(
-          'send thumbwhere host notifications',
+          'send thumbwhere externalrepositorytype notifications',
       ),      
       'administrator' => array(
-          'send thumbwhere host notifications',
+          'send thumbwhere externalrepositorytype notifications',
       ),
   );
 }
