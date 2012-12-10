@@ -202,14 +202,47 @@ function thumbwhere_admin_settings() {
       '#type' => 'checkbox',
       '#title' => t('Log API Debug Messages'),
       '#default_value' => variable_get('thumbwhere_api_log_debug', 0),
-      '#description' => t('Include Thumbwhere API call debugging messages in the watchdog log..')
+      '#description' => t('Include Thumbwhere API call debugging messages in the watchdog log.')
   );
 
   $form['thumbwhere_api_log_trace'] = array(
       '#type' => 'checkbox',
       '#title' => t('Log API Trace Messages'),
       '#default_value' => variable_get('thumbwhere_api_log_trace', 0),
-      '#description' => t('Include Thumbwhere API call trace messages in the watchdog log..')
+      '#description' => t('Include Thumbwhere API call trace messages in the watchdog log.')
+  );
+
+  //
+  // Logging...
+  //
+
+
+  $form['thumbwhere_auth_link_on_load'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Link to User On Load.'),
+      '#default_value' => variable_get('thumbwhere_auth_link_on_load', 0),
+      '#description' => t('Link User to ThumbWhere User when user entity is loaded.')
+  );
+
+  $form['thumbwhere_auth_link_on_create'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Link to User On Create.'),
+      '#default_value' => variable_get('thumbwhere_auth_link_on_create', 0),
+      '#description' => t('Link User to ThumbWhere User when user entity is created.')
+  );
+
+  $form['thumbwhere_auth_link_on_login'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Link to User On Login.'),
+      '#default_value' => variable_get('thumbwhere_auth_link_on_login', 1),
+      '#description' => t('Link User to ThumbWhere User when user first logs in.')
+  );
+
+  $form['thumbwhere_auth_link_on_ingest'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Link to Producer On First Ingest.'),
+      '#default_value' => variable_get('thumbwhere_auth_link_on_ingest', 1),
+      '#description' => t('Link Content Producer to ThumbWhere User when we injest our first content..')
   );
 
 

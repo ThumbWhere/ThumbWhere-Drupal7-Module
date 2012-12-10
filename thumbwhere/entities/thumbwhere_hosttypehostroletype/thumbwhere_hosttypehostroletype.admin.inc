@@ -2,7 +2,7 @@
 
 /**
  * @file
- * ThumbWhereHostRole editing UI.
+ * ThumbWhereHostTypeHostRoleType editing UI.
  *
  * We make very little use of the EntityAPI interface for this - preferring instead to use
  * views. That offers more flexibility to change a UI that will, more often than not,
@@ -18,7 +18,7 @@
 /**
  * Handle the notification for content_ingext
  */
-function _thumbwhere_handle_host_role_notify_xml($notification) {
+function _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($notification) {
 
   //
   // Get the operation
@@ -26,9 +26,9 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
 
   if (!isset($notification->attributes()->op)) {
     drupal_add_http_header('Status', '501 unable to fulfull request..');
-    $err = 'We were expecting an \'op\', attribute on the \'host_role\', element.';
+    $err = 'We were expecting an \'op\', attribute on the \'host_type_capable_of_host_role_type\', element.';
     print($err);
-   	watchdog('thumbwhere_hostrole', $err ,array(), WATCHDOG_ERROR);
+   	watchdog('thumbwhere_hosttypehostroletype', $err ,array(), WATCHDOG_ERROR);
     exit(0);
   }
 
@@ -43,9 +43,9 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
 
   if (!isset($notification->attributes()->key)) {
     drupal_add_http_header('Status', '412 unable to fulfull request..');
-    $err = 'We were expecting a \'key\', attribute on the \'host_role\', element.';
+    $err = 'We were expecting a \'key\', attribute on the \'host_type_capable_of_host_role_type\', element.';
     print($err);
-    watchdog('thumbwhere_hostrole', $err ,array(), WATCHDOG_ERROR);
+    watchdog('thumbwhere_hosttypehostroletype', $err ,array(), WATCHDOG_ERROR);
     exit(0);
   }
 
@@ -79,9 +79,9 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
 		
         if (!isset($notification->attributes()->id)) {
           drupal_add_http_header('Status', '412 Unable to fulfull request.');
-          $err = 'We were expecting an \'id\', attribute on the \'host_role\', element when we are performing an \'update\' notification..';
+          $err = 'We were expecting an \'id\', attribute on the \'host_type_capable_of_host_role_type\', element when we are performing an \'update\' notification..';
           print($err);
-          watchdog('thumbwhere_hostrole', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_hosttypehostroletype', $err ,array(), WATCHDOG_ERROR);
           exit(0);
         }
 
@@ -96,24 +96,24 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
         // Get the fields
         //
           
-        $entities = entity_load('thumbwhere_hostrole', array($id));
+        $entities = entity_load('thumbwhere_hosttypehostroletype', array($id));
 
         if (twCanDebug()) debug('$entities');
         if (twCanDebug()) debug($entities);
 
         if (count($entities) != 0) {
           //drupal_add_http_header('Status', '409 Resource already exists.');
-          $err = '\'host_role\' resource already exists with an id of \'' . $id . '\'.';
+          $err = '\'host_type_capable_of_host_role_type\' resource already exists with an id of \'' . $id . '\'.';
            //print($err);
-          watchdog('thumbwhere_hostrole', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_hosttypehostroletype', $err ,array(), WATCHDOG_ERROR);
           //exit(0);
 
           	
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<host_role op="' . $op . '" id="' . $id . '" >');
+          print('<host_type_capable_of_host_role_type op="' . $op . '" id="' . $id . '" >');
           print('<status>success</status>');
-          print('</host_role>');
+          print('</host_type_capable_of_host_role_type>');
           print('</response>');
           exit(0);          	
           
@@ -129,14 +129,14 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
         //
 
 
-        $entityfields['pk_hostrole'] = $id;	
+        $entityfields['pk_hosttypehostroletype'] = $id;	
+
+        if (isset($notification->hosttype)) {
+          $entityfields['fk_hosttype'] = intval($notification->hosttype);
+        }
 
         if (isset($notification->hostroletype)) {
           $entityfields['fk_hostroletype'] = intval($notification->hostroletype);
-        }
-
-        if (isset($notification->host)) {
-          $entityfields['fk_host'] = intval($notification->host);
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -146,7 +146,7 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
 
         // We are being notified, so we do not want to ship this out again as a notification...
         // Finally write the entity.
-        $entity = entity_create('thumbwhere_hostrole', $entityfields);
+        $entity = entity_create('thumbwhere_hosttypehostroletype', $entityfields);
         $entity->do_not_propagate = TRUE;
         $entity->save();
 
@@ -158,9 +158,9 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<host_role op="' . $op . '" id="' . $id . '" >');
+        print('<host_type_capable_of_host_role_type op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
-        print('</host_role>');
+        print('</host_type_capable_of_host_role_type>');
         print('</response>');
         exit(0);			
 		
@@ -188,9 +188,9 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
 		
         if (!isset($notification->attributes()->id)) {
           drupal_add_http_header('Status', '412 Unable to fulfull request.');
-          $err = 'We were expecting an \'id\', attribute on the \'host_role\', element when we are performing an \'update\' notification..';
+          $err = 'We were expecting an \'id\', attribute on the \'host_type_capable_of_host_role_type\', element when we are performing an \'update\' notification..';
           print($err);
-          watchdog('thumbwhere_hostrole', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_hosttypehostroletype', $err ,array(), WATCHDOG_ERROR);
           exit(0);
         }
 
@@ -205,23 +205,23 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
         // Get the fields
         //
           
-        $entities = entity_load('thumbwhere_hostrole', array($id));
+        $entities = entity_load('thumbwhere_hosttypehostroletype', array($id));
 
         if (twCanDebug()) debug('$entities');
         if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
           //drupal_add_http_header('Status', '409 No such resource exists.');
-          $err = 'No such \'host_role\' resource exists with an id of \'' . $id . '\'.';
+          $err = 'No such \'host_type_capable_of_host_role_type\' resource exists with an id of \'' . $id . '\'.';
           //print($err);
-          watchdog('thumbwhere_hostrole',$err,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_hosttypehostroletype',$err,array(), WATCHDOG_ERROR);
           //exit(0);
 
 ////////////////////////////////////////////////////////////////////////
 //
 // ... for now we will just create the local copy
 //
-          watchdog('thumbwhere_hostrole','creating local version of missing entity',array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_hosttypehostroletype','creating local version of missing entity',array(), WATCHDOG_ERROR);
 		
 		
 		//
@@ -240,9 +240,9 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
 		
         if (!isset($notification->attributes()->id)) {
           drupal_add_http_header('Status', '412 Unable to fulfull request.');
-          $err = 'We were expecting an \'id\', attribute on the \'host_role\', element when we are performing an \'update\' notification..';
+          $err = 'We were expecting an \'id\', attribute on the \'host_type_capable_of_host_role_type\', element when we are performing an \'update\' notification..';
           print($err);
-          watchdog('thumbwhere_hostrole', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_hosttypehostroletype', $err ,array(), WATCHDOG_ERROR);
           exit(0);
         }
 
@@ -257,24 +257,24 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
         // Get the fields
         //
           
-        $entities = entity_load('thumbwhere_hostrole', array($id));
+        $entities = entity_load('thumbwhere_hosttypehostroletype', array($id));
 
         if (twCanDebug()) debug('$entities');
         if (twCanDebug()) debug($entities);
 
         if (count($entities) != 0) {
           //drupal_add_http_header('Status', '409 Resource already exists.');
-          $err = '\'host_role\' resource already exists with an id of \'' . $id . '\'.';
+          $err = '\'host_type_capable_of_host_role_type\' resource already exists with an id of \'' . $id . '\'.';
            //print($err);
-          watchdog('thumbwhere_hostrole', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_hosttypehostroletype', $err ,array(), WATCHDOG_ERROR);
           //exit(0);
 
           	
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<host_role op="' . $op . '" id="' . $id . '" >');
+          print('<host_type_capable_of_host_role_type op="' . $op . '" id="' . $id . '" >');
           print('<status>success</status>');
-          print('</host_role>');
+          print('</host_type_capable_of_host_role_type>');
           print('</response>');
           exit(0);          	
           
@@ -290,14 +290,14 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
         //
 
 
-        $entityfields['pk_hostrole'] = $id;	
+        $entityfields['pk_hosttypehostroletype'] = $id;	
+
+        if (isset($notification->hosttype)) {
+          $entityfields['fk_hosttype'] = intval($notification->hosttype);
+        }
 
         if (isset($notification->hostroletype)) {
           $entityfields['fk_hostroletype'] = intval($notification->hostroletype);
-        }
-
-        if (isset($notification->host)) {
-          $entityfields['fk_host'] = intval($notification->host);
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -307,7 +307,7 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
 
         // We are being notified, so we do not want to ship this out again as a notification...
         // Finally write the entity.
-        $entity = entity_create('thumbwhere_hostrole', $entityfields);
+        $entity = entity_create('thumbwhere_hosttypehostroletype', $entityfields);
         $entity->do_not_propagate = TRUE;
         $entity->save();
 
@@ -319,9 +319,9 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<host_role op="' . $op . '" id="' . $id . '" >');
+        print('<host_type_capable_of_host_role_type op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
-        print('</host_role>');
+        print('</host_type_capable_of_host_role_type>');
         print('</response>');
         exit(0);			
 		
@@ -341,12 +341,12 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
         //
 
 
-        if (isset($notification->hostroletype)) {
-          $entity->fk_hostroletype = intval($notification->hostroletype);
+        if (isset($notification->hosttype)) {
+          $entity->fk_hosttype = intval($notification->hosttype);
         }
 
-        if (isset($notification->host)) {
-          $entity->fk_host = intval($notification->host);
+        if (isset($notification->hostroletype)) {
+          $entity->fk_hostroletype = intval($notification->hostroletype);
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -358,7 +358,7 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
         $entity->do_not_propagate = TRUE;
 
         // Finally write the entity.
-        entity_save('thumbwhere_hostrole', $entity);
+        entity_save('thumbwhere_hosttypehostroletype', $entity);
 
         //
         // Send the final response
@@ -368,9 +368,9 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response  duration="' . $duration . '" >');
-        print('<host_role op="' . $op . '" id="' . $id . '" >');
+        print('<host_type_capable_of_host_role_type op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
-        print('</host_role>');
+        print('</host_type_capable_of_host_role_type>');
         print('</response>');
         exit(0);
       }
@@ -380,7 +380,7 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
     default:
       {
         drupal_add_http_header('Status', '501 Unable to fulfull request. Unhandled operation \'' . $op . '\'.');
-        print('We don\'t handle the \'' . $op . '\', notification operation on the \'host_role\', element.');
+        print('We don\'t handle the \'' . $op . '\', notification operation on the \'host_type_capable_of_host_role_type\', element.');
         exit(0);
 
       }
@@ -392,10 +392,10 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
 /**
  * Menu callback: React to a notifications for ContentIngest.
  */
-function _thumbwhere_host_role_notify() {
+function _thumbwhere_host_type_capable_of_host_role_type_notify() {
 
   if (twCanDebug()) {
-    watchdog('thumbwhere_host_role', 'incoming notification.');
+    watchdog('thumbwhere_host_type_capable_of_host_role_type', 'incoming notification.');
   }
 
   $numargs = func_num_args();
@@ -441,7 +441,7 @@ function _thumbwhere_host_role_notify() {
 
     case 'POST': {
         if ($numargs == 1) {
-          if ($arg_list[0] == 'host_role') {
+          if ($arg_list[0] == 'host_type_capable_of_host_role_type') {
 
             //
             // Get the POST data as XML
@@ -463,7 +463,7 @@ function _thumbwhere_host_role_notify() {
 
             /*
              *  SimpleXMLElement::__set_state(array(
-             *      'host_role' =>
+             *      'host_type_capable_of_host_role_type' =>
              *      SimpleXMLElement::__set_state(array(
              *       '@attributes' =>
              *      array (
@@ -476,14 +476,14 @@ function _thumbwhere_host_role_notify() {
 
 
             // We expect 'action' as the root element.
-            if (!isset($post_xml->host_role)) {
+            if (!isset($post_xml->host_type_capable_of_host_role_type)) {
               drupal_add_http_header('Status', '404 not found.');
-              print('We were expecting a \'host_role\', element in the action payload.');
+              print('We were expecting a \'host_type_capable_of_host_role_type\', element in the action payload.');
               exit(0);
             }
 
             // Handle the incoming notification for content ingest
-            _thumbwhere_handle_host_role_notify_xml($post_xml->host_role);
+            _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($post_xml->host_type_capable_of_host_role_type);
 
           }
           else {
@@ -543,9 +543,9 @@ function _thumbwhere_host_role_notify() {
 
 
 /**
- * HostRole UI controller.
+ * HostTypeHostRoleType UI controller.
  */
-class ThumbWhereHostRoleUIController extends EntityDefaultUIController {
+class ThumbWhereHostTypeHostRoleTypeUIController extends EntityDefaultUIController {
 
   /**
    * Overrides hook_menu() defaults. Main reason for doing this is that
@@ -556,13 +556,13 @@ class ThumbWhereHostRoleUIController extends EntityDefaultUIController {
     $items = array();
     
     // Add a notification page...
-    $items['thumbwhere/host_role/notify'] = array(
-        'title' => 'Notifications Callback for "HostRole" Entity',
-        'page callback' => '_thumbwhere_host_role_notify',
+    $items['thumbwhere/host_type_capable_of_host_role_type/notify'] = array(
+        'title' => 'Notifications Callback for "HostTypeHostRoleType" Entity',
+        'page callback' => '_thumbwhere_host_type_capable_of_host_role_type_notify',
         'access arguments' => array(
-            'send thumbwhere hostrole notifications'
+            'send thumbwhere hosttypehostroletype notifications'
         ),
-        'file' => 'thumbwhere_hostrole.admin.inc',
+        'file' => 'thumbwhere_hosttypehostroletype.admin.inc',
         'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );    
     
@@ -570,27 +570,27 @@ class ThumbWhereHostRoleUIController extends EntityDefaultUIController {
     $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
 
     $items[$this->path] = array(
-      'title' => 'HostRole',
-      'description' => 'Add edit and update thumbwhere_hostroles.',
+      'title' => 'HostTypeHostRoleType',
+      'description' => 'Add edit and update thumbwhere_hosttypehostroletypes.',
       'page callback' => 'system_admin_menu_block_page',
       'access arguments' => array('access administration pages'),
       'file path' => drupal_get_path('module', 'system'),
       'file' => 'system.admin.inc',
     );
 
-    // Change the overview menu type for the list of thumbwhere_hostroles.
+    // Change the overview menu type for the list of thumbwhere_hosttypehostroletypes.
     $items[$this->path]['type'] = MENU_LOCAL_TASK;
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      //'title' => 'Add a HostRole',
+      //'title' => 'Add a HostTypeHostRoleType',
       'title' => 'Add',
-      'description' => 'Add a new HostRole',
-      'page callback' => 'thumbwhere_hostrole_form_wrapper',
-      'page arguments' => array(thumbwhere_hostrole_create(array('type' => 'thumbwhere_hostrole'))),
-      'access callback' => 'thumbwhere_hostrole_access',
-      'access arguments' => array('edit', 'edit ' . 'thumbwhere_hostrole'),
-      'file' => 'thumbwhere_hostrole.admin.inc',
+      'description' => 'Add a new HostTypeHostRoleType',
+      'page callback' => 'thumbwhere_hosttypehostroletype_form_wrapper',
+      'page arguments' => array(thumbwhere_hosttypehostroletype_create(array('type' => 'thumbwhere_hosttypehostroletype'))),
+      'access callback' => 'thumbwhere_hosttypehostroletype_access',
+      'access arguments' => array('edit', 'edit ' . 'thumbwhere_hosttypehostroletype'),
+      'file' => 'thumbwhere_hosttypehostroletype.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
 
@@ -598,69 +598,69 @@ class ThumbWhereHostRoleUIController extends EntityDefaultUIController {
 /*
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      //'title' => 'Add a HostRole',
+      //'title' => 'Add a HostTypeHostRoleType',
       'title' => 'Add',
-	  'description' => 'Add a new HostRole',
-      'page callback'  => 'thumbwhere_hostrole_add_page',
-      'access callback'  => 'thumbwhere_hostrole_access',
+	  'description' => 'Add a new HostTypeHostRoleType',
+      'page callback'  => 'thumbwhere_hosttypehostroletype_add_page',
+      'access callback'  => 'thumbwhere_hosttypehostroletype_access',
       'access arguments' => array('edit'),
       'type' => MENU_NORMAL_ITEM,
       'weight' => 20,
-      'file' => 'thumbwhere_hostrole.admin.inc',
+      'file' => 'thumbwhere_hosttypehostroletype.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
 */    
 /*
-    $items[$this->path . '/add/' . 'thumbwhere_hostrole'] = array(
-      'title' => 'Add ' . 'ThumbWhereHostRole',
-      'page callback' => 'thumbwhere_hostrole_form_wrapper',
-      'page arguments' => array(thumbwhere_hostrole_create(array('type' => 'thumbwhere_hostrole'))),
-      'access callback' => 'thumbwhere_hostrole_access',
-      'access arguments' => array('edit', 'edit ' . 'thumbwhere_hostrole'),
-      'file' => 'thumbwhere_hostrole.admin.inc',
+    $items[$this->path . '/add/' . 'thumbwhere_hosttypehostroletype'] = array(
+      'title' => 'Add ' . 'ThumbWhereHostTypeHostRoleType',
+      'page callback' => 'thumbwhere_hosttypehostroletype_form_wrapper',
+      'page arguments' => array(thumbwhere_hosttypehostroletype_create(array('type' => 'thumbwhere_hosttypehostroletype'))),
+      'access callback' => 'thumbwhere_hosttypehostroletype_access',
+      'access arguments' => array('edit', 'edit ' . 'thumbwhere_hosttypehostroletype'),
+      'file' => 'thumbwhere_hosttypehostroletype.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
 */
-    // Loading and editing thumbwhere_hostrole entities
-    $items[$this->path . '/thumbwhere_hostrole/' . $wildcard] = array(
-      'page callback' => 'thumbwhere_hostrole_form_wrapper',
+    // Loading and editing thumbwhere_hosttypehostroletype entities
+    $items[$this->path . '/thumbwhere_hosttypehostroletype/' . $wildcard] = array(
+      'page callback' => 'thumbwhere_hosttypehostroletype_form_wrapper',
       'page arguments' => array($id_count + 1),
-      'access callback' => 'thumbwhere_hostrole_access',
+      'access callback' => 'thumbwhere_hosttypehostroletype_access',
       'access arguments' => array('edit', $id_count + 1),
       'weight' => 0,
       'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
-      'file' => 'thumbwhere_hostrole.admin.inc',
+      'file' => 'thumbwhere_hosttypehostroletype.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
-    $items[$this->path . '/thumbwhere_hostrole/' . $wildcard . '/edit'] = array(
+    $items[$this->path . '/thumbwhere_hosttypehostroletype/' . $wildcard . '/edit'] = array(
       'title' => 'Edit',
       'type' => MENU_DEFAULT_LOCAL_TASK,
       'weight' => -10,
       'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
     );
 
-    $items[$this->path . '/thumbwhere_hostrole/' . $wildcard . '/delete'] = array(
+    $items[$this->path . '/thumbwhere_hosttypehostroletype/' . $wildcard . '/delete'] = array(
       'title' => 'Delete',
-      'page callback' => 'thumbwhere_hostrole_delete_form_wrapper',
+      'page callback' => 'thumbwhere_hosttypehostroletype_delete_form_wrapper',
       'page arguments' => array($id_count + 1),
-      'access callback' => 'thumbwhere_hostrole_access',
+      'access callback' => 'thumbwhere_hosttypehostroletype_access',
       'access arguments' => array('edit', $id_count + 1),
       'type' => MENU_LOCAL_TASK,
       'context' => MENU_CONTEXT_INLINE,
       'weight' => 10,
-      'file' => 'thumbwhere_hostrole.admin.inc',
+      'file' => 'thumbwhere_hosttypehostroletype.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
 
-    // Menu item for viewing thumbwhere_hostroles
-    $items['thumbwhere_hostrole/' . $wildcard] = array(
+    // Menu item for viewing thumbwhere_hosttypehostroletypes
+    $items['thumbwhere_hosttypehostroletype/' . $wildcard] = array(
       //'title' => 'Title',
-      'title callback' => 'thumbwhere_hostrole_page_title',
+      'title callback' => 'thumbwhere_hosttypehostroletype_page_title',
       'title arguments' => array(1),
-      'page callback' => 'thumbwhere_hostrole_page_view',
+      'page callback' => 'thumbwhere_hosttypehostroletype_page_view',
       'page arguments' => array(1),
-      'access callback' => 'thumbwhere_hostrole_access',
+      'access callback' => 'thumbwhere_hosttypehostroletype_access',
       'access arguments' => array('view', 1),
       'type' => MENU_CALLBACK,
     );
@@ -669,7 +669,7 @@ class ThumbWhereHostRoleUIController extends EntityDefaultUIController {
 
 
   /**
-   * Create the markup for the add ThumbWhereHostRole Entities page within the class
+   * Create the markup for the add ThumbWhereHostTypeHostRoleType Entities page within the class
    * so it can easily be extended/overriden.
    */
   public function addPage() {
@@ -681,70 +681,70 @@ class ThumbWhereHostRoleUIController extends EntityDefaultUIController {
       drupal_goto($item['href']);
     }
 
-    return theme('thumbwhere_hostrole_add_list', array('content' => $content));
+    return theme('thumbwhere_hosttypehostroletype_add_list', array('content' => $content));
   }
 
 }
 
 
 /**
- * Form callback wrapper: create or edit a thumbwhere_hostrole.
+ * Form callback wrapper: create or edit a thumbwhere_hosttypehostroletype.
  *
- * @param $thumbwhere_hostrole
- *   The thumbwhere_hostrole object being edited by this form.
+ * @param $thumbwhere_hosttypehostroletype
+ *   The thumbwhere_hosttypehostroletype object being edited by this form.
  *
- * @see thumbwhere_hostrole_edit_form()
+ * @see thumbwhere_hosttypehostroletype_edit_form()
  */
-function thumbwhere_hostrole_form_wrapper($thumbwhere_hostrole) {
+function thumbwhere_hosttypehostroletype_form_wrapper($thumbwhere_hosttypehostroletype) {
   // Add the breadcrumb for the form's location.
-  thumbwhere_hostrole_set_breadcrumb();
-  return drupal_get_form('thumbwhere_hostrole_edit_form', $thumbwhere_hostrole);
+  thumbwhere_hosttypehostroletype_set_breadcrumb();
+  return drupal_get_form('thumbwhere_hosttypehostroletype_edit_form', $thumbwhere_hosttypehostroletype);
 }
 
 
 /**
- * Form callback wrapper: delete a thumbwhere_hostrole.
+ * Form callback wrapper: delete a thumbwhere_hosttypehostroletype.
  *
- * @param $thumbwhere_hostrole
- *   The thumbwhere_hostrole object being edited by this form.
+ * @param $thumbwhere_hosttypehostroletype
+ *   The thumbwhere_hosttypehostroletype object being edited by this form.
  *
- * @see thumbwhere_hostrole_edit_form()
+ * @see thumbwhere_hosttypehostroletype_edit_form()
  */
-function thumbwhere_hostrole_delete_form_wrapper($thumbwhere_hostrole) {
+function thumbwhere_hosttypehostroletype_delete_form_wrapper($thumbwhere_hosttypehostroletype) {
   // Add the breadcrumb for the form's location.
-  //thumbwhere_hostrole_set_breadcrumb();
-  return drupal_get_form('thumbwhere_hostrole_delete_form', $thumbwhere_hostrole);
+  //thumbwhere_hosttypehostroletype_set_breadcrumb();
+  return drupal_get_form('thumbwhere_hosttypehostroletype_delete_form', $thumbwhere_hosttypehostroletype);
 }
 
 
 /**
- * Form callback: create or edit a thumbwhere_hostrole.
+ * Form callback: create or edit a thumbwhere_hosttypehostroletype.
  *
- * @param $thumbwhere_hostrole
- *   The thumbwhere_hostrole object to edit or for a create form an empty thumbwhere_hostrole object
- *     with only a thumbwhere_hostrole type defined.
+ * @param $thumbwhere_hosttypehostroletype
+ *   The thumbwhere_hosttypehostroletype object to edit or for a create form an empty thumbwhere_hosttypehostroletype object
+ *     with only a thumbwhere_hosttypehostroletype type defined.
  */
-function thumbwhere_hostrole_edit_form($form, &$form_state, $thumbwhere_hostrole) {
+function thumbwhere_hosttypehostroletype_edit_form($form, &$form_state, $thumbwhere_hosttypehostroletype) {
 
+  // Add the default field elements.
+  $form['fk_hosttype'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereHostTypeHostRoleType fk_hosttype'),
+    '#default_value' => isset($thumbwhere_hosttypehostroletype->fk_hosttype) ? $thumbwhere_hosttypehostroletype->fk_hosttype : '',
+    //'#maxlength' => 255,
+   /// '#required' => TRUE,
+    '#weight' => -5,
+    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_hosttype',
+  );
   // Add the default field elements.
   $form['fk_hostroletype'] = array(
     '#type' => 'textfield',
-    '#title' => t('ThumbWhereHostRole fk_hostroletype'),
-    '#default_value' => isset($thumbwhere_hostrole->fk_hostroletype) ? $thumbwhere_hostrole->fk_hostroletype : '',
+    '#title' => t('ThumbWhereHostTypeHostRoleType fk_hostroletype'),
+    '#default_value' => isset($thumbwhere_hosttypehostroletype->fk_hostroletype) ? $thumbwhere_hosttypehostroletype->fk_hostroletype : '',
     //'#maxlength' => 255,
    /// '#required' => TRUE,
     '#weight' => -5,
     '#autocomplete_path' => 'entity-autocomplete/thumbwhere_hostroletype',
-  );
-  // Add the default field elements.
-  $form['fk_host'] = array(
-    '#type' => 'textfield',
-    '#title' => t('ThumbWhereHostRole fk_host'),
-    '#default_value' => isset($thumbwhere_hostrole->fk_host) ? $thumbwhere_hostrole->fk_host : '',
-    //'#maxlength' => 255,
-   /// '#required' => TRUE,
-    '#weight' => -5,
-    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_host',
   );
 
 
@@ -754,15 +754,15 @@ function thumbwhere_hostrole_edit_form($form, &$form_state, $thumbwhere_hostrole
   /*
   $form['data']['sample_data'] = array(
     '#type' => 'checkbox',
-    '#title' => t('An interesting thumbwhere_hostrole switch'),
-    '#default_value' => isset($thumbwhere_hostrole->data['sample_data']) ? $thumbwhere_hostrole->data['sample_data'] : 1,
+    '#title' => t('An interesting thumbwhere_hosttypehostroletype switch'),
+    '#default_value' => isset($thumbwhere_hosttypehostroletype->data['sample_data']) ? $thumbwhere_hosttypehostroletype->data['sample_data'] : 1,
   );
   */
 
 
   // Add the field related form elements.
-  $form_state['thumbwhere_hostrole'] = $thumbwhere_hostrole;
-  field_attach_form('thumbwhere_hostrole', $thumbwhere_hostrole, $form, $form_state);
+  $form_state['thumbwhere_hosttypehostroletype'] = $thumbwhere_hosttypehostroletype;
+  field_attach_form('thumbwhere_hosttypehostroletype', $thumbwhere_hosttypehostroletype, $form, $form_state);
 
   $form['actions'] = array(
     '#type' => 'container',
@@ -780,32 +780,32 @@ function thumbwhere_hostrole_edit_form($form, &$form_state, $thumbwhere_hostrole
 
   $form['actions']['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Save thumbwhere_hostrole'),
-    '#submit' => $submit + array('thumbwhere_hostrole_edit_form_submit'),
+    '#value' => t('Save thumbwhere_hosttypehostroletype'),
+    '#submit' => $submit + array('thumbwhere_hosttypehostroletype_edit_form_submit'),
   );
 
   // Do we show the delete button?
-  if (!empty($thumbwhere_hostrole->pk_hostrole)) {
+  if (!empty($thumbwhere_hosttypehostroletype->pk_hosttypehostroletype)) {
     $form['actions']['delete'] = array(
       '#type' => 'submit',
-      '#value' => t('Delete thumbwhere_hostrole'),
-      '#suffix' => l(t('Cancel'), 'admin/thumbwhere/thumbwhere_hostroles'),
-      '#submit' => $submit + array('thumbwhere_hostrole_form_submit_delete'),
+      '#value' => t('Delete thumbwhere_hosttypehostroletype'),
+      '#suffix' => l(t('Cancel'), 'admin/thumbwhere/thumbwhere_hosttypehostroletypes'),
+      '#submit' => $submit + array('thumbwhere_hosttypehostroletype_form_submit_delete'),
       '#weight' => 45,
     );
   }
 
   // We append the validate handler to #validate in case a form callback_wrapper
   // is used to add validate handlers earlier.
-  $form['#validate'][] = 'thumbwhere_hostrole_edit_form_validate';
+  $form['#validate'][] = 'thumbwhere_hosttypehostroletype_edit_form_validate';
   return $form;
 }
 
 
 /**
- * Form API validate callback for the thumbwhere_hostrole form
+ * Form API validate callback for the thumbwhere_hosttypehostroletype form
  */
-function thumbwhere_hostrole_edit_form_validate(&$form, &$form_state) {
+function thumbwhere_hosttypehostroletype_edit_form_validate(&$form, &$form_state) {
    
   //if (twCanDebug()) debug($form);   
   //if (twCanDebug()) debug($form_state);
@@ -813,6 +813,21 @@ function thumbwhere_hostrole_edit_form_validate(&$form, &$form_state) {
 
   // No validation for pk
 
+
+  // Convert fk autocomplete for fk_hosttype
+  $value = $form['fk_hosttype']['#value'];
+  // If we have something, escape the auto-completion encoding.
+  if (!empty($value)) { 
+    $value = entity_autocomplete_get_id($value);
+    form_set_value($form['fk_hosttype'], $value,$form_state);
+  }
+  //if (twCanDebug()) debug($form['fk_hosttype']);
+   if (twCanDebug()) debug('fk_hosttype = ' . $value);
+  // Validate fk fk_hosttype
+  if (empty($value)) {
+    form_set_error('fk_hosttype', t('Validation error, \'fk_hosttype\' is mandatory1.'));
+    // throw new Exception('Field \'fk_hosttype\' in is mandatory');
+  }
 
   // Convert fk autocomplete for fk_hostroletype
   $value = $form['fk_hostroletype']['#value'];
@@ -829,28 +844,16 @@ function thumbwhere_hostrole_edit_form_validate(&$form, &$form_state) {
     // throw new Exception('Field \'fk_hostroletype\' in is mandatory');
   }
 
-  // Convert fk autocomplete for fk_host
-  $value = $form['fk_host']['#value'];
-  // If we have something, escape the auto-completion encoding.
-  if (!empty($value)) { 
-    $value = entity_autocomplete_get_id($value);
-    form_set_value($form['fk_host'], $value,$form_state);
-  }
-  //if (twCanDebug()) debug($form['fk_host']);
-   if (twCanDebug()) debug('fk_host = ' . $value);
-  // Validate fk fk_host
-
-
               
 
   //form_set_value( array('#parents' => array('array_key_parent', 'array_key_to_replace')) , $value, $form_state);
 
    
    
-  $thumbwhere_hostrole = $form_state['thumbwhere_hostrole'];
+  $thumbwhere_hosttypehostroletype = $form_state['thumbwhere_hosttypehostroletype'];
 
   // Notify field widgets to validate their data.
-  field_attach_form_validate('thumbwhere_hostrole', $thumbwhere_hostrole, $form, $form_state);
+  field_attach_form_validate('thumbwhere_hosttypehostroletype', $thumbwhere_hosttypehostroletype, $form, $form_state);
     
     
   
@@ -858,24 +861,24 @@ function thumbwhere_hostrole_edit_form_validate(&$form, &$form_state) {
 
 
 /**
- * Form API submit callback for the thumbwhere_hostrole form.
+ * Form API submit callback for the thumbwhere_hosttypehostroletype form.
  *
  * @todo remove hard-coded link
  */
-function thumbwhere_hostrole_edit_form_submit(&$form, &$form_state) {
+function thumbwhere_hosttypehostroletype_edit_form_submit(&$form, &$form_state) {
 
-  $thumbwhere_hostrole = entity_ui_controller('thumbwhere_hostrole')->entityFormSubmitBuildEntity($form, $form_state);
-  // Save the thumbwhere_hostrole and go back to the list of thumbwhere_hostroles
+  $thumbwhere_hosttypehostroletype = entity_ui_controller('thumbwhere_hosttypehostroletype')->entityFormSubmitBuildEntity($form, $form_state);
+  // Save the thumbwhere_hosttypehostroletype and go back to the list of thumbwhere_hosttypehostroletypes
 
   // Add in created and changed times.
-  if ($thumbwhere_hostrole->is_new = isset($thumbwhere_hostrole->is_new) ? $thumbwhere_hostrole->is_new : 0) {
-    $thumbwhere_hostrole->created = time();
+  if ($thumbwhere_hosttypehostroletype->is_new = isset($thumbwhere_hosttypehostroletype->is_new) ? $thumbwhere_hosttypehostroletype->is_new : 0) {
+    $thumbwhere_hosttypehostroletype->created = time();
   }
 
-  $thumbwhere_hostrole->changed = time();
+  $thumbwhere_hosttypehostroletype->changed = time();
 
-  $thumbwhere_hostrole->save();
-  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_hostroles';
+  $thumbwhere_hosttypehostroletype->save();
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_hosttypehostroletypes';
 }
 
 /**
@@ -883,8 +886,8 @@ function thumbwhere_hostrole_edit_form_submit(&$form, &$form_state) {
  *
  * @todo Remove hard-coded path
  */
-function thumbwhere_hostrole_form_submit_delete(&$form, &$form_state) {
-  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_hostroles/thumbwhere_hostrole/' . $form_state['thumbwhere_hostrole']->pk_hostrole . '/delete';
+function thumbwhere_hosttypehostroletype_form_submit_delete(&$form, &$form_state) {
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_hosttypehostroletypes/thumbwhere_hosttypehostroletype/' . $form_state['thumbwhere_hosttypehostroletype']->pk_hosttypehostroletype . '/delete';
 }
 
 
@@ -892,21 +895,21 @@ function thumbwhere_hostrole_form_submit_delete(&$form, &$form_state) {
 
 
 /**
- * Form callback: confirmation form for deleting a thumbwhere_hostrole.
+ * Form callback: confirmation form for deleting a thumbwhere_hosttypehostroletype.
  *
- * @param $thumbwhere_hostrole
- *   The thumbwhere_hostrole to delete
+ * @param $thumbwhere_hosttypehostroletype
+ *   The thumbwhere_hosttypehostroletype to delete
  *
  * @see confirm_form()
  */
-function thumbwhere_hostrole_delete_form($form, &$form_state, $thumbwhere_hostrole) {
-  $form_state['thumbwhere_hostrole'] = $thumbwhere_hostrole;
+function thumbwhere_hosttypehostroletype_delete_form($form, &$form_state, $thumbwhere_hosttypehostroletype) {
+  $form_state['thumbwhere_hosttypehostroletype'] = $thumbwhere_hosttypehostroletype;
 
-  $form['#submit'][] = 'thumbwhere_hostrole_delete_form_submit';
+  $form['#submit'][] = 'thumbwhere_hosttypehostroletype_delete_form_submit';
 
   $form = confirm_form($form,
-    t('Are you sure you want to delete thumbwhere_hostrole %name?', array('%name' => $thumbwhere_hostrole->pk_hostrole)),
-    'admin/thumbwhere/thumbwhere_hostroles/thumbwhere_hostrole',
+    t('Are you sure you want to delete thumbwhere_hosttypehostroletype %name?', array('%name' => $thumbwhere_hosttypehostroletype->pk_hosttypehostroletype)),
+    'admin/thumbwhere/thumbwhere_hosttypehostroletypes/thumbwhere_hosttypehostroletype',
     '<p>' . t('This action cannot be undone.') . '</p>',
     t('Delete'),
     t('Cancel'),
@@ -917,45 +920,45 @@ function thumbwhere_hostrole_delete_form($form, &$form_state, $thumbwhere_hostro
 }
 
 /**
- * Submit callback for thumbwhere_hostrole_delete_form
+ * Submit callback for thumbwhere_hosttypehostroletype_delete_form
  */
-function thumbwhere_hostrole_delete_form_submit($form, &$form_state) {
-  $thumbwhere_hostrole = $form_state['thumbwhere_hostrole'];
+function thumbwhere_hosttypehostroletype_delete_form_submit($form, &$form_state) {
+  $thumbwhere_hosttypehostroletype = $form_state['thumbwhere_hosttypehostroletype'];
 
-  thumbwhere_hostrole_delete($thumbwhere_hostrole);
+  thumbwhere_hosttypehostroletype_delete($thumbwhere_hosttypehostroletype);
 
-  drupal_set_message(t('The thumbwhere_hostrole %name has been deleted.', array('%name' => $thumbwhere_hostrole->pk_hostrole)));
-  watchdog('thumbwhere_hostrole', 'Deleted thumbwhere_hostrole %name.', array('%name' => $thumbwhere_hostrole->pk_hostrole));
+  drupal_set_message(t('The thumbwhere_hosttypehostroletype %name has been deleted.', array('%name' => $thumbwhere_hosttypehostroletype->pk_hosttypehostroletype)));
+  watchdog('thumbwhere_hosttypehostroletype', 'Deleted thumbwhere_hosttypehostroletype %name.', array('%name' => $thumbwhere_hosttypehostroletype->pk_hosttypehostroletype));
 
-  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_hostroles';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_hosttypehostroletypes';
 }
 
 
 
 /**
- * Page to add ThumbWhereHostRole Entities.
+ * Page to add ThumbWhereHostTypeHostRoleType Entities.
  *
  * @todo Pass this through a proper theme function
  */
-function thumbwhere_hostrole_add_page() {
-  $controller = entity_ui_controller('thumbwhere_hostrole');
+function thumbwhere_hosttypehostroletype_add_page() {
+  $controller = entity_ui_controller('thumbwhere_hosttypehostroletype');
   return $controller->addPage();
 }
 
 
 /**
- * Displays the list of available thumbwhere_hostrole types for thumbwhere_hostrole creation.
+ * Displays the list of available thumbwhere_hosttypehostroletype types for thumbwhere_hosttypehostroletype creation.
  *
  * @ingroup themeable
  */
-function theme_thumbwhere_hostrole_add_list($variables) {
+function theme_thumbwhere_hosttypehostroletype_add_list($variables) {
 
 
   //$content = $variables['content'];
   $output = '';
   /*
   if ($content) {
-    $output = '<dl class="thumbwhere_hostrole-type-list">';
+    $output = '<dl class="thumbwhere_hosttypehostroletype-type-list">';
     foreach ($content as $item) {
       $output .= '<dt>' . l($item['title'], $item['href']) . '</dt>';
       $output .= '<dd>' . filter_xss_admin($item['description']) . '</dd>';
@@ -963,11 +966,11 @@ function theme_thumbwhere_hostrole_add_list($variables) {
     $output .= '</dl>';
   }
   else {
-    if (user_access('administer thumbwhere_hostrole types')) {
-      $output = '<p>' . t('ThumbWhereHostRole Entities cannot be added because you have not created any thumbwhere_hostrole types yet. Go to the <a href="@create-thumbwhere_hostrole-type">thumbwhere_hostrole type creation page</a> to add a new thumbwhere_hostrole type.', array('@create-thumbwhere_hostrole-type' => url('admin/structure/thumbwhere_hostrole_types/add'))) . '</p>';
+    if (user_access('administer thumbwhere_hosttypehostroletype types')) {
+      $output = '<p>' . t('ThumbWhereHostTypeHostRoleType Entities cannot be added because you have not created any thumbwhere_hosttypehostroletype types yet. Go to the <a href="@create-thumbwhere_hosttypehostroletype-type">thumbwhere_hosttypehostroletype type creation page</a> to add a new thumbwhere_hosttypehostroletype type.', array('@create-thumbwhere_hosttypehostroletype-type' => url('admin/structure/thumbwhere_hosttypehostroletype_types/add'))) . '</p>';
     }
     else {
-      $output = '<p>' . t('No thumbwhere_hostrole types have been created yet for you to use.') . '</p>';
+      $output = '<p>' . t('No thumbwhere_hosttypehostroletype types have been created yet for you to use.') . '</p>';
     }
   }
   */
@@ -979,14 +982,14 @@ function theme_thumbwhere_hostrole_add_list($variables) {
 
 
 /**
- * Sets the breadcrumb for administrative thumbwhere_hostrole pages.
+ * Sets the breadcrumb for administrative thumbwhere_hosttypehostroletype pages.
  */
-function thumbwhere_hostrole_set_breadcrumb() {
+function thumbwhere_hosttypehostroletype_set_breadcrumb() {
   $breadcrumb = array(
     l(t('Home'), '<front>'),
     l(t('Administration'), 'admin'),
-    l(t('HostRole'), 'admin/content'),
-    l(t('HostRole'), 'admin/thumbwhere/thumbwhere_hostroles'),
+    l(t('HostTypeHostRoleType'), 'admin/content'),
+    l(t('HostTypeHostRoleType'), 'admin/thumbwhere/thumbwhere_hosttypehostroletypes'),
   );
 
   drupal_set_breadcrumb($breadcrumb);

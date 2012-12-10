@@ -17,15 +17,15 @@
     <type name="datetime" implemented_by="DateTime" />
   </types>
   <resources version="V1.1" service="Admin">
-    <resource name="host_role" type="HostRole" runat="server" enabled="true" object="HostRole" create="true" subscribe="true">
+    <resource name="host_role_subrole" type="HostSubRole" runat="server" enabled="true" object="HostSubRole" create="true" subscribe="true">
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>
-      <field name="hostroletype" type="HostRoleType">
-        <doc>'hostroletype' field, which is an embedded 'HostRoleType' resource.</doc>
+      <field name="subroletype" type="HostSubRoleType">
+        <doc>'subroletype' field, which is an embedded 'HostSubRoleType' resource.</doc>
       </field>
-      <field name="host" type="Host" optional="true">
-        <doc>'host' field, which is an embedded 'Host' resource.</doc>
+      <field name="hostrole" type="HostRole" optional="true">
+        <doc>'hostrole' field, which is an embedded 'HostRole' resource.</doc>
       </field>
     </resource>
   </resources>

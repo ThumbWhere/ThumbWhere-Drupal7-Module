@@ -17,15 +17,21 @@
     <type name="datetime" implemented_by="DateTime" />
   </types>
   <resources version="V1.1" service="Admin">
-    <resource name="host_role" type="HostRole" runat="server" enabled="true" object="HostRole" create="true" subscribe="true">
+    <resource name="host_role_subrole_order" type="HostSubRoleOrder" runat="server" enabled="true" object="HostSubRoleOrder" create="true" subscribe="true">
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>
-      <field name="hostroletype" type="HostRoleType">
-        <doc>'hostroletype' field, which is an embedded 'HostRoleType' resource.</doc>
-      </field>
       <field name="host" type="Host" optional="true">
         <doc>'host' field, which is an embedded 'Host' resource.</doc>
+      </field>
+      <field name="subroletype" type="HostSubRoleType" optional="true">
+        <doc>'subroletype' field, which is an embedded 'HostSubRoleType' resource.</doc>
+      </field>
+      <field name="processing" type="boolean">
+        <doc>'processing' field, which is a 'boolean' type.</doc>
+      </field>
+      <field name="completed" type="boolean">
+        <doc>'completed' field, which is a 'boolean' type.</doc>
       </field>
     </resource>
   </resources>

@@ -13,12 +13,12 @@
  *
  * This hook is called when the module is installed.
  *
- * @ingroup thumbwhere_hostrole
+ * @ingroup thumbwhere_hostsubroleorder
  */
-function thumbwhere_hostrole_uninstall() {
+function thumbwhere_hostsubroleorder_uninstall() {
 
   // Delete the permissions
-  foreach (_thumbwhere_hostrole_get_permissions() as $role_name => $permissions) {
+  foreach (_thumbwhere_hostsubroleorder_get_permissions() as $role_name => $permissions) {
     // Find the role ID for this role
     $role = user_role_load_by_name($role_name);
     if ($role != false) {
@@ -35,8 +35,8 @@ function thumbwhere_hostrole_uninstall() {
 
   // Uninstall the Menu TODO: Do we even install a menu???
   if (module_exists('menu')) {
-    if ($thumbwhere_hostrole_menu = menu_load('thumbwhere_hostrole')) {
-      menu_delete($thumbwhere_hostrole_menu);
+    if ($thumbwhere_hostsubroleorder_menu = menu_load('thumbwhere_hostsubroleorder')) {
+      menu_delete($thumbwhere_hostsubroleorder_menu);
     }
   }
 
@@ -53,12 +53,12 @@ function thumbwhere_hostrole_uninstall() {
  *
  * This hook is called when the module is installed.
  *
- * @ingroup thumbwhere_hostrole
+ * @ingroup thumbwhere_hostsubroleorder
  */
-function thumbwhere_hostrole_install() {
+function thumbwhere_hostsubroleorder_install() {
 
  // Create the permissions
-  foreach (_thumbwhere_hostrole_get_permissions() as $role_name => $permissions) {
+  foreach (_thumbwhere_hostsubroleorder_get_permissions() as $role_name => $permissions) {
     // Find the role ID for this role
     $role = user_role_load_by_name($role_name);
     if ($role != false) {
@@ -76,7 +76,7 @@ function thumbwhere_hostrole_install() {
   menu_rebuild();
 
   // Entity provided by ThumbWhere gets a weight of 12. Storage = 11 and ThumbWere itself, 10
-  //db_query("UPDATE {system} SET weight = 12 WHERE name = 'thumbwhere_hostrole'");
+  //db_query("UPDATE {system} SET weight = 12 WHERE name = 'thumbwhere_hostsubroleorder'");
 
 }
 
@@ -85,9 +85,9 @@ function thumbwhere_hostrole_install() {
  *
  * Called when the module is enabled
  *
- * @ingroup thumbwhere_hostrole
+ * @ingroup thumbwhere_hostsubroleorder
  */
-function thumbwhere_hostrole_enable() {
+function thumbwhere_hostsubroleorder_enable() {
 
   // Clear the everything cache
   drupal_flush_all_caches();
@@ -102,9 +102,9 @@ function thumbwhere_hostrole_enable() {
  *
  * Called when the module is disabled
  *
- * @ingroup thumbwhere_hostrole
+ * @ingroup thumbwhere_hostsubroleorder
  */
-function thumbwhere_hostrole_disable() {
+function thumbwhere_hostsubroleorder_disable() {
 
   // Clear the everything cache
   drupal_flush_all_caches();
@@ -119,35 +119,28 @@ function thumbwhere_hostrole_disable() {
  *
  * This is where we define the schema for our entity.
  *
- * This results in a table being created called 'thumbwhere_hostrole'
+ * This results in a table being created called 'thumbwhere_hostsubroleorder'
  *
- * thumbwhere_hostrole_id
+ * thumbwhere_hostsubroleorder_id
  * The primary key used by
  *
- * pk_hostrole
+ * pk_hostsubroleorder
  * Used to map to the actual object in ThumbWhere.
  */
-function thumbwhere_hostrole_schema() {
+function thumbwhere_hostsubroleorder_schema() {
   $t = get_t();
 
   $schema = array();
 
-  $schema['thumbwhere_hostrole'] = array(
-  'description' => 'The base table for thumbwhere_hostrole entities.' . 'An host role that has been assigned to a host.',
+  $schema['thumbwhere_hostsubroleorder'] = array(
+  'description' => 'The base table for thumbwhere_hostsubroleorder entities.' . 'An order to install a subrole role on the role on a host',
     'fields' => array(
-          'pk_hostrole' => array(
-              'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereHostRoles\' entity.',
+          'pk_subroleorder' => array(
+              'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereHostSubRoleOrders\' entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => TRUE,
               'default' => -1,
-          ),
-          'fk_hostroletype' => array(
-          'description' => 'ThumbWhere Id: References a \'HostRoleType\' Entity.',
-              'type' => 'int',
-              'size' => 'big',
-              'not null' => FALSE,
-              //'default' => -1,
           ),
           'fk_host' => array(
           'description' => 'ThumbWhere Id: Optional reference to a \'Host\' Entity.',
@@ -155,20 +148,39 @@ function thumbwhere_hostrole_schema() {
               'size' => 'big',
               'not null' => FALSE,
               //'default' => -1,
+          ),
+          'fk_subroletype' => array(
+          'description' => 'ThumbWhere Id: Optional reference to a \'HostSubRoleType\' Entity.',
+              'type' => 'int',
+              'size' => 'big',
+              'not null' => FALSE,
+              //'default' => -1,
+          ),
+          'processing' => array(
+              'description' => 'The \'processing\' checkbox field of the \'HostSubRoleOrder\' entity.',
+              'type' => 'int',
+              'size' => 'tiny',
+              'not null' => FALSE,                  
+          ),
+          'completed' => array(
+              'description' => 'The \'completed\' checkbox field of the \'HostSubRoleOrder\' entity.',
+              'type' => 'int',
+              'size' => 'tiny',
+              'not null' => FALSE,                  
           ),      
       ),
       'primary key' => array(
-          'pk_hostrole'      
+          'pk_subroleorder'      
       ),      
       'indexes' => array(
-          'pk_hostrole' => array(
-              'pk_hostrole'
-          ),
-          'fk_hostroletype' => array(
-              'fk_hostroletype'
+          'pk_subroleorder' => array(
+              'pk_subroleorder'
           ),
           'fk_host' => array(
               'fk_host'
+          ),
+          'fk_subroletype' => array(
+              'fk_subroletype'
           ),
       
       ),
@@ -186,16 +198,16 @@ function thumbwhere_hostrole_schema() {
  *
  * @ingroup track
  */
-function _thumbwhere_hostrole_get_permissions() {
+function _thumbwhere_hostsubroleorder_get_permissions() {
   return array(
       'anonymous user' => array(
-          'send thumbwhere hostrole notifications',
+          'send thumbwhere hostsubroleorder notifications',
       ),
       'authenticated user' => array(
-          'send thumbwhere hostrole notifications',
+          'send thumbwhere hostsubroleorder notifications',
       ),      
       'administrator' => array(
-          'send thumbwhere hostrole notifications',
+          'send thumbwhere hostsubroleorder notifications',
       ),
   );
 }
