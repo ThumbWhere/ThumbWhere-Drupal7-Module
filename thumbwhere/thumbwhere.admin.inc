@@ -234,7 +234,7 @@ function thumbwhere_admin_settings() {
   $form['thumbwhere_auth_link_on_login'] = array(
       '#type' => 'checkbox',
       '#title' => t('Link to User On Login.'),
-      '#default_value' => variable_get('thumbwhere_auth_link_on_login', 1),
+      '#default_value' => variable_get('thumbwhere_auth_link_on_login', 0),
       '#description' => t('Link User to ThumbWhere User when user first logs in.')
   );
 

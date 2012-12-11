@@ -77,8 +77,6 @@ function thumbwhere_authentication_entity_presave($entity, $type) {
   if ($type != 'user') return;
 
 
-
-
   // Force the language to be 'und' *HACK*
   $entity->language = 'und';
 
@@ -146,6 +144,11 @@ function thumbwhere_authentication_entity_load($entities, $type) {
     $entity->language = 'und';
 
 
+    debug('thumbwhere_authentication_entity_load');
+
+    _thumbwhere_link_consumer($uid);
+
+    /*
     ///////////////////////////////////////////////////////////////////////////////////////////////
     //
     //  Here we create a corresponding entity in the ThumbWhere domain if we need to.
@@ -183,6 +186,7 @@ function thumbwhere_authentication_entity_load($entities, $type) {
       //debug('CONSUMER ALLOCATED');
 
     }
+    */
 
     //
     // After that we are all good to return our populated node, and Drupal should be none the wiser...
@@ -337,6 +341,87 @@ function _thumbwhere_authentication_validate_and_changepassword(&$form_state) {
 //  ThumbWhere/Drupal Integration
 //
 
+
+/**
+ * Link the user if we should..
+ */
+function _thumbwhere_link_consumer($uid)
+{
+
+  debug('_thumbwhere_link_consumer ' . $uid);
+
+  // This global represents the current thumbwhere member id
+  global $_tw_pk_consumer;
+
+  ////////////////////////////////////////////////
+  //
+  // Make sure the user has a comsumer_id
+  //
+  //
+
+
+  if (variable_get('thumbwhere_auth_link_on_login',0) == 1) {
+
+    //debug('thumbwhere_authentication_entity_load user ' .  $uid);
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    //  Here we create a corresponding entity in the ThumbWhere domain if we need to.
+    //
+
+    $entity = user_load($uid);
+
+    $_tw_pk_consumer = _get_pk_consumer($entity);
+
+    // $_tw_pk_consumer has not been set - so this is Register...
+    if (empty($_tw_pk_consumer)) {
+
+      //if (twCanDebug())
+        debug('USER HAS NO CONSUMER');
+
+
+      // If no password is provided (when we are testing) then we supply one just for completeness.
+      if (!isset($entity->pass)) {
+        $entity->pass = 'pass-' . uniqid();
+      }
+
+      // $_tw_pk_consumer has not been set - so this is Register so this will create a ThumbWhere and Drupal user
+      _thumbwhere_register_existing($entity->name, $entity->pass);
+
+      //if (twCanDebug())
+      debug('_tw_pk_consumer = ' . $_tw_pk_consumer);
+
+
+      // If we managed to get back a tw identity, then all is good.
+      if (!empty($_tw_pk_consumer)) {
+        _set_pk_consumer($entity, $_tw_pk_consumer);
+      }
+      else {
+        // We were not expecting that...
+        throw new Exception('Failed to Create User : Error TA-001');
+      }
+
+      //if (twCanDebug())
+      debug($entity);
+
+      // Save it back..
+      user_save($entity);
+
+      //if (twCanDebug())
+        debug('CONSUMER ALLOCATED');
+
+    }
+  }
+
+
+  //
+  //
+  //
+  ////////////////////////////////////////////////
+}
+
+
 /**
  * Return true if the user is authenticates with ThumbWhere
  */
@@ -376,10 +461,16 @@ function _thumbwhere_login($username, $password) {
     //
 
 
-    if (variable_get('thumbwhere_auth_link_on_login',1) == 1) {
+    if (variable_get('thumbwhere_auth_link_on_login',0) == 1) {
 
       //debug('thumbwhere_authentication_entity_load user ' .  $uid);
 
+
+      debug('_thumbwhere_login');
+
+      _thumbwhere_link_consumer($uid);
+
+      /*
 
       ///////////////////////////////////////////////////////////////////////////////////////////////
       //
@@ -419,6 +510,7 @@ function _thumbwhere_login($username, $password) {
         if (twCanDebug()) debug('CONSUMER ALLOCATED');
 
       }
+      */
     }
 
 
@@ -659,6 +751,11 @@ function _thumbwhere_change_password($username, $new_password) {
   }
   else {
 
+    //debug('_thumbwhere_change_password');
+
+    // Link the consumer, if we should
+    //_thumbwhere_link_consumer($uid);
+
     // Do we want to login via drupal?
     if (variable_get('thumbwhere_auth_drupal') == 1) {
 
@@ -894,7 +991,7 @@ function _set_pk_consumer(&$object, $id) {
       $object['field_pk_consumer'] = array(
           $object->language => array(
               0 => array(
-                  'thumbwhere_id' => $id,
+                  'thumbwhere_id' => (int)$id,
               ),
           ),
       );
@@ -908,7 +1005,7 @@ function _set_pk_consumer(&$object, $id) {
       $object->field_pk_consumer = array(
           $object->language => array(
               0 => array(
-                  'thumbwhere_id' => $id,
+                  'thumbwhere_id' => (int)$id,
               ),
           )
       );
