@@ -184,6 +184,13 @@ function thumbwhere_contentingest_schema() {
               'not null' => FALSE,
               //'default' => -1,
           ),
+          'fk_target' => array(
+          'description' => 'ThumbWhere Id: Optional reference to a \'Target\' Entity.',
+              'type' => 'int',
+              'size' => 'big',
+              'not null' => FALSE,
+              //'default' => -1,
+          ),
           'url' => array(
               'description' => 'The \'url\' textfield field of the \'ContentIngest\' entity.',
               'type' => 'varchar',
@@ -272,6 +279,9 @@ function thumbwhere_contentingest_schema() {
           ),
           'fk_consumer' => array(
               'fk_consumer'
+          ),
+          'fk_target' => array(
+              'fk_target'
           ),
       
       ),

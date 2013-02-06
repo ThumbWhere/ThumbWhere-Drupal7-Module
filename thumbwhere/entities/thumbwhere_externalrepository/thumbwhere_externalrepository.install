@@ -133,7 +133,7 @@ function thumbwhere_externalrepository_schema() {
   $schema = array();
 
   $schema['thumbwhere_externalrepository'] = array(
-  'description' => 'The base table for thumbwhere_externalrepository entities.' . 'An machine that contains it\&apos;s own mirror of ThumbWhere \&apos;Resources\&apos; and can \&apos;originate\&apos; entities.',
+  'description' => 'The base table for thumbwhere_externalrepository entities.' . 'An machine that contains it\&apos;s own mirror of ThumbWhere \&apos;Resources\&apos; and can \&apos;originate\&apos; entities. host is the host information. apikey is the apikey we are going to use to authenticate with each other. url is the end point for the repository',
     'fields' => array(
           'pk_externalrepository' => array(
               'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereExternalRepositorys\' entity.',
@@ -142,12 +142,33 @@ function thumbwhere_externalrepository_schema() {
               'not null' => TRUE,
               'default' => -1,
           ),
+          'fk_externalrepositorytype' => array(
+          'description' => 'ThumbWhere Id: References a \'ExternalRepositoryType\' Entity.',
+              'type' => 'int',
+              'size' => 'big',
+              'not null' => FALSE,
+              //'default' => -1,
+          ),
           'fk_host' => array(
           'description' => 'ThumbWhere Id: References a \'Host\' Entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => FALSE,
               //'default' => -1,
+          ),
+          'fk_apikey' => array(
+          'description' => 'ThumbWhere Id: References a \'APIKey\' Entity.',
+              'type' => 'int',
+              'size' => 'big',
+              'not null' => FALSE,
+              //'default' => -1,
+          ),
+          'url' => array(
+              'description' => 'The \'url\' textfield field of the \'ExternalRepository\' entity.',
+              'type' => 'varchar',
+              'size' => 'normal',
+              'length' => 128,
+              'not null' => FALSE,                  
           ),      
       ),
       'primary key' => array(
@@ -157,8 +178,14 @@ function thumbwhere_externalrepository_schema() {
           'pk_externalrepository' => array(
               'pk_externalrepository'
           ),
+          'fk_externalrepositorytype' => array(
+              'fk_externalrepositorytype'
+          ),
           'fk_host' => array(
               'fk_host'
+          ),
+          'fk_apikey' => array(
+              'fk_apikey'
           ),
       
       ),

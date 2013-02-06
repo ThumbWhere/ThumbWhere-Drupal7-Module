@@ -85,10 +85,8 @@ function thumbwhere_hostrole_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
     'pk_hostrole' => 'pk_hostrole',
+    'fk_hostroletype' => 'fk_hostroletype',
     'fk_host' => 'fk_host',
-    'fk_hosttype' => 'fk_hosttype',
-    'fk_hostorder' => 'fk_hostorder',
-    'enabled' => 'enabled',
     'link_thumbwhere_hostrole' => 'link_thumbwhere_hostrole',
     'operations' => 'operations',
   );
@@ -101,28 +99,14 @@ function thumbwhere_hostrole_views_default_views() {
           'separator' => '',
           'empty_column' => 0,
       ),
+      'fk_hostroletype' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
       'fk_host' => array(
-          'sortable' => 0,
-          'default_sort_order' => 'asc',
-          'align' => '',
-          'separator' => '',
-          'empty_column' => 0,
-      ),
-      'fk_hosttype' => array(
-          'sortable' => 0,
-          'default_sort_order' => 'asc',
-          'align' => '',
-          'separator' => '',
-          'empty_column' => 0,
-      ),
-      'fk_hostorder' => array(
-          'sortable' => 0,
-          'default_sort_order' => 'asc',
-          'align' => '',
-          'separator' => '',
-          'empty_column' => 0,
-      ),
-      'enabled' => array(
           'sortable' => 0,
           'default_sort_order' => 'asc',
           'align' => '',
@@ -263,6 +247,30 @@ function thumbwhere_hostrole_views_default_views() {
   $handler->display->display_options['fields']['pk_hostrole']['hide_empty'] = 0;
   $handler->display->display_options['fields']['pk_hostrole']['empty_zero'] = 0;
   
+  /* Field: ThumbWhereHostRole: fk_hostroletype */
+  $handler->display->display_options['fields']['fk_hostroletype']['id'] = 'fk_hostroletype';
+  $handler->display->display_options['fields']['fk_hostroletype']['table'] = 'thumbwhere_hostrole';
+  $handler->display->display_options['fields']['fk_hostroletype']['field'] = 'fk_hostroletype';
+  $handler->display->display_options['fields']['fk_hostroletype']['label'] = 'fk_hostroletype';
+  $handler->display->display_options['fields']['fk_hostroletype']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['fk_hostroletype']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['fk_hostroletype']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['fk_hostroletype']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['fk_hostroletype']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['fk_hostroletype']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['fk_hostroletype']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['fk_hostroletype']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['fk_hostroletype']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['fk_hostroletype']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['fk_hostroletype']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['fk_hostroletype']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['fk_hostroletype']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['fk_hostroletype']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['fk_hostroletype']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['fk_hostroletype']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['fk_hostroletype']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['fk_hostroletype']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['fk_hostroletype']['format_plural'] = 0;
   /* Field: ThumbWhereHostRole: fk_host */
   $handler->display->display_options['fields']['fk_host']['id'] = 'fk_host';
   $handler->display->display_options['fields']['fk_host']['table'] = 'thumbwhere_hostrole';
@@ -287,75 +295,6 @@ function thumbwhere_hostrole_views_default_views() {
   $handler->display->display_options['fields']['fk_host']['empty_zero'] = 0;
   $handler->display->display_options['fields']['fk_host']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['fk_host']['format_plural'] = 0;
-  /* Field: ThumbWhereHostRole: fk_hosttype */
-  $handler->display->display_options['fields']['fk_hosttype']['id'] = 'fk_hosttype';
-  $handler->display->display_options['fields']['fk_hosttype']['table'] = 'thumbwhere_hostrole';
-  $handler->display->display_options['fields']['fk_hosttype']['field'] = 'fk_hosttype';
-  $handler->display->display_options['fields']['fk_hosttype']['label'] = 'fk_hosttype';
-  $handler->display->display_options['fields']['fk_hosttype']['alter']['alter_text'] = 0;
-  $handler->display->display_options['fields']['fk_hosttype']['alter']['make_link'] = 0;
-  $handler->display->display_options['fields']['fk_hosttype']['alter']['absolute'] = 0;
-  $handler->display->display_options['fields']['fk_hosttype']['alter']['external'] = 0;
-  $handler->display->display_options['fields']['fk_hosttype']['alter']['replace_spaces'] = 0;
-  $handler->display->display_options['fields']['fk_hosttype']['alter']['trim_whitespace'] = 0;
-  $handler->display->display_options['fields']['fk_hosttype']['alter']['nl2br'] = 0;
-  $handler->display->display_options['fields']['fk_hosttype']['alter']['word_boundary'] = 1;
-  $handler->display->display_options['fields']['fk_hosttype']['alter']['ellipsis'] = 1;
-  $handler->display->display_options['fields']['fk_hosttype']['alter']['more_link'] = 0;
-  $handler->display->display_options['fields']['fk_hosttype']['alter']['strip_tags'] = 0;
-  $handler->display->display_options['fields']['fk_hosttype']['alter']['trim'] = 0;
-  $handler->display->display_options['fields']['fk_hosttype']['alter']['html'] = 0;
-  $handler->display->display_options['fields']['fk_hosttype']['element_label_colon'] = 1;
-  $handler->display->display_options['fields']['fk_hosttype']['element_default_classes'] = 1;
-  $handler->display->display_options['fields']['fk_hosttype']['hide_empty'] = 0;
-  $handler->display->display_options['fields']['fk_hosttype']['empty_zero'] = 0;
-  $handler->display->display_options['fields']['fk_hosttype']['hide_alter_empty'] = 1;
-  $handler->display->display_options['fields']['fk_hosttype']['format_plural'] = 0;
-  /* Field: ThumbWhereHostRole: fk_hostorder */
-  $handler->display->display_options['fields']['fk_hostorder']['id'] = 'fk_hostorder';
-  $handler->display->display_options['fields']['fk_hostorder']['table'] = 'thumbwhere_hostrole';
-  $handler->display->display_options['fields']['fk_hostorder']['field'] = 'fk_hostorder';
-  $handler->display->display_options['fields']['fk_hostorder']['label'] = 'fk_hostorder';
-  $handler->display->display_options['fields']['fk_hostorder']['alter']['alter_text'] = 0;
-  $handler->display->display_options['fields']['fk_hostorder']['alter']['make_link'] = 0;
-  $handler->display->display_options['fields']['fk_hostorder']['alter']['absolute'] = 0;
-  $handler->display->display_options['fields']['fk_hostorder']['alter']['external'] = 0;
-  $handler->display->display_options['fields']['fk_hostorder']['alter']['replace_spaces'] = 0;
-  $handler->display->display_options['fields']['fk_hostorder']['alter']['trim_whitespace'] = 0;
-  $handler->display->display_options['fields']['fk_hostorder']['alter']['nl2br'] = 0;
-  $handler->display->display_options['fields']['fk_hostorder']['alter']['word_boundary'] = 1;
-  $handler->display->display_options['fields']['fk_hostorder']['alter']['ellipsis'] = 1;
-  $handler->display->display_options['fields']['fk_hostorder']['alter']['more_link'] = 0;
-  $handler->display->display_options['fields']['fk_hostorder']['alter']['strip_tags'] = 0;
-  $handler->display->display_options['fields']['fk_hostorder']['alter']['trim'] = 0;
-  $handler->display->display_options['fields']['fk_hostorder']['alter']['html'] = 0;
-  $handler->display->display_options['fields']['fk_hostorder']['element_label_colon'] = 1;
-  $handler->display->display_options['fields']['fk_hostorder']['element_default_classes'] = 1;
-  $handler->display->display_options['fields']['fk_hostorder']['hide_empty'] = 0;
-  $handler->display->display_options['fields']['fk_hostorder']['empty_zero'] = 0;
-  $handler->display->display_options['fields']['fk_hostorder']['hide_alter_empty'] = 1;
-  $handler->display->display_options['fields']['fk_hostorder']['format_plural'] = 0;
-  /* Field: ThumbWhereHostRole: enabled */
-  $handler->display->display_options['fields']['enabled']['id'] = 'enabled';
-  $handler->display->display_options['fields']['enabled']['table'] = 'thumbwhere_hostrole';
-  $handler->display->display_options['fields']['enabled']['field'] = 'enabled';
-  $handler->display->display_options['fields']['enabled']['label'] = 'enabled';
-  $handler->display->display_options['fields']['enabled']['alter']['alter_text'] = 0;
-  $handler->display->display_options['fields']['enabled']['alter']['make_link'] = 0;
-  $handler->display->display_options['fields']['enabled']['alter']['absolute'] = 0;
-  $handler->display->display_options['fields']['enabled']['alter']['external'] = 0;
-  $handler->display->display_options['fields']['enabled']['alter']['replace_spaces'] = 0;
-  $handler->display->display_options['fields']['enabled']['alter']['nl2br'] = 0;
-  $handler->display->display_options['fields']['enabled']['alter']['word_boundary'] = 1;
-  $handler->display->display_options['fields']['enabled']['alter']['ellipsis'] = 1;
-  $handler->display->display_options['fields']['enabled']['alter']['strip_tags'] = 0;
-  $handler->display->display_options['fields']['enabled']['alter']['trim'] = 0;
-  $handler->display->display_options['fields']['enabled']['alter']['html'] = 0;
-  $handler->display->display_options['fields']['enabled']['element_label_colon'] = 1;
-  $handler->display->display_options['fields']['enabled']['element_default_classes'] = 1;
-  $handler->display->display_options['fields']['enabled']['hide_empty'] = 0;
-  $handler->display->display_options['fields']['enabled']['empty_zero'] = 0;
-
     
     
     

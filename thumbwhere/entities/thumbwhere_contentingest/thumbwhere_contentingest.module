@@ -384,6 +384,11 @@ function thumbwhere_contentingest_entity_presave($entity, $entity_type) {
     if (isset($entity->fk_consumer)) {
       $fields['consumer'] = $entity->fk_consumer;
     }
+
+    // Nullable so we only pass it through to create_content_ingest if we have it..
+    if (isset($entity->fk_target)) {
+      $fields['target'] = $entity->fk_target;
+    }
     // Compulsory so..
     if (empty($entity->url)) {
       throw new Exception('url is mandatory.');

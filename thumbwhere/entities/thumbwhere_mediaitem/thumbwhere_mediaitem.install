@@ -184,6 +184,13 @@ function thumbwhere_mediaitem_schema() {
               'not null' => FALSE,
               //'default' => -1,
           ),
+          'fk_target' => array(
+          'description' => 'ThumbWhere Id: Optional reference to a \'Target\' Entity.',
+              'type' => 'int',
+              'size' => 'big',
+              'not null' => FALSE,
+              //'default' => -1,
+          ),
           'title' => array(
               'description' => 'The \'title\' textarea field of the \'MediaItem\' entity.',
               'type' => 'text',
@@ -305,6 +312,9 @@ function thumbwhere_mediaitem_schema() {
           ),
           'fk_content' => array(
               'fk_content'
+          ),
+          'fk_target' => array(
+              'fk_target'
           ),
       
       ),

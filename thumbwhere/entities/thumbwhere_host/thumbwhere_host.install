@@ -133,7 +133,7 @@ function thumbwhere_host_schema() {
   $schema = array();
 
   $schema['thumbwhere_host'] = array(
-  'description' => 'The base table for thumbwhere_host entities.' . 'A host machine that sits on the edge of the ThumbWhere network.',
+  'description' => 'The base table for thumbwhere_host entities.' . 'A host machine that sits on the edge of the ThumbWhere network. address we use to manage the host.',
     'fields' => array(
           'pk_host' => array(
               'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereHosts\' entity.',

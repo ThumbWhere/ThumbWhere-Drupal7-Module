@@ -21,11 +21,8 @@
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>
-      <field name="externalrepository" type="ExternalRepository">
-        <doc>'externalrepository' field, which is an embedded 'ExternalRepository' resource.</doc>
-      </field>
-      <field name="resource" type="string">
-        <doc>'resource' field, which is a 'string' type.</doc>
+      <field name="externalsubscription" type="ExternalSubscription">
+        <doc>'externalsubscription' field, which is an embedded 'ExternalSubscription' resource.</doc>
       </field>
       <field name="last_sync" type="datetime">
         <doc>'last_sync' field, which is a 'datetime' type.</doc>

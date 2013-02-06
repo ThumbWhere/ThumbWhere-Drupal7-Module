@@ -91,6 +91,7 @@ function thumbwhere_contentingest_views_default_views() {
     'fk_identity' => 'fk_identity',
     'fk_producer' => 'fk_producer',
     'fk_consumer' => 'fk_consumer',
+    'fk_target' => 'fk_target',
     'url' => 'url',
     'size' => 'size',
     'uploaded' => 'uploaded',
@@ -148,6 +149,13 @@ function thumbwhere_contentingest_views_default_views() {
           'empty_column' => 0,
       ),
       'fk_consumer' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'fk_target' => array(
           'sortable' => 0,
           'default_sort_order' => 'asc',
           'align' => '',
@@ -495,6 +503,30 @@ function thumbwhere_contentingest_views_default_views() {
   $handler->display->display_options['fields']['fk_consumer']['empty_zero'] = 0;
   $handler->display->display_options['fields']['fk_consumer']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['fk_consumer']['format_plural'] = 0;
+  /* Field: ThumbWhereContentIngest: fk_target */
+  $handler->display->display_options['fields']['fk_target']['id'] = 'fk_target';
+  $handler->display->display_options['fields']['fk_target']['table'] = 'thumbwhere_contentingest';
+  $handler->display->display_options['fields']['fk_target']['field'] = 'fk_target';
+  $handler->display->display_options['fields']['fk_target']['label'] = 'fk_target';
+  $handler->display->display_options['fields']['fk_target']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['fk_target']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['fk_target']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['fk_target']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['fk_target']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['fk_target']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['fk_target']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['fk_target']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['fk_target']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['fk_target']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['fk_target']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['fk_target']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['fk_target']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['fk_target']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['fk_target']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['fk_target']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['fk_target']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['fk_target']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['fk_target']['format_plural'] = 0;
   /* Field: ThumbWhereContentIngest: url */
   $handler->display->display_options['fields']['url']['id'] = 'url';
   $handler->display->display_options['fields']['url']['table'] = 'thumbwhere_contentingest';

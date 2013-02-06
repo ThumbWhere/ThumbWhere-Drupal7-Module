@@ -85,7 +85,10 @@ function thumbwhere_externalrepository_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
     'pk_externalrepository' => 'pk_externalrepository',
+    'fk_externalrepositorytype' => 'fk_externalrepositorytype',
     'fk_host' => 'fk_host',
+    'fk_apikey' => 'fk_apikey',
+    'url' => 'url',
     'link_thumbwhere_externalrepository' => 'link_thumbwhere_externalrepository',
     'operations' => 'operations',
   );
@@ -98,7 +101,28 @@ function thumbwhere_externalrepository_views_default_views() {
           'separator' => '',
           'empty_column' => 0,
       ),
+      'fk_externalrepositorytype' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
       'fk_host' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'fk_apikey' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'url' => array(
           'sortable' => 0,
           'default_sort_order' => 'asc',
           'align' => '',
@@ -239,6 +263,30 @@ function thumbwhere_externalrepository_views_default_views() {
   $handler->display->display_options['fields']['pk_externalrepository']['hide_empty'] = 0;
   $handler->display->display_options['fields']['pk_externalrepository']['empty_zero'] = 0;
   
+  /* Field: ThumbWhereExternalRepository: fk_externalrepositorytype */
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['id'] = 'fk_externalrepositorytype';
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['table'] = 'thumbwhere_externalrepository';
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['field'] = 'fk_externalrepositorytype';
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['label'] = 'fk_externalrepositorytype';
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['fk_externalrepositorytype']['format_plural'] = 0;
   /* Field: ThumbWhereExternalRepository: fk_host */
   $handler->display->display_options['fields']['fk_host']['id'] = 'fk_host';
   $handler->display->display_options['fields']['fk_host']['table'] = 'thumbwhere_externalrepository';
@@ -263,6 +311,51 @@ function thumbwhere_externalrepository_views_default_views() {
   $handler->display->display_options['fields']['fk_host']['empty_zero'] = 0;
   $handler->display->display_options['fields']['fk_host']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['fk_host']['format_plural'] = 0;
+  /* Field: ThumbWhereExternalRepository: fk_apikey */
+  $handler->display->display_options['fields']['fk_apikey']['id'] = 'fk_apikey';
+  $handler->display->display_options['fields']['fk_apikey']['table'] = 'thumbwhere_externalrepository';
+  $handler->display->display_options['fields']['fk_apikey']['field'] = 'fk_apikey';
+  $handler->display->display_options['fields']['fk_apikey']['label'] = 'fk_apikey';
+  $handler->display->display_options['fields']['fk_apikey']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['fk_apikey']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['fk_apikey']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['fk_apikey']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['fk_apikey']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['fk_apikey']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['fk_apikey']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['fk_apikey']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['fk_apikey']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['fk_apikey']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['fk_apikey']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['fk_apikey']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['fk_apikey']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['fk_apikey']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['fk_apikey']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['fk_apikey']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['fk_apikey']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['fk_apikey']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['fk_apikey']['format_plural'] = 0;
+  /* Field: ThumbWhereExternalRepository: url */
+  $handler->display->display_options['fields']['url']['id'] = 'url';
+  $handler->display->display_options['fields']['url']['table'] = 'thumbwhere_externalrepository';
+  $handler->display->display_options['fields']['url']['field'] = 'url';
+  $handler->display->display_options['fields']['url']['label'] = 'url';
+  $handler->display->display_options['fields']['url']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['url']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['url']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['url']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['url']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['url']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['url']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['url']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['url']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['url']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['url']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['url']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['url']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['url']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['url']['empty_zero'] = 0;
+
     
     
     

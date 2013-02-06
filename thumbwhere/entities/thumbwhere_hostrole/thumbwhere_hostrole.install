@@ -133,7 +133,7 @@ function thumbwhere_hostrole_schema() {
   $schema = array();
 
   $schema['thumbwhere_hostrole'] = array(
-  'description' => 'The base table for thumbwhere_hostrole entities.' . 'A role that has been assigned to a host. eg. I made an order for a host that had IRC and API.',
+  'description' => 'The base table for thumbwhere_hostrole entities.' . 'An host role that has been assigned to a host.',
     'fields' => array(
           'pk_hostrole' => array(
               'description' => 'ThumbWhere Id: ThumbWhere\'s Primary key this entity. Represents the id of this entity in the ThumbWhere \'ThumbWhereHostRoles\' entity.',
@@ -142,32 +142,19 @@ function thumbwhere_hostrole_schema() {
               'not null' => TRUE,
               'default' => -1,
           ),
+          'fk_hostroletype' => array(
+          'description' => 'ThumbWhere Id: References a \'HostRoleType\' Entity.',
+              'type' => 'int',
+              'size' => 'big',
+              'not null' => FALSE,
+              //'default' => -1,
+          ),
           'fk_host' => array(
           'description' => 'ThumbWhere Id: Optional reference to a \'Host\' Entity.',
               'type' => 'int',
               'size' => 'big',
               'not null' => FALSE,
               //'default' => -1,
-          ),
-          'fk_hosttype' => array(
-          'description' => 'ThumbWhere Id: References a \'HostType\' Entity.',
-              'type' => 'int',
-              'size' => 'big',
-              'not null' => FALSE,
-              //'default' => -1,
-          ),
-          'fk_hostorder' => array(
-          'description' => 'ThumbWhere Id: References a \'HostOrder\' Entity.',
-              'type' => 'int',
-              'size' => 'big',
-              'not null' => FALSE,
-              //'default' => -1,
-          ),
-          'enabled' => array(
-              'description' => 'The \'enabled\' checkbox field of the \'HostRole\' entity.',
-              'type' => 'int',
-              'size' => 'tiny',
-              'not null' => FALSE,                  
           ),      
       ),
       'primary key' => array(
@@ -177,14 +164,11 @@ function thumbwhere_hostrole_schema() {
           'pk_hostrole' => array(
               'pk_hostrole'
           ),
+          'fk_hostroletype' => array(
+              'fk_hostroletype'
+          ),
           'fk_host' => array(
               'fk_host'
-          ),
-          'fk_hosttype' => array(
-              'fk_hosttype'
-          ),
-          'fk_hostorder' => array(
-              'fk_hostorder'
           ),
       
       ),

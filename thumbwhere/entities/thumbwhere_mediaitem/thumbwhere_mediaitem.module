@@ -394,6 +394,11 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
     }
 
     // Nullable so we only pass it through to create_mediaitem if we have it..
+    if (isset($entity->fk_target)) {
+      $fields['target'] = $entity->fk_target;
+    }
+
+    // Nullable so we only pass it through to create_mediaitem if we have it..
     if (!empty($entity->title)) {
       $fields['title'] = $entity->title;
     }

@@ -355,11 +355,32 @@ function thumbwhere_externalrepository_entity_presave($entity, $entity_type) {
 
     $fields = array();
     // Compulsory so..
+    if (!isset($entity->fk_externalrepositorytype)) {
+      throw new Exception('externalrepositorytype is mandatory.');
+    }
+    else {
+      $fields['externalrepositorytype'] = $entity->fk_externalrepositorytype;
+    }
+    // Compulsory so..
     if (!isset($entity->fk_host)) {
       throw new Exception('host is mandatory.');
     }
     else {
       $fields['host'] = $entity->fk_host;
+    }
+    // Compulsory so..
+    if (!isset($entity->fk_apikey)) {
+      throw new Exception('apikey is mandatory.');
+    }
+    else {
+      $fields['apikey'] = $entity->fk_apikey;
+    }
+    // Compulsory so..
+    if (empty($entity->url)) {
+      throw new Exception('url is mandatory.');
+    }
+    else {
+      $fields['url'] = $entity->url;
     }
 		
 	//

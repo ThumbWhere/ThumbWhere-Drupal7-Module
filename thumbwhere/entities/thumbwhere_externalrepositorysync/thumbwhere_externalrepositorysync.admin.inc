@@ -131,12 +131,8 @@ function _thumbwhere_handle_external_repository_sync_notify_xml($notification) {
 
         $entityfields['pk_externalrepositorysync'] = $id;	
 
-        if (isset($notification->externalrepository)) {
-          $entityfields['fk_externalrepository'] = intval($notification->externalrepository);
-        }
-
-        if (isset($notification->resource)) {
-          $entityfields['resource'] = (string)($notification->resource);
+        if (isset($notification->externalsubscription)) {
+          $entityfields['fk_externalsubscription'] = intval($notification->externalsubscription);
         }
 
         if (isset($notification->last_sync)) {
@@ -309,12 +305,8 @@ function _thumbwhere_handle_external_repository_sync_notify_xml($notification) {
 
         $entityfields['pk_externalrepositorysync'] = $id;	
 
-        if (isset($notification->externalrepository)) {
-          $entityfields['fk_externalrepository'] = intval($notification->externalrepository);
-        }
-
-        if (isset($notification->resource)) {
-          $entityfields['resource'] = (string)($notification->resource);
+        if (isset($notification->externalsubscription)) {
+          $entityfields['fk_externalsubscription'] = intval($notification->externalsubscription);
         }
 
         if (isset($notification->last_sync)) {
@@ -375,12 +367,8 @@ function _thumbwhere_handle_external_repository_sync_notify_xml($notification) {
         //
 
 
-        if (isset($notification->externalrepository)) {
-          $entity->fk_externalrepository = intval($notification->externalrepository);
-        }
-
-        if (isset($notification->resource)) {
-          $entity->resource = (string)($notification->resource);
+        if (isset($notification->externalsubscription)) {
+          $entity->fk_externalsubscription = intval($notification->externalsubscription);
         }
 
         if (isset($notification->last_sync)) {
@@ -778,23 +766,14 @@ function thumbwhere_externalrepositorysync_delete_form_wrapper($thumbwhere_exter
 function thumbwhere_externalrepositorysync_edit_form($form, &$form_state, $thumbwhere_externalrepositorysync) {
 
   // Add the default field elements.
-  $form['fk_externalrepository'] = array(
+  $form['fk_externalsubscription'] = array(
     '#type' => 'textfield',
-    '#title' => t('ThumbWhereExternalRepositorySync fk_externalrepository'),
-    '#default_value' => isset($thumbwhere_externalrepositorysync->fk_externalrepository) ? $thumbwhere_externalrepositorysync->fk_externalrepository : '',
+    '#title' => t('ThumbWhereExternalRepositorySync fk_externalsubscription'),
+    '#default_value' => isset($thumbwhere_externalrepositorysync->fk_externalsubscription) ? $thumbwhere_externalrepositorysync->fk_externalsubscription : '',
     //'#maxlength' => 255,
    /// '#required' => TRUE,
     '#weight' => -5,
-    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_externalrepository',
-  );
-  // Add the default field elements.
-    $form['resource'] = array(
-    '#type' => 'textfield',
-    '#title' => t('ThumbWhereExternalRepositorySync resource'),
-
-    // '#maxlength' => 255,
-   // '#required' => TRUE,
-    '#weight' => -5,
+    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_externalsubscription',
   );
   // Add the default field elements.
     $form['last_sync'] = array(
@@ -891,27 +870,19 @@ function thumbwhere_externalrepositorysync_edit_form_validate(&$form, &$form_sta
   // No validation for pk
 
 
-  // Convert fk autocomplete for fk_externalrepository
-  $value = $form['fk_externalrepository']['#value'];
+  // Convert fk autocomplete for fk_externalsubscription
+  $value = $form['fk_externalsubscription']['#value'];
   // If we have something, escape the auto-completion encoding.
   if (!empty($value)) { 
     $value = entity_autocomplete_get_id($value);
-    form_set_value($form['fk_externalrepository'], $value,$form_state);
+    form_set_value($form['fk_externalsubscription'], $value,$form_state);
   }
-  //if (twCanDebug()) debug($form['fk_externalrepository']);
-   if (twCanDebug()) debug('fk_externalrepository = ' . $value);
-  // Validate fk fk_externalrepository
+  //if (twCanDebug()) debug($form['fk_externalsubscription']);
+   if (twCanDebug()) debug('fk_externalsubscription = ' . $value);
+  // Validate fk fk_externalsubscription
   if (empty($value)) {
-    form_set_error('fk_externalrepository', t('Validation error, \'fk_externalrepository\' is mandatory1.'));
-    // throw new Exception('Field \'fk_externalrepository\' in is mandatory');
-  }
-
-  // Validate normalresource
-  $value = $form['resource']['#value'];
-  // If we have no default value then we don't care much for checking for emptyness.
-  if (empty($value)) {
-    form_set_error('resource', t('Validation error, \'resource\' is mandatory2.'));
-    //throw new Exception('Field \'resource\' in is mandatory.');
+    form_set_error('fk_externalsubscription', t('Validation error, \'fk_externalsubscription\' is mandatory1.'));
+    // throw new Exception('Field \'fk_externalsubscription\' in is mandatory');
   }
 
   // Validate normallast_sync

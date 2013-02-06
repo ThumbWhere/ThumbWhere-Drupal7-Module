@@ -39,6 +39,9 @@
       <field name="consumer" type="Consumer" optional="true">
         <doc>'consumer' field, which is an embedded 'Consumer' resource.</doc>
       </field>
+      <field name="target" type="Target" optional="true">
+        <doc>'target' field, which is an embedded 'Target' resource.</doc>
+      </field>
       <field name="url" type="string">
         <doc>'url' field, which is a 'string' type.</doc>
       </field>

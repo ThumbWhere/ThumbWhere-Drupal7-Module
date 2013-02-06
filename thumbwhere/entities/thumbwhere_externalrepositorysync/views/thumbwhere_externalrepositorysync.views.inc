@@ -102,8 +102,7 @@ function thumbwhere_externalrepositorysync_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
     'pk_externalrepositorysync' => 'pk_externalrepositorysync',
-    'fk_externalrepository' => 'fk_externalrepository',
-    'resource' => 'resource',
+    'fk_externalsubscription' => 'fk_externalsubscription',
     'last_sync' => 'last_sync',
     'max' => 'max',
     'complete' => 'complete',
@@ -119,14 +118,7 @@ function thumbwhere_externalrepositorysync_views_default_views() {
           'separator' => '',
           'empty_column' => 0,
       ),
-      'fk_externalrepository' => array(
-          'sortable' => 0,
-          'default_sort_order' => 'asc',
-          'align' => '',
-          'separator' => '',
-          'empty_column' => 0,
-      ),
-      'resource' => array(
+      'fk_externalsubscription' => array(
           'sortable' => 0,
           'default_sort_order' => 'asc',
           'align' => '',
@@ -288,51 +280,30 @@ function thumbwhere_externalrepositorysync_views_default_views() {
   $handler->display->display_options['fields']['pk_externalrepositorysync']['hide_empty'] = 0;
   $handler->display->display_options['fields']['pk_externalrepositorysync']['empty_zero'] = 0;
   
-  /* Field: ThumbWhereExternalRepositorySync: fk_externalrepository */
-  $handler->display->display_options['fields']['fk_externalrepository']['id'] = 'fk_externalrepository';
-  $handler->display->display_options['fields']['fk_externalrepository']['table'] = 'thumbwhere_externalrepositorysync';
-  $handler->display->display_options['fields']['fk_externalrepository']['field'] = 'fk_externalrepository';
-  $handler->display->display_options['fields']['fk_externalrepository']['label'] = 'fk_externalrepository';
-  $handler->display->display_options['fields']['fk_externalrepository']['alter']['alter_text'] = 0;
-  $handler->display->display_options['fields']['fk_externalrepository']['alter']['make_link'] = 0;
-  $handler->display->display_options['fields']['fk_externalrepository']['alter']['absolute'] = 0;
-  $handler->display->display_options['fields']['fk_externalrepository']['alter']['external'] = 0;
-  $handler->display->display_options['fields']['fk_externalrepository']['alter']['replace_spaces'] = 0;
-  $handler->display->display_options['fields']['fk_externalrepository']['alter']['trim_whitespace'] = 0;
-  $handler->display->display_options['fields']['fk_externalrepository']['alter']['nl2br'] = 0;
-  $handler->display->display_options['fields']['fk_externalrepository']['alter']['word_boundary'] = 1;
-  $handler->display->display_options['fields']['fk_externalrepository']['alter']['ellipsis'] = 1;
-  $handler->display->display_options['fields']['fk_externalrepository']['alter']['more_link'] = 0;
-  $handler->display->display_options['fields']['fk_externalrepository']['alter']['strip_tags'] = 0;
-  $handler->display->display_options['fields']['fk_externalrepository']['alter']['trim'] = 0;
-  $handler->display->display_options['fields']['fk_externalrepository']['alter']['html'] = 0;
-  $handler->display->display_options['fields']['fk_externalrepository']['element_label_colon'] = 1;
-  $handler->display->display_options['fields']['fk_externalrepository']['element_default_classes'] = 1;
-  $handler->display->display_options['fields']['fk_externalrepository']['hide_empty'] = 0;
-  $handler->display->display_options['fields']['fk_externalrepository']['empty_zero'] = 0;
-  $handler->display->display_options['fields']['fk_externalrepository']['hide_alter_empty'] = 1;
-  $handler->display->display_options['fields']['fk_externalrepository']['format_plural'] = 0;
-  /* Field: ThumbWhereExternalRepositorySync: resource */
-  $handler->display->display_options['fields']['resource']['id'] = 'resource';
-  $handler->display->display_options['fields']['resource']['table'] = 'thumbwhere_externalrepositorysync';
-  $handler->display->display_options['fields']['resource']['field'] = 'resource';
-  $handler->display->display_options['fields']['resource']['label'] = 'resource';
-  $handler->display->display_options['fields']['resource']['alter']['alter_text'] = 0;
-  $handler->display->display_options['fields']['resource']['alter']['make_link'] = 0;
-  $handler->display->display_options['fields']['resource']['alter']['absolute'] = 0;
-  $handler->display->display_options['fields']['resource']['alter']['external'] = 0;
-  $handler->display->display_options['fields']['resource']['alter']['replace_spaces'] = 0;
-  $handler->display->display_options['fields']['resource']['alter']['nl2br'] = 0;
-  $handler->display->display_options['fields']['resource']['alter']['word_boundary'] = 1;
-  $handler->display->display_options['fields']['resource']['alter']['ellipsis'] = 1;
-  $handler->display->display_options['fields']['resource']['alter']['strip_tags'] = 0;
-  $handler->display->display_options['fields']['resource']['alter']['trim'] = 0;
-  $handler->display->display_options['fields']['resource']['alter']['html'] = 0;
-  $handler->display->display_options['fields']['resource']['element_label_colon'] = 1;
-  $handler->display->display_options['fields']['resource']['element_default_classes'] = 1;
-  $handler->display->display_options['fields']['resource']['hide_empty'] = 0;
-  $handler->display->display_options['fields']['resource']['empty_zero'] = 0;
-
+  /* Field: ThumbWhereExternalRepositorySync: fk_externalsubscription */
+  $handler->display->display_options['fields']['fk_externalsubscription']['id'] = 'fk_externalsubscription';
+  $handler->display->display_options['fields']['fk_externalsubscription']['table'] = 'thumbwhere_externalrepositorysync';
+  $handler->display->display_options['fields']['fk_externalsubscription']['field'] = 'fk_externalsubscription';
+  $handler->display->display_options['fields']['fk_externalsubscription']['label'] = 'fk_externalsubscription';
+  $handler->display->display_options['fields']['fk_externalsubscription']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['fk_externalsubscription']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['fk_externalsubscription']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['fk_externalsubscription']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['fk_externalsubscription']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['fk_externalsubscription']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['fk_externalsubscription']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['fk_externalsubscription']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['fk_externalsubscription']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['fk_externalsubscription']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['fk_externalsubscription']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['fk_externalsubscription']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['fk_externalsubscription']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['fk_externalsubscription']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['fk_externalsubscription']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['fk_externalsubscription']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['fk_externalsubscription']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['fk_externalsubscription']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['fk_externalsubscription']['format_plural'] = 0;
   /* Field: ThumbWhereExternalRepositorySync: last_sync */
   $handler->display->display_options['fields']['last_sync']['id'] = 'last_sync';
   $handler->display->display_options['fields']['last_sync']['table'] = 'thumbwhere_externalrepositorysync';

@@ -122,23 +122,13 @@ function _thumbwhere_stresstest_create_HostRole($uid,$test) {
     // Global values that we will use...
     //
     
-    global $_global_thumbwhere_stresstest_HostType;
-    if (!isset( $_global_thumbwhere_stresstest_HostType)){
-      if (function_exists ('_thumbwhere_stresstest_create_HostType')) {
-        $_global_thumbwhere_stresstest_HostType = _thumbwhere_stresstest_create_HostType($uid,$test);
+    global $_global_thumbwhere_stresstest_HostRoleType;
+    if (!isset( $_global_thumbwhere_stresstest_HostRoleType)){
+      if (function_exists ('_thumbwhere_stresstest_create_HostRoleType')) {
+        $_global_thumbwhere_stresstest_HostRoleType = _thumbwhere_stresstest_create_HostRoleType($uid,$test);
       }
       else {
-        debug('bailing - function \'_thumbwhere_stresstest_create_HostType\' is not loaded yet.');
-        return NULL;
-      }
-    }
-    global $_global_thumbwhere_stresstest_HostOrder;
-    if (!isset( $_global_thumbwhere_stresstest_HostOrder)){
-      if (function_exists ('_thumbwhere_stresstest_create_HostOrder')) {
-        $_global_thumbwhere_stresstest_HostOrder = _thumbwhere_stresstest_create_HostOrder($uid,$test);
-      }
-      else {
-        debug('bailing - function \'_thumbwhere_stresstest_create_HostOrder\' is not loaded yet.');
+        debug('bailing - function \'_thumbwhere_stresstest_create_HostRoleType\' is not loaded yet.');
         return NULL;
       }
     }
@@ -146,9 +136,7 @@ function _thumbwhere_stresstest_create_HostRole($uid,$test) {
           		
     $entity = entity_create('thumbwhere_hostrole', array(
         'uid' => $uid,
-        'hosttype' => $_global_thumbwhere_stresstest_HostType,
-        'hostorder' => $_global_thumbwhere_stresstest_HostOrder,
-    		'enabled' => (rand(0,1) == 1 ? TRUE : FALSE),
+        'hostroletype' => $_global_thumbwhere_stresstest_HostRoleType,
 
       ));  
       

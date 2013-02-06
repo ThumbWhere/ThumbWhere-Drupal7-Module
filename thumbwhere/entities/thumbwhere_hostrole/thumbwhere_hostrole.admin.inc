@@ -131,25 +131,12 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
 
         $entityfields['pk_hostrole'] = $id;	
 
+        if (isset($notification->hostroletype)) {
+          $entityfields['fk_hostroletype'] = intval($notification->hostroletype);
+        }
+
         if (isset($notification->host)) {
           $entityfields['fk_host'] = intval($notification->host);
-        }
-
-        if (isset($notification->hosttype)) {
-          $entityfields['fk_hosttype'] = intval($notification->hosttype);
-        }
-
-        if (isset($notification->hostorder)) {
-          $entityfields['fk_hostorder'] = intval($notification->hostorder);
-        }
-
-        if (isset($notification->enabled)) {
-          if ((string)($notification->enabled) == 'true') {
-            $entityfields['enabled'] = '1';
-          }
-          else {
-            $entityfields['enabled'] = '0';
-          }
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -305,25 +292,12 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
 
         $entityfields['pk_hostrole'] = $id;	
 
+        if (isset($notification->hostroletype)) {
+          $entityfields['fk_hostroletype'] = intval($notification->hostroletype);
+        }
+
         if (isset($notification->host)) {
           $entityfields['fk_host'] = intval($notification->host);
-        }
-
-        if (isset($notification->hosttype)) {
-          $entityfields['fk_hosttype'] = intval($notification->hosttype);
-        }
-
-        if (isset($notification->hostorder)) {
-          $entityfields['fk_hostorder'] = intval($notification->hostorder);
-        }
-
-        if (isset($notification->enabled)) {
-          if ((string)($notification->enabled) == 'true') {
-            $entityfields['enabled'] = '1';
-          }
-          else {
-            $entityfields['enabled'] = '0';
-          }
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -367,25 +341,12 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
         //
 
 
+        if (isset($notification->hostroletype)) {
+          $entity->fk_hostroletype = intval($notification->hostroletype);
+        }
+
         if (isset($notification->host)) {
           $entity->fk_host = intval($notification->host);
-        }
-
-        if (isset($notification->hosttype)) {
-          $entity->fk_hosttype = intval($notification->hosttype);
-        }
-
-        if (isset($notification->hostorder)) {
-          $entity->fk_hostorder = intval($notification->hostorder);
-        }
-
-        if (isset($notification->enabled)) {
-          if ((string)($notification->enabled) == 'true') {
-            $entity->enabled = '1';
-          }
-          else {
-            $entity->enabled = '0';
-          }
         }
 
         if (!isset($notification->attributes()->key)) {
@@ -766,6 +727,16 @@ function thumbwhere_hostrole_delete_form_wrapper($thumbwhere_hostrole) {
 function thumbwhere_hostrole_edit_form($form, &$form_state, $thumbwhere_hostrole) {
 
   // Add the default field elements.
+  $form['fk_hostroletype'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereHostRole fk_hostroletype'),
+    '#default_value' => isset($thumbwhere_hostrole->fk_hostroletype) ? $thumbwhere_hostrole->fk_hostroletype : '',
+    //'#maxlength' => 255,
+   /// '#required' => TRUE,
+    '#weight' => -5,
+    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_hostroletype',
+  );
+  // Add the default field elements.
   $form['fk_host'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereHostRole fk_host'),
@@ -774,35 +745,6 @@ function thumbwhere_hostrole_edit_form($form, &$form_state, $thumbwhere_hostrole
    /// '#required' => TRUE,
     '#weight' => -5,
     '#autocomplete_path' => 'entity-autocomplete/thumbwhere_host',
-  );
-  // Add the default field elements.
-  $form['fk_hosttype'] = array(
-    '#type' => 'textfield',
-    '#title' => t('ThumbWhereHostRole fk_hosttype'),
-    '#default_value' => isset($thumbwhere_hostrole->fk_hosttype) ? $thumbwhere_hostrole->fk_hosttype : '',
-    //'#maxlength' => 255,
-   /// '#required' => TRUE,
-    '#weight' => -5,
-    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_hosttype',
-  );
-  // Add the default field elements.
-  $form['fk_hostorder'] = array(
-    '#type' => 'textfield',
-    '#title' => t('ThumbWhereHostRole fk_hostorder'),
-    '#default_value' => isset($thumbwhere_hostrole->fk_hostorder) ? $thumbwhere_hostrole->fk_hostorder : '',
-    //'#maxlength' => 255,
-   /// '#required' => TRUE,
-    '#weight' => -5,
-    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_hostorder',
-  );
-  // Add the default field elements.
-    $form['enabled'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('ThumbWhereHostRole enabled'),
-
-    // '#maxlength' => 255,
-   // '#required' => TRUE,
-    '#weight' => -5,
   );
 
 
@@ -872,6 +814,21 @@ function thumbwhere_hostrole_edit_form_validate(&$form, &$form_state) {
   // No validation for pk
 
 
+  // Convert fk autocomplete for fk_hostroletype
+  $value = $form['fk_hostroletype']['#value'];
+  // If we have something, escape the auto-completion encoding.
+  if (!empty($value)) { 
+    $value = entity_autocomplete_get_id($value);
+    form_set_value($form['fk_hostroletype'], $value,$form_state);
+  }
+  //if (twCanDebug()) debug($form['fk_hostroletype']);
+   if (twCanDebug()) debug('fk_hostroletype = ' . $value);
+  // Validate fk fk_hostroletype
+  if (empty($value)) {
+    form_set_error('fk_hostroletype', t('Validation error, \'fk_hostroletype\' is mandatory1.'));
+    // throw new Exception('Field \'fk_hostroletype\' in is mandatory');
+  }
+
   // Convert fk autocomplete for fk_host
   $value = $form['fk_host']['#value'];
   // If we have something, escape the auto-completion encoding.
@@ -883,44 +840,6 @@ function thumbwhere_hostrole_edit_form_validate(&$form, &$form_state) {
    if (twCanDebug()) debug('fk_host = ' . $value);
   // Validate fk fk_host
 
-
-  // Convert fk autocomplete for fk_hosttype
-  $value = $form['fk_hosttype']['#value'];
-  // If we have something, escape the auto-completion encoding.
-  if (!empty($value)) { 
-    $value = entity_autocomplete_get_id($value);
-    form_set_value($form['fk_hosttype'], $value,$form_state);
-  }
-  //if (twCanDebug()) debug($form['fk_hosttype']);
-   if (twCanDebug()) debug('fk_hosttype = ' . $value);
-  // Validate fk fk_hosttype
-  if (empty($value)) {
-    form_set_error('fk_hosttype', t('Validation error, \'fk_hosttype\' is mandatory1.'));
-    // throw new Exception('Field \'fk_hosttype\' in is mandatory');
-  }
-
-  // Convert fk autocomplete for fk_hostorder
-  $value = $form['fk_hostorder']['#value'];
-  // If we have something, escape the auto-completion encoding.
-  if (!empty($value)) { 
-    $value = entity_autocomplete_get_id($value);
-    form_set_value($form['fk_hostorder'], $value,$form_state);
-  }
-  //if (twCanDebug()) debug($form['fk_hostorder']);
-   if (twCanDebug()) debug('fk_hostorder = ' . $value);
-  // Validate fk fk_hostorder
-  if (empty($value)) {
-    form_set_error('fk_hostorder', t('Validation error, \'fk_hostorder\' is mandatory1.'));
-    // throw new Exception('Field \'fk_hostorder\' in is mandatory');
-  }
-
-  // Validate normalenabled
-  $value = $form['enabled']['#value'];
-  // If we have no default value then we don't care much for checking for emptyness.
-  if (empty($value)) {
-    form_set_error('enabled', t('Validation error, \'enabled\' is mandatory2.'));
-    //throw new Exception('Field \'enabled\' in is mandatory.');
-  }
 
               
 

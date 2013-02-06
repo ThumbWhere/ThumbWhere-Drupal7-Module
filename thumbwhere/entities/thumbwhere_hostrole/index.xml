@@ -21,17 +21,11 @@
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>
+      <field name="hostroletype" type="HostRoleType">
+        <doc>'hostroletype' field, which is an embedded 'HostRoleType' resource.</doc>
+      </field>
       <field name="host" type="Host" optional="true">
         <doc>'host' field, which is an embedded 'Host' resource.</doc>
-      </field>
-      <field name="hosttype" type="HostType">
-        <doc>'hosttype' field, which is an embedded 'HostType' resource.</doc>
-      </field>
-      <field name="hostorder" type="HostOrder">
-        <doc>'hostorder' field, which is an embedded 'HostOrder' resource.</doc>
-      </field>
-      <field name="enabled" type="boolean">
-        <doc>'enabled' field, which is a 'boolean' type.</doc>
       </field>
     </resource>
   </resources>

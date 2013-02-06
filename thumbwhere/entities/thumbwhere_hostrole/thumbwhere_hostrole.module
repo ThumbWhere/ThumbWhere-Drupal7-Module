@@ -354,31 +354,17 @@ function thumbwhere_hostrole_entity_presave($entity, $entity_type) {
     //
 
     $fields = array();
+    // Compulsory so..
+    if (!isset($entity->fk_hostroletype)) {
+      throw new Exception('hostroletype is mandatory.');
+    }
+    else {
+      $fields['hostroletype'] = $entity->fk_hostroletype;
+    }
 
     // Nullable so we only pass it through to create_host_role if we have it..
     if (isset($entity->fk_host)) {
       $fields['host'] = $entity->fk_host;
-    }
-    // Compulsory so..
-    if (!isset($entity->fk_hosttype)) {
-      throw new Exception('hosttype is mandatory.');
-    }
-    else {
-      $fields['hosttype'] = $entity->fk_hosttype;
-    }
-    // Compulsory so..
-    if (!isset($entity->fk_hostorder)) {
-      throw new Exception('hostorder is mandatory.');
-    }
-    else {
-      $fields['hostorder'] = $entity->fk_hostorder;
-    }
-    // Compulsory so..
-    if (!isset($entity->enabled)) {
-      throw new Exception('enabled is mandatory.');
-    }
-    else {
-      $fields['enabled'] = $entity->enabled;
     }
 		
 	//

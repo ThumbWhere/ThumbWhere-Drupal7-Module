@@ -155,6 +155,10 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
           $entityfields['fk_consumer'] = intval($notification->consumer);
         }
 
+        if (isset($notification->target)) {
+          $entityfields['fk_target'] = intval($notification->target);
+        }
+
         if (isset($notification->url)) {
           $entityfields['url'] = (string)($notification->url);
         }
@@ -398,6 +402,10 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
           $entityfields['fk_consumer'] = intval($notification->consumer);
         }
 
+        if (isset($notification->target)) {
+          $entityfields['fk_target'] = intval($notification->target);
+        }
+
         if (isset($notification->url)) {
           $entityfields['url'] = (string)($notification->url);
         }
@@ -527,6 +535,10 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
         if (isset($notification->consumer)) {
           $entity->fk_consumer = intval($notification->consumer);
+        }
+
+        if (isset($notification->target)) {
+          $entity->fk_target = intval($notification->target);
         }
 
         if (isset($notification->url)) {
@@ -1033,6 +1045,16 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
     '#autocomplete_path' => 'entity-autocomplete/thumbwhere_consumer',
   );
   // Add the default field elements.
+  $form['fk_target'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereContentIngest fk_target'),
+    '#default_value' => isset($thumbwhere_contentingest->fk_target) ? $thumbwhere_contentingest->fk_target : '',
+    //'#maxlength' => 255,
+   /// '#required' => TRUE,
+    '#weight' => -5,
+    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_target',
+  );
+  // Add the default field elements.
     $form['url'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereContentIngest url'),
@@ -1251,6 +1273,18 @@ function thumbwhere_contentingest_edit_form_validate(&$form, &$form_state) {
   //if (twCanDebug()) debug($form['fk_consumer']);
    if (twCanDebug()) debug('fk_consumer = ' . $value);
   // Validate fk fk_consumer
+
+
+  // Convert fk autocomplete for fk_target
+  $value = $form['fk_target']['#value'];
+  // If we have something, escape the auto-completion encoding.
+  if (!empty($value)) { 
+    $value = entity_autocomplete_get_id($value);
+    form_set_value($form['fk_target'], $value,$form_state);
+  }
+  //if (twCanDebug()) debug($form['fk_target']);
+   if (twCanDebug()) debug('fk_target = ' . $value);
+  // Validate fk fk_target
 
 
   // Validate normalurl

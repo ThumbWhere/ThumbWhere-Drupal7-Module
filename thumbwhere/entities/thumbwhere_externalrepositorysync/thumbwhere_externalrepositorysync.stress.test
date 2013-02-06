@@ -122,13 +122,13 @@ function _thumbwhere_stresstest_create_ExternalRepositorySync($uid,$test) {
     // Global values that we will use...
     //
     
-    global $_global_thumbwhere_stresstest_ExternalRepository;
-    if (!isset( $_global_thumbwhere_stresstest_ExternalRepository)){
-      if (function_exists ('_thumbwhere_stresstest_create_ExternalRepository')) {
-        $_global_thumbwhere_stresstest_ExternalRepository = _thumbwhere_stresstest_create_ExternalRepository($uid,$test);
+    global $_global_thumbwhere_stresstest_ExternalSubscription;
+    if (!isset( $_global_thumbwhere_stresstest_ExternalSubscription)){
+      if (function_exists ('_thumbwhere_stresstest_create_ExternalSubscription')) {
+        $_global_thumbwhere_stresstest_ExternalSubscription = _thumbwhere_stresstest_create_ExternalSubscription($uid,$test);
       }
       else {
-        debug('bailing - function \'_thumbwhere_stresstest_create_ExternalRepository\' is not loaded yet.');
+        debug('bailing - function \'_thumbwhere_stresstest_create_ExternalSubscription\' is not loaded yet.');
         return NULL;
       }
     }
@@ -136,8 +136,7 @@ function _thumbwhere_stresstest_create_ExternalRepositorySync($uid,$test) {
           		
     $entity = entity_create('thumbwhere_externalrepositorysync', array(
         'uid' => $uid,
-        'externalrepository' => $_global_thumbwhere_stresstest_ExternalRepository,
-    		'resource' => $test->randomName(),
+        'externalsubscription' => $_global_thumbwhere_stresstest_ExternalSubscription,
     		'last_sync' => strtotime("now"),
     		'max' => rand(),
 
