@@ -2,7 +2,7 @@
 
 /**
  * @file
- * ThumbWhereContentIngest editing UI.
+ * ThumbWhereContentUpload editing UI.
  *
  * We make very little use of the EntityAPI interface for this - preferring instead to use
  * views. That offers more flexibility to change a UI that will, more often than not,
@@ -18,7 +18,7 @@
 /**
  * Handle the notification for content_ingext
  */
-function _thumbwhere_handle_content_ingest_notify_xml($notification) {
+function _thumbwhere_handle_content_upload_notify_xml($notification) {
 
   //
   // Get the operation
@@ -26,9 +26,9 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
   if (!isset($notification->attributes()->op)) {
     drupal_add_http_header('Status', '501 unable to fulfull request..');
-    $err = 'We were expecting an \'op\', attribute on the \'content_ingest\', element.';
+    $err = 'We were expecting an \'op\', attribute on the \'content_upload\', element.';
     print($err);
-   	watchdog('thumbwhere_contentingest', $err ,array(), WATCHDOG_ERROR);
+   	watchdog('thumbwhere_contentupload', $err ,array(), WATCHDOG_ERROR);
     exit(0);
   }
 
@@ -43,9 +43,9 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
   if (!isset($notification->attributes()->key)) {
     drupal_add_http_header('Status', '412 unable to fulfull request..');
-    $err = 'We were expecting a \'key\', attribute on the \'content_ingest\', element.';
+    $err = 'We were expecting a \'key\', attribute on the \'content_upload\', element.';
     print($err);
-    watchdog('thumbwhere_contentingest', $err ,array(), WATCHDOG_ERROR);
+    watchdog('thumbwhere_contentupload', $err ,array(), WATCHDOG_ERROR);
     exit(0);
   }
 
@@ -79,9 +79,9 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 		
         if (!isset($notification->attributes()->id)) {
           drupal_add_http_header('Status', '412 Unable to fulfull request.');
-          $err = 'We were expecting an \'id\', attribute on the \'content_ingest\', element when we are performing an \'update\' notification..';
+          $err = 'We were expecting an \'id\', attribute on the \'content_upload\', element when we are performing an \'update\' notification..';
           print($err);
-          watchdog('thumbwhere_contentingest', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_contentupload', $err ,array(), WATCHDOG_ERROR);
           exit(0);
         }
 
@@ -96,24 +96,24 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         // Get the fields
         //
           
-        $entities = entity_load('thumbwhere_contentingest', array($id));
+        $entities = entity_load('thumbwhere_contentupload', array($id));
 
         if (twCanDebug()) debug('$entities');
         if (twCanDebug()) debug($entities);
 
         if (count($entities) != 0) {
           //drupal_add_http_header('Status', '409 Resource already exists.');
-          $err = '\'content_ingest\' resource already exists with an id of \'' . $id . '\'.';
+          $err = '\'content_upload\' resource already exists with an id of \'' . $id . '\'.';
            //print($err);
-          watchdog('thumbwhere_contentingest', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_contentupload', $err ,array(), WATCHDOG_ERROR);
           //exit(0);
 
           	
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<content_ingest op="' . $op . '" id="' . $id . '" >');
+          print('<content_upload op="' . $op . '" id="' . $id . '" >');
           print('<status>success</status>');
-          print('</content_ingest>');
+          print('</content_upload>');
           print('</response>');
           exit(0);          	
           
@@ -129,7 +129,11 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         //
 
 
-        $entityfields['pk_contentingest'] = $id;	
+        $entityfields['pk_contentupload'] = $id;	
+
+        if (isset($notification->mediaitemuploadpush)) {
+          $entityfields['fk_mediaitemuploadpush'] = intval($notification->mediaitemuploadpush);
+        }
 
         if (isset($notification->mediaitem)) {
           $entityfields['fk_mediaitem'] = intval($notification->mediaitem);
@@ -153,14 +157,6 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
         if (isset($notification->consumer)) {
           $entityfields['fk_consumer'] = intval($notification->consumer);
-        }
-
-        if (isset($notification->target)) {
-          $entityfields['fk_target'] = intval($notification->target);
-        }
-
-        if (isset($notification->url)) {
-          $entityfields['url'] = (string)($notification->url);
         }
 
         if (isset($notification->size)) {
@@ -232,7 +228,7 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
         // We are being notified, so we do not want to ship this out again as a notification...
         // Finally write the entity.
-        $entity = entity_create('thumbwhere_contentingest', $entityfields);
+        $entity = entity_create('thumbwhere_contentupload', $entityfields);
         $entity->do_not_propagate = TRUE;
         $entity->save();
 
@@ -244,9 +240,9 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<content_ingest op="' . $op . '" id="' . $id . '" >');
+        print('<content_upload op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
-        print('</content_ingest>');
+        print('</content_upload>');
         print('</response>');
         exit(0);			
 		
@@ -274,9 +270,9 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 		
         if (!isset($notification->attributes()->id)) {
           drupal_add_http_header('Status', '412 Unable to fulfull request.');
-          $err = 'We were expecting an \'id\', attribute on the \'content_ingest\', element when we are performing an \'update\' notification..';
+          $err = 'We were expecting an \'id\', attribute on the \'content_upload\', element when we are performing an \'update\' notification..';
           print($err);
-          watchdog('thumbwhere_contentingest', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_contentupload', $err ,array(), WATCHDOG_ERROR);
           exit(0);
         }
 
@@ -291,23 +287,23 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         // Get the fields
         //
           
-        $entities = entity_load('thumbwhere_contentingest', array($id));
+        $entities = entity_load('thumbwhere_contentupload', array($id));
 
         if (twCanDebug()) debug('$entities');
         if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
           //drupal_add_http_header('Status', '409 No such resource exists.');
-          $err = 'No such \'content_ingest\' resource exists with an id of \'' . $id . '\'.';
+          $err = 'No such \'content_upload\' resource exists with an id of \'' . $id . '\'.';
           //print($err);
-          watchdog('thumbwhere_contentingest',$err,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_contentupload',$err,array(), WATCHDOG_ERROR);
           //exit(0);
 
 ////////////////////////////////////////////////////////////////////////
 //
 // ... for now we will just create the local copy
 //
-          watchdog('thumbwhere_contentingest','creating local version of missing entity',array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_contentupload','creating local version of missing entity',array(), WATCHDOG_ERROR);
 		
 		
 		//
@@ -326,9 +322,9 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 		
         if (!isset($notification->attributes()->id)) {
           drupal_add_http_header('Status', '412 Unable to fulfull request.');
-          $err = 'We were expecting an \'id\', attribute on the \'content_ingest\', element when we are performing an \'update\' notification..';
+          $err = 'We were expecting an \'id\', attribute on the \'content_upload\', element when we are performing an \'update\' notification..';
           print($err);
-          watchdog('thumbwhere_contentingest', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_contentupload', $err ,array(), WATCHDOG_ERROR);
           exit(0);
         }
 
@@ -343,24 +339,24 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         // Get the fields
         //
           
-        $entities = entity_load('thumbwhere_contentingest', array($id));
+        $entities = entity_load('thumbwhere_contentupload', array($id));
 
         if (twCanDebug()) debug('$entities');
         if (twCanDebug()) debug($entities);
 
         if (count($entities) != 0) {
           //drupal_add_http_header('Status', '409 Resource already exists.');
-          $err = '\'content_ingest\' resource already exists with an id of \'' . $id . '\'.';
+          $err = '\'content_upload\' resource already exists with an id of \'' . $id . '\'.';
            //print($err);
-          watchdog('thumbwhere_contentingest', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_contentupload', $err ,array(), WATCHDOG_ERROR);
           //exit(0);
 
           	
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<content_ingest op="' . $op . '" id="' . $id . '" >');
+          print('<content_upload op="' . $op . '" id="' . $id . '" >');
           print('<status>success</status>');
-          print('</content_ingest>');
+          print('</content_upload>');
           print('</response>');
           exit(0);          	
           
@@ -376,7 +372,11 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         //
 
 
-        $entityfields['pk_contentingest'] = $id;	
+        $entityfields['pk_contentupload'] = $id;	
+
+        if (isset($notification->mediaitemuploadpush)) {
+          $entityfields['fk_mediaitemuploadpush'] = intval($notification->mediaitemuploadpush);
+        }
 
         if (isset($notification->mediaitem)) {
           $entityfields['fk_mediaitem'] = intval($notification->mediaitem);
@@ -400,14 +400,6 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
         if (isset($notification->consumer)) {
           $entityfields['fk_consumer'] = intval($notification->consumer);
-        }
-
-        if (isset($notification->target)) {
-          $entityfields['fk_target'] = intval($notification->target);
-        }
-
-        if (isset($notification->url)) {
-          $entityfields['url'] = (string)($notification->url);
         }
 
         if (isset($notification->size)) {
@@ -479,7 +471,7 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
         // We are being notified, so we do not want to ship this out again as a notification...
         // Finally write the entity.
-        $entity = entity_create('thumbwhere_contentingest', $entityfields);
+        $entity = entity_create('thumbwhere_contentupload', $entityfields);
         $entity->do_not_propagate = TRUE;
         $entity->save();
 
@@ -491,9 +483,9 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<content_ingest op="' . $op . '" id="' . $id . '" >');
+        print('<content_upload op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
-        print('</content_ingest>');
+        print('</content_upload>');
         print('</response>');
         exit(0);			
 		
@@ -512,6 +504,10 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         // TODO: Validate incoming values.
         //
 
+
+        if (isset($notification->mediaitemuploadpush)) {
+          $entity->fk_mediaitemuploadpush = intval($notification->mediaitemuploadpush);
+        }
 
         if (isset($notification->mediaitem)) {
           $entity->fk_mediaitem = intval($notification->mediaitem);
@@ -535,14 +531,6 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
         if (isset($notification->consumer)) {
           $entity->fk_consumer = intval($notification->consumer);
-        }
-
-        if (isset($notification->target)) {
-          $entity->fk_target = intval($notification->target);
-        }
-
-        if (isset($notification->url)) {
-          $entity->url = (string)($notification->url);
         }
 
         if (isset($notification->size)) {
@@ -616,7 +604,7 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         $entity->do_not_propagate = TRUE;
 
         // Finally write the entity.
-        entity_save('thumbwhere_contentingest', $entity);
+        entity_save('thumbwhere_contentupload', $entity);
 
         //
         // Send the final response
@@ -626,9 +614,9 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response  duration="' . $duration . '" >');
-        print('<content_ingest op="' . $op . '" id="' . $id . '" >');
+        print('<content_upload op="' . $op . '" id="' . $id . '" >');
         print('<status>success</status>');
-        print('</content_ingest>');
+        print('</content_upload>');
         print('</response>');
         exit(0);
       }
@@ -638,7 +626,7 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
     default:
       {
         drupal_add_http_header('Status', '501 Unable to fulfull request. Unhandled operation \'' . $op . '\'.');
-        print('We don\'t handle the \'' . $op . '\', notification operation on the \'content_ingest\', element.');
+        print('We don\'t handle the \'' . $op . '\', notification operation on the \'content_upload\', element.');
         exit(0);
 
       }
@@ -650,10 +638,10 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 /**
  * Menu callback: React to a notifications for ContentIngest.
  */
-function _thumbwhere_content_ingest_notify() {
+function _thumbwhere_content_upload_notify() {
 
   if (twCanDebug()) {
-    watchdog('thumbwhere_content_ingest', 'incoming notification.');
+    watchdog('thumbwhere_content_upload', 'incoming notification.');
   }
 
   $numargs = func_num_args();
@@ -699,7 +687,7 @@ function _thumbwhere_content_ingest_notify() {
 
     case 'POST': {
         if ($numargs == 1) {
-          if ($arg_list[0] == 'content_ingest') {
+          if ($arg_list[0] == 'content_upload') {
 
             //
             // Get the POST data as XML
@@ -721,7 +709,7 @@ function _thumbwhere_content_ingest_notify() {
 
             /*
              *  SimpleXMLElement::__set_state(array(
-             *      'content_ingest' =>
+             *      'content_upload' =>
              *      SimpleXMLElement::__set_state(array(
              *       '@attributes' =>
              *      array (
@@ -734,14 +722,14 @@ function _thumbwhere_content_ingest_notify() {
 
 
             // We expect 'action' as the root element.
-            if (!isset($post_xml->content_ingest)) {
+            if (!isset($post_xml->content_upload)) {
               drupal_add_http_header('Status', '404 not found.');
-              print('We were expecting a \'content_ingest\', element in the action payload.');
+              print('We were expecting a \'content_upload\', element in the action payload.');
               exit(0);
             }
 
             // Handle the incoming notification for content ingest
-            _thumbwhere_handle_content_ingest_notify_xml($post_xml->content_ingest);
+            _thumbwhere_handle_content_upload_notify_xml($post_xml->content_upload);
 
           }
           else {
@@ -801,9 +789,9 @@ function _thumbwhere_content_ingest_notify() {
 
 
 /**
- * ContentIngest UI controller.
+ * ContentUpload UI controller.
  */
-class ThumbWhereContentIngestUIController extends EntityDefaultUIController {
+class ThumbWhereContentUploadUIController extends EntityDefaultUIController {
 
   /**
    * Overrides hook_menu() defaults. Main reason for doing this is that
@@ -814,13 +802,13 @@ class ThumbWhereContentIngestUIController extends EntityDefaultUIController {
     $items = array();
     
     // Add a notification page...
-    $items['thumbwhere/content_ingest/notify'] = array(
-        'title' => 'Notifications Callback for "ContentIngest" Entity',
-        'page callback' => '_thumbwhere_content_ingest_notify',
+    $items['thumbwhere/content_upload/notify'] = array(
+        'title' => 'Notifications Callback for "ContentUpload" Entity',
+        'page callback' => '_thumbwhere_content_upload_notify',
         'access arguments' => array(
-            'send thumbwhere contentingest notifications'
+            'send thumbwhere contentupload notifications'
         ),
-        'file' => 'thumbwhere_contentingest.admin.inc',
+        'file' => 'thumbwhere_contentupload.admin.inc',
         'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );    
     
@@ -828,27 +816,27 @@ class ThumbWhereContentIngestUIController extends EntityDefaultUIController {
     $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
 
     $items[$this->path] = array(
-      'title' => 'ContentIngest',
-      'description' => 'Add edit and update thumbwhere_contentingests.',
+      'title' => 'ContentUpload',
+      'description' => 'Add edit and update thumbwhere_contentuploads.',
       'page callback' => 'system_admin_menu_block_page',
       'access arguments' => array('access administration pages'),
       'file path' => drupal_get_path('module', 'system'),
       'file' => 'system.admin.inc',
     );
 
-    // Change the overview menu type for the list of thumbwhere_contentingests.
+    // Change the overview menu type for the list of thumbwhere_contentuploads.
     $items[$this->path]['type'] = MENU_LOCAL_TASK;
 
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      //'title' => 'Add a ContentIngest',
+      //'title' => 'Add a ContentUpload',
       'title' => 'Add',
-      'description' => 'Add a new ContentIngest',
-      'page callback' => 'thumbwhere_contentingest_form_wrapper',
-      'page arguments' => array(thumbwhere_contentingest_create(array('type' => 'thumbwhere_contentingest'))),
-      'access callback' => 'thumbwhere_contentingest_access',
-      'access arguments' => array('edit', 'edit ' . 'thumbwhere_contentingest'),
-      'file' => 'thumbwhere_contentingest.admin.inc',
+      'description' => 'Add a new ContentUpload',
+      'page callback' => 'thumbwhere_contentupload_form_wrapper',
+      'page arguments' => array(thumbwhere_contentupload_create(array('type' => 'thumbwhere_contentupload'))),
+      'access callback' => 'thumbwhere_contentupload_access',
+      'access arguments' => array('edit', 'edit ' . 'thumbwhere_contentupload'),
+      'file' => 'thumbwhere_contentupload.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
 
@@ -856,69 +844,69 @@ class ThumbWhereContentIngestUIController extends EntityDefaultUIController {
 /*
     // Change the add page menu to multiple types of entities
     $items[$this->path . '/add'] = array(
-      //'title' => 'Add a ContentIngest',
+      //'title' => 'Add a ContentUpload',
       'title' => 'Add',
-	  'description' => 'Add a new ContentIngest',
-      'page callback'  => 'thumbwhere_contentingest_add_page',
-      'access callback'  => 'thumbwhere_contentingest_access',
+	  'description' => 'Add a new ContentUpload',
+      'page callback'  => 'thumbwhere_contentupload_add_page',
+      'access callback'  => 'thumbwhere_contentupload_access',
       'access arguments' => array('edit'),
       'type' => MENU_NORMAL_ITEM,
       'weight' => 20,
-      'file' => 'thumbwhere_contentingest.admin.inc',
+      'file' => 'thumbwhere_contentupload.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
 
     );
 */    
 /*
-    $items[$this->path . '/add/' . 'thumbwhere_contentingest'] = array(
-      'title' => 'Add ' . 'ThumbWhereContentIngest',
-      'page callback' => 'thumbwhere_contentingest_form_wrapper',
-      'page arguments' => array(thumbwhere_contentingest_create(array('type' => 'thumbwhere_contentingest'))),
-      'access callback' => 'thumbwhere_contentingest_access',
-      'access arguments' => array('edit', 'edit ' . 'thumbwhere_contentingest'),
-      'file' => 'thumbwhere_contentingest.admin.inc',
+    $items[$this->path . '/add/' . 'thumbwhere_contentupload'] = array(
+      'title' => 'Add ' . 'ThumbWhereContentUpload',
+      'page callback' => 'thumbwhere_contentupload_form_wrapper',
+      'page arguments' => array(thumbwhere_contentupload_create(array('type' => 'thumbwhere_contentupload'))),
+      'access callback' => 'thumbwhere_contentupload_access',
+      'access arguments' => array('edit', 'edit ' . 'thumbwhere_contentupload'),
+      'file' => 'thumbwhere_contentupload.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
 */
-    // Loading and editing thumbwhere_contentingest entities
-    $items[$this->path . '/thumbwhere_contentingest/' . $wildcard] = array(
-      'page callback' => 'thumbwhere_contentingest_form_wrapper',
+    // Loading and editing thumbwhere_contentupload entities
+    $items[$this->path . '/thumbwhere_contentupload/' . $wildcard] = array(
+      'page callback' => 'thumbwhere_contentupload_form_wrapper',
       'page arguments' => array($id_count + 1),
-      'access callback' => 'thumbwhere_contentingest_access',
+      'access callback' => 'thumbwhere_contentupload_access',
       'access arguments' => array('edit', $id_count + 1),
       'weight' => 0,
       'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
-      'file' => 'thumbwhere_contentingest.admin.inc',
+      'file' => 'thumbwhere_contentupload.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
-    $items[$this->path . '/thumbwhere_contentingest/' . $wildcard . '/edit'] = array(
+    $items[$this->path . '/thumbwhere_contentupload/' . $wildcard . '/edit'] = array(
       'title' => 'Edit',
       'type' => MENU_DEFAULT_LOCAL_TASK,
       'weight' => -10,
       'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
     );
 
-    $items[$this->path . '/thumbwhere_contentingest/' . $wildcard . '/delete'] = array(
+    $items[$this->path . '/thumbwhere_contentupload/' . $wildcard . '/delete'] = array(
       'title' => 'Delete',
-      'page callback' => 'thumbwhere_contentingest_delete_form_wrapper',
+      'page callback' => 'thumbwhere_contentupload_delete_form_wrapper',
       'page arguments' => array($id_count + 1),
-      'access callback' => 'thumbwhere_contentingest_access',
+      'access callback' => 'thumbwhere_contentupload_access',
       'access arguments' => array('edit', $id_count + 1),
       'type' => MENU_LOCAL_TASK,
       'context' => MENU_CONTEXT_INLINE,
       'weight' => 10,
-      'file' => 'thumbwhere_contentingest.admin.inc',
+      'file' => 'thumbwhere_contentupload.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
 
-    // Menu item for viewing thumbwhere_contentingests
-    $items['thumbwhere_contentingest/' . $wildcard] = array(
+    // Menu item for viewing thumbwhere_contentuploads
+    $items['thumbwhere_contentupload/' . $wildcard] = array(
       //'title' => 'Title',
-      'title callback' => 'thumbwhere_contentingest_page_title',
+      'title callback' => 'thumbwhere_contentupload_page_title',
       'title arguments' => array(1),
-      'page callback' => 'thumbwhere_contentingest_page_view',
+      'page callback' => 'thumbwhere_contentupload_page_view',
       'page arguments' => array(1),
-      'access callback' => 'thumbwhere_contentingest_access',
+      'access callback' => 'thumbwhere_contentupload_access',
       'access arguments' => array('view', 1),
       'type' => MENU_CALLBACK,
     );
@@ -927,7 +915,7 @@ class ThumbWhereContentIngestUIController extends EntityDefaultUIController {
 
 
   /**
-   * Create the markup for the add ThumbWhereContentIngest Entities page within the class
+   * Create the markup for the add ThumbWhereContentUpload Entities page within the class
    * so it can easily be extended/overriden.
    */
   public function addPage() {
@@ -939,56 +927,66 @@ class ThumbWhereContentIngestUIController extends EntityDefaultUIController {
       drupal_goto($item['href']);
     }
 
-    return theme('thumbwhere_contentingest_add_list', array('content' => $content));
+    return theme('thumbwhere_contentupload_add_list', array('content' => $content));
   }
 
 }
 
 
 /**
- * Form callback wrapper: create or edit a thumbwhere_contentingest.
+ * Form callback wrapper: create or edit a thumbwhere_contentupload.
  *
- * @param $thumbwhere_contentingest
- *   The thumbwhere_contentingest object being edited by this form.
+ * @param $thumbwhere_contentupload
+ *   The thumbwhere_contentupload object being edited by this form.
  *
- * @see thumbwhere_contentingest_edit_form()
+ * @see thumbwhere_contentupload_edit_form()
  */
-function thumbwhere_contentingest_form_wrapper($thumbwhere_contentingest) {
+function thumbwhere_contentupload_form_wrapper($thumbwhere_contentupload) {
   // Add the breadcrumb for the form's location.
-  thumbwhere_contentingest_set_breadcrumb();
-  return drupal_get_form('thumbwhere_contentingest_edit_form', $thumbwhere_contentingest);
+  thumbwhere_contentupload_set_breadcrumb();
+  return drupal_get_form('thumbwhere_contentupload_edit_form', $thumbwhere_contentupload);
 }
 
 
 /**
- * Form callback wrapper: delete a thumbwhere_contentingest.
+ * Form callback wrapper: delete a thumbwhere_contentupload.
  *
- * @param $thumbwhere_contentingest
- *   The thumbwhere_contentingest object being edited by this form.
+ * @param $thumbwhere_contentupload
+ *   The thumbwhere_contentupload object being edited by this form.
  *
- * @see thumbwhere_contentingest_edit_form()
+ * @see thumbwhere_contentupload_edit_form()
  */
-function thumbwhere_contentingest_delete_form_wrapper($thumbwhere_contentingest) {
+function thumbwhere_contentupload_delete_form_wrapper($thumbwhere_contentupload) {
   // Add the breadcrumb for the form's location.
-  //thumbwhere_contentingest_set_breadcrumb();
-  return drupal_get_form('thumbwhere_contentingest_delete_form', $thumbwhere_contentingest);
+  //thumbwhere_contentupload_set_breadcrumb();
+  return drupal_get_form('thumbwhere_contentupload_delete_form', $thumbwhere_contentupload);
 }
 
 
 /**
- * Form callback: create or edit a thumbwhere_contentingest.
+ * Form callback: create or edit a thumbwhere_contentupload.
  *
- * @param $thumbwhere_contentingest
- *   The thumbwhere_contentingest object to edit or for a create form an empty thumbwhere_contentingest object
- *     with only a thumbwhere_contentingest type defined.
+ * @param $thumbwhere_contentupload
+ *   The thumbwhere_contentupload object to edit or for a create form an empty thumbwhere_contentupload object
+ *     with only a thumbwhere_contentupload type defined.
  */
-function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_contentingest) {
+function thumbwhere_contentupload_edit_form($form, &$form_state, $thumbwhere_contentupload) {
 
+  // Add the default field elements.
+  $form['fk_mediaitemuploadpush'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ThumbWhereContentUpload fk_mediaitemuploadpush'),
+    '#default_value' => isset($thumbwhere_contentupload->fk_mediaitemuploadpush) ? $thumbwhere_contentupload->fk_mediaitemuploadpush : '',
+    //'#maxlength' => 255,
+   /// '#required' => TRUE,
+    '#weight' => -5,
+    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_mediaitemuploadpush',
+  );
   // Add the default field elements.
   $form['fk_mediaitem'] = array(
     '#type' => 'textfield',
-    '#title' => t('ThumbWhereContentIngest fk_mediaitem'),
-    '#default_value' => isset($thumbwhere_contentingest->fk_mediaitem) ? $thumbwhere_contentingest->fk_mediaitem : '',
+    '#title' => t('ThumbWhereContentUpload fk_mediaitem'),
+    '#default_value' => isset($thumbwhere_contentupload->fk_mediaitem) ? $thumbwhere_contentupload->fk_mediaitem : '',
     //'#maxlength' => 255,
    /// '#required' => TRUE,
     '#weight' => -5,
@@ -997,8 +995,8 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
   // Add the default field elements.
   $form['fk_content'] = array(
     '#type' => 'textfield',
-    '#title' => t('ThumbWhereContentIngest fk_content'),
-    '#default_value' => isset($thumbwhere_contentingest->fk_content) ? $thumbwhere_contentingest->fk_content : '',
+    '#title' => t('ThumbWhereContentUpload fk_content'),
+    '#default_value' => isset($thumbwhere_contentupload->fk_content) ? $thumbwhere_contentupload->fk_content : '',
     //'#maxlength' => 255,
    /// '#required' => TRUE,
     '#weight' => -5,
@@ -1007,8 +1005,8 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
   // Add the default field elements.
   $form['fk_member'] = array(
     '#type' => 'textfield',
-    '#title' => t('ThumbWhereContentIngest fk_member'),
-    '#default_value' => isset($thumbwhere_contentingest->fk_member) ? $thumbwhere_contentingest->fk_member : '',
+    '#title' => t('ThumbWhereContentUpload fk_member'),
+    '#default_value' => isset($thumbwhere_contentupload->fk_member) ? $thumbwhere_contentupload->fk_member : '',
     //'#maxlength' => 255,
    /// '#required' => TRUE,
     '#weight' => -5,
@@ -1017,8 +1015,8 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
   // Add the default field elements.
   $form['fk_identity'] = array(
     '#type' => 'textfield',
-    '#title' => t('ThumbWhereContentIngest fk_identity'),
-    '#default_value' => isset($thumbwhere_contentingest->fk_identity) ? $thumbwhere_contentingest->fk_identity : '',
+    '#title' => t('ThumbWhereContentUpload fk_identity'),
+    '#default_value' => isset($thumbwhere_contentupload->fk_identity) ? $thumbwhere_contentupload->fk_identity : '',
     //'#maxlength' => 255,
    /// '#required' => TRUE,
     '#weight' => -5,
@@ -1027,8 +1025,8 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
   // Add the default field elements.
   $form['fk_producer'] = array(
     '#type' => 'textfield',
-    '#title' => t('ThumbWhereContentIngest fk_producer'),
-    '#default_value' => isset($thumbwhere_contentingest->fk_producer) ? $thumbwhere_contentingest->fk_producer : '',
+    '#title' => t('ThumbWhereContentUpload fk_producer'),
+    '#default_value' => isset($thumbwhere_contentupload->fk_producer) ? $thumbwhere_contentupload->fk_producer : '',
     //'#maxlength' => 255,
    /// '#required' => TRUE,
     '#weight' => -5,
@@ -1037,36 +1035,17 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
   // Add the default field elements.
   $form['fk_consumer'] = array(
     '#type' => 'textfield',
-    '#title' => t('ThumbWhereContentIngest fk_consumer'),
-    '#default_value' => isset($thumbwhere_contentingest->fk_consumer) ? $thumbwhere_contentingest->fk_consumer : '',
+    '#title' => t('ThumbWhereContentUpload fk_consumer'),
+    '#default_value' => isset($thumbwhere_contentupload->fk_consumer) ? $thumbwhere_contentupload->fk_consumer : '',
     //'#maxlength' => 255,
    /// '#required' => TRUE,
     '#weight' => -5,
     '#autocomplete_path' => 'entity-autocomplete/thumbwhere_consumer',
   );
   // Add the default field elements.
-  $form['fk_target'] = array(
-    '#type' => 'textfield',
-    '#title' => t('ThumbWhereContentIngest fk_target'),
-    '#default_value' => isset($thumbwhere_contentingest->fk_target) ? $thumbwhere_contentingest->fk_target : '',
-    //'#maxlength' => 255,
-   /// '#required' => TRUE,
-    '#weight' => -5,
-    '#autocomplete_path' => 'entity-autocomplete/thumbwhere_target',
-  );
-  // Add the default field elements.
-    $form['url'] = array(
-    '#type' => 'textfield',
-    '#title' => t('ThumbWhereContentIngest url'),
-
-    // '#maxlength' => 255,
-   // '#required' => TRUE,
-    '#weight' => -5,
-  );
-  // Add the default field elements.
     $form['size'] = array(
     '#type' => 'textfield',
-    '#title' => t('ThumbWhereContentIngest size'),
+    '#title' => t('ThumbWhereContentUpload size'),
 
     // '#maxlength' => 255,
    // '#required' => TRUE,
@@ -1075,8 +1054,8 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
   // Add the default field elements.
     $form['uploaded'] = array(
     '#type' => 'checkbox',
-    '#title' => t('ThumbWhereContentIngest uploaded'),
-    '#default_value' => isset($thumbwhere_contentingest->uploaded) ? $thumbwhere_contentingest->uploaded : 0,
+    '#title' => t('ThumbWhereContentUpload uploaded'),
+    '#default_value' => isset($thumbwhere_contentupload->uploaded) ? $thumbwhere_contentupload->uploaded : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -1084,8 +1063,8 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
   // Add the default field elements.
     $form['transcoded'] = array(
     '#type' => 'checkbox',
-    '#title' => t('ThumbWhereContentIngest transcoded'),
-    '#default_value' => isset($thumbwhere_contentingest->transcoded) ? $thumbwhere_contentingest->transcoded : 0,
+    '#title' => t('ThumbWhereContentUpload transcoded'),
+    '#default_value' => isset($thumbwhere_contentupload->transcoded) ? $thumbwhere_contentupload->transcoded : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -1093,8 +1072,8 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
   // Add the default field elements.
     $form['encrypted'] = array(
     '#type' => 'checkbox',
-    '#title' => t('ThumbWhereContentIngest encrypted'),
-    '#default_value' => isset($thumbwhere_contentingest->encrypted) ? $thumbwhere_contentingest->encrypted : 0,
+    '#title' => t('ThumbWhereContentUpload encrypted'),
+    '#default_value' => isset($thumbwhere_contentupload->encrypted) ? $thumbwhere_contentupload->encrypted : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -1102,8 +1081,8 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
   // Add the default field elements.
     $form['deployed'] = array(
     '#type' => 'checkbox',
-    '#title' => t('ThumbWhereContentIngest deployed'),
-    '#default_value' => isset($thumbwhere_contentingest->deployed) ? $thumbwhere_contentingest->deployed : 0,
+    '#title' => t('ThumbWhereContentUpload deployed'),
+    '#default_value' => isset($thumbwhere_contentupload->deployed) ? $thumbwhere_contentupload->deployed : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -1111,8 +1090,8 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
   // Add the default field elements.
     $form['ready'] = array(
     '#type' => 'checkbox',
-    '#title' => t('ThumbWhereContentIngest ready'),
-    '#default_value' => isset($thumbwhere_contentingest->ready) ? $thumbwhere_contentingest->ready : 0,
+    '#title' => t('ThumbWhereContentUpload ready'),
+    '#default_value' => isset($thumbwhere_contentupload->ready) ? $thumbwhere_contentupload->ready : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -1120,8 +1099,8 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
   // Add the default field elements.
     $form['error'] = array(
     '#type' => 'checkbox',
-    '#title' => t('ThumbWhereContentIngest error'),
-    '#default_value' => isset($thumbwhere_contentingest->error) ? $thumbwhere_contentingest->error : 0,
+    '#title' => t('ThumbWhereContentUpload error'),
+    '#default_value' => isset($thumbwhere_contentupload->error) ? $thumbwhere_contentupload->error : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -1129,8 +1108,8 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
   // Add the default field elements.
     $form['status'] = array(
     '#type' => 'textfield',
-    '#title' => t('ThumbWhereContentIngest status'),
-    '#default_value' => isset($thumbwhere_contentingest->status) ? $thumbwhere_contentingest->status : 'pending',
+    '#title' => t('ThumbWhereContentUpload status'),
+    '#default_value' => isset($thumbwhere_contentupload->status) ? $thumbwhere_contentupload->status : 'pending',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -1143,15 +1122,15 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
   /*
   $form['data']['sample_data'] = array(
     '#type' => 'checkbox',
-    '#title' => t('An interesting thumbwhere_contentingest switch'),
-    '#default_value' => isset($thumbwhere_contentingest->data['sample_data']) ? $thumbwhere_contentingest->data['sample_data'] : 1,
+    '#title' => t('An interesting thumbwhere_contentupload switch'),
+    '#default_value' => isset($thumbwhere_contentupload->data['sample_data']) ? $thumbwhere_contentupload->data['sample_data'] : 1,
   );
   */
 
 
   // Add the field related form elements.
-  $form_state['thumbwhere_contentingest'] = $thumbwhere_contentingest;
-  field_attach_form('thumbwhere_contentingest', $thumbwhere_contentingest, $form, $form_state);
+  $form_state['thumbwhere_contentupload'] = $thumbwhere_contentupload;
+  field_attach_form('thumbwhere_contentupload', $thumbwhere_contentupload, $form, $form_state);
 
   $form['actions'] = array(
     '#type' => 'container',
@@ -1169,32 +1148,32 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
 
   $form['actions']['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Save thumbwhere_contentingest'),
-    '#submit' => $submit + array('thumbwhere_contentingest_edit_form_submit'),
+    '#value' => t('Save thumbwhere_contentupload'),
+    '#submit' => $submit + array('thumbwhere_contentupload_edit_form_submit'),
   );
 
   // Do we show the delete button?
-  if (!empty($thumbwhere_contentingest->pk_contentingest)) {
+  if (!empty($thumbwhere_contentupload->pk_contentupload)) {
     $form['actions']['delete'] = array(
       '#type' => 'submit',
-      '#value' => t('Delete thumbwhere_contentingest'),
-      '#suffix' => l(t('Cancel'), 'admin/thumbwhere/thumbwhere_contentingests'),
-      '#submit' => $submit + array('thumbwhere_contentingest_form_submit_delete'),
+      '#value' => t('Delete thumbwhere_contentupload'),
+      '#suffix' => l(t('Cancel'), 'admin/thumbwhere/thumbwhere_contentuploads'),
+      '#submit' => $submit + array('thumbwhere_contentupload_form_submit_delete'),
       '#weight' => 45,
     );
   }
 
   // We append the validate handler to #validate in case a form callback_wrapper
   // is used to add validate handlers earlier.
-  $form['#validate'][] = 'thumbwhere_contentingest_edit_form_validate';
+  $form['#validate'][] = 'thumbwhere_contentupload_edit_form_validate';
   return $form;
 }
 
 
 /**
- * Form API validate callback for the thumbwhere_contentingest form
+ * Form API validate callback for the thumbwhere_contentupload form
  */
-function thumbwhere_contentingest_edit_form_validate(&$form, &$form_state) {
+function thumbwhere_contentupload_edit_form_validate(&$form, &$form_state) {
    
   //if (twCanDebug()) debug($form);   
   //if (twCanDebug()) debug($form_state);
@@ -1202,6 +1181,21 @@ function thumbwhere_contentingest_edit_form_validate(&$form, &$form_state) {
 
   // No validation for pk
 
+
+  // Convert fk autocomplete for fk_mediaitemuploadpush
+  $value = $form['fk_mediaitemuploadpush']['#value'];
+  // If we have something, escape the auto-completion encoding.
+  if (!empty($value)) { 
+    $value = entity_autocomplete_get_id($value);
+    form_set_value($form['fk_mediaitemuploadpush'], $value,$form_state);
+  }
+  //if (twCanDebug()) debug($form['fk_mediaitemuploadpush']);
+   if (twCanDebug()) debug('fk_mediaitemuploadpush = ' . $value);
+  // Validate fk fk_mediaitemuploadpush
+  if (empty($value)) {
+    form_set_error('fk_mediaitemuploadpush', t('Validation error, \'fk_mediaitemuploadpush\' is mandatory1.'));
+    // throw new Exception('Field \'fk_mediaitemuploadpush\' in is mandatory');
+  }
 
   // Convert fk autocomplete for fk_mediaitem
   $value = $form['fk_mediaitem']['#value'];
@@ -1275,26 +1269,6 @@ function thumbwhere_contentingest_edit_form_validate(&$form, &$form_state) {
   // Validate fk fk_consumer
 
 
-  // Convert fk autocomplete for fk_target
-  $value = $form['fk_target']['#value'];
-  // If we have something, escape the auto-completion encoding.
-  if (!empty($value)) { 
-    $value = entity_autocomplete_get_id($value);
-    form_set_value($form['fk_target'], $value,$form_state);
-  }
-  //if (twCanDebug()) debug($form['fk_target']);
-   if (twCanDebug()) debug('fk_target = ' . $value);
-  // Validate fk fk_target
-
-
-  // Validate normalurl
-  $value = $form['url']['#value'];
-  // If we have no default value then we don't care much for checking for emptyness.
-  if (empty($value)) {
-    form_set_error('url', t('Validation error, \'url\' is mandatory2.'));
-    //throw new Exception('Field \'url\' in is mandatory.');
-  }
-
   // Validate normalsize
   $value = $form['size']['#value'];
   // If we have no default value then we don't care much for checking for emptyness.
@@ -1341,10 +1315,10 @@ function thumbwhere_contentingest_edit_form_validate(&$form, &$form_state) {
 
    
    
-  $thumbwhere_contentingest = $form_state['thumbwhere_contentingest'];
+  $thumbwhere_contentupload = $form_state['thumbwhere_contentupload'];
 
   // Notify field widgets to validate their data.
-  field_attach_form_validate('thumbwhere_contentingest', $thumbwhere_contentingest, $form, $form_state);
+  field_attach_form_validate('thumbwhere_contentupload', $thumbwhere_contentupload, $form, $form_state);
     
     
   
@@ -1352,24 +1326,24 @@ function thumbwhere_contentingest_edit_form_validate(&$form, &$form_state) {
 
 
 /**
- * Form API submit callback for the thumbwhere_contentingest form.
+ * Form API submit callback for the thumbwhere_contentupload form.
  *
  * @todo remove hard-coded link
  */
-function thumbwhere_contentingest_edit_form_submit(&$form, &$form_state) {
+function thumbwhere_contentupload_edit_form_submit(&$form, &$form_state) {
 
-  $thumbwhere_contentingest = entity_ui_controller('thumbwhere_contentingest')->entityFormSubmitBuildEntity($form, $form_state);
-  // Save the thumbwhere_contentingest and go back to the list of thumbwhere_contentingests
+  $thumbwhere_contentupload = entity_ui_controller('thumbwhere_contentupload')->entityFormSubmitBuildEntity($form, $form_state);
+  // Save the thumbwhere_contentupload and go back to the list of thumbwhere_contentuploads
 
   // Add in created and changed times.
-  if ($thumbwhere_contentingest->is_new = isset($thumbwhere_contentingest->is_new) ? $thumbwhere_contentingest->is_new : 0) {
-    $thumbwhere_contentingest->created = time();
+  if ($thumbwhere_contentupload->is_new = isset($thumbwhere_contentupload->is_new) ? $thumbwhere_contentupload->is_new : 0) {
+    $thumbwhere_contentupload->created = time();
   }
 
-  $thumbwhere_contentingest->changed = time();
+  $thumbwhere_contentupload->changed = time();
 
-  $thumbwhere_contentingest->save();
-  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_contentingests';
+  $thumbwhere_contentupload->save();
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_contentuploads';
 }
 
 /**
@@ -1377,8 +1351,8 @@ function thumbwhere_contentingest_edit_form_submit(&$form, &$form_state) {
  *
  * @todo Remove hard-coded path
  */
-function thumbwhere_contentingest_form_submit_delete(&$form, &$form_state) {
-  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_contentingests/thumbwhere_contentingest/' . $form_state['thumbwhere_contentingest']->pk_contentingest . '/delete';
+function thumbwhere_contentupload_form_submit_delete(&$form, &$form_state) {
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_contentuploads/thumbwhere_contentupload/' . $form_state['thumbwhere_contentupload']->pk_contentupload . '/delete';
 }
 
 
@@ -1386,21 +1360,21 @@ function thumbwhere_contentingest_form_submit_delete(&$form, &$form_state) {
 
 
 /**
- * Form callback: confirmation form for deleting a thumbwhere_contentingest.
+ * Form callback: confirmation form for deleting a thumbwhere_contentupload.
  *
- * @param $thumbwhere_contentingest
- *   The thumbwhere_contentingest to delete
+ * @param $thumbwhere_contentupload
+ *   The thumbwhere_contentupload to delete
  *
  * @see confirm_form()
  */
-function thumbwhere_contentingest_delete_form($form, &$form_state, $thumbwhere_contentingest) {
-  $form_state['thumbwhere_contentingest'] = $thumbwhere_contentingest;
+function thumbwhere_contentupload_delete_form($form, &$form_state, $thumbwhere_contentupload) {
+  $form_state['thumbwhere_contentupload'] = $thumbwhere_contentupload;
 
-  $form['#submit'][] = 'thumbwhere_contentingest_delete_form_submit';
+  $form['#submit'][] = 'thumbwhere_contentupload_delete_form_submit';
 
   $form = confirm_form($form,
-    t('Are you sure you want to delete thumbwhere_contentingest %name?', array('%name' => $thumbwhere_contentingest->pk_contentingest)),
-    'admin/thumbwhere/thumbwhere_contentingests/thumbwhere_contentingest',
+    t('Are you sure you want to delete thumbwhere_contentupload %name?', array('%name' => $thumbwhere_contentupload->pk_contentupload)),
+    'admin/thumbwhere/thumbwhere_contentuploads/thumbwhere_contentupload',
     '<p>' . t('This action cannot be undone.') . '</p>',
     t('Delete'),
     t('Cancel'),
@@ -1411,45 +1385,45 @@ function thumbwhere_contentingest_delete_form($form, &$form_state, $thumbwhere_c
 }
 
 /**
- * Submit callback for thumbwhere_contentingest_delete_form
+ * Submit callback for thumbwhere_contentupload_delete_form
  */
-function thumbwhere_contentingest_delete_form_submit($form, &$form_state) {
-  $thumbwhere_contentingest = $form_state['thumbwhere_contentingest'];
+function thumbwhere_contentupload_delete_form_submit($form, &$form_state) {
+  $thumbwhere_contentupload = $form_state['thumbwhere_contentupload'];
 
-  thumbwhere_contentingest_delete($thumbwhere_contentingest);
+  thumbwhere_contentupload_delete($thumbwhere_contentupload);
 
-  drupal_set_message(t('The thumbwhere_contentingest %name has been deleted.', array('%name' => $thumbwhere_contentingest->pk_contentingest)));
-  watchdog('thumbwhere_contentingest', 'Deleted thumbwhere_contentingest %name.', array('%name' => $thumbwhere_contentingest->pk_contentingest));
+  drupal_set_message(t('The thumbwhere_contentupload %name has been deleted.', array('%name' => $thumbwhere_contentupload->pk_contentupload)));
+  watchdog('thumbwhere_contentupload', 'Deleted thumbwhere_contentupload %name.', array('%name' => $thumbwhere_contentupload->pk_contentupload));
 
-  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_contentingests';
+  $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_contentuploads';
 }
 
 
 
 /**
- * Page to add ThumbWhereContentIngest Entities.
+ * Page to add ThumbWhereContentUpload Entities.
  *
  * @todo Pass this through a proper theme function
  */
-function thumbwhere_contentingest_add_page() {
-  $controller = entity_ui_controller('thumbwhere_contentingest');
+function thumbwhere_contentupload_add_page() {
+  $controller = entity_ui_controller('thumbwhere_contentupload');
   return $controller->addPage();
 }
 
 
 /**
- * Displays the list of available thumbwhere_contentingest types for thumbwhere_contentingest creation.
+ * Displays the list of available thumbwhere_contentupload types for thumbwhere_contentupload creation.
  *
  * @ingroup themeable
  */
-function theme_thumbwhere_contentingest_add_list($variables) {
+function theme_thumbwhere_contentupload_add_list($variables) {
 
 
   //$content = $variables['content'];
   $output = '';
   /*
   if ($content) {
-    $output = '<dl class="thumbwhere_contentingest-type-list">';
+    $output = '<dl class="thumbwhere_contentupload-type-list">';
     foreach ($content as $item) {
       $output .= '<dt>' . l($item['title'], $item['href']) . '</dt>';
       $output .= '<dd>' . filter_xss_admin($item['description']) . '</dd>';
@@ -1457,11 +1431,11 @@ function theme_thumbwhere_contentingest_add_list($variables) {
     $output .= '</dl>';
   }
   else {
-    if (user_access('administer thumbwhere_contentingest types')) {
-      $output = '<p>' . t('ThumbWhereContentIngest Entities cannot be added because you have not created any thumbwhere_contentingest types yet. Go to the <a href="@create-thumbwhere_contentingest-type">thumbwhere_contentingest type creation page</a> to add a new thumbwhere_contentingest type.', array('@create-thumbwhere_contentingest-type' => url('admin/structure/thumbwhere_contentingest_types/add'))) . '</p>';
+    if (user_access('administer thumbwhere_contentupload types')) {
+      $output = '<p>' . t('ThumbWhereContentUpload Entities cannot be added because you have not created any thumbwhere_contentupload types yet. Go to the <a href="@create-thumbwhere_contentupload-type">thumbwhere_contentupload type creation page</a> to add a new thumbwhere_contentupload type.', array('@create-thumbwhere_contentupload-type' => url('admin/structure/thumbwhere_contentupload_types/add'))) . '</p>';
     }
     else {
-      $output = '<p>' . t('No thumbwhere_contentingest types have been created yet for you to use.') . '</p>';
+      $output = '<p>' . t('No thumbwhere_contentupload types have been created yet for you to use.') . '</p>';
     }
   }
   */
@@ -1473,14 +1447,14 @@ function theme_thumbwhere_contentingest_add_list($variables) {
 
 
 /**
- * Sets the breadcrumb for administrative thumbwhere_contentingest pages.
+ * Sets the breadcrumb for administrative thumbwhere_contentupload pages.
  */
-function thumbwhere_contentingest_set_breadcrumb() {
+function thumbwhere_contentupload_set_breadcrumb() {
   $breadcrumb = array(
     l(t('Home'), '<front>'),
     l(t('Administration'), 'admin'),
-    l(t('ContentIngest'), 'admin/content'),
-    l(t('ContentIngest'), 'admin/thumbwhere/thumbwhere_contentingests'),
+    l(t('ContentUpload'), 'admin/content'),
+    l(t('ContentUpload'), 'admin/thumbwhere/thumbwhere_contentuploads'),
   );
 
   drupal_set_breadcrumb($breadcrumb);

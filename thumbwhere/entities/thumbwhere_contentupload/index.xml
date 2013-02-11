@@ -17,10 +17,13 @@
     <type name="datetime" implemented_by="DateTime" />
   </types>
   <resources version="V1.1" service="Content">
-    <resource name="content_ingest" type="ContentIngest" runat="server" enabled="true" object="ContentIngest" create="true" subscribe="true">
+    <resource name="content_upload" type="ContentUpload" runat="server" enabled="true" object="ContentUpload" create="true" subscribe="true">
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>
+      <field name="mediaitemuploadpush" type="MediaItemUploadPush">
+        <doc>'mediaitemuploadpush' field, which is an embedded 'MediaItemUploadPush' resource.</doc>
+      </field>
       <field name="mediaitem" type="MediaItem" optional="true">
         <doc>'mediaitem' field, which is an embedded 'MediaItem' resource.</doc>
       </field>
@@ -38,12 +41,6 @@
       </field>
       <field name="consumer" type="Consumer" optional="true">
         <doc>'consumer' field, which is an embedded 'Consumer' resource.</doc>
-      </field>
-      <field name="target" type="Target" optional="true">
-        <doc>'target' field, which is an embedded 'Target' resource.</doc>
-      </field>
-      <field name="url" type="string">
-        <doc>'url' field, which is a 'string' type.</doc>
       </field>
       <field name="size" type="long" optional="true">
         <doc>'size' field, which is a 'long' type.</doc>

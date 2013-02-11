@@ -39,6 +39,9 @@
       <field name="content" type="Content" optional="true">
         <doc>'content' field, which is an embedded 'Content' resource.</doc>
       </field>
+      <field name="target" type="Target" optional="true">
+        <doc>'target' field, which is an embedded 'Target' resource.</doc>
+      </field>
       <field name="title" type="string" optional="true">
         <doc>'title' field, which is a 'string' type.</doc>
       </field>
