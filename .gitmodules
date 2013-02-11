@@ -1,4 +1,0 @@
-[submodule "thumbwhere/dependencies/tw"]
-	path = thumbwhere/dependencies/tw
-	url = https://JamesMcParlane@github.com/ThumbWhere/ThumbWhere-PHP5-WebServiceLibrary.git
-	
