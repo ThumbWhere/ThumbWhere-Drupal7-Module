@@ -774,7 +774,7 @@ function thumbwhere_producer_edit_form($form, &$form_state, $thumbwhere_producer
     $form['name'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereProducer name'),
-
+    '#default_value' => isset($thumbwhere_producer->name) ? $thumbwhere_producer->name : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -783,7 +783,7 @@ function thumbwhere_producer_edit_form($form, &$form_state, $thumbwhere_producer
     $form['external_id'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereProducer external_id'),
-
+    '#default_value' => isset($thumbwhere_producer->external_id) ? $thumbwhere_producer->external_id : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

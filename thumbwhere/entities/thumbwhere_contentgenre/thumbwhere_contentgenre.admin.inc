@@ -730,7 +730,7 @@ function thumbwhere_contentgenre_edit_form($form, &$form_state, $thumbwhere_cont
     $form['name'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereContentGenre name'),
-
+    '#default_value' => isset($thumbwhere_contentgenre->name) ? $thumbwhere_contentgenre->name : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -739,7 +739,7 @@ function thumbwhere_contentgenre_edit_form($form, &$form_state, $thumbwhere_cont
     $form['external_id'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereContentGenre external_id'),
-
+    '#default_value' => isset($thumbwhere_contentgenre->external_id) ? $thumbwhere_contentgenre->external_id : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

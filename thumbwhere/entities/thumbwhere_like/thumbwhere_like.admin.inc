@@ -784,7 +784,7 @@ function thumbwhere_like_edit_form($form, &$form_state, $thumbwhere_like) {
     $form['documentation'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereLike documentation'),
-
+    '#default_value' => isset($thumbwhere_like->documentation) ? $thumbwhere_like->documentation : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

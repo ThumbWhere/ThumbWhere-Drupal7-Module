@@ -818,7 +818,7 @@ function thumbwhere_member_edit_form($form, &$form_state, $thumbwhere_member) {
     $form['password'] = array(
     '#type' => 'password',
     '#title' => t('ThumbWhereMember password'),
-
+    '#default_value' => isset($thumbwhere_member->password) ? $thumbwhere_member->password : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -827,7 +827,7 @@ function thumbwhere_member_edit_form($form, &$form_state, $thumbwhere_member) {
     $form['external_id'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereMember external_id'),
-
+    '#default_value' => isset($thumbwhere_member->external_id) ? $thumbwhere_member->external_id : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

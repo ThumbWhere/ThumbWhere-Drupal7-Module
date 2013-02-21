@@ -816,7 +816,7 @@ function thumbwhere_hostorder_edit_form($form, &$form_state, $thumbwhere_hostord
     $form['address'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereHostOrder address'),
-
+    '#default_value' => isset($thumbwhere_hostorder->address) ? $thumbwhere_hostorder->address : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -825,7 +825,7 @@ function thumbwhere_hostorder_edit_form($form, &$form_state, $thumbwhere_hostord
     $form['processing'] = array(
     '#type' => 'checkbox',
     '#title' => t('ThumbWhereHostOrder processing'),
-
+    '#default_value' => isset($thumbwhere_hostorder->processing) ? $thumbwhere_hostorder->processing : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -834,7 +834,7 @@ function thumbwhere_hostorder_edit_form($form, &$form_state, $thumbwhere_hostord
     $form['completed'] = array(
     '#type' => 'checkbox',
     '#title' => t('ThumbWhereHostOrder completed'),
-
+    '#default_value' => isset($thumbwhere_hostorder->completed) ? $thumbwhere_hostorder->completed : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

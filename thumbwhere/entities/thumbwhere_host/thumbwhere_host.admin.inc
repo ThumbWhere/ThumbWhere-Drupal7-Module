@@ -789,7 +789,7 @@ function thumbwhere_host_edit_form($form, &$form_state, $thumbwhere_host) {
     $form['address'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereHost address'),
-
+    '#default_value' => isset($thumbwhere_host->address) ? $thumbwhere_host->address : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

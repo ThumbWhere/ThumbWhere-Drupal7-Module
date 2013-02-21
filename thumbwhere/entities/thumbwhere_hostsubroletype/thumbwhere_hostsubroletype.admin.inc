@@ -730,7 +730,7 @@ function thumbwhere_hostsubroletype_edit_form($form, &$form_state, $thumbwhere_h
     $form['name'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereHostSubRoleType name'),
-
+    '#default_value' => isset($thumbwhere_hostsubroletype->name) ? $thumbwhere_hostsubroletype->name : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -739,7 +739,7 @@ function thumbwhere_hostsubroletype_edit_form($form, &$form_state, $thumbwhere_h
     $form['config_xsl'] = array(
     '#type' => 'textarea',
     '#title' => t('ThumbWhereHostSubRoleType config_xsl'),
-
+    '#default_value' => isset($thumbwhere_hostsubroletype->config_xsl) ? $thumbwhere_hostsubroletype->config_xsl : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

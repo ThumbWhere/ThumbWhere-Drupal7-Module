@@ -1046,7 +1046,7 @@ function thumbwhere_contentupload_edit_form($form, &$form_state, $thumbwhere_con
     $form['size'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereContentUpload size'),
-
+    '#default_value' => isset($thumbwhere_contentupload->size) ? $thumbwhere_contentupload->size : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

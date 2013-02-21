@@ -774,7 +774,7 @@ function thumbwhere_content_edit_form($form, &$form_state, $thumbwhere_content) 
     $form['external_id'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereContent external_id'),
-
+    '#default_value' => isset($thumbwhere_content->external_id) ? $thumbwhere_content->external_id : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

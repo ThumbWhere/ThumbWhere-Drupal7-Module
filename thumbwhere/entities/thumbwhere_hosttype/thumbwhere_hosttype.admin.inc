@@ -718,7 +718,7 @@ function thumbwhere_hosttype_edit_form($form, &$form_state, $thumbwhere_hosttype
     $form['name'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereHostType name'),
-
+    '#default_value' => isset($thumbwhere_hosttype->name) ? $thumbwhere_hosttype->name : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

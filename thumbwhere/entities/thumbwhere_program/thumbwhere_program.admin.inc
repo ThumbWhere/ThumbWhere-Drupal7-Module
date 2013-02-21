@@ -718,7 +718,7 @@ function thumbwhere_program_edit_form($form, &$form_state, $thumbwhere_program) 
     $form['name'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereProgram name'),
-
+    '#default_value' => isset($thumbwhere_program->name) ? $thumbwhere_program->name : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

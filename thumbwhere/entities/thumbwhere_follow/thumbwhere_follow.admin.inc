@@ -784,7 +784,7 @@ function thumbwhere_follow_edit_form($form, &$form_state, $thumbwhere_follow) {
     $form['documentation'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereFollow documentation'),
-
+    '#default_value' => isset($thumbwhere_follow->documentation) ? $thumbwhere_follow->documentation : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

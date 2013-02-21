@@ -742,7 +742,7 @@ function thumbwhere_hostcommandtemplate_edit_form($form, &$form_state, $thumbwhe
     $form['name'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereHostCommandTemplate name'),
-
+    '#default_value' => isset($thumbwhere_hostcommandtemplate->name) ? $thumbwhere_hostcommandtemplate->name : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

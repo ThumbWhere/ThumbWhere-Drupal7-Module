@@ -858,7 +858,7 @@ function thumbwhere_identity_edit_form($form, &$form_state, $thumbwhere_identity
     $form['id'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereIdentity id'),
-
+    '#default_value' => isset($thumbwhere_identity->id) ? $thumbwhere_identity->id : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -867,7 +867,7 @@ function thumbwhere_identity_edit_form($form, &$form_state, $thumbwhere_identity
     $form['external_id'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereIdentity external_id'),
-
+    '#default_value' => isset($thumbwhere_identity->external_id) ? $thumbwhere_identity->external_id : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -876,7 +876,7 @@ function thumbwhere_identity_edit_form($form, &$form_state, $thumbwhere_identity
     $form['secret'] = array(
     '#type' => 'textarea',
     '#title' => t('ThumbWhereIdentity secret'),
-
+    '#default_value' => isset($thumbwhere_identity->secret) ? $thumbwhere_identity->secret : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -885,7 +885,7 @@ function thumbwhere_identity_edit_form($form, &$form_state, $thumbwhere_identity
     $form['secret_hash'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereIdentity secret_hash'),
-
+    '#default_value' => isset($thumbwhere_identity->secret_hash) ? $thumbwhere_identity->secret_hash : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -894,7 +894,7 @@ function thumbwhere_identity_edit_form($form, &$form_state, $thumbwhere_identity
     $form['secret_hash_salt'] = array(
     '#type' => 'textarea',
     '#title' => t('ThumbWhereIdentity secret_hash_salt'),
-
+    '#default_value' => isset($thumbwhere_identity->secret_hash_salt) ? $thumbwhere_identity->secret_hash_salt : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -912,7 +912,7 @@ function thumbwhere_identity_edit_form($form, &$form_state, $thumbwhere_identity
     $form['label'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereIdentity label'),
-
+    '#default_value' => isset($thumbwhere_identity->label) ? $thumbwhere_identity->label : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -921,7 +921,7 @@ function thumbwhere_identity_edit_form($form, &$form_state, $thumbwhere_identity
     $form['last_login'] = array(
     '#type' => 'date',
     '#title' => t('ThumbWhereIdentity last_login'),
-
+    '#default_value' => isset($thumbwhere_identity->last_login) ? $thumbwhere_identity->last_login : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

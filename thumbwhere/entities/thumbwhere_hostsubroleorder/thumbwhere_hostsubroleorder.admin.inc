@@ -804,7 +804,7 @@ function thumbwhere_hostsubroleorder_edit_form($form, &$form_state, $thumbwhere_
     $form['processing'] = array(
     '#type' => 'checkbox',
     '#title' => t('ThumbWhereHostSubRoleOrder processing'),
-
+    '#default_value' => isset($thumbwhere_hostsubroleorder->processing) ? $thumbwhere_hostsubroleorder->processing : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -813,7 +813,7 @@ function thumbwhere_hostsubroleorder_edit_form($form, &$form_state, $thumbwhere_
     $form['completed'] = array(
     '#type' => 'checkbox',
     '#title' => t('ThumbWhereHostSubRoleOrder completed'),
-
+    '#default_value' => isset($thumbwhere_hostsubroleorder->completed) ? $thumbwhere_hostsubroleorder->completed : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

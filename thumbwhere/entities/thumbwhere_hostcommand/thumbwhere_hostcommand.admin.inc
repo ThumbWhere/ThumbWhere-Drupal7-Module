@@ -816,7 +816,7 @@ function thumbwhere_hostcommand_edit_form($form, &$form_state, $thumbwhere_hostc
     $form['command'] = array(
     '#type' => 'textarea',
     '#title' => t('ThumbWhereHostCommand command'),
-
+    '#default_value' => isset($thumbwhere_hostcommand->command) ? $thumbwhere_hostcommand->command : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -825,7 +825,7 @@ function thumbwhere_hostcommand_edit_form($form, &$form_state, $thumbwhere_hostc
     $form['running'] = array(
     '#type' => 'checkbox',
     '#title' => t('ThumbWhereHostCommand running'),
-
+    '#default_value' => isset($thumbwhere_hostcommand->running) ? $thumbwhere_hostcommand->running : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -834,7 +834,7 @@ function thumbwhere_hostcommand_edit_form($form, &$form_state, $thumbwhere_hostc
     $form['completed'] = array(
     '#type' => 'checkbox',
     '#title' => t('ThumbWhereHostCommand completed'),
-
+    '#default_value' => isset($thumbwhere_hostcommand->completed) ? $thumbwhere_hostcommand->completed : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

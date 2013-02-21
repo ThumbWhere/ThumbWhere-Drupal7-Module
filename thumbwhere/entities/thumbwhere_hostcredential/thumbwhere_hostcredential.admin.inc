@@ -764,7 +764,7 @@ function thumbwhere_hostcredential_edit_form($form, &$form_state, $thumbwhere_ho
     $form['username'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereHostCredential username'),
-
+    '#default_value' => isset($thumbwhere_hostcredential->username) ? $thumbwhere_hostcredential->username : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -773,7 +773,7 @@ function thumbwhere_hostcredential_edit_form($form, &$form_state, $thumbwhere_ho
     $form['password'] = array(
     '#type' => 'password',
     '#title' => t('ThumbWhereHostCredential password'),
-
+    '#default_value' => isset($thumbwhere_hostcredential->password) ? $thumbwhere_hostcredential->password : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -782,7 +782,7 @@ function thumbwhere_hostcredential_edit_form($form, &$form_state, $thumbwhere_ho
     $form['sshprivatekey'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereHostCredential sshprivatekey'),
-
+    '#default_value' => isset($thumbwhere_hostcredential->sshprivatekey) ? $thumbwhere_hostcredential->sshprivatekey : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

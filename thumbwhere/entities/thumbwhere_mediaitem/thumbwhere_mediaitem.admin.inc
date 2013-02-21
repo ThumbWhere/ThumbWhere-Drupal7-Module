@@ -1103,7 +1103,7 @@ function thumbwhere_mediaitem_edit_form($form, &$form_state, $thumbwhere_mediait
     $form['title'] = array(
     '#type' => 'textarea',
     '#title' => t('ThumbWhereMediaItem title'),
-
+    '#default_value' => isset($thumbwhere_mediaitem->title) ? $thumbwhere_mediaitem->title : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -1112,7 +1112,7 @@ function thumbwhere_mediaitem_edit_form($form, &$form_state, $thumbwhere_mediait
     $form['body'] = array(
     '#type' => 'textarea',
     '#title' => t('ThumbWhereMediaItem body'),
-
+    '#default_value' => isset($thumbwhere_mediaitem->body) ? $thumbwhere_mediaitem->body : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -1148,7 +1148,7 @@ function thumbwhere_mediaitem_edit_form($form, &$form_state, $thumbwhere_mediait
     $form['digest'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereMediaItem digest'),
-
+    '#default_value' => isset($thumbwhere_mediaitem->digest) ? $thumbwhere_mediaitem->digest : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

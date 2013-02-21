@@ -730,7 +730,7 @@ function thumbwhere_hostlogentry_edit_form($form, &$form_state, $thumbwhere_host
     $form['log'] = array(
     '#type' => 'textarea',
     '#title' => t('ThumbWhereHostLogEntry log'),
-
+    '#default_value' => isset($thumbwhere_hostlogentry->log) ? $thumbwhere_hostlogentry->log : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

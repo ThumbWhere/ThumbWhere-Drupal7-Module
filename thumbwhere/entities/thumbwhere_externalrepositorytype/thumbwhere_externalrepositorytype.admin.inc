@@ -718,7 +718,7 @@ function thumbwhere_externalrepositorytype_edit_form($form, &$form_state, $thumb
     $form['name'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereExternalRepositoryType name'),
-
+    '#default_value' => isset($thumbwhere_externalrepositorytype->name) ? $thumbwhere_externalrepositorytype->name : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

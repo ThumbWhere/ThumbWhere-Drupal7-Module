@@ -740,7 +740,7 @@ function thumbwhere_target_edit_form($form, &$form_state, $thumbwhere_target) {
     $form['name'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereTarget name'),
-
+    '#default_value' => isset($thumbwhere_target->name) ? $thumbwhere_target->name : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

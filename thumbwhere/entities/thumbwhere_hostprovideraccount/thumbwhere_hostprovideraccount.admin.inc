@@ -754,7 +754,7 @@ function thumbwhere_hostprovideraccount_edit_form($form, &$form_state, $thumbwhe
     $form['name'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereHostProviderAccount name'),
-
+    '#default_value' => isset($thumbwhere_hostprovideraccount->name) ? $thumbwhere_hostprovideraccount->name : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -763,7 +763,7 @@ function thumbwhere_hostprovideraccount_edit_form($form, &$form_state, $thumbwhe
     $form['token'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereHostProviderAccount token'),
-
+    '#default_value' => isset($thumbwhere_hostprovideraccount->token) ? $thumbwhere_hostprovideraccount->token : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -772,7 +772,7 @@ function thumbwhere_hostprovideraccount_edit_form($form, &$form_state, $thumbwhe
     $form['secret'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereHostProviderAccount secret'),
-
+    '#default_value' => isset($thumbwhere_hostprovideraccount->secret) ? $thumbwhere_hostprovideraccount->secret : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

@@ -745,7 +745,7 @@ function thumbwhere_trophy_edit_form($form, &$form_state, $thumbwhere_trophy) {
     $form['singleton'] = array(
     '#type' => 'checkbox',
     '#title' => t('ThumbWhereTrophy singleton'),
-
+    '#default_value' => isset($thumbwhere_trophy->singleton) ? $thumbwhere_trophy->singleton : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -754,7 +754,7 @@ function thumbwhere_trophy_edit_form($form, &$form_state, $thumbwhere_trophy) {
     $form['name'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereTrophy name'),
-
+    '#default_value' => isset($thumbwhere_trophy->name) ? $thumbwhere_trophy->name : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

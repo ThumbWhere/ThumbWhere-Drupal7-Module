@@ -825,7 +825,7 @@ function thumbwhere_contentmetadata_edit_form($form, &$form_state, $thumbwhere_c
     $form['description'] = array(
     '#type' => 'textarea',
     '#title' => t('ThumbWhereContentMetadata description'),
-
+    '#default_value' => isset($thumbwhere_contentmetadata->description) ? $thumbwhere_contentmetadata->description : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -834,7 +834,7 @@ function thumbwhere_contentmetadata_edit_form($form, &$form_state, $thumbwhere_c
     $form['comment'] = array(
     '#type' => 'textarea',
     '#title' => t('ThumbWhereContentMetadata comment'),
-
+    '#default_value' => isset($thumbwhere_contentmetadata->comment) ? $thumbwhere_contentmetadata->comment : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -843,7 +843,7 @@ function thumbwhere_contentmetadata_edit_form($form, &$form_state, $thumbwhere_c
     $form['year'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereContentMetadata year'),
-
+    '#default_value' => isset($thumbwhere_contentmetadata->year) ? $thumbwhere_contentmetadata->year : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -852,7 +852,7 @@ function thumbwhere_contentmetadata_edit_form($form, &$form_state, $thumbwhere_c
     $form['compilation'] = array(
     '#type' => 'checkbox',
     '#title' => t('ThumbWhereContentMetadata compilation'),
-
+    '#default_value' => isset($thumbwhere_contentmetadata->compilation) ? $thumbwhere_contentmetadata->compilation : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

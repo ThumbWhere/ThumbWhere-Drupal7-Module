@@ -779,7 +779,7 @@ function thumbwhere_externalrepositorysync_edit_form($form, &$form_state, $thumb
     $form['last_sync'] = array(
     '#type' => 'date',
     '#title' => t('ThumbWhereExternalRepositorySync last_sync'),
-
+    '#default_value' => isset($thumbwhere_externalrepositorysync->last_sync) ? $thumbwhere_externalrepositorysync->last_sync : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -788,7 +788,7 @@ function thumbwhere_externalrepositorysync_edit_form($form, &$form_state, $thumb
     $form['max'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereExternalRepositorySync max'),
-
+    '#default_value' => isset($thumbwhere_externalrepositorysync->max) ? $thumbwhere_externalrepositorysync->max : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

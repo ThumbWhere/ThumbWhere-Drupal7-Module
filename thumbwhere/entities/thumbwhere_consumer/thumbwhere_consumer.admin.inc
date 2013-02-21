@@ -774,7 +774,7 @@ function thumbwhere_consumer_edit_form($form, &$form_state, $thumbwhere_consumer
     $form['name'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereConsumer name'),
-
+    '#default_value' => isset($thumbwhere_consumer->name) ? $thumbwhere_consumer->name : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -783,7 +783,7 @@ function thumbwhere_consumer_edit_form($form, &$form_state, $thumbwhere_consumer
     $form['external_id'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereConsumer external_id'),
-
+    '#default_value' => isset($thumbwhere_consumer->external_id) ? $thumbwhere_consumer->external_id : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

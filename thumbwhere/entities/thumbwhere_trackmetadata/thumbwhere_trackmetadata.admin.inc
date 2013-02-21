@@ -778,7 +778,7 @@ function thumbwhere_trackmetadata_edit_form($form, &$form_state, $thumbwhere_tra
     $form['track'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereTrackMetadata track'),
-
+    '#default_value' => isset($thumbwhere_trackmetadata->track) ? $thumbwhere_trackmetadata->track : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -787,7 +787,7 @@ function thumbwhere_trackmetadata_edit_form($form, &$form_state, $thumbwhere_tra
     $form['album'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereTrackMetadata album'),
-
+    '#default_value' => isset($thumbwhere_trackmetadata->album) ? $thumbwhere_trackmetadata->album : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -796,7 +796,7 @@ function thumbwhere_trackmetadata_edit_form($form, &$form_state, $thumbwhere_tra
     $form['disk'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereTrackMetadata disk'),
-
+    '#default_value' => isset($thumbwhere_trackmetadata->disk) ? $thumbwhere_trackmetadata->disk : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -805,7 +805,7 @@ function thumbwhere_trackmetadata_edit_form($form, &$form_state, $thumbwhere_tra
     $form['bpm'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereTrackMetadata bpm'),
-
+    '#default_value' => isset($thumbwhere_trackmetadata->bpm) ? $thumbwhere_trackmetadata->bpm : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -814,7 +814,7 @@ function thumbwhere_trackmetadata_edit_form($form, &$form_state, $thumbwhere_tra
     $form['lyrics'] = array(
     '#type' => 'textarea',
     '#title' => t('ThumbWhereTrackMetadata lyrics'),
-
+    '#default_value' => isset($thumbwhere_trackmetadata->lyrics) ? $thumbwhere_trackmetadata->lyrics : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -823,7 +823,7 @@ function thumbwhere_trackmetadata_edit_form($form, &$form_state, $thumbwhere_tra
     $form['composer'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereTrackMetadata composer'),
-
+    '#default_value' => isset($thumbwhere_trackmetadata->composer) ? $thumbwhere_trackmetadata->composer : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

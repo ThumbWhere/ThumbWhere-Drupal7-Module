@@ -1058,7 +1058,7 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
     $form['url'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereContentIngest url'),
-
+    '#default_value' => isset($thumbwhere_contentingest->url) ? $thumbwhere_contentingest->url : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
@@ -1067,7 +1067,7 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
     $form['size'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereContentIngest size'),
-
+    '#default_value' => isset($thumbwhere_contentingest->size) ? $thumbwhere_contentingest->size : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

@@ -718,7 +718,7 @@ function thumbwhere_contentclassification_edit_form($form, &$form_state, $thumbw
     $form['name'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereContentClassification name'),
-
+    '#default_value' => isset($thumbwhere_contentclassification->name) ? $thumbwhere_contentclassification->name : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

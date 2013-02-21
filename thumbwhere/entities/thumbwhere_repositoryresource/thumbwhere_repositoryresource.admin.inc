@@ -718,7 +718,7 @@ function thumbwhere_repositoryresource_edit_form($form, &$form_state, $thumbwher
     $form['name'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereRepositoryResource name'),
-
+    '#default_value' => isset($thumbwhere_repositoryresource->name) ? $thumbwhere_repositoryresource->name : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

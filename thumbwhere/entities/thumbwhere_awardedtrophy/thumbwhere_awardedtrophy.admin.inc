@@ -784,7 +784,7 @@ function thumbwhere_awardedtrophy_edit_form($form, &$form_state, $thumbwhere_awa
     $form['documentation'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereAwardedTrophy documentation'),
-
+    '#default_value' => isset($thumbwhere_awardedtrophy->documentation) ? $thumbwhere_awardedtrophy->documentation : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

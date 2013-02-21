@@ -784,7 +784,7 @@ function thumbwhere_fan_edit_form($form, &$form_state, $thumbwhere_fan) {
     $form['documentation'] = array(
     '#type' => 'textfield',
     '#title' => t('ThumbWhereFan documentation'),
-
+    '#default_value' => isset($thumbwhere_fan->documentation) ? $thumbwhere_fan->documentation : '',
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,
