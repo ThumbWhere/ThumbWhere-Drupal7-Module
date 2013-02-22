@@ -376,13 +376,6 @@ function thumbwhere_consumer_entity_presave($entity, $entity_type) {
     if (!empty($entity->external_id)) {
       $fields['external_id'] = $entity->external_id;
     }
-    // Compulsory so..
-    if (empty($entity->name)) {
-      throw new Exception('name is mandatory.');
-    }
-    else {
-      $fields['name'] = $entity->name;
-    }
 		
 	//
 	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
@@ -404,7 +397,6 @@ function thumbwhere_consumer_entity_presave($entity, $entity_type) {
       //
 
       $consumer = $twContentAPI->create_consumer($context = array(
-                  'key' => variable_get('thumbwhere_api_key')
                   'key' => variable_get('thumbwhere_api_key')
           ), $fields);
             
@@ -430,7 +422,6 @@ function thumbwhere_consumer_entity_presave($entity, $entity_type) {
       //
 
       $consumer = $twContentAPI->update_consumer($id=$entity->pk_consumer,$context = array(
-                  'key' => variable_get('thumbwhere_api_key')
                   'key' => variable_get('thumbwhere_api_key')
           ), $fields);
             
