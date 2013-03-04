@@ -1,22 +1,26 @@
 REM Set the path to home where we have the config
+REM This works with msysgit BUT ONLY IF YOU DON'T USE PUTTY!
 SET HOME=\home
 
-"C:\Program Files\Git\bin\git.exe" config --global user.name "Build Server"
-"C:\Program Files\Git\bin\git.exe" config --global user.email "build@thumbwhere.com"
+"C:\Program Files (x86)\Git\bin\git.exe" config --global user.name "Build Server"
+"C:\Program Files (x86)\Git\bin\git.exe" config --global user.email "build@thumbwhere.com"
 
 SET BUILD=0
-SET STREAM="dev"
-SET MESSAGE="dev"
-SET F1="--recommended"
-SET F2="--supported"
-SET F3="--default"
+SET STREAM=dev
+SET MESSAGE=dev
+SET F1=--recommended
+SET F2=--supported
+SET F3=--default
 
-IF NOT (%1)==("") SET MESSAGE=%1
-IF NOT (%2)==("") SET STREAM=%2
-IF NOT (%3)==("") SET BUILD=%3
-IF NOT (%4)==("") SET F1=%4
-IF NOT (%5)==("") SET F2=%5
-IF NOT (%6)==("") SET F3=%6
+IF NOT ("%1")==("") SET MESSAGE=%1
+IF NOT ("%2")==("") SET STREAM=%2
+IF NOT ("%3")==("") SET BUILD=%3
+IF NOT ("%4")==("") SET F1=%4
+IF NOT ("%5")==("") SET F2=%5
+IF NOT ("%6")==("") SET F3=%6
+
+
+ECHO "STREAM = %STREAM%"
 
 @REM Change to the release folder
 PUSHD ..\..\ThumbWhere-Drupal7-Module-Releases\release-history\
@@ -40,7 +44,7 @@ PUSHD E:\checkout\%STREAM%\
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Checkout if we need to
-IF NOT EXIST ThumbWhere-Drupal7-Module-Releases "C:\Program Files\Git\bin\git.exe" clone git@github.com:ThumbWhere/ThumbWhere-Drupal7-Module-Releases.git
+IF NOT EXIST ThumbWhere-Drupal7-Module-Releases "C:\Program Files (x86)\Git\bin\git.exe" clone git@github.com:ThumbWhere/ThumbWhere-Drupal7-Module-Releases.git
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 POPD
@@ -57,19 +61,19 @@ PUSHD E:\checkout\%STREAM%\ThumbWhere-Drupal7-Module-Releases
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Make sure we are up to date
-"C:\Program Files\Git\bin\git.exe" pull
+"C:\Program Files (x86)\Git\bin\git.exe" pull
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Add the new changes
-"C:\Program Files\Git\bin\git.exe" add .
+"C:\Program Files (x86)\Git\bin\git.exe" add .
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Add the new changes
-"C:\Program Files\Git\bin\git.exe" commit -m "Automatic commit by %STREAM% build."
+"C:\Program Files (x86)\Git\bin\git.exe" commit -m "Automatic commit by %STREAM% build."
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Push the new changes
-"C:\Program Files\Git\bin\git.exe" push
+"C:\Program Files (x86)\Git\bin\git.exe" push
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 POPD

@@ -37,5 +37,5 @@ files[] = views/thumbwhere_hostsubrole_handler_thumbwhere_hostsubrole_operations
 project status url = "http://drupalmodules.thumbwhere.com/release-history"
 version = "7.x-0.0-dev-local0"
 project = "thumbwhere"
-datestamp = "2000000000"
+datestamp = "0000000000"
 

@@ -34,6 +34,5 @@ project status url = "http://drupalmodules.thumbwhere.com/release-history"
 version = "7.x-0.0-dev-local0"
 project = "thumbwhere"
 datestamp = "0000000000"
-;
 
     
