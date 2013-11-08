@@ -17,7 +17,7 @@
     <type name="datetime" implemented_by="DateTime" />
   </types>
   <resources version="V1.1" service="Content">
-    <resource name="action" type="Action" runat="server" enabled="true" object="Action" create="true" subscribe="true">
+    <resource name="action" type="Action" runat="server" enabled="true" object="Action" group="content" create="true" subscribe="true">
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>
@@ -50,6 +50,9 @@
       </field>
       <field name="consume" type="Consume" optional="true">
         <doc>'consume' field, which is an embedded 'Consume' resource.</doc>
+      </field>
+      <field name="produce" type="Produce" optional="true">
+        <doc>'produce' field, which is an embedded 'Produce' resource.</doc>
       </field>
       <field name="consumermember" type="ConsumerMember" optional="true">
         <doc>'consumermember' field, which is an embedded 'ConsumerMember' resource.</doc>

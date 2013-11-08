@@ -95,6 +95,7 @@ function thumbwhere_action_views_default_views() {
     'fk_booking' => 'fk_booking',
     'fk_checkin' => 'fk_checkin',
     'fk_consume' => 'fk_consume',
+    'fk_produce' => 'fk_produce',
     'fk_consumermember' => 'fk_consumermember',
     'fk_producermember' => 'fk_producermember',
     'link_thumbwhere_action' => 'link_thumbwhere_action',
@@ -173,6 +174,13 @@ function thumbwhere_action_views_default_views() {
           'empty_column' => 0,
       ),
       'fk_consume' => array(
+          'sortable' => 0,
+          'default_sort_order' => 'asc',
+          'align' => '',
+          'separator' => '',
+          'empty_column' => 0,
+      ),
+      'fk_produce' => array(
           'sortable' => 0,
           'default_sort_order' => 'asc',
           'align' => '',
@@ -567,6 +575,30 @@ function thumbwhere_action_views_default_views() {
   $handler->display->display_options['fields']['fk_consume']['empty_zero'] = 0;
   $handler->display->display_options['fields']['fk_consume']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['fk_consume']['format_plural'] = 0;
+  /* Field: ThumbWhereAction: fk_produce */
+  $handler->display->display_options['fields']['fk_produce']['id'] = 'fk_produce';
+  $handler->display->display_options['fields']['fk_produce']['table'] = 'thumbwhere_action';
+  $handler->display->display_options['fields']['fk_produce']['field'] = 'fk_produce';
+  $handler->display->display_options['fields']['fk_produce']['label'] = 'fk_produce';
+  $handler->display->display_options['fields']['fk_produce']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['fk_produce']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['fk_produce']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['fk_produce']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['fk_produce']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['fk_produce']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['fk_produce']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['fk_produce']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['fk_produce']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['fk_produce']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['fk_produce']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['fk_produce']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['fk_produce']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['fk_produce']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['fk_produce']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['fk_produce']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['fk_produce']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['fk_produce']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['fk_produce']['format_plural'] = 0;
   /* Field: ThumbWhereAction: fk_consumermember */
   $handler->display->display_options['fields']['fk_consumermember']['id'] = 'fk_consumermember';
   $handler->display->display_options['fields']['fk_consumermember']['table'] = 'thumbwhere_action';

@@ -406,6 +406,11 @@ function thumbwhere_action_entity_presave($entity, $entity_type) {
     }
 
     // Nullable so we only pass it through to create_action if we have it..
+    if (isset($entity->fk_produce)) {
+      $fields['produce'] = $entity->fk_produce;
+    }
+
+    // Nullable so we only pass it through to create_action if we have it..
     if (isset($entity->fk_consumermember)) {
       $fields['consumermember'] = $entity->fk_consumermember;
     }

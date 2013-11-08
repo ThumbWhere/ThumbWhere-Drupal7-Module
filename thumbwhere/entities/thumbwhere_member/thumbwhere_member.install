@@ -142,7 +142,7 @@ function thumbwhere_member_schema() {
               'not null' => TRUE,
               'default' => -1,
           ),
-          'fk_profilepic_mediaitem' => array(
+          'fk_profilepic' => array(
           'description' => 'ThumbWhere Id: Optional reference to a \'MediaItem\' Entity.',
               'type' => 'int',
               'size' => 'big',
@@ -183,6 +183,18 @@ function thumbwhere_member_schema() {
               'size' => 'normal',
               'length' => 128,
               'not null' => FALSE,                  
+          ),
+          'about' => array(
+              'description' => 'The \'about\' textarea field of the \'Member\' entity.',
+              'type' => 'text',
+              'size' => 'big',
+              'not null' => FALSE,                  
+          ),
+          'url' => array(
+              'description' => 'The \'url\' textarea field of the \'Member\' entity.',
+              'type' => 'text',
+              'size' => 'big',
+              'not null' => FALSE,                  
           ),      
       ),
       'primary key' => array(
@@ -192,8 +204,8 @@ function thumbwhere_member_schema() {
           'pk_member' => array(
               'pk_member'
           ),
-          'fk_profilepic_mediaitem' => array(
-              'fk_profilepic_mediaitem'
+          'fk_profilepic' => array(
+              'fk_profilepic'
           ),
           'fk_profilepics_mediaitemcollection' => array(
               'fk_profilepics_mediaitemcollection'
@@ -218,7 +230,7 @@ function thumbwhere_member_schema() {
  * @return
  *  An associative array specifying the permissions for each role
  *
- * @ingroup track
+ * @ingroup thumbwhere_member
  */
 function _thumbwhere_member_get_permissions() {
   return array(
@@ -234,4 +246,40 @@ function _thumbwhere_member_get_permissions() {
   );
 }
 
+
+/**
+ * Returns a structured array defining the fields that are being renamed
+ *
+ * @return
+ *  An array specifying which fields are being renames.
+ *
+ * @ingroup thumbwhere_member
+ */
+function _thumbwhere_member_field_rename() {
+	$field_rename = array(
+		//'oldfield' => 'newfield'
+	);
+	return $field_rename;
+}
+
+/**
+ * Returns a structured array defining the permission for each role.
+ *
+ * @return
+ *  An associative array specifying the permissions for each role
+ *
+ * @ingroup thumbwhere_member
+ */
+function _thumbwhere_member_update() {	
+	return _thumbwhere_schema_update('thumbwhere_member',thumbwhere_member_schema(),_thumbwhere_member_field_rename());
+}
+
+/**
+ * <p>Updates the 'thumbwhere_member' entity.</p>
+ * <p>Compares this schema with the one currently installed and will make any changes to bring it up to date with the definition in this module.</p>
+ * <p>If any changes needed to be made, this wil output a message at the end of the update process with a list of what was modified.</p>
+ */
+function thumbwhere_member_update_7100() {	
+	return _thumbwhere_member_update();	
+}
 

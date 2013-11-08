@@ -356,8 +356,8 @@ function thumbwhere_member_entity_presave($entity, $entity_type) {
     $fields = array();
 
     // Nullable so we only pass it through to create_member if we have it..
-    if (isset($entity->fk_profilepic_mediaitem)) {
-      $fields['profilepic_mediaitem'] = $entity->fk_profilepic_mediaitem;
+    if (isset($entity->fk_profilepic)) {
+      $fields['profilepic'] = $entity->fk_profilepic;
     }
 
     // Nullable so we only pass it through to create_member if we have it..
@@ -383,6 +383,16 @@ function thumbwhere_member_entity_presave($entity, $entity_type) {
     // Nullable so we only pass it through to create_member if we have it..
     if (!empty($entity->external_id)) {
       $fields['external_id'] = $entity->external_id;
+    }
+
+    // Nullable so we only pass it through to create_member if we have it..
+    if (!empty($entity->about)) {
+      $fields['about'] = $entity->about;
+    }
+
+    // Nullable so we only pass it through to create_member if we have it..
+    if (!empty($entity->url)) {
+      $fields['url'] = $entity->url;
     }
 		
 	//
