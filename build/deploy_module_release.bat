@@ -2,8 +2,14 @@ REM Set the path to home where we have the config
 REM This works with msysgit BUT ONLY IF YOU DON'T USE PUTTY!
 SET HOME=\home
 
-"C:\Program Files (x86)\Git\bin\git.exe" config --global user.name "Build Server"
-"C:\Program Files (x86)\Git\bin\git.exe" config --global user.email "build@thumbwhere.com"
+SET GIT_PATH="C:\Program Files (x86)\Git\bin\git.exe"
+
+git.exe config --global user.name "Build Server"
+git.exe config --global user.email "build@thumbwhere.com"
+
+
+REM "C:\Program Files (x86)\Git\bin\git.exe" config --global user.name "Build Server"
+REM "C:\Program Files (x86)\Git\bin\git.exe" config --global user.email "build@thumbwhere.com"
 
 SET BUILD=0
 SET STREAM=dev
@@ -44,7 +50,7 @@ PUSHD E:\checkout\%STREAM%\
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Checkout if we need to
-IF NOT EXIST ThumbWhere-Drupal7-Module-Releases "C:\Program Files (x86)\Git\bin\git.exe" clone git@github.com:ThumbWhere/ThumbWhere-Drupal7-Module-Releases.git
+IF NOT EXIST ThumbWhere-Drupal7-Module-Releases "git.exe" clone git@github.com:ThumbWhere/ThumbWhere-Drupal7-Module-Releases.git
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 POPD
