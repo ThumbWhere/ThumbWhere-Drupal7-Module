@@ -74,6 +74,10 @@ PUSHD E:\checkout\%STREAM%\ThumbWhere-Drupal7-Module-Releases
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Make sure we are up to date
+%GIT_PATH% checkout master
+IF NOT ERRORLEVEL 0 GOTO ReportError
+
+REM Make sure we are up to date
 %GIT_PATH% pull
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
