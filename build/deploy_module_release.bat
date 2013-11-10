@@ -3,6 +3,7 @@ REM This works with msysgit BUT ONLY IF YOU DON'T USE PUTTY!
 SET HOME=\home
 
 
+REM PICK YOUR GIT
 if exist {"C:\Program Files (x86)\Git\bin\git.exe"} (
     SET GIT_PATH="C:\Program Files (x86)\Git\bin\git.exe"
 ) else (
@@ -73,19 +74,19 @@ PUSHD E:\checkout\%STREAM%\ThumbWhere-Drupal7-Module-Releases
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Make sure we are up to date
-"C:\Program Files (x86)\Git\bin\git.exe" pull
+%GIT_PATH% pull
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Add the new changes
-"C:\Program Files (x86)\Git\bin\git.exe" add .
+%GIT_PATH% add .
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Add the new changes
-"C:\Program Files (x86)\Git\bin\git.exe" commit -m "Automatic commit by %STREAM% build."
+%GIT_PATH% commit -m "Automatic commit by %STREAM% build."
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Push the new changes
-"C:\Program Files (x86)\Git\bin\git.exe" push
+%GIT_PATH% push
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 POPD
