@@ -24,7 +24,7 @@ SET F1=--recommended
 SET F2=--supported
 SET F3=--default
 
-IF NOT ("%1")==("") SET MESSAGE=%1
+IF NOT (%1)==("") SET MESSAGE=%1
 IF NOT ("%2")==("") SET STREAM=%2
 IF NOT ("%3")==("") SET BUILD=%3
 IF NOT ("%4")==("") SET F1=%4
