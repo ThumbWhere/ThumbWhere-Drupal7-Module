@@ -157,11 +157,11 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
         }
 
         if (isset($notification->title)) {
-
+          $entityfields['title'] = (string)($notification->title);
         }
 
         if (isset($notification->body)) {
-
+          $entityfields['body'] = (string)($notification->body);
         }
 
         if (isset($notification->bodyonly)) {
@@ -419,11 +419,11 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
         }
 
         if (isset($notification->title)) {
-
+          $entityfields['title'] = (string)($notification->title);
         }
 
         if (isset($notification->body)) {
-
+          $entityfields['body'] = (string)($notification->body);
         }
 
         if (isset($notification->bodyonly)) {
@@ -569,11 +569,11 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
         }
 
         if (isset($notification->title)) {
-
+          $entity->title = (string)($notification->title);
         }
 
         if (isset($notification->body)) {
-
+          $entity->body = (string)($notification->body);
         }
 
         if (isset($notification->bodyonly)) {
