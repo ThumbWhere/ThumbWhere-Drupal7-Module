@@ -779,9 +779,9 @@ function thumbwhere_externalrepository_edit_form($form, &$form_state, $thumbwher
   );
   // Add the default field elements.
     $form['url'] = array(
-    '#type' => 'textfield',
+    '#type' => 'textarea',
     '#title' => t('ThumbWhereExternalRepository url'),
-    '#default_value' => isset($thumbwhere_externalrepository->url) ? $thumbwhere_externalrepository->url : '',
+    '#default_value' => isset($thumbwhere_externalrepository->url) ? $thumbwhere_externalrepository->url : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

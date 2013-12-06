@@ -164,10 +164,9 @@ function thumbwhere_externalrepository_schema() {
               //'default' => -1,
           ),
           'url' => array(
-              'description' => 'The \'url\' textfield field of the \'ExternalRepository\' entity.',
-              'type' => 'varchar',
-              'size' => 'normal',
-              'length' => 128,
+              'description' => 'The \'url\' textarea field of the \'ExternalRepository\' entity.',
+              'type' => 'text',
+              'size' => 'big',
               'not null' => FALSE,                  
           ),      
       ),

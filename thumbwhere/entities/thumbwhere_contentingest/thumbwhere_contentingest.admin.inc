@@ -1053,9 +1053,9 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
   );
   // Add the default field elements.
     $form['url'] = array(
-    '#type' => 'textfield',
+    '#type' => 'textarea',
     '#title' => t('ThumbWhereContentIngest url'),
-    '#default_value' => isset($thumbwhere_contentingest->url) ? $thumbwhere_contentingest->url : '',
+    '#default_value' => isset($thumbwhere_contentingest->url) ? $thumbwhere_contentingest->url : 0,
     // '#maxlength' => 255,
    // '#required' => TRUE,
     '#weight' => -5,

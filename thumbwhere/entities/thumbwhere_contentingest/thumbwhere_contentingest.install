@@ -192,10 +192,9 @@ function thumbwhere_contentingest_schema() {
               //'default' => -1,
           ),
           'url' => array(
-              'description' => 'The \'url\' textfield field of the \'ContentIngest\' entity.',
-              'type' => 'varchar',
-              'size' => 'normal',
-              'length' => 128,
+              'description' => 'The \'url\' textarea field of the \'ContentIngest\' entity.',
+              'type' => 'text',
+              'size' => 'big',
               'not null' => FALSE,                  
           ),
           'size' => array(

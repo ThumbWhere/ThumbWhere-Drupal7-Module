@@ -159,7 +159,7 @@ function _thumbwhere_stresstest_create_ExternalRepository($uid,$test) {
         'externalrepositorytype' => $_global_thumbwhere_stresstest_ExternalRepositoryType,
         'host' => $_global_thumbwhere_stresstest_Host,
         'apikey' => $_global_thumbwhere_stresstest_APIKey,
-    		'url' => $test->randomName(),
+    		'url' => $test->randomString(),
 
       ));  
       
