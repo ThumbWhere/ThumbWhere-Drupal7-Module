@@ -22,7 +22,7 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
   //
 
   if (!isset($notification->attributes()->op)) {
-    drupal_add_http_header('Status', '501 unable to fulfull request..');
+    drupal_add_http_header('Status', '501 unable to fulfil request..');
     $err = 'We were expecting an \'op\', attribute on the \'host_role_type_capable_of_host_role_subrole_type\', element.';
     print($err);
    	watchdog('thumbwhere_hostroletypehostsubroletype', $err ,array(), WATCHDOG_ERROR);
@@ -39,7 +39,7 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
   //
 
   if (!isset($notification->attributes()->key)) {
-    drupal_add_http_header('Status', '412 unable to fulfull request..');
+    drupal_add_http_header('Status', '412 unable to fulfil request..');
     $err = 'We were expecting a \'key\', attribute on the \'host_role_type_capable_of_host_role_subrole_type\', element.';
     print($err);
     watchdog('thumbwhere_hostroletypehostsubroletype', $err ,array(), WATCHDOG_ERROR);
@@ -75,7 +75,7 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
         //
 		
         if (!isset($notification->attributes()->id)) {
-          drupal_add_http_header('Status', '412 Unable to fulfull request.');
+          drupal_add_http_header('Status', '412 Unable to fulfil request.');
           $err = 'We were expecting an \'id\', attribute on the \'host_role_type_capable_of_host_role_subrole_type\', element when we are performing an \'update\' notification..';
           print($err);
           watchdog('thumbwhere_hostroletypehostsubroletype', $err ,array(), WATCHDOG_ERROR);
@@ -184,7 +184,7 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
         //
 		
         if (!isset($notification->attributes()->id)) {
-          drupal_add_http_header('Status', '412 Unable to fulfull request.');
+          drupal_add_http_header('Status', '412 Unable to fulfil request.');
           $err = 'We were expecting an \'id\', attribute on the \'host_role_type_capable_of_host_role_subrole_type\', element when we are performing an \'update\' notification..';
           print($err);
           watchdog('thumbwhere_hostroletypehostsubroletype', $err ,array(), WATCHDOG_ERROR);
@@ -236,7 +236,7 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
         //
 		
         if (!isset($notification->attributes()->id)) {
-          drupal_add_http_header('Status', '412 Unable to fulfull request.');
+          drupal_add_http_header('Status', '412 Unable to fulfil request.');
           $err = 'We were expecting an \'id\', attribute on the \'host_role_type_capable_of_host_role_subrole_type\', element when we are performing an \'update\' notification..';
           print($err);
           watchdog('thumbwhere_hostroletypehostsubroletype', $err ,array(), WATCHDOG_ERROR);
@@ -376,7 +376,7 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
 
     default:
       {
-        drupal_add_http_header('Status', '501 Unable to fulfull request. Unhandled operation \'' . $op . '\'.');
+        drupal_add_http_header('Status', '501 Unable to fulfil request. Unhandled operation \'' . $op . '\'.');
         print('We don\'t handle the \'' . $op . '\', notification operation on the \'host_role_type_capable_of_host_role_subrole_type\', element.');
         exit(0);
 
@@ -387,7 +387,7 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
 
 
 /**
- * Menu callback: React to a notifications for ContentIngest.
+ * Menu callback: React to a notification for hostroletypehostsubroletype.
  */
 function _thumbwhere_host_role_type_capable_of_host_role_subrole_type_notify() {
 

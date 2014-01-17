@@ -22,7 +22,7 @@ function _thumbwhere_handle_consumer_notify_xml($notification) {
   //
 
   if (!isset($notification->attributes()->op)) {
-    drupal_add_http_header('Status', '501 unable to fulfull request..');
+    drupal_add_http_header('Status', '501 unable to fulfil request..');
     $err = 'We were expecting an \'op\', attribute on the \'consumer\', element.';
     print($err);
    	watchdog('thumbwhere_consumer', $err ,array(), WATCHDOG_ERROR);
@@ -39,7 +39,7 @@ function _thumbwhere_handle_consumer_notify_xml($notification) {
   //
 
   if (!isset($notification->attributes()->key)) {
-    drupal_add_http_header('Status', '412 unable to fulfull request..');
+    drupal_add_http_header('Status', '412 unable to fulfil request..');
     $err = 'We were expecting a \'key\', attribute on the \'consumer\', element.';
     print($err);
     watchdog('thumbwhere_consumer', $err ,array(), WATCHDOG_ERROR);
@@ -75,7 +75,7 @@ function _thumbwhere_handle_consumer_notify_xml($notification) {
         //
 		
         if (!isset($notification->attributes()->id)) {
-          drupal_add_http_header('Status', '412 Unable to fulfull request.');
+          drupal_add_http_header('Status', '412 Unable to fulfil request.');
           $err = 'We were expecting an \'id\', attribute on the \'consumer\', element when we are performing an \'update\' notification..';
           print($err);
           watchdog('thumbwhere_consumer', $err ,array(), WATCHDOG_ERROR);
@@ -192,7 +192,7 @@ function _thumbwhere_handle_consumer_notify_xml($notification) {
         //
 		
         if (!isset($notification->attributes()->id)) {
-          drupal_add_http_header('Status', '412 Unable to fulfull request.');
+          drupal_add_http_header('Status', '412 Unable to fulfil request.');
           $err = 'We were expecting an \'id\', attribute on the \'consumer\', element when we are performing an \'update\' notification..';
           print($err);
           watchdog('thumbwhere_consumer', $err ,array(), WATCHDOG_ERROR);
@@ -244,7 +244,7 @@ function _thumbwhere_handle_consumer_notify_xml($notification) {
         //
 		
         if (!isset($notification->attributes()->id)) {
-          drupal_add_http_header('Status', '412 Unable to fulfull request.');
+          drupal_add_http_header('Status', '412 Unable to fulfil request.');
           $err = 'We were expecting an \'id\', attribute on the \'consumer\', element when we are performing an \'update\' notification..';
           print($err);
           watchdog('thumbwhere_consumer', $err ,array(), WATCHDOG_ERROR);
@@ -400,7 +400,7 @@ function _thumbwhere_handle_consumer_notify_xml($notification) {
 
     default:
       {
-        drupal_add_http_header('Status', '501 Unable to fulfull request. Unhandled operation \'' . $op . '\'.');
+        drupal_add_http_header('Status', '501 Unable to fulfil request. Unhandled operation \'' . $op . '\'.');
         print('We don\'t handle the \'' . $op . '\', notification operation on the \'consumer\', element.');
         exit(0);
 
@@ -411,7 +411,7 @@ function _thumbwhere_handle_consumer_notify_xml($notification) {
 
 
 /**
- * Menu callback: React to a notifications for ContentIngest.
+ * Menu callback: React to a notification for consumer.
  */
 function _thumbwhere_consumer_notify() {
 
