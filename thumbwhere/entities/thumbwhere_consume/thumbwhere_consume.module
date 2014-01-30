@@ -304,8 +304,6 @@ function thumbwhere_consume_entity_presave($entity, $entity_type) {
   // We only look after what we want...
   if ($entity_type == 'thumbwhere_consume')  {
   	
-  	
-  	
  	/////////////////////////////////////////////////////
     //
     // Should we not propagate this to ThumbWhere? 
@@ -315,12 +313,12 @@ function thumbwhere_consume_entity_presave($entity, $entity_type) {
         if (twCanDebug()) {
           if ($entity->is_new) {
             if (twCanDebug()){
-              debug("DO NOT PROPAGATE 'consume' presave *CREATE*");
+              debug("DO NOT PROPAGATE 'consume' presave *CREATE* not being sent to ThumbWhere server.");
           	}
           }
           else {
             if (twCanDebug()) {
-              debug("DO NOT PROPAGATE 'consume' presave *UPDATE*");
+              debug("DO NOT PROPAGATE 'consume' presave *UPDATE* not being sent to ThumbWhere server.");
             }
           }
         }
@@ -329,7 +327,7 @@ function thumbwhere_consume_entity_presave($entity, $entity_type) {
         return;
       }
       else if (twCanDebug()) {
-        debug("OK PROAOGATE 'consume' presave to ThumbWhere Server");
+        debug("OK PROAOGATE 'consume' presave to ThumbWhere server.");
       }
     }
     else if (twCanDebug()) {

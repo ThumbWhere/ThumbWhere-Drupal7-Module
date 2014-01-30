@@ -17,6 +17,9 @@
  */
 function _thumbwhere_handle_activity_notify_xml($notification) {
 
+  if (twCanDebug()) debug('PROCESS NOTIFICATION');
+  if (twCanDebug()) debug($notification);
+
   //
   // Get the operation
   //
@@ -33,6 +36,24 @@ function _thumbwhere_handle_activity_notify_xml($notification) {
 
   if (twCanDebug()) debug('op');
   if (twCanDebug()) debug($op);
+
+  //
+  // If this is a notification then $op should be 'notify'
+  //
+
+  if (!isset($notification->attributes()->notification)) {
+    drupal_add_http_header('Status', '501 unable to fulfil request..');
+    $err = 'We were expecting an \'notification\', attribute on the \'activity\', element.';
+    print($err);
+   	watchdog('thumbwhere_activity', $err ,array(), WATCHDOG_ERROR);
+    exit(0);
+  }
+
+  $notification_op = $notification->attributes()->notification;
+
+  if (twCanDebug()) debug('notification');
+  if (twCanDebug()) debug($notification_op);
+
 
   //
   // Get the context
@@ -52,7 +73,7 @@ function _thumbwhere_handle_activity_notify_xml($notification) {
   // Now based on the operation..
   //
 
-  switch($op)
+  switch($notification_op)
   {
   
   
@@ -60,11 +81,11 @@ function _thumbwhere_handle_activity_notify_xml($notification) {
       {
       		
 		
-		//
-		// We want to time this
-		//
+		    //
+		    // We want to time this
+		    //
 			
-		$start_time = microtime(TRUE);
+		    $start_time = microtime(TRUE);
 			
         //
         // What resource are we creating?
@@ -76,7 +97,7 @@ function _thumbwhere_handle_activity_notify_xml($notification) {
 		
         if (!isset($notification->attributes()->id)) {
           drupal_add_http_header('Status', '412 Unable to fulfil request.');
-          $err = 'We were expecting an \'id\', attribute on the \'activity\', element when we are performing an \'update\' notification..';
+          $err = 'We were expecting an \'id\', attribute on the \'activity\', element when we are handling a \'create\' notification..';
           print($err);
           watchdog('thumbwhere_activity', $err ,array(), WATCHDOG_ERROR);
           exit(0);
@@ -100,12 +121,13 @@ function _thumbwhere_handle_activity_notify_xml($notification) {
 
         if (count($entities) != 0) {
           //drupal_add_http_header('Status', '409 Resource already exists.');
-          $err = '\'activity\' resource already exists with an id of \'' . $id . '\'.';
+          $err = 'Error while servicing \'create\' notification. Resource \'activity\' already exists with an id of \'' . $id . '\'.';
            //print($err);
-          watchdog('thumbwhere_activity', $err ,array(), WATCHDOG_ERROR);
-          //exit(0);
+          // When ORIGIN (TW-171) is sorted out then this can be re-anbled
+          //watchdog('thumbwhere_activity', $err ,array(), WATCHDOG_ERROR);
 
           	
+          // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
           print('<activity op="' . $op . '" id="' . $id . '" >');
@@ -176,11 +198,11 @@ function _thumbwhere_handle_activity_notify_xml($notification) {
     case 'update':
       {
       
-		//
-		// We want to time this
-		//
-			
-		$start_time = microtime(TRUE);
+    		//
+    		// We want to time this
+    		//
+    			
+    		$start_time = microtime(TRUE);
       
         //
         // What resource are we updating?
@@ -229,11 +251,11 @@ function _thumbwhere_handle_activity_notify_xml($notification) {
           watchdog('thumbwhere_activity','creating local version of missing entity',array(), WATCHDOG_ERROR);
 		
 		
-		//
-		// We want to time this
-		//
+		    //
+		    // We want to time this
+		    //
 			
-		$start_time = microtime(TRUE);
+		    $start_time = microtime(TRUE);
 			
         //
         // What resource are we creating?
@@ -245,7 +267,7 @@ function _thumbwhere_handle_activity_notify_xml($notification) {
 		
         if (!isset($notification->attributes()->id)) {
           drupal_add_http_header('Status', '412 Unable to fulfil request.');
-          $err = 'We were expecting an \'id\', attribute on the \'activity\', element when we are performing an \'update\' notification..';
+          $err = 'We were expecting an \'id\', attribute on the \'activity\', element when we are handling a \'update\' notification..';
           print($err);
           watchdog('thumbwhere_activity', $err ,array(), WATCHDOG_ERROR);
           exit(0);
@@ -269,12 +291,13 @@ function _thumbwhere_handle_activity_notify_xml($notification) {
 
         if (count($entities) != 0) {
           //drupal_add_http_header('Status', '409 Resource already exists.');
-          $err = '\'activity\' resource already exists with an id of \'' . $id . '\'.';
+          $err = 'Error while servicing \'update\' notification. Resource \'activity\' already exists with an id of \'' . $id . '\'.';
            //print($err);
-          watchdog('thumbwhere_activity', $err ,array(), WATCHDOG_ERROR);
-          //exit(0);
+          // When ORIGIN (TW-171) is sorted out then this can be re-anbled
+          //watchdog('thumbwhere_activity', $err ,array(), WATCHDOG_ERROR);
 
           	
+          // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
           print('<activity op="' . $op . '" id="' . $id . '" >');
@@ -389,21 +412,18 @@ function _thumbwhere_handle_activity_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response  duration="' . $duration . '" >');
-        print('<activity op="' . $op . '" id="' . $id . '" >');
+        print('<activity op="' . $op . '" notification="' . $notification_op . '" id="' . $id . '" >');
         print('<status>success</status>');
         print('</activity>');
         print('</response>');
         exit(0);
       }
-      
-      
 
     default:
       {
         drupal_add_http_header('Status', '501 Unable to fulfil request. Unhandled operation \'' . $op . '\'.');
-        print('We don\'t handle the \'' . $op . '\', notification operation on the \'activity\', element.');
+        print('We don\'t handle the \'' . $notification_op . '\', notification operation on the \'activity\', element.');
         exit(0);
-
       }
   }
 }
