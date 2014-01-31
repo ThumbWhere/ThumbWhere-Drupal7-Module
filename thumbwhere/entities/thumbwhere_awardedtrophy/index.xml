@@ -17,7 +17,7 @@
     <type name="datetime" implemented_by="DateTime" />
   </types>
   <resources version="V1.1" service="Content">
-    <resource name="awarded_trophy" type="AwardedTrophy" runat="server" enabled="true" object="AwardedTrophy" create="true" subscribe="true">
+    <resource name="awarded_trophy" type="AwardedTrophy" runat="server" enabled="true" object="AwardedTrophy" group="content" create="true" subscribe="true">
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>

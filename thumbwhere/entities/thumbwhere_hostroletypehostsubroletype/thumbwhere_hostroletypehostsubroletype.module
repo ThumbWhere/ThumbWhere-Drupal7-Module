@@ -304,8 +304,6 @@ function thumbwhere_hostroletypehostsubroletype_entity_presave($entity, $entity_
   // We only look after what we want...
   if ($entity_type == 'thumbwhere_hostroletypehostsubroletype')  {
   	
-  	
-  	
  	/////////////////////////////////////////////////////
     //
     // Should we not propagate this to ThumbWhere? 
@@ -315,12 +313,12 @@ function thumbwhere_hostroletypehostsubroletype_entity_presave($entity, $entity_
         if (twCanDebug()) {
           if ($entity->is_new) {
             if (twCanDebug()){
-              debug("DO NOT PROPAGATE 'hostroletypehostsubroletype' presave *CREATE*");
+              debug("DO NOT PROPAGATE 'hostroletypehostsubroletype' presave *CREATE* not being sent to ThumbWhere server.");
           	}
           }
           else {
             if (twCanDebug()) {
-              debug("DO NOT PROPAGATE 'hostroletypehostsubroletype' presave *UPDATE*");
+              debug("DO NOT PROPAGATE 'hostroletypehostsubroletype' presave *UPDATE* not being sent to ThumbWhere server.");
             }
           }
         }
@@ -329,7 +327,7 @@ function thumbwhere_hostroletypehostsubroletype_entity_presave($entity, $entity_
         return;
       }
       else if (twCanDebug()) {
-        debug("OK PROAOGATE 'hostroletypehostsubroletype' presave to ThumbWhere Server");
+        debug("OK PROAOGATE 'hostroletypehostsubroletype' presave to ThumbWhere server.");
       }
     }
     else if (twCanDebug()) {

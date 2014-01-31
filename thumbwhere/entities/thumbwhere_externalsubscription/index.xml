@@ -17,7 +17,7 @@
     <type name="datetime" implemented_by="DateTime" />
   </types>
   <resources version="V1.1" service="Admin">
-    <resource name="external_repository_resource_subscription" type="ExternalSubscription" runat="server" enabled="true" object="ExternalSubscription" create="true" subscribe="true">
+    <resource name="external_repository_resource_subscription" type="ExternalSubscription" runat="server" enabled="true" object="ExternalSubscription" group="repositories" create="true" subscribe="true">
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>

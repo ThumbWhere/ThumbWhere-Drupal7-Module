@@ -135,8 +135,6 @@ function thumbwhere_install() {
     }
   }
 
-
-
   /*
   // We define the node type as an associative array.
   $twcontent = array(
@@ -550,4 +548,110 @@ function _thumbwhere_get_permissions() {
       ),*/
   );
 }
+
+/**
+ * Updates the database to bring the specified table into alignment with the schema definition.
+ *
+ * @return
+ *  A HTML text description of the changes that were made.
+ *
+ */
+function _thumbwhere_schema_update($tablename,$new_schema,$field_rename) {
+	
+	$response = '';
+	
+	//
+	// Field renaming
+	//
+
+	foreach ($field_rename as $old_field_name => $new_field_name  ) {
+		//debug('old_field_name ' . $old_field_name);
+		//debug('new_field_name ' . $new_field_name);
+
+		if (db_field_exists($tablename, $old_field_name)) {
+		
+			if (db_field_exists($tablename, $new_field_name)) {
+				throw new Exception('rename from ' . $old_field_name . ' to ' .  $new_field_name . ' was rejected because that field already exists.');
+			}
+		}
+	}	
+	
+	//
+	// Add any new fields
+	//
+
+	foreach ($new_schema[$tablename]['fields'] as $n => $new_field) { 	
+		if (db_field_exists($tablename, $n)) {
+			//debug('field ' . $n . ' exists.');		
+			// TODO: is it different?
+		}
+		else
+		{
+			//debug('Created field ' . $n . '.');		
+			
+			// Field does not exist.. so create the field..
+			db_add_field($tablename, $n, $new_field);
+			
+			$response .= '<li>Created field \'' . $n . '\'. </li>';
+		}
+	}
+
+	//
+	// Rename any fields that should be renamed
+	//
+
+	foreach ($field_rename as $old_field_name => $new_field_name  ) {
+		//debug('old_field_name ' . $old_field_name);
+		//debug('new_field_name ' . $new_field_name);
+
+		if (db_field_exists($tablename, $old_field_name)) {
+		
+			if (db_field_exists($tablename, $new_field_name)) {
+		
+				//debug('rename field ' . $old_field_name . ' to ' . $new_field_name);
+				
+				$response .= '<li>Migrating content from \'' . $old_field_name . '\' to \'' . $new_field_name . '\'.</li>';
+				
+				db_update($tablename)
+					->expression($new_field_name, $old_field_name )
+					->execute();		
+			}
+			else
+			{
+				throw new Exception($old_field_name . ' could not be renamed  to ' .  $new_field_name . ' as that would colide with an existing field.');
+			}
+		}
+	}
+	
+	//
+	// Remove any old fields
+	//
+	
+	// get the column description from the database
+	$result = db_query("SELECT table_name, column_name from information_schema.columns where TABLE_NAME = '$tablename'");
+	$columns = array();
+	foreach ($result as $record) {
+	  $columns[] = $record->column_name;
+	}	
+
+	foreach ($columns as $n) {
+		if (!array_key_exists($n,$new_schema[$tablename]['fields'])) {
+			if (db_field_exists($tablename, $n)) {	
+				//debug('Removed field (1) ' . $n);
+				$response .= '<li>Removed field ' . $n . '</li>';
+				db_drop_field($tablename, $n);
+			}
+		}	
+	}	
+	
+	//debug($response);
+	
+	if ($response == '')
+	{
+		return;
+	}
+	
+	return '<ol>' . $response . '</ol>';
+}
+
 

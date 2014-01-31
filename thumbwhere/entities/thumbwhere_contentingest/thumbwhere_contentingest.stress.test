@@ -126,7 +126,7 @@ function _thumbwhere_stresstest_create_ContentIngest($uid,$test) {
           		
     $entity = entity_create('thumbwhere_contentingest', array(
         'uid' => $uid,
-    		'url' => $test->randomName(),
+    		'url' => $test->randomString(),
 
       ));  
       

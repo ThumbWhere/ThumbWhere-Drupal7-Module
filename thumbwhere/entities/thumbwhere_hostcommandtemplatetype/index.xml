@@ -17,7 +17,7 @@
     <type name="datetime" implemented_by="DateTime" />
   </types>
   <resources version="V1.1" service="Admin">
-    <resource name="host_command_template_type" type="HostCommandTemplateType" runat="server" enabled="true" object="HostCommandTemplateType" create="true" subscribe="true">
+    <resource name="host_command_template_type" type="HostCommandTemplateType" runat="server" enabled="true" object="HostCommandTemplateType" group="hosts" create="true" subscribe="true">
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>

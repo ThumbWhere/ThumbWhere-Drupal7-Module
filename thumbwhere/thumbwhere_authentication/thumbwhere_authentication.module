@@ -37,8 +37,8 @@ function thumbwhere_authentication_info($field = 0) {
  */
 function thumbwhere_authentication_form_alter(&$form, &$form_state, $form_id) {
 
-	// Depending on the form id we decide and the block, we decide 	
-	if ($form_id == 'user_login' || $form_id == 'user_login_block') {    
+	// Depending on the form id we decide and the block, we decide
+	if ($form_id == 'user_login' || $form_id == 'user_login_block') {
 		// Find the normal password validator.
 		$key = array_search('user_login_authenticate_validate', $form['#validate']);
 
@@ -63,16 +63,19 @@ function thumbwhere_authentication_form_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
- * Implements hook__entity_presave().
+ * Implements hook_entity_presave().
  *
  * When the user entity is saved, we need to check if it is new and create a new ThumbWhere member.
  *
  */
 function thumbwhere_authentication_entity_presave($entity, $type) {
 
+  //debug('thumbwhere_authentication_entity_presave');
+
   global $_tw_pk_consumer;
 
   if ($type != 'user') return;
+
 
   // Force the language to be 'und' *HACK*
   $entity->language = 'und';
@@ -80,6 +83,7 @@ function thumbwhere_authentication_entity_presave($entity, $type) {
   // If this is new
   if ($entity->is_new) {
 
+    if (variable_get('thumbwhere_auth_link_on_create',0) == 0) return;
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -114,51 +118,89 @@ function thumbwhere_authentication_entity_presave($entity, $type) {
     //
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // Ta dah!
-
-  }
-  else {
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    //
-    //  Here we maybe modify a corresponding entity in the ThumbWhere domain..
-    //  We only want to modify it if something has changed. For this size of object that we have, it
-    //  is cheaper to work out if and what has changed instead of performing a superflous update to the database
-    //
-
-    //
-    // Work out what has changed.
-    //
-
-    $changes = array();
-
-    /*
-     if ($node->track_quantity[$node->language][0]['value'] != $node->original->track_quantity['und'][0]['value'])
-     {
-     $changes['track_quantity'] = $node->track_quantity;
-     }
-     */
-
-    $changesCount = count($changes);
-
-    //
-    // If there are fields we care about, we perform an update to the corresponding ThumbWhere entity.
-    //
-
-    if ($changesCount > 0) {
-      if (twCanDebug()) debug('We have ' . $changesCount . ' changes.');
-    }
-
-    //
-    // Also... we have an oportunity here to update the Node with any new values...
-    //
-
-    //
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////////////
 
   }
 }
+
+/**
+ * Implements hook_entity_presave().
+ *
+ * When the user entity is saved, we need to check if it is new and create a new ThumbWhere member.
+ *
+ */
+function thumbwhere_authentication_entity_load($entities, $type) {
+
+  global $_tw_pk_consumer;
+
+  if ($type != 'user') return;
+
+  if (variable_get('thumbwhere_auth_link_on_load',0) == 0) return;
+
+  //debug('thumbwhere_authentication_entity_load');
+
+  foreach ($entities as $entity) {
+
+    // Force the language to be 'und' *HACK*
+    $entity->language = 'und';
+
+
+    debug('thumbwhere_authentication_entity_load');
+
+    _thumbwhere_link_consumer($uid);
+
+    /*
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    //  Here we create a corresponding entity in the ThumbWhere domain if we need to.
+    //
+
+    $_tw_pk_consumer = _get_pk_consumer($entity);
+
+    // $_tw_pk_consumer has not been set - so this is Register...
+    if (empty($_tw_pk_consumer)) {
+
+      //debug('USER HAS NO CONSUMER');
+
+
+      // If no password is provided (when we are testing) then we supply one just for completeness.
+      if (!isset($entity->pass)) {
+        $entity->pass = 'pass-' . uniqid();
+      }
+
+      // $_tw_pk_consumer has not been set - so this is Register so this will create a ThumbWhere and Drupal user
+      _thumbwhere_register_existing($entity->name, $entity->pass);
+
+      // If we managed to get back a tw identity, then all is good.
+      if (!empty($_tw_pk_consumer)) {
+        _set_pk_consumer($entity, $_tw_pk_consumer);
+      }
+      else {
+        // We were not expecting that...
+        throw new Exception('Failed to Create User : Error TA-001');
+      }
+
+      // Save it back..
+      // TODO: This may need to be secret SQL..
+      entity_save('user', $entity);
+
+      //debug('CONSUMER ALLOCATED');
+
+    }
+    */
+
+    //
+    // After that we are all good to return our populated node, and Drupal should be none the wiser...
+    //
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Ta dah!
+
+  }
+
+
+}
+
+
 
 //
 //  Official Drupal Hooks
@@ -187,11 +229,11 @@ function _thumbwhere_user_login_form_validate($form, &$form_state) {
 function _thumbwhere_validate_current_pass($form, &$form_state) {
 
 	if (twCanDebug()) debug('_thumbwhere_validate_current_pass');
- 
+
 	global $user;
- 
+
 	// Work out  if we we performing a password reset
-	$uid = $user->uid; 
+	$uid = $user->uid;
 	$pass_reset = isset($_SESSION['pass_reset_' . $uid]) && isset($_GET['pass-reset-token']) && ($_GET['pass-reset-token'] == $_SESSION['pass_reset_' . $uid]);
 
 	// Bacause if we are...
@@ -248,20 +290,20 @@ function _thumbwhere_authentication_authenticate(&$form_state) {
 function _thumbwhere_authentication_validate_and_changepassword(&$form_state) {
 
   if (twCanDebug()) debug('_thumbwhere_authentication_validate_and_changepassword');
-    
+
   $username = trim($form_state['values']['name']);
   $new_password = trim($form_state['values']['pass']);
   $current_password = trim($form_state['values']['current_pass']);
 
    // If we are changing the password?
-   if (!empty($new_password)) {  
-      
-	if (twCanDebug()) debug('CALL _thumbwhere_validate_and_change_password');  
+   if (!empty($new_password)) {
+
+	if (twCanDebug()) debug('CALL _thumbwhere_validate_and_change_password');
     // ... yes.. then validate and change the password
     return _thumbwhere_validate_and_change_password($username, $current_password, $new_password);
   }
   else {
-	if (twCanDebug()) debug('CALL _thumbwhere_validate');  
+	if (twCanDebug()) debug('CALL _thumbwhere_validate');
     // .. no just validate the password
     return _thumbwhere_validate($username, $current_password);
   }
@@ -274,12 +316,12 @@ function _thumbwhere_authentication_validate_and_changepassword(&$form_state) {
  function _thumbwhere_authentication_changepassword(&$form_state) {
 
   if (twCanDebug()) debug('_thumbwhere_authentication_changepassword');
-    
+
   $username = trim($form_state['values']['name']);
   $new_password = trim($form_state['values']['pass']);
 
   // If we are changing the password - we need one..
-   if (!empty($new_password)) {  
+   if (!empty($new_password)) {
       if (twCanDebug()) debug('CHANGE PASSWORD to ' . $new_password);
 	  return _thumbwhere_change_password($username, $new_password);
    }
@@ -298,6 +340,87 @@ function _thumbwhere_authentication_validate_and_changepassword(&$form_state) {
 //
 //  ThumbWhere/Drupal Integration
 //
+
+
+/**
+ * Link the user if we should..
+ */
+function _thumbwhere_link_consumer($uid)
+{
+
+  debug('_thumbwhere_link_consumer ' . $uid);
+
+  // This global represents the current thumbwhere member id
+  global $_tw_pk_consumer;
+
+  ////////////////////////////////////////////////
+  //
+  // Make sure the user has a comsumer_id
+  //
+  //
+
+
+  if (variable_get('thumbwhere_auth_link_on_login',0) == 1) {
+
+    //debug('thumbwhere_authentication_entity_load user ' .  $uid);
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    //  Here we create a corresponding entity in the ThumbWhere domain if we need to.
+    //
+
+    $entity = user_load($uid);
+
+    $_tw_pk_consumer = _get_pk_consumer($entity);
+
+    // $_tw_pk_consumer has not been set - so this is Register...
+    if (empty($_tw_pk_consumer)) {
+
+      //if (twCanDebug())
+        debug('USER HAS NO CONSUMER');
+
+
+      // If no password is provided (when we are testing) then we supply one just for completeness.
+      if (!isset($entity->pass)) {
+        $entity->pass = 'pass-' . uniqid();
+      }
+
+      // $_tw_pk_consumer has not been set - so this is Register so this will create a ThumbWhere and Drupal user
+      _thumbwhere_register_existing($entity->name, $entity->pass);
+
+      //if (twCanDebug())
+      debug('_tw_pk_consumer = ' . $_tw_pk_consumer);
+
+
+      // If we managed to get back a tw identity, then all is good.
+      if (!empty($_tw_pk_consumer)) {
+        _set_pk_consumer($entity, $_tw_pk_consumer);
+      }
+      else {
+        // We were not expecting that...
+        throw new Exception('Failed to Create User : Error TA-001');
+      }
+
+      //if (twCanDebug())
+      debug($entity);
+
+      // Save it back..
+      user_save($entity);
+
+      //if (twCanDebug())
+        debug('CONSUMER ALLOCATED');
+
+    }
+  }
+
+
+  //
+  //
+  //
+  ////////////////////////////////////////////////
+}
+
 
 /**
  * Return true if the user is authenticates with ThumbWhere
@@ -329,6 +452,73 @@ function _thumbwhere_login($username, $password) {
     if ((variable_get('thumbwhere_auth_backdoor') == 1) &&  ($password == variable_get('thumbwhere_auth_backdoor_password'))) {
       return $uid;
     }
+
+
+    ////////////////////////////////////////////////
+    //
+    // Make sure the user has a comsumer_id
+    //
+    //
+
+
+    if (variable_get('thumbwhere_auth_link_on_login',0) == 1) {
+
+      //debug('thumbwhere_authentication_entity_load user ' .  $uid);
+
+
+      debug('_thumbwhere_login');
+
+      _thumbwhere_link_consumer($uid);
+
+      /*
+
+      ///////////////////////////////////////////////////////////////////////////////////////////////
+      //
+      //  Here we create a corresponding entity in the ThumbWhere domain if we need to.
+      //
+
+      $entity = user_load($uid);
+
+      $_tw_pk_consumer = _get_pk_consumer($entity);
+
+      // $_tw_pk_consumer has not been set - so this is Register...
+      if (empty($_tw_pk_consumer)) {
+
+       if (twCanDebug()) debug('USER HAS NO CONSUMER');
+
+
+        // If no password is provided (when we are testing) then we supply one just for completeness.
+        if (!isset($entity->pass)) {
+          $entity->pass = 'pass-' . uniqid();
+        }
+
+        // $_tw_pk_consumer has not been set - so this is Register so this will create a ThumbWhere and Drupal user
+        _thumbwhere_register_existing($entity->name, $entity->pass);
+
+        // If we managed to get back a tw identity, then all is good.
+        if (!empty($_tw_pk_consumer)) {
+          _set_pk_consumer($entity, $_tw_pk_consumer);
+        }
+        else {
+          // We were not expecting that...
+          throw new Exception('Failed to Create User : Error TA-001');
+        }
+
+        // Save it back..
+        user_save($entity);
+
+        if (twCanDebug()) debug('CONSUMER ALLOCATED');
+
+      }
+      */
+    }
+
+
+    //
+    //
+    //
+    ////////////////////////////////////////////////
+
 
     // Do we want to login via drupal?
     if (variable_get('thumbwhere_auth_drupal') == 1) {
@@ -372,10 +562,10 @@ function _thumbwhere_login($username, $password) {
 
       $requestResponse = $twIdentityAPI->call_authenticate($parameters);
 
-      //if (twCanDebug()) {
+      if (twCanDebug()) {
         debug('$requestResponse');
         debug($requestResponse);
-      //}
+      }
 
 
       return $uid;
@@ -452,19 +642,17 @@ function _thumbwhere_validate($username, $current_password) {
 
       $requestResponse = $twIdentityAPI->call_authenticate($parameters);
 
-      debug('$requestResponse');
-      debug($requestResponse);
+      //debug('$requestResponse');
+      //debug($requestResponse);
 
       $memberToken = $requestResponse->body->authenticate->member;
       $identityToken = $requestResponse->body->authenticate->identity;
 
       // No member token, no login
       if (empty($memberToken)) {
+        //throw new Exception('Failed to Verify User : Error TA-002');
         return FALSE;
       }
-
-      // If we run into trouble during the verifiy...
-      //throw new Exception('Failed to Verify User : Error TA-002');
     }
 
     return TRUE;
@@ -486,8 +674,8 @@ function _thumbwhere_validate_and_change_password($username, $current_password, 
   $uid = db_query("SELECT uid FROM {users} WHERE name = :name", array(
       ':name' => $username
   ))->fetchField();
-  
-  
+
+
 
   // If we dom't know about this user in drupal...
   if (empty($uid)) {
@@ -495,7 +683,7 @@ function _thumbwhere_validate_and_change_password($username, $current_password, 
     return FALSE;
   }
   else {
-  
+
 
     // Do we want to login via drupal?
     if (variable_get('thumbwhere_auth_drupal') == 1) {
@@ -530,13 +718,7 @@ function _thumbwhere_validate_and_change_password($username, $current_password, 
     } else
     {
 
-      //
-      // TODO: Validate and change password.
-      //
-
-      //if (twCanDebug()) debug('VALIDATE AND CHANGE  THUMBWHERE');
-
-      //  If we run into trouble during the verifiy...
+      // This is not implemented.. We don't need it yet.
       throw new Exception('ThumbWhere Failed to Update User Password : Error TA-005');
 
       return TRUE;
@@ -560,7 +742,7 @@ function _thumbwhere_change_password($username, $new_password) {
   $uid = db_query("SELECT uid FROM {users} WHERE name = :name", array(
       ':name' => $username
   ))->fetchField();
-  
+
 
   // If we dom't know about this user in drupal...
   if (empty($uid)) {
@@ -568,6 +750,11 @@ function _thumbwhere_change_password($username, $new_password) {
     return FALSE;
   }
   else {
+
+    //debug('_thumbwhere_change_password');
+
+    // Link the consumer, if we should
+    //_thumbwhere_link_consumer($uid);
 
     // Do we want to login via drupal?
     if (variable_get('thumbwhere_auth_drupal') == 1) {
@@ -582,13 +769,7 @@ function _thumbwhere_change_password($username, $new_password) {
     } else
     {
 
-      //
-      // TODO: Validate and change password.
-      //
-
-      //if (twCanDebug()) debug('VALIDATE AND CHANGE  THUMBWHERE');
-
-      //  If we run into trouble during the verifiy...
+      //  This is not implemented.. We don't need it yet.
       throw new Exception('ThumbWhere Failed to Update User Password : Error TA-005');
 
       return TRUE;
@@ -679,7 +860,102 @@ function _thumbwhere_register($username, $password) {
       debug('REGISTERCONSUMER');
       debug($registerConsumerResponse);
     }
-    
+
+    // Primary id we want to use...
+    $_tw_pk_consumer = $registerConsumerResponse->body->register_consumer->consumer;
+
+
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+
+/**
+ * Return true if the user is authenticates with ThumbWhere
+ */
+function _thumbwhere_register_existing($username, $password) {
+
+  // Just make sure that the uset does not already exist...
+  if (db_query("SELECT COUNT(*) FROM {users} WHERE name = :name", array(
+      ':name' => $username
+  ))->fetchField()) {
+
+    // This global represents the current thumbwhere consumer id
+    global $_tw_pk_consumer;
+
+    //
+    // TODO: Create the user - get id
+    //
+
+    if (twCanDebug())
+      debug('CREATE NEW THUMBWHERE MEMBER');
+
+    // Get a handle on the web service library provider for 'identity v1.1'
+    $twIdentityAPI = new ThumbWhereAPIIdentity();
+
+    //
+    // Request a new 'unearthed' identity...
+    //
+
+    $parameters = array();
+
+    $parameters['key'] = variable_get('thumbwhere_api_key');
+    $parameters['type'] = 'unearthed';
+    $parameters['id'] = $username;
+
+    $requestResponse = $twIdentityAPI->call_request($parameters);
+
+    if (twCanDebug()) {
+      debug('REQUEST');
+
+      debug($requestResponse);
+    }
+
+    //
+    // Then authenticate the request...
+    //
+
+    $parameters = array();
+    $parameters['key'] = variable_get('thumbwhere_api_key');
+    $parameters['code'] = $requestResponse->body->request->challenge_code;
+    //$parameters['id'] = $username;
+    $parameters['secret'] = $password;
+
+    $authenticateRequestResponse = $twIdentityAPI->call_authenticate_request($parameters);
+
+    if (twCanDebug()) {
+      debug('AUTHENTICATEREQUEST');
+      debug($authenticateRequestResponse);
+    }
+
+    $memberToken = $authenticateRequestResponse->body->authenticate_request->member;
+    $identityToken = $authenticateRequestResponse->body->authenticate_request->identity;
+
+    if (twCanDebug()) {
+      debug('member ' . $memberToken);
+      debug('identity ' . $identityToken);
+    }
+
+    //
+    // .. and now we create a consumer with a single member...
+    //
+
+    // Get a handle on the web service library provider for 'content v1.1'
+    $twContentAPI = new ThumbWhereAPIContent();
+
+    $parameters['key'] = variable_get('thumbwhere_api_key');
+    $parameters['member'] = $memberToken;
+    $parameters['name'] = $username;
+
+    $registerConsumerResponse = $twContentAPI->call_register_consumer($parameters);
+
+    if (twCanDebug()) {
+      debug('REGISTERCONSUMER');
+      debug($registerConsumerResponse);
+    }
+
     // Primary id we want to use...
     $_tw_pk_consumer = $registerConsumerResponse->body->register_consumer->consumer;
 
@@ -715,7 +991,7 @@ function _set_pk_consumer(&$object, $id) {
       $object['field_pk_consumer'] = array(
           $object->language => array(
               0 => array(
-                  'thumbwhere_id' => $id,
+                  'thumbwhere_id' => (int)$id,
               ),
           ),
       );
@@ -729,7 +1005,7 @@ function _set_pk_consumer(&$object, $id) {
       $object->field_pk_consumer = array(
           $object->language => array(
               0 => array(
-                  'thumbwhere_id' => $id,
+                  'thumbwhere_id' => (int)$id,
               ),
           )
       );
@@ -737,6 +1013,30 @@ function _set_pk_consumer(&$object, $id) {
   }
 }
 
+
+/**
+ * Set the pk_consumer ThumbWhere ID for the User
+ */
+function _get_pk_consumer(&$object) {
+
+  if (is_array($object)) {
+
+    if (!empty($object['field_pk_consumer'][$object->language]))
+    {
+
+      return $object['field_pk_consumer'][$object->language][0]['thumbwhere_id'];
+    }
+  }
+  else {
+    if (!empty($object->field_pk_consumer[$object->language]))
+    {
+      return $object->field_pk_consumer[$object->language][0]['thumbwhere_id'];
+    }
+
+  }
+
+  return NULL;
+}
 
 
 //

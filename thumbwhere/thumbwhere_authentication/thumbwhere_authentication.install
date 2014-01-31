@@ -34,7 +34,7 @@ function thumbwhere_authentication_requirements($phase) {
       );
     }
 
-    if (variable_get('user_email_verification') != '0') {
+    if (variable_get('user_email_verification') != '1') {
 
       $requirements['thumbwhere_authentication_user_email_verification'] = array(
           'title' => $t('ThumbWhere Authentication'),
@@ -44,6 +44,7 @@ function thumbwhere_authentication_requirements($phase) {
           'value' => $t('Required configuration'),
       );
     }
+
 
     $user_fields = user_load(1);
     $user_fields->language = 'und';

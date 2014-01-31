@@ -17,7 +17,7 @@
     <type name="datetime" implemented_by="DateTime" />
   </types>
   <resources version="V1.1" service="Program">
-    <resource name="program" type="Program" runat="server" enabled="true" object="Program" create="true" subscribe="true">
+    <resource name="program" type="Program" runat="server" enabled="true" object="Program" group="content" create="true" subscribe="true">
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>

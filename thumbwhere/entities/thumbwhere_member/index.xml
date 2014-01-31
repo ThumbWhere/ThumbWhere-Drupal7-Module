@@ -17,12 +17,12 @@
     <type name="datetime" implemented_by="DateTime" />
   </types>
   <resources version="V1.1" service="Member">
-    <resource name="member" type="Member" runat="server" enabled="true" object="Member" create="true" subscribe="true">
+    <resource name="member" type="Member" runat="server" enabled="true" object="Member" group="member" create="true" subscribe="true">
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>
-      <field name="profilepic_mediaitem" type="MediaItem" optional="true">
-        <doc>'profilepic_mediaitem' field, which is an embedded 'MediaItem' resource.</doc>
+      <field name="profilepic" type="MediaItem" optional="true">
+        <doc>'profilepic' field, which is an embedded 'MediaItem' resource.</doc>
       </field>
       <field name="profilepics_mediaitemcollection" type="MediaItemCollection" optional="true">
         <doc>'profilepics_mediaitemcollection' field, which is an embedded 'MediaItemCollection' resource.</doc>
@@ -38,6 +38,12 @@
       </field>
       <field name="external_id" type="string" optional="true">
         <doc>'external_id' field, which is a 'string' type.</doc>
+      </field>
+      <field name="about" type="string" optional="true">
+        <doc>'about' field, which is a 'string' type.</doc>
+      </field>
+      <field name="url" type="string" optional="true">
+        <doc>'url' field, which is a 'string' type.</doc>
       </field>
     </resource>
   </resources>

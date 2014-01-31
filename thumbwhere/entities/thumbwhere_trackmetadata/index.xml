@@ -17,7 +17,7 @@
     <type name="datetime" implemented_by="DateTime" />
   </types>
   <resources version="V1.1" service="Content">
-    <resource name="track_metadata" type="TrackMetadata" runat="server" enabled="true" object="TrackMetadata" create="true" subscribe="true">
+    <resource name="track_metadata" type="TrackMetadata" runat="server" enabled="true" object="TrackMetadata" group="content" create="true" subscribe="true">
       <context name="key" type="APIKey">
         <doc>Provides context for the campaign.</doc>
       </context>
