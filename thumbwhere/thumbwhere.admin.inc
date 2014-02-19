@@ -110,9 +110,9 @@ function thumbwhere_admin_settings() {
 
   $form['thumbwhere_api_ssl_verification'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Validate SSL Certificates'),
+      '#title' => t('Verify SSL Certificates & Hostnames'),
       '#default_value' => variable_get('thumbwhere_api_ssl_verification', true),
-      '#description' => t('Only allow valid SSL certificates.')
+      '#description' => t('Only allow valid, non expired SSL certificates and Hostnames that are stricly covered by the certificate.')
   );
 
   $form['thumbwhere_api_version'] = array(

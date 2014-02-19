@@ -77,14 +77,12 @@ function thumbwhere_requirements($phase) {
     if (variable_get('thumbwhere_api_ssl_verification',true) == false) {
 
       $requirements['thumbwhere_api_ssl_verification'] = array(
-          'title' => $t('ThumbWhere API Verify certificates'),
+          'title' => $t('ThumbWhere API Verify SSL Certificates and Hostnames'),
           'description' => $t(' The configuration variable "thumbwhere_api_ssl_verification" should be enabled. Anything less weakens security. <p/> Go to the Configuration for <b>ThumbWhere Settings</b> and enter the correct value.'),
           'severity' => REQUIREMENT_WARNING,
           'value' => $t('Recomended configuration'),
       );
     }
-
-
 
     if (variable_get('thumbwhere_api_key') == '') {
 
