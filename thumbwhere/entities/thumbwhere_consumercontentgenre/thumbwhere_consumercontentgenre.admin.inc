@@ -69,6 +69,10 @@ function _thumbwhere_handle_consumer_subscribed_contengenre_notify_xml($notifica
 
   $context_key =  $notification->attributes()->key;
 
+  // Start a transaction
+  //$transaction = db_transaction('consumercontentgenre_notify');
+  $transaction = null;
+
   //
   // Now based on the operation..
   //
@@ -109,6 +113,35 @@ function _thumbwhere_handle_consumer_subscribed_contengenre_notify_xml($notifica
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'consumer_subscribed_contengenre\', Dropping this \'create\' notification.';
+            watchdog('thumbwhere_consumercontentgenre', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<consumer_subscribed_contengenre op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</consumer_subscribed_contengenre>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_consumercontentgenre', 'Notification: \'create\' consumercontentgenre $<a href="/admin/thumbwhere/consumercontentgenres/consumercontentgenre/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -124,13 +157,13 @@ function _thumbwhere_handle_consumer_subscribed_contengenre_notify_xml($notifica
           $err = 'Error while servicing \'create\' notification. Resource \'consumer_subscribed_contengenre\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_consumercontentgenre', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_consumercontentgenre', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<consumer_subscribed_contengenre op="' . $op . '" id="' . $id . '" >');
+          print('<consumer_subscribed_contengenre op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</consumer_subscribed_contengenre>');
           print('</response>');
@@ -167,7 +200,7 @@ function _thumbwhere_handle_consumer_subscribed_contengenre_notify_xml($notifica
         // Finally write the entity.
         $entity = entity_create('thumbwhere_consumercontentgenre', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -177,13 +210,13 @@ function _thumbwhere_handle_consumer_subscribed_contengenre_notify_xml($notifica
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<consumer_subscribed_contengenre op="' . $op . '" id="' . $id . '" >');
+        print('<consumer_subscribed_contengenre op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</consumer_subscribed_contengenre>');
         print('</response>');
         exit(0);			
 		
-      
+      break;
       }
   
   
@@ -219,7 +252,36 @@ function _thumbwhere_handle_consumer_subscribed_contengenre_notify_xml($notifica
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
-      
+            
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {                
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'consumer_subscribed_contengenre\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_consumercontentgenre', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<consumer_subscribed_contengenre op="' . $op . '" id="' . $id . '" origin="' . $origin . '">');
+            print('<status>success</status>');
+            print('</consumer_subscribed_contengenre>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+          
+        watchdog('thumbwhere_consumercontentgenre', 'Notification: \'' . $notification_op . '\' consumercontentgenre #<a href="/admin/thumbwhere/consumercontentgenres/consumercontentgenre/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+       
         //
         // Get the fields
         //
@@ -271,6 +333,35 @@ function _thumbwhere_handle_consumer_subscribed_contengenre_notify_xml($notifica
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'consumer_subscribed_contengenre\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_consumercontentgenre', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<consumer_subscribed_contengenre op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</consumer_subscribed_contengenre>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_consumercontentgenre', 'Notification: \'update\' consumercontentgenre $<a href="/admin/thumbwhere/consumercontentgenres/consumercontentgenre/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -286,13 +377,13 @@ function _thumbwhere_handle_consumer_subscribed_contengenre_notify_xml($notifica
           $err = 'Error while servicing \'update\' notification. Resource \'consumer_subscribed_contengenre\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_consumercontentgenre', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_consumercontentgenre', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<consumer_subscribed_contengenre op="' . $op . '" id="' . $id . '" >');
+          print('<consumer_subscribed_contengenre op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</consumer_subscribed_contengenre>');
           print('</response>');
@@ -329,7 +420,7 @@ function _thumbwhere_handle_consumer_subscribed_contengenre_notify_xml($notifica
         // Finally write the entity.
         $entity = entity_create('thumbwhere_consumercontentgenre', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -339,7 +430,7 @@ function _thumbwhere_handle_consumer_subscribed_contengenre_notify_xml($notifica
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<consumer_subscribed_contengenre op="' . $op . '" id="' . $id . '" >');
+        print('<consumer_subscribed_contengenre op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</consumer_subscribed_contengenre>');
         print('</response>');
@@ -378,7 +469,8 @@ function _thumbwhere_handle_consumer_subscribed_contengenre_notify_xml($notifica
         $entity->do_not_propagate = TRUE;
 
         // Finally write the entity.
-        entity_save('thumbwhere_consumercontentgenre', $entity);
+        //entity_save('thumbwhere_consumercontentgenre', $entity);
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -894,7 +986,7 @@ function thumbwhere_consumercontentgenre_edit_form_submit(&$form, &$form_state) 
 
   $thumbwhere_consumercontentgenre->changed = time();
 
-  $thumbwhere_consumercontentgenre->save();
+  $thumbwhere_consumercontentgenre->save($transaction);
   $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_consumercontentgenres';
 }
 

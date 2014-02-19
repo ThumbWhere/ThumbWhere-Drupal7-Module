@@ -368,10 +368,18 @@ function thumbwhere_hostsubroletype_entity_presave($entity, $entity_type) {
 	//
 	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
 	//
-    if (variable_get('thumbwhere_api_key') == '') {
-    	throw new Exception('ThumbWhere resource for \'HostSubRoleType\' requires that variable \'thumbwhere_api_key\' is set.');
-    }
-    
+  if (variable_get('thumbwhere_api_key') == '') {
+    throw new Exception('ThumbWhere resource calls for \'HostSubRoleType\' requires that variable \'thumbwhere_api_key\' is set.');
+  }
+
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+  if (!is_numeric(variable_get('thumbwhere_host_id'))) {
+    throw new Exception('ThumbWhere resource calls for \'HostSubRoleType\' requires that variable \'thumbwhere_host_id\' is set.');
+  }
+
+
               		
     //
     // If this hostsubroletype entity is new....
@@ -385,7 +393,8 @@ function thumbwhere_hostsubroletype_entity_presave($entity, $entity_type) {
       //
 
       $hostsubroletype = $twAdminAPI->create_host_role_subrole_type($context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
        if (twCanDebug()) debug($hostsubroletype);
@@ -410,7 +419,8 @@ function thumbwhere_hostsubroletype_entity_presave($entity, $entity_type) {
       //
 
       $hostsubroletype = $twAdminAPI->update_host_role_subrole_type($id=$entity->pk_hostsubroletype,$context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
         

@@ -69,6 +69,10 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
 
   $context_key =  $notification->attributes()->key;
 
+  // Start a transaction
+  //$transaction = db_transaction('hostroletypehostsubroletype_notify');
+  $transaction = null;
+
   //
   // Now based on the operation..
   //
@@ -109,6 +113,35 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'host_role_type_capable_of_host_role_subrole_type\', Dropping this \'create\' notification.';
+            watchdog('thumbwhere_hostroletypehostsubroletype', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<host_role_type_capable_of_host_role_subrole_type op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</host_role_type_capable_of_host_role_subrole_type>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_hostroletypehostsubroletype', 'Notification: \'create\' hostroletypehostsubroletype $<a href="/admin/thumbwhere/hostroletypehostsubroletypes/hostroletypehostsubroletype/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -124,13 +157,13 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
           $err = 'Error while servicing \'create\' notification. Resource \'host_role_type_capable_of_host_role_subrole_type\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_hostroletypehostsubroletype', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_hostroletypehostsubroletype', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<host_role_type_capable_of_host_role_subrole_type op="' . $op . '" id="' . $id . '" >');
+          print('<host_role_type_capable_of_host_role_subrole_type op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</host_role_type_capable_of_host_role_subrole_type>');
           print('</response>');
@@ -167,7 +200,7 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
         // Finally write the entity.
         $entity = entity_create('thumbwhere_hostroletypehostsubroletype', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -177,13 +210,13 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<host_role_type_capable_of_host_role_subrole_type op="' . $op . '" id="' . $id . '" >');
+        print('<host_role_type_capable_of_host_role_subrole_type op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</host_role_type_capable_of_host_role_subrole_type>');
         print('</response>');
         exit(0);			
 		
-      
+      break;
       }
   
   
@@ -219,7 +252,36 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
-      
+            
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {                
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'host_role_type_capable_of_host_role_subrole_type\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_hostroletypehostsubroletype', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<host_role_type_capable_of_host_role_subrole_type op="' . $op . '" id="' . $id . '" origin="' . $origin . '">');
+            print('<status>success</status>');
+            print('</host_role_type_capable_of_host_role_subrole_type>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+          
+        watchdog('thumbwhere_hostroletypehostsubroletype', 'Notification: \'' . $notification_op . '\' hostroletypehostsubroletype #<a href="/admin/thumbwhere/hostroletypehostsubroletypes/hostroletypehostsubroletype/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+       
         //
         // Get the fields
         //
@@ -271,6 +333,35 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'host_role_type_capable_of_host_role_subrole_type\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_hostroletypehostsubroletype', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<host_role_type_capable_of_host_role_subrole_type op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</host_role_type_capable_of_host_role_subrole_type>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_hostroletypehostsubroletype', 'Notification: \'update\' hostroletypehostsubroletype $<a href="/admin/thumbwhere/hostroletypehostsubroletypes/hostroletypehostsubroletype/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -286,13 +377,13 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
           $err = 'Error while servicing \'update\' notification. Resource \'host_role_type_capable_of_host_role_subrole_type\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_hostroletypehostsubroletype', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_hostroletypehostsubroletype', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<host_role_type_capable_of_host_role_subrole_type op="' . $op . '" id="' . $id . '" >');
+          print('<host_role_type_capable_of_host_role_subrole_type op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</host_role_type_capable_of_host_role_subrole_type>');
           print('</response>');
@@ -329,7 +420,7 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
         // Finally write the entity.
         $entity = entity_create('thumbwhere_hostroletypehostsubroletype', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -339,7 +430,7 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<host_role_type_capable_of_host_role_subrole_type op="' . $op . '" id="' . $id . '" >');
+        print('<host_role_type_capable_of_host_role_subrole_type op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</host_role_type_capable_of_host_role_subrole_type>');
         print('</response>');
@@ -378,7 +469,8 @@ function _thumbwhere_handle_host_role_type_capable_of_host_role_subrole_type_not
         $entity->do_not_propagate = TRUE;
 
         // Finally write the entity.
-        entity_save('thumbwhere_hostroletypehostsubroletype', $entity);
+        //entity_save('thumbwhere_hostroletypehostsubroletype', $entity);
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -894,7 +986,7 @@ function thumbwhere_hostroletypehostsubroletype_edit_form_submit(&$form, &$form_
 
   $thumbwhere_hostroletypehostsubroletype->changed = time();
 
-  $thumbwhere_hostroletypehostsubroletype->save();
+  $thumbwhere_hostroletypehostsubroletype->save($transaction);
   $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_hostroletypehostsubroletypes';
 }
 

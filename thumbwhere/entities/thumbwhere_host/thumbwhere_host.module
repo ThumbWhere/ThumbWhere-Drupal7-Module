@@ -385,10 +385,18 @@ function thumbwhere_host_entity_presave($entity, $entity_type) {
 	//
 	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
 	//
-    if (variable_get('thumbwhere_api_key') == '') {
-    	throw new Exception('ThumbWhere resource for \'Host\' requires that variable \'thumbwhere_api_key\' is set.');
-    }
-    
+  if (variable_get('thumbwhere_api_key') == '') {
+    throw new Exception('ThumbWhere resource calls for \'Host\' requires that variable \'thumbwhere_api_key\' is set.');
+  }
+
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+  if (!is_numeric(variable_get('thumbwhere_host_id'))) {
+    throw new Exception('ThumbWhere resource calls for \'Host\' requires that variable \'thumbwhere_host_id\' is set.');
+  }
+
+
               		
     //
     // If this host entity is new....
@@ -402,7 +410,8 @@ function thumbwhere_host_entity_presave($entity, $entity_type) {
       //
 
       $host = $twAdminAPI->create_host($context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
        if (twCanDebug()) debug($host);
@@ -427,7 +436,8 @@ function thumbwhere_host_entity_presave($entity, $entity_type) {
       //
 
       $host = $twAdminAPI->update_host($id=$entity->pk_host,$context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
         

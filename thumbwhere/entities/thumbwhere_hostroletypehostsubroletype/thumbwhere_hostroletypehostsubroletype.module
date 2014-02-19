@@ -370,10 +370,18 @@ function thumbwhere_hostroletypehostsubroletype_entity_presave($entity, $entity_
 	//
 	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
 	//
-    if (variable_get('thumbwhere_api_key') == '') {
-    	throw new Exception('ThumbWhere resource for \'HostRoleTypeHostSubRoleType\' requires that variable \'thumbwhere_api_key\' is set.');
-    }
-    
+  if (variable_get('thumbwhere_api_key') == '') {
+    throw new Exception('ThumbWhere resource calls for \'HostRoleTypeHostSubRoleType\' requires that variable \'thumbwhere_api_key\' is set.');
+  }
+
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+  if (!is_numeric(variable_get('thumbwhere_host_id'))) {
+    throw new Exception('ThumbWhere resource calls for \'HostRoleTypeHostSubRoleType\' requires that variable \'thumbwhere_host_id\' is set.');
+  }
+
+
               		
     //
     // If this hostroletypehostsubroletype entity is new....
@@ -387,7 +395,8 @@ function thumbwhere_hostroletypehostsubroletype_entity_presave($entity, $entity_
       //
 
       $hostroletypehostsubroletype = $twAdminAPI->create_host_role_type_capable_of_host_role_subrole_type($context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
        if (twCanDebug()) debug($hostroletypehostsubroletype);
@@ -412,7 +421,8 @@ function thumbwhere_hostroletypehostsubroletype_entity_presave($entity, $entity_
       //
 
       $hostroletypehostsubroletype = $twAdminAPI->update_host_role_type_capable_of_host_role_subrole_type($id=$entity->pk_hostroletypehostsubroletype,$context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
         

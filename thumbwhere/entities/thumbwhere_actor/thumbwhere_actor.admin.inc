@@ -69,6 +69,10 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
 
   $context_key =  $notification->attributes()->key;
 
+  // Start a transaction
+  //$transaction = db_transaction('actor_notify');
+  $transaction = null;
+
   //
   // Now based on the operation..
   //
@@ -109,6 +113,35 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'actor\', Dropping this \'create\' notification.';
+            watchdog('thumbwhere_actor', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<actor op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</actor>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_actor', 'Notification: \'create\' actor $<a href="/admin/thumbwhere/actors/actor/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -124,13 +157,13 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
           $err = 'Error while servicing \'create\' notification. Resource \'actor\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_actor', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_actor', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<actor op="' . $op . '" id="' . $id . '" >');
+          print('<actor op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</actor>');
           print('</response>');
@@ -175,7 +208,7 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
         // Finally write the entity.
         $entity = entity_create('thumbwhere_actor', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -185,13 +218,13 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<actor op="' . $op . '" id="' . $id . '" >');
+        print('<actor op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</actor>');
         print('</response>');
         exit(0);			
 		
-      
+      break;
       }
   
   
@@ -227,7 +260,36 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
-      
+            
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {                
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'actor\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_actor', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<actor op="' . $op . '" id="' . $id . '" origin="' . $origin . '">');
+            print('<status>success</status>');
+            print('</actor>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+          
+        watchdog('thumbwhere_actor', 'Notification: \'' . $notification_op . '\' actor #<a href="/admin/thumbwhere/actors/actor/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+       
         //
         // Get the fields
         //
@@ -279,6 +341,35 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'actor\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_actor', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<actor op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</actor>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_actor', 'Notification: \'update\' actor $<a href="/admin/thumbwhere/actors/actor/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -294,13 +385,13 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
           $err = 'Error while servicing \'update\' notification. Resource \'actor\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_actor', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_actor', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<actor op="' . $op . '" id="' . $id . '" >');
+          print('<actor op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</actor>');
           print('</response>');
@@ -345,7 +436,7 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
         // Finally write the entity.
         $entity = entity_create('thumbwhere_actor', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -355,7 +446,7 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<actor op="' . $op . '" id="' . $id . '" >');
+        print('<actor op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</actor>');
         print('</response>');
@@ -402,7 +493,8 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
         $entity->do_not_propagate = TRUE;
 
         // Finally write the entity.
-        entity_save('thumbwhere_actor', $entity);
+        //entity_save('thumbwhere_actor', $entity);
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -956,7 +1048,7 @@ function thumbwhere_actor_edit_form_submit(&$form, &$form_state) {
 
   $thumbwhere_actor->changed = time();
 
-  $thumbwhere_actor->save();
+  $thumbwhere_actor->save($transaction);
   $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_actors';
 }
 

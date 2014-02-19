@@ -45,6 +45,14 @@ function thumbwhere_admin_settings_validator($form, &$form_state) {
     form_set_error('thumbwhere_api_key', t('API Key must be a GUID.'));
   }
 
+
+  $regex = '(\d+)';
+  $string = strtoupper($form_state['values']['thumbwhere_host_id']);
+  if (!preg_match($regex, $string)) {
+    form_set_error('thumbwhere_host_id', t('Host ID must be a integer and a valid Host id from the ThumbWhere server.'));
+  }
+
+
   if ($form_state['values']['thumbwhere_master_console'] == 1) {
     $string = strtoupper($form_state['values']['thumbwhere_master_key']);
     //if (!preg_match($regex, $string)) {
@@ -68,6 +76,9 @@ function thumbwhere_admin_settings_validator($form, &$form_state) {
   variable_set('thumbwhere_api_log_debug', $form_state['values']['thumbwhere_api_log_debug']);
   variable_set('thumbwhere_api_log_trace', $form_state['values']['thumbwhere_api_log_trace']);
 
+  variable_set('thumbwhere_api_use_ssl', $form_state['values']['thumbwhere_api_use_ssl']);
+  variable_set('thumbwhere_api_ssl_verification', $form_state['values']['thumbwhere_api_ssl_verification']);
+
 }
 
 /**
@@ -86,6 +97,24 @@ function thumbwhere_admin_settings() {
       '#description' => t('The base URL for ThumbWhere API calls. You might change this if you run your own instance of ThumbWhere.')
   );
 
+  //
+  // Https...
+  //
+
+  $form['thumbwhere_api_use_ssl'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Force use of SSL'),
+      '#default_value' => variable_get('thumbwhere_api_use_ssl', true),
+      '#description' => t('Forces all API calls to be made using ssl.')
+  );
+
+  $form['thumbwhere_api_ssl_verification'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Validate SSL Certificates'),
+      '#default_value' => variable_get('thumbwhere_api_ssl_verification', true),
+      '#description' => t('Only allow valid SSL certificates.')
+  );
+
   $form['thumbwhere_api_version'] = array(
       '#type' => 'textfield',
       '#title' => t('API Version'),
@@ -101,11 +130,14 @@ function thumbwhere_admin_settings() {
   );
 
 
-  $form['thumbwhere_machine_id'] = array(
+
+
+
+  $form['thumbwhere_host_id'] = array(
       '#type' => 'textfield',
-      '#title' => t('Machine ID'),
-      '#default_value' => variable_get('thumbwhere_machine_id', 1),
-      '#description' => t('The machine id allocated to this system.')
+      '#title' => t('Host ID'),
+      '#default_value' => variable_get('thumbwhere_host_id', -1),
+      '#description' => t('The host id allocated to this system.')
   );
 
   //
@@ -212,8 +244,11 @@ function thumbwhere_admin_settings() {
       '#description' => t('Include Thumbwhere API call trace messages in the watchdog log.')
   );
 
+
+
+
   //
-  // Logging...
+  // Authentication
   //
 
 

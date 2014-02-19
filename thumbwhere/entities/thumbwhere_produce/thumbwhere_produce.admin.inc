@@ -69,6 +69,10 @@ function _thumbwhere_handle_produce_notify_xml($notification) {
 
   $context_key =  $notification->attributes()->key;
 
+  // Start a transaction
+  //$transaction = db_transaction('produce_notify');
+  $transaction = null;
+
   //
   // Now based on the operation..
   //
@@ -109,6 +113,35 @@ function _thumbwhere_handle_produce_notify_xml($notification) {
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'produce\', Dropping this \'create\' notification.';
+            watchdog('thumbwhere_produce', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<produce op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</produce>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_produce', 'Notification: \'create\' produce $<a href="/admin/thumbwhere/produces/produce/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -124,13 +157,13 @@ function _thumbwhere_handle_produce_notify_xml($notification) {
           $err = 'Error while servicing \'create\' notification. Resource \'produce\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_produce', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_produce', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<produce op="' . $op . '" id="' . $id . '" >');
+          print('<produce op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</produce>');
           print('</response>');
@@ -179,7 +212,7 @@ function _thumbwhere_handle_produce_notify_xml($notification) {
         // Finally write the entity.
         $entity = entity_create('thumbwhere_produce', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -189,13 +222,13 @@ function _thumbwhere_handle_produce_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<produce op="' . $op . '" id="' . $id . '" >');
+        print('<produce op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</produce>');
         print('</response>');
         exit(0);			
 		
-      
+      break;
       }
   
   
@@ -231,7 +264,36 @@ function _thumbwhere_handle_produce_notify_xml($notification) {
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
-      
+            
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {                
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'produce\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_produce', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<produce op="' . $op . '" id="' . $id . '" origin="' . $origin . '">');
+            print('<status>success</status>');
+            print('</produce>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+          
+        watchdog('thumbwhere_produce', 'Notification: \'' . $notification_op . '\' produce #<a href="/admin/thumbwhere/produces/produce/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+       
         //
         // Get the fields
         //
@@ -283,6 +345,35 @@ function _thumbwhere_handle_produce_notify_xml($notification) {
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'produce\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_produce', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<produce op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</produce>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_produce', 'Notification: \'update\' produce $<a href="/admin/thumbwhere/produces/produce/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -298,13 +389,13 @@ function _thumbwhere_handle_produce_notify_xml($notification) {
           $err = 'Error while servicing \'update\' notification. Resource \'produce\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_produce', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_produce', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<produce op="' . $op . '" id="' . $id . '" >');
+          print('<produce op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</produce>');
           print('</response>');
@@ -353,7 +444,7 @@ function _thumbwhere_handle_produce_notify_xml($notification) {
         // Finally write the entity.
         $entity = entity_create('thumbwhere_produce', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -363,7 +454,7 @@ function _thumbwhere_handle_produce_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<produce op="' . $op . '" id="' . $id . '" >');
+        print('<produce op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</produce>');
         print('</response>');
@@ -414,7 +505,8 @@ function _thumbwhere_handle_produce_notify_xml($notification) {
         $entity->do_not_propagate = TRUE;
 
         // Finally write the entity.
-        entity_save('thumbwhere_produce', $entity);
+        //entity_save('thumbwhere_produce', $entity);
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -991,7 +1083,7 @@ function thumbwhere_produce_edit_form_submit(&$form, &$form_state) {
 
   $thumbwhere_produce->changed = time();
 
-  $thumbwhere_produce->save();
+  $thumbwhere_produce->save($transaction);
   $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_produces';
 }
 

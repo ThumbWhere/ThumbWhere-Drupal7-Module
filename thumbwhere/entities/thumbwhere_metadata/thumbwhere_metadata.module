@@ -366,10 +366,18 @@ function thumbwhere_metadata_entity_presave($entity, $entity_type) {
 	//
 	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
 	//
-    if (variable_get('thumbwhere_api_key') == '') {
-    	throw new Exception('ThumbWhere resource for \'Metadata\' requires that variable \'thumbwhere_api_key\' is set.');
-    }
-    
+  if (variable_get('thumbwhere_api_key') == '') {
+    throw new Exception('ThumbWhere resource calls for \'Metadata\' requires that variable \'thumbwhere_api_key\' is set.');
+  }
+
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+  if (!is_numeric(variable_get('thumbwhere_host_id'))) {
+    throw new Exception('ThumbWhere resource calls for \'Metadata\' requires that variable \'thumbwhere_host_id\' is set.');
+  }
+
+
               		
     //
     // If this metadata entity is new....
@@ -383,7 +391,8 @@ function thumbwhere_metadata_entity_presave($entity, $entity_type) {
       //
 
       $metadata = $twContentAPI->create_metadata($context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
        if (twCanDebug()) debug($metadata);
@@ -408,7 +417,8 @@ function thumbwhere_metadata_entity_presave($entity, $entity_type) {
       //
 
       $metadata = $twContentAPI->update_metadata($id=$entity->pk_metadata,$context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
         

@@ -69,6 +69,10 @@ function _thumbwhere_handle_external_repository_resource_subscription_notify_xml
 
   $context_key =  $notification->attributes()->key;
 
+  // Start a transaction
+  //$transaction = db_transaction('externalsubscription_notify');
+  $transaction = null;
+
   //
   // Now based on the operation..
   //
@@ -109,6 +113,35 @@ function _thumbwhere_handle_external_repository_resource_subscription_notify_xml
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'external_repository_resource_subscription\', Dropping this \'create\' notification.';
+            watchdog('thumbwhere_externalsubscription', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<external_repository_resource_subscription op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</external_repository_resource_subscription>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_externalsubscription', 'Notification: \'create\' externalsubscription $<a href="/admin/thumbwhere/externalsubscriptions/externalsubscription/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -124,13 +157,13 @@ function _thumbwhere_handle_external_repository_resource_subscription_notify_xml
           $err = 'Error while servicing \'create\' notification. Resource \'external_repository_resource_subscription\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_externalsubscription', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_externalsubscription', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<external_repository_resource_subscription op="' . $op . '" id="' . $id . '" >');
+          print('<external_repository_resource_subscription op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</external_repository_resource_subscription>');
           print('</response>');
@@ -176,7 +209,7 @@ function _thumbwhere_handle_external_repository_resource_subscription_notify_xml
         // Finally write the entity.
         $entity = entity_create('thumbwhere_externalsubscription', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -186,13 +219,13 @@ function _thumbwhere_handle_external_repository_resource_subscription_notify_xml
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<external_repository_resource_subscription op="' . $op . '" id="' . $id . '" >');
+        print('<external_repository_resource_subscription op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</external_repository_resource_subscription>');
         print('</response>');
         exit(0);			
 		
-      
+      break;
       }
   
   
@@ -228,7 +261,36 @@ function _thumbwhere_handle_external_repository_resource_subscription_notify_xml
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
-      
+            
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {                
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'external_repository_resource_subscription\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_externalsubscription', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<external_repository_resource_subscription op="' . $op . '" id="' . $id . '" origin="' . $origin . '">');
+            print('<status>success</status>');
+            print('</external_repository_resource_subscription>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+          
+        watchdog('thumbwhere_externalsubscription', 'Notification: \'' . $notification_op . '\' externalsubscription #<a href="/admin/thumbwhere/externalsubscriptions/externalsubscription/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+       
         //
         // Get the fields
         //
@@ -280,6 +342,35 @@ function _thumbwhere_handle_external_repository_resource_subscription_notify_xml
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'external_repository_resource_subscription\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_externalsubscription', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<external_repository_resource_subscription op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</external_repository_resource_subscription>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_externalsubscription', 'Notification: \'update\' externalsubscription $<a href="/admin/thumbwhere/externalsubscriptions/externalsubscription/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -295,13 +386,13 @@ function _thumbwhere_handle_external_repository_resource_subscription_notify_xml
           $err = 'Error while servicing \'update\' notification. Resource \'external_repository_resource_subscription\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_externalsubscription', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_externalsubscription', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<external_repository_resource_subscription op="' . $op . '" id="' . $id . '" >');
+          print('<external_repository_resource_subscription op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</external_repository_resource_subscription>');
           print('</response>');
@@ -347,7 +438,7 @@ function _thumbwhere_handle_external_repository_resource_subscription_notify_xml
         // Finally write the entity.
         $entity = entity_create('thumbwhere_externalsubscription', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -357,7 +448,7 @@ function _thumbwhere_handle_external_repository_resource_subscription_notify_xml
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<external_repository_resource_subscription op="' . $op . '" id="' . $id . '" >');
+        print('<external_repository_resource_subscription op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</external_repository_resource_subscription>');
         print('</response>');
@@ -405,7 +496,8 @@ function _thumbwhere_handle_external_repository_resource_subscription_notify_xml
         $entity->do_not_propagate = TRUE;
 
         // Finally write the entity.
-        entity_save('thumbwhere_externalsubscription', $entity);
+        //entity_save('thumbwhere_externalsubscription', $entity);
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -935,7 +1027,7 @@ function thumbwhere_externalsubscription_edit_form_submit(&$form, &$form_state) 
 
   $thumbwhere_externalsubscription->changed = time();
 
-  $thumbwhere_externalsubscription->save();
+  $thumbwhere_externalsubscription->save($transaction);
   $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_externalsubscriptions';
 }
 

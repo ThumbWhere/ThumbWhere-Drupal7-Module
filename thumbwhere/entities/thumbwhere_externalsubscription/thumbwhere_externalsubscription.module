@@ -378,10 +378,18 @@ function thumbwhere_externalsubscription_entity_presave($entity, $entity_type) {
 	//
 	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
 	//
-    if (variable_get('thumbwhere_api_key') == '') {
-    	throw new Exception('ThumbWhere resource for \'ExternalSubscription\' requires that variable \'thumbwhere_api_key\' is set.');
-    }
-    
+  if (variable_get('thumbwhere_api_key') == '') {
+    throw new Exception('ThumbWhere resource calls for \'ExternalSubscription\' requires that variable \'thumbwhere_api_key\' is set.');
+  }
+
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+  if (!is_numeric(variable_get('thumbwhere_host_id'))) {
+    throw new Exception('ThumbWhere resource calls for \'ExternalSubscription\' requires that variable \'thumbwhere_host_id\' is set.');
+  }
+
+
               		
     //
     // If this externalsubscription entity is new....
@@ -395,7 +403,8 @@ function thumbwhere_externalsubscription_entity_presave($entity, $entity_type) {
       //
 
       $externalsubscription = $twAdminAPI->create_external_repository_resource_subscription($context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
        if (twCanDebug()) debug($externalsubscription);
@@ -420,7 +429,8 @@ function thumbwhere_externalsubscription_entity_presave($entity, $entity_type) {
       //
 
       $externalsubscription = $twAdminAPI->update_external_repository_resource_subscription($id=$entity->pk_externalsubscription,$context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
         

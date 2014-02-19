@@ -99,6 +99,11 @@ function thumbwhere_authentication_entity_presave($entity, $type) {
         $entity->pass = 'pass-' . uniqid();
       }
 
+      if (empty($entity->name))
+      {
+        watchdog('thumbwhere_authentication_entity_presave', ('User: #' . $entity->uid . ' has an empty username. A guid will be substituded.'), array(), WATCHDOG_ERROR);
+      }
+
       // $_tw_pk_consumer has not been set - so this is Register so this will create a ThumbWhere and Drupal user
       _thumbwhere_register($entity->name, $entity->pass);
 
@@ -804,6 +809,11 @@ function _thumbwhere_register($username, $password) {
     // Request a new 'unearthed' identity...
     //
 
+    if (empty($username))
+    {
+      $username = uniqid();
+    }
+
     $parameters = array();
 
     $parameters['key'] = variable_get('thumbwhere_api_key');
@@ -899,6 +909,12 @@ function _thumbwhere_register_existing($username, $password) {
     // Request a new 'unearthed' identity...
     //
 
+    if (empty($username))
+    {
+      $username = uniqid();
+    }
+
+
     $parameters = array();
 
     $parameters['key'] = variable_get('thumbwhere_api_key');
@@ -981,7 +997,7 @@ function _thumbwhere_register_existing($username, $password) {
  */
 function _set_pk_consumer(&$object, $id) {
 
-  watchdog('thumbwhere_authenticate', '_set_pk_consumer ' . $id);
+  //watchdog('thumbwhere_authenticate', '_set_pk_consumer ' . $id);
 
   if (is_array($object)) {
     if (isset($object['field_pk_consumer'][$object->language][0])) {

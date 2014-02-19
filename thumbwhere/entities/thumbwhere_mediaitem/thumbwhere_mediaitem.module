@@ -504,10 +504,18 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
 	//
 	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
 	//
-    if (variable_get('thumbwhere_api_key') == '') {
-    	throw new Exception('ThumbWhere resource for \'MediaItem\' requires that variable \'thumbwhere_api_key\' is set.');
-    }
-    
+  if (variable_get('thumbwhere_api_key') == '') {
+    throw new Exception('ThumbWhere resource calls for \'MediaItem\' requires that variable \'thumbwhere_api_key\' is set.');
+  }
+
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+  if (!is_numeric(variable_get('thumbwhere_host_id'))) {
+    throw new Exception('ThumbWhere resource calls for \'MediaItem\' requires that variable \'thumbwhere_host_id\' is set.');
+  }
+
+
               		
     //
     // If this mediaitem entity is new....
@@ -521,7 +529,8 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
       //
 
       $mediaitem = $twMediaAPI->create_mediaitem($context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
        if (twCanDebug()) debug($mediaitem);
@@ -546,7 +555,8 @@ function thumbwhere_mediaitem_entity_presave($entity, $entity_type) {
       //
 
       $mediaitem = $twMediaAPI->update_mediaitem($id=$entity->pk_mediaitem,$context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
         

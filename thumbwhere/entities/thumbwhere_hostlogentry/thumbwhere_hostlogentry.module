@@ -370,10 +370,18 @@ function thumbwhere_hostlogentry_entity_presave($entity, $entity_type) {
 	//
 	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
 	//
-    if (variable_get('thumbwhere_api_key') == '') {
-    	throw new Exception('ThumbWhere resource for \'HostLogEntry\' requires that variable \'thumbwhere_api_key\' is set.');
-    }
-    
+  if (variable_get('thumbwhere_api_key') == '') {
+    throw new Exception('ThumbWhere resource calls for \'HostLogEntry\' requires that variable \'thumbwhere_api_key\' is set.');
+  }
+
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+  if (!is_numeric(variable_get('thumbwhere_host_id'))) {
+    throw new Exception('ThumbWhere resource calls for \'HostLogEntry\' requires that variable \'thumbwhere_host_id\' is set.');
+  }
+
+
               		
     //
     // If this hostlogentry entity is new....
@@ -387,7 +395,8 @@ function thumbwhere_hostlogentry_entity_presave($entity, $entity_type) {
       //
 
       $hostlogentry = $twAdminAPI->create_host_log_entry($context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
        if (twCanDebug()) debug($hostlogentry);
@@ -412,7 +421,8 @@ function thumbwhere_hostlogentry_entity_presave($entity, $entity_type) {
       //
 
       $hostlogentry = $twAdminAPI->update_host_log_entry($id=$entity->pk_hostlogentry,$context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
         

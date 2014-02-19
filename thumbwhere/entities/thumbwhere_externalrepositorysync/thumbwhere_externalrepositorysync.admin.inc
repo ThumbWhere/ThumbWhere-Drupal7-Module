@@ -69,6 +69,10 @@ function _thumbwhere_handle_external_repository_sync_notify_xml($notification) {
 
   $context_key =  $notification->attributes()->key;
 
+  // Start a transaction
+  //$transaction = db_transaction('externalrepositorysync_notify');
+  $transaction = null;
+
   //
   // Now based on the operation..
   //
@@ -109,6 +113,35 @@ function _thumbwhere_handle_external_repository_sync_notify_xml($notification) {
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'external_repository_sync\', Dropping this \'create\' notification.';
+            watchdog('thumbwhere_externalrepositorysync', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<external_repository_sync op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</external_repository_sync>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_externalrepositorysync', 'Notification: \'create\' externalrepositorysync $<a href="/admin/thumbwhere/externalrepositorysyncs/externalrepositorysync/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -124,13 +157,13 @@ function _thumbwhere_handle_external_repository_sync_notify_xml($notification) {
           $err = 'Error while servicing \'create\' notification. Resource \'external_repository_sync\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_externalrepositorysync', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_externalrepositorysync', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<external_repository_sync op="' . $op . '" id="' . $id . '" >');
+          print('<external_repository_sync op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</external_repository_sync>');
           print('</response>');
@@ -180,7 +213,7 @@ function _thumbwhere_handle_external_repository_sync_notify_xml($notification) {
         // Finally write the entity.
         $entity = entity_create('thumbwhere_externalrepositorysync', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -190,13 +223,13 @@ function _thumbwhere_handle_external_repository_sync_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<external_repository_sync op="' . $op . '" id="' . $id . '" >');
+        print('<external_repository_sync op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</external_repository_sync>');
         print('</response>');
         exit(0);			
 		
-      
+      break;
       }
   
   
@@ -232,7 +265,36 @@ function _thumbwhere_handle_external_repository_sync_notify_xml($notification) {
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
-      
+            
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {                
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'external_repository_sync\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_externalrepositorysync', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<external_repository_sync op="' . $op . '" id="' . $id . '" origin="' . $origin . '">');
+            print('<status>success</status>');
+            print('</external_repository_sync>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+          
+        watchdog('thumbwhere_externalrepositorysync', 'Notification: \'' . $notification_op . '\' externalrepositorysync #<a href="/admin/thumbwhere/externalrepositorysyncs/externalrepositorysync/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+       
         //
         // Get the fields
         //
@@ -284,6 +346,35 @@ function _thumbwhere_handle_external_repository_sync_notify_xml($notification) {
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'external_repository_sync\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_externalrepositorysync', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<external_repository_sync op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</external_repository_sync>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_externalrepositorysync', 'Notification: \'update\' externalrepositorysync $<a href="/admin/thumbwhere/externalrepositorysyncs/externalrepositorysync/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -299,13 +390,13 @@ function _thumbwhere_handle_external_repository_sync_notify_xml($notification) {
           $err = 'Error while servicing \'update\' notification. Resource \'external_repository_sync\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_externalrepositorysync', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_externalrepositorysync', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<external_repository_sync op="' . $op . '" id="' . $id . '" >');
+          print('<external_repository_sync op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</external_repository_sync>');
           print('</response>');
@@ -355,7 +446,7 @@ function _thumbwhere_handle_external_repository_sync_notify_xml($notification) {
         // Finally write the entity.
         $entity = entity_create('thumbwhere_externalrepositorysync', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -365,7 +456,7 @@ function _thumbwhere_handle_external_repository_sync_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<external_repository_sync op="' . $op . '" id="' . $id . '" >');
+        print('<external_repository_sync op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</external_repository_sync>');
         print('</response>');
@@ -417,7 +508,8 @@ function _thumbwhere_handle_external_repository_sync_notify_xml($notification) {
         $entity->do_not_propagate = TRUE;
 
         // Finally write the entity.
-        entity_save('thumbwhere_externalrepositorysync', $entity);
+        //entity_save('thumbwhere_externalrepositorysync', $entity);
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -956,7 +1048,7 @@ function thumbwhere_externalrepositorysync_edit_form_submit(&$form, &$form_state
 
   $thumbwhere_externalrepositorysync->changed = time();
 
-  $thumbwhere_externalrepositorysync->save();
+  $thumbwhere_externalrepositorysync->save($transaction);
   $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_externalrepositorysyncs';
 }
 
