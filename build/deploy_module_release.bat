@@ -57,7 +57,7 @@ PUSHD E:\checkout\%STREAM%\
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 REM Checkout if we need to
-IF NOT EXIST ThumbWhere-Drupal7-Module-Releases %GIT_PATH% clone git@github.com:ThumbWhere/ThumbWhere-Drupal7-Module-Releases.git
+IF NOT EXIST ThumbWhere-Drupal7-Module-Releases %GIT_PATH% clone git@github.com:ThumbWhere/ThumbWhere-Drupal7-Module-Releases.git --recurse-submodules
 IF NOT ERRORLEVEL 0 GOTO ReportError
 
 POPD
