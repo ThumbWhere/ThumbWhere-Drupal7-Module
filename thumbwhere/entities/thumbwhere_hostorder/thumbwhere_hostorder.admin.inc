@@ -69,6 +69,10 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
 
   $context_key =  $notification->attributes()->key;
 
+  // Start a transaction
+  //$transaction = db_transaction('hostorder_notify');
+  $transaction = null;
+
   //
   // Now based on the operation..
   //
@@ -109,6 +113,35 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'host_order\', Dropping this \'create\' notification.';
+            watchdog('thumbwhere_hostorder', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<host_order op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</host_order>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_hostorder', 'Notification: \'create\' hostorder $<a href="/admin/thumbwhere/hostorders/hostorder/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -124,13 +157,13 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
           $err = 'Error while servicing \'create\' notification. Resource \'host_order\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_hostorder', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_hostorder', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<host_order op="' . $op . '" id="' . $id . '" >');
+          print('<host_order op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</host_order>');
           print('</response>');
@@ -189,7 +222,7 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         // Finally write the entity.
         $entity = entity_create('thumbwhere_hostorder', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -199,13 +232,13 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<host_order op="' . $op . '" id="' . $id . '" >');
+        print('<host_order op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</host_order>');
         print('</response>');
         exit(0);			
 		
-      
+      break;
       }
   
   
@@ -241,7 +274,36 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
-      
+            
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {                
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'host_order\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_hostorder', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<host_order op="' . $op . '" id="' . $id . '" origin="' . $origin . '">');
+            print('<status>success</status>');
+            print('</host_order>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+          
+        watchdog('thumbwhere_hostorder', 'Notification: \'' . $notification_op . '\' hostorder #<a href="/admin/thumbwhere/hostorders/hostorder/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+       
         //
         // Get the fields
         //
@@ -293,6 +355,35 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'host_order\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_hostorder', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<host_order op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</host_order>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_hostorder', 'Notification: \'update\' hostorder $<a href="/admin/thumbwhere/hostorders/hostorder/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -308,13 +399,13 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
           $err = 'Error while servicing \'update\' notification. Resource \'host_order\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_hostorder', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_hostorder', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<host_order op="' . $op . '" id="' . $id . '" >');
+          print('<host_order op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</host_order>');
           print('</response>');
@@ -373,7 +464,7 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         // Finally write the entity.
         $entity = entity_create('thumbwhere_hostorder', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -383,7 +474,7 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<host_order op="' . $op . '" id="' . $id . '" >');
+        print('<host_order op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</host_order>');
         print('</response>');
@@ -444,7 +535,8 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         $entity->do_not_propagate = TRUE;
 
         // Finally write the entity.
-        entity_save('thumbwhere_hostorder', $entity);
+        //entity_save('thumbwhere_hostorder', $entity);
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -1005,7 +1097,7 @@ function thumbwhere_hostorder_edit_form_submit(&$form, &$form_state) {
 
   $thumbwhere_hostorder->changed = time();
 
-  $thumbwhere_hostorder->save();
+  $thumbwhere_hostorder->save($transaction);
   $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_hostorders';
 }
 

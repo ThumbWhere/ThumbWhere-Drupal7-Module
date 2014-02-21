@@ -96,7 +96,7 @@ function thumbwhere_hosttypehostroletype_permission() {
   'send thumbwhere hosttypehostroletype notifications' => array(
           'title' => t('Send ThumbWhere Notifications'),
           'description' => t('Allow the caller to call the ThumbWhere HostTypeHostRoleType Entity Notifications Endpoint.'),
-          'restrict access' => TRUE,
+          //'restrict access' => TRUE,
       ),    
   );
 
@@ -370,10 +370,18 @@ function thumbwhere_hosttypehostroletype_entity_presave($entity, $entity_type) {
 	//
 	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
 	//
-    if (variable_get('thumbwhere_api_key') == '') {
-    	throw new Exception('ThumbWhere resource for \'HostTypeHostRoleType\' requires that variable \'thumbwhere_api_key\' is set.');
-    }
-    
+  if (variable_get('thumbwhere_api_key') == '') {
+    throw new Exception('ThumbWhere resource calls for \'HostTypeHostRoleType\' requires that variable \'thumbwhere_api_key\' is set.');
+  }
+
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+  if (!is_numeric(variable_get('thumbwhere_host_id'))) {
+    throw new Exception('ThumbWhere resource calls for \'HostTypeHostRoleType\' requires that variable \'thumbwhere_host_id\' is set.');
+  }
+
+
               		
     //
     // If this hosttypehostroletype entity is new....
@@ -387,7 +395,8 @@ function thumbwhere_hosttypehostroletype_entity_presave($entity, $entity_type) {
       //
 
       $hosttypehostroletype = $twAdminAPI->create_host_type_capable_of_host_role_type($context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
        if (twCanDebug()) debug($hosttypehostroletype);
@@ -412,7 +421,8 @@ function thumbwhere_hosttypehostroletype_entity_presave($entity, $entity_type) {
       //
 
       $hosttypehostroletype = $twAdminAPI->update_host_type_capable_of_host_role_type($id=$entity->pk_hosttypehostroletype,$context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
         

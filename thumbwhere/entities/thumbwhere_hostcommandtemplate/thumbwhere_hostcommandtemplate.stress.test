@@ -79,7 +79,7 @@ class ThumbWhereHostCommandTemplateStressTestCase extends DrupalWebTestCase {
       }
 	  
 
-      $entity->save();
+      $entity->save($transaction);
       
       $total++;
 

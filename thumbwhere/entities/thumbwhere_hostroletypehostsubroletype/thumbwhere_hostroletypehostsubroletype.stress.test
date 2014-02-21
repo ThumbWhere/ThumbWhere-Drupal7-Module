@@ -79,7 +79,7 @@ class ThumbWhereHostRoleTypeHostSubRoleTypeStressTestCase extends DrupalWebTestC
       }
 	  
 
-      $entity->save();
+      $entity->save($transaction);
       
       $total++;
 

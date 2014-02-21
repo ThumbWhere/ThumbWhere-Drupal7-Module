@@ -96,7 +96,7 @@ function thumbwhere_hostcommandtemplatetype_permission() {
   'send thumbwhere hostcommandtemplatetype notifications' => array(
           'title' => t('Send ThumbWhere Notifications'),
           'description' => t('Allow the caller to call the ThumbWhere HostCommandTemplateType Entity Notifications Endpoint.'),
-          'restrict access' => TRUE,
+          //'restrict access' => TRUE,
       ),    
   );
 
@@ -363,10 +363,18 @@ function thumbwhere_hostcommandtemplatetype_entity_presave($entity, $entity_type
 	//
 	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
 	//
-    if (variable_get('thumbwhere_api_key') == '') {
-    	throw new Exception('ThumbWhere resource for \'HostCommandTemplateType\' requires that variable \'thumbwhere_api_key\' is set.');
-    }
-    
+  if (variable_get('thumbwhere_api_key') == '') {
+    throw new Exception('ThumbWhere resource calls for \'HostCommandTemplateType\' requires that variable \'thumbwhere_api_key\' is set.');
+  }
+
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+  if (!is_numeric(variable_get('thumbwhere_host_id'))) {
+    throw new Exception('ThumbWhere resource calls for \'HostCommandTemplateType\' requires that variable \'thumbwhere_host_id\' is set.');
+  }
+
+
               		
     //
     // If this hostcommandtemplatetype entity is new....
@@ -380,7 +388,8 @@ function thumbwhere_hostcommandtemplatetype_entity_presave($entity, $entity_type
       //
 
       $hostcommandtemplatetype = $twAdminAPI->create_host_command_template_type($context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
        if (twCanDebug()) debug($hostcommandtemplatetype);
@@ -405,7 +414,8 @@ function thumbwhere_hostcommandtemplatetype_entity_presave($entity, $entity_type
       //
 
       $hostcommandtemplatetype = $twAdminAPI->update_host_command_template_type($id=$entity->pk_hostcommandtemplatetype,$context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
         

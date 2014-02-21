@@ -96,7 +96,7 @@ function thumbwhere_activity_permission() {
   'send thumbwhere activity notifications' => array(
           'title' => t('Send ThumbWhere Notifications'),
           'description' => t('Allow the caller to call the ThumbWhere Activity Entity Notifications Endpoint.'),
-          'restrict access' => TRUE,
+          //'restrict access' => TRUE,
       ),    
   );
 
@@ -382,10 +382,18 @@ function thumbwhere_activity_entity_presave($entity, $entity_type) {
 	//
 	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
 	//
-    if (variable_get('thumbwhere_api_key') == '') {
-    	throw new Exception('ThumbWhere resource for \'Activity\' requires that variable \'thumbwhere_api_key\' is set.');
-    }
-    
+  if (variable_get('thumbwhere_api_key') == '') {
+    throw new Exception('ThumbWhere resource calls for \'Activity\' requires that variable \'thumbwhere_api_key\' is set.');
+  }
+
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+  if (!is_numeric(variable_get('thumbwhere_host_id'))) {
+    throw new Exception('ThumbWhere resource calls for \'Activity\' requires that variable \'thumbwhere_host_id\' is set.');
+  }
+
+
               		
     //
     // If this activity entity is new....
@@ -399,7 +407,8 @@ function thumbwhere_activity_entity_presave($entity, $entity_type) {
       //
 
       $activity = $twContentAPI->create_activity($context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
        if (twCanDebug()) debug($activity);
@@ -424,7 +433,8 @@ function thumbwhere_activity_entity_presave($entity, $entity_type) {
       //
 
       $activity = $twContentAPI->update_activity($id=$entity->pk_activity,$context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
         

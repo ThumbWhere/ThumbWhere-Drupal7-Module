@@ -69,6 +69,10 @@ function _thumbwhere_handle_host_command_template_type_notify_xml($notification)
 
   $context_key =  $notification->attributes()->key;
 
+  // Start a transaction
+  //$transaction = db_transaction('hostcommandtemplatetype_notify');
+  $transaction = null;
+
   //
   // Now based on the operation..
   //
@@ -109,6 +113,35 @@ function _thumbwhere_handle_host_command_template_type_notify_xml($notification)
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'host_command_template_type\', Dropping this \'create\' notification.';
+            watchdog('thumbwhere_hostcommandtemplatetype', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<host_command_template_type op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</host_command_template_type>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_hostcommandtemplatetype', 'Notification: \'create\' hostcommandtemplatetype $<a href="/admin/thumbwhere/hostcommandtemplatetypes/hostcommandtemplatetype/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -124,13 +157,13 @@ function _thumbwhere_handle_host_command_template_type_notify_xml($notification)
           $err = 'Error while servicing \'create\' notification. Resource \'host_command_template_type\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_hostcommandtemplatetype', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_hostcommandtemplatetype', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<host_command_template_type op="' . $op . '" id="' . $id . '" >');
+          print('<host_command_template_type op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</host_command_template_type>');
           print('</response>');
@@ -163,7 +196,7 @@ function _thumbwhere_handle_host_command_template_type_notify_xml($notification)
         // Finally write the entity.
         $entity = entity_create('thumbwhere_hostcommandtemplatetype', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -173,13 +206,13 @@ function _thumbwhere_handle_host_command_template_type_notify_xml($notification)
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<host_command_template_type op="' . $op . '" id="' . $id . '" >');
+        print('<host_command_template_type op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</host_command_template_type>');
         print('</response>');
         exit(0);			
 		
-      
+      break;
       }
   
   
@@ -215,7 +248,36 @@ function _thumbwhere_handle_host_command_template_type_notify_xml($notification)
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
-      
+            
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {                
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'host_command_template_type\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_hostcommandtemplatetype', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<host_command_template_type op="' . $op . '" id="' . $id . '" origin="' . $origin . '">');
+            print('<status>success</status>');
+            print('</host_command_template_type>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+          
+        watchdog('thumbwhere_hostcommandtemplatetype', 'Notification: \'' . $notification_op . '\' hostcommandtemplatetype #<a href="/admin/thumbwhere/hostcommandtemplatetypes/hostcommandtemplatetype/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+       
         //
         // Get the fields
         //
@@ -267,6 +329,35 @@ function _thumbwhere_handle_host_command_template_type_notify_xml($notification)
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'host_command_template_type\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_hostcommandtemplatetype', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<host_command_template_type op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</host_command_template_type>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_hostcommandtemplatetype', 'Notification: \'update\' hostcommandtemplatetype $<a href="/admin/thumbwhere/hostcommandtemplatetypes/hostcommandtemplatetype/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -282,13 +373,13 @@ function _thumbwhere_handle_host_command_template_type_notify_xml($notification)
           $err = 'Error while servicing \'update\' notification. Resource \'host_command_template_type\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_hostcommandtemplatetype', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_hostcommandtemplatetype', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<host_command_template_type op="' . $op . '" id="' . $id . '" >');
+          print('<host_command_template_type op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</host_command_template_type>');
           print('</response>');
@@ -321,7 +412,7 @@ function _thumbwhere_handle_host_command_template_type_notify_xml($notification)
         // Finally write the entity.
         $entity = entity_create('thumbwhere_hostcommandtemplatetype', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -331,7 +422,7 @@ function _thumbwhere_handle_host_command_template_type_notify_xml($notification)
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<host_command_template_type op="' . $op . '" id="' . $id . '" >');
+        print('<host_command_template_type op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</host_command_template_type>');
         print('</response>');
@@ -366,7 +457,8 @@ function _thumbwhere_handle_host_command_template_type_notify_xml($notification)
         $entity->do_not_propagate = TRUE;
 
         // Finally write the entity.
-        entity_save('thumbwhere_hostcommandtemplatetype', $entity);
+        //entity_save('thumbwhere_hostcommandtemplatetype', $entity);
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -849,7 +941,7 @@ function thumbwhere_hostcommandtemplatetype_edit_form_submit(&$form, &$form_stat
 
   $thumbwhere_hostcommandtemplatetype->changed = time();
 
-  $thumbwhere_hostcommandtemplatetype->save();
+  $thumbwhere_hostcommandtemplatetype->save($transaction);
   $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_hostcommandtemplatetypes';
 }
 

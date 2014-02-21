@@ -172,7 +172,7 @@ function thumbwhere_authentication_install() {
 
   $registerConsumerResponse = $twContentAPI->call_register_consumer($parameters);
 
-  watchdog('thumbwhere_authenticate', 'REGISTERCONSUMER');
+  //watchdog('thumbwhere_authenticate', 'REGISTERCONSUMER');
 
   //if (twCanDebug())
   debug($registerConsumerResponse);
@@ -190,7 +190,7 @@ function thumbwhere_authentication_install() {
 
   //$user_fields->pk_consumer = $_tw_pk_consumer;
 
-  watchdog('thumbwhere_authenticate', 'REGISTERCONSUMER');
+  //watchdog('thumbwhere_authenticate', 'REGISTERCONSUMER');
 
   if (twCanDebug()) debug('SAVING USER');
 

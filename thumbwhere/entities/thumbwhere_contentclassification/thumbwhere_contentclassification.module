@@ -96,7 +96,7 @@ function thumbwhere_contentclassification_permission() {
   'send thumbwhere contentclassification notifications' => array(
           'title' => t('Send ThumbWhere Notifications'),
           'description' => t('Allow the caller to call the ThumbWhere ContentClassification Entity Notifications Endpoint.'),
-          'restrict access' => TRUE,
+          //'restrict access' => TRUE,
       ),    
   );
 
@@ -363,10 +363,18 @@ function thumbwhere_contentclassification_entity_presave($entity, $entity_type) 
 	//
 	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
 	//
-    if (variable_get('thumbwhere_api_key') == '') {
-    	throw new Exception('ThumbWhere resource for \'ContentClassification\' requires that variable \'thumbwhere_api_key\' is set.');
-    }
-    
+  if (variable_get('thumbwhere_api_key') == '') {
+    throw new Exception('ThumbWhere resource calls for \'ContentClassification\' requires that variable \'thumbwhere_api_key\' is set.');
+  }
+
+	//
+	// Ensure that we have the 'thumbwhere_api_key' as we are going to pass that through in a context
+	//
+  if (!is_numeric(variable_get('thumbwhere_host_id'))) {
+    throw new Exception('ThumbWhere resource calls for \'ContentClassification\' requires that variable \'thumbwhere_host_id\' is set.');
+  }
+
+
               		
     //
     // If this contentclassification entity is new....
@@ -380,7 +388,8 @@ function thumbwhere_contentclassification_entity_presave($entity, $entity_type) 
       //
 
       $contentclassification = $twContentAPI->create_content_classification($context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
        if (twCanDebug()) debug($contentclassification);
@@ -405,7 +414,8 @@ function thumbwhere_contentclassification_entity_presave($entity, $entity_type) 
       //
 
       $contentclassification = $twContentAPI->update_content_classification($id=$entity->pk_contentclassification,$context = array(
-                  'key' => variable_get('thumbwhere_api_key')
+                  'key' => variable_get('thumbwhere_api_key'),
+                  'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
             
         

@@ -69,6 +69,10 @@ function _thumbwhere_handle_content_collection_item_notify_xml($notification) {
 
   $context_key =  $notification->attributes()->key;
 
+  // Start a transaction
+  //$transaction = db_transaction('contentcollectionitem_notify');
+  $transaction = null;
+
   //
   // Now based on the operation..
   //
@@ -109,6 +113,35 @@ function _thumbwhere_handle_content_collection_item_notify_xml($notification) {
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'content_collection_item\', Dropping this \'create\' notification.';
+            watchdog('thumbwhere_contentcollectionitem', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<content_collection_item op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</content_collection_item>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_contentcollectionitem', 'Notification: \'create\' contentcollectionitem $<a href="/admin/thumbwhere/contentcollectionitems/contentcollectionitem/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -124,13 +157,13 @@ function _thumbwhere_handle_content_collection_item_notify_xml($notification) {
           $err = 'Error while servicing \'create\' notification. Resource \'content_collection_item\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_contentcollectionitem', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_contentcollectionitem', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<content_collection_item op="' . $op . '" id="' . $id . '" >');
+          print('<content_collection_item op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</content_collection_item>');
           print('</response>');
@@ -171,7 +204,7 @@ function _thumbwhere_handle_content_collection_item_notify_xml($notification) {
         // Finally write the entity.
         $entity = entity_create('thumbwhere_contentcollectionitem', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -181,13 +214,13 @@ function _thumbwhere_handle_content_collection_item_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<content_collection_item op="' . $op . '" id="' . $id . '" >');
+        print('<content_collection_item op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</content_collection_item>');
         print('</response>');
         exit(0);			
 		
-      
+      break;
       }
   
   
@@ -223,7 +256,36 @@ function _thumbwhere_handle_content_collection_item_notify_xml($notification) {
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
-      
+            
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {                
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'content_collection_item\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_contentcollectionitem', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<content_collection_item op="' . $op . '" id="' . $id . '" origin="' . $origin . '">');
+            print('<status>success</status>');
+            print('</content_collection_item>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+          
+        watchdog('thumbwhere_contentcollectionitem', 'Notification: \'' . $notification_op . '\' contentcollectionitem #<a href="/admin/thumbwhere/contentcollectionitems/contentcollectionitem/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+       
         //
         // Get the fields
         //
@@ -275,6 +337,35 @@ function _thumbwhere_handle_content_collection_item_notify_xml($notification) {
         if (twCanDebug()) debug('id');
         if (twCanDebug()) debug($id);
 
+
+        //
+        // Get the origin
+        //
+		
+		    $origin = -1;
+		    
+        if (isset($notification->attributes()->origin)) {        
+          $origin = intval($notification->attributes()->origin);
+
+          if (twCanDebug()) debug('origin');
+          if (twCanDebug()) debug($origin);
+
+          if ($origin == variable_get('thumbwhere_host_id',-1)) {
+            $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'content_collection_item\', Dropping this \'update\' notification.';
+            watchdog('thumbwhere_contentcollectionitem', $err ,array(), WATCHDOG_ERROR);
+              
+            // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
+            drupal_add_http_header('Content-Type', 'text/xml');
+            print('<response>');
+            print('<content_collection_item op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
+            print('<status>success</status>');
+            print('</content_collection_item>');
+            print('</response>');
+            exit(0);               
+          }
+        }
+              
+        watchdog('thumbwhere_contentcollectionitem', 'Notification: \'update\' contentcollectionitem $<a href="/admin/thumbwhere/contentcollectionitems/contentcollectionitem/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -290,13 +381,13 @@ function _thumbwhere_handle_content_collection_item_notify_xml($notification) {
           $err = 'Error while servicing \'update\' notification. Resource \'content_collection_item\' already exists with an id of \'' . $id . '\'.';
            //print($err);
           // When ORIGIN (TW-171) is sorted out then this can be re-anbled
-          //watchdog('thumbwhere_contentcollectionitem', $err ,array(), WATCHDOG_ERROR);
+          watchdog('thumbwhere_contentcollectionitem', $err ,array(), WATCHDOG_ERROR);
 
           	
           // We act all idempotent like its all good. 'create', when it already exists, is ignored. 
           drupal_add_http_header('Content-Type', 'text/xml');
           print('<response>');
-          print('<content_collection_item op="' . $op . '" id="' . $id . '" >');
+          print('<content_collection_item op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
           print('<status>success</status>');
           print('</content_collection_item>');
           print('</response>');
@@ -337,7 +428,7 @@ function _thumbwhere_handle_content_collection_item_notify_xml($notification) {
         // Finally write the entity.
         $entity = entity_create('thumbwhere_contentcollectionitem', $entityfields);
         $entity->do_not_propagate = TRUE;
-        $entity->save();
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -347,7 +438,7 @@ function _thumbwhere_handle_content_collection_item_notify_xml($notification) {
 
         drupal_add_http_header('Content-Type', 'text/xml');
         print('<response duration="' . $duration . 'ms">');
-        print('<content_collection_item op="' . $op . '" id="' . $id . '" >');
+        print('<content_collection_item op="' . $op . '" id="' . $id . '" origin="' . $origin . '" >');
         print('<status>success</status>');
         print('</content_collection_item>');
         print('</response>');
@@ -390,7 +481,8 @@ function _thumbwhere_handle_content_collection_item_notify_xml($notification) {
         $entity->do_not_propagate = TRUE;
 
         // Finally write the entity.
-        entity_save('thumbwhere_contentcollectionitem', $entity);
+        //entity_save('thumbwhere_contentcollectionitem', $entity);
+        $entity->save($transaction);
 
         //
         // Send the final response
@@ -920,7 +1012,7 @@ function thumbwhere_contentcollectionitem_edit_form_submit(&$form, &$form_state)
 
   $thumbwhere_contentcollectionitem->changed = time();
 
-  $thumbwhere_contentcollectionitem->save();
+  $thumbwhere_contentcollectionitem->save($transaction);
   $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_contentcollectionitems';
 }
 

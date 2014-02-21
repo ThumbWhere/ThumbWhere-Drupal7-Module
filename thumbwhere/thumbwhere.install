@@ -63,6 +63,27 @@ function thumbwhere_requirements($phase) {
       );
     }
 
+
+    if (variable_get('thumbwhere_api_use_ssl',true) == false) {
+
+      $requirements['thumbwhere_api_use_ssl'] = array(
+          'title' => $t('ThumbWhere API Use SLL'),
+          'description' => $t(' The configuration variable "thumbwhere_api_use_ssl" should be enabled. Anything less weakens security. <p/> Go to the Configuration for <b>ThumbWhere Settings</b> and enter the correct value.'),
+          'severity' => REQUIREMENT_WARNING,
+          'value' => $t('Recomended configuration'),
+      );
+    }
+
+    if (variable_get('thumbwhere_api_ssl_verification',true) == false) {
+
+      $requirements['thumbwhere_api_ssl_verification'] = array(
+          'title' => $t('ThumbWhere API Verify SSL Certificates and Hostnames'),
+          'description' => $t(' The configuration variable "thumbwhere_api_ssl_verification" should be enabled. Anything less weakens security. <p/> Go to the Configuration for <b>ThumbWhere Settings</b> and enter the correct value.'),
+          'severity' => REQUIREMENT_WARNING,
+          'value' => $t('Recomended configuration'),
+      );
+    }
+
     if (variable_get('thumbwhere_api_key') == '') {
 
       $requirements['thumbwhere_api_key'] = array(
@@ -71,6 +92,16 @@ function thumbwhere_requirements($phase) {
           'value' => $t('Required configuration'),
       );
     }
+
+    if (variable_get('thumbwhere_host_id') == '') {
+
+      $requirements['thumbwhere_host_id'] = array(
+          'title' => $t('ThumbWhere Host ID'),
+          'description' => $t(' The configuration variable "thumbwhere_host_id" should be configured. <p/> Go to the Configuration for <b>ThumbWhere Settings</b> and enter the correct value.'),            'severity' => REQUIREMENT_ERROR,
+          'value' => $t('Required configuration'),
+      );
+    }
+
 
     if (variable_get('thumbwhere_master_console') == '1' )
     {
@@ -557,9 +588,9 @@ function _thumbwhere_get_permissions() {
  *
  */
 function _thumbwhere_schema_update($tablename,$new_schema,$field_rename) {
-	
+
 	$response = '';
-	
+
 	//
 	// Field renaming
 	//
@@ -569,29 +600,29 @@ function _thumbwhere_schema_update($tablename,$new_schema,$field_rename) {
 		//debug('new_field_name ' . $new_field_name);
 
 		if (db_field_exists($tablename, $old_field_name)) {
-		
+
 			if (db_field_exists($tablename, $new_field_name)) {
 				throw new Exception('rename from ' . $old_field_name . ' to ' .  $new_field_name . ' was rejected because that field already exists.');
 			}
 		}
-	}	
-	
+	}
+
 	//
 	// Add any new fields
 	//
 
-	foreach ($new_schema[$tablename]['fields'] as $n => $new_field) { 	
+	foreach ($new_schema[$tablename]['fields'] as $n => $new_field) {
 		if (db_field_exists($tablename, $n)) {
-			//debug('field ' . $n . ' exists.');		
+			//debug('field ' . $n . ' exists.');
 			// TODO: is it different?
 		}
 		else
 		{
-			//debug('Created field ' . $n . '.');		
-			
+			//debug('Created field ' . $n . '.');
+
 			// Field does not exist.. so create the field..
 			db_add_field($tablename, $n, $new_field);
-			
+
 			$response .= '<li>Created field \'' . $n . '\'. </li>';
 		}
 	}
@@ -605,16 +636,16 @@ function _thumbwhere_schema_update($tablename,$new_schema,$field_rename) {
 		//debug('new_field_name ' . $new_field_name);
 
 		if (db_field_exists($tablename, $old_field_name)) {
-		
+
 			if (db_field_exists($tablename, $new_field_name)) {
-		
+
 				//debug('rename field ' . $old_field_name . ' to ' . $new_field_name);
-				
+
 				$response .= '<li>Migrating content from \'' . $old_field_name . '\' to \'' . $new_field_name . '\'.</li>';
-				
+
 				db_update($tablename)
 					->expression($new_field_name, $old_field_name )
-					->execute();		
+					->execute();
 			}
 			else
 			{
@@ -622,35 +653,35 @@ function _thumbwhere_schema_update($tablename,$new_schema,$field_rename) {
 			}
 		}
 	}
-	
+
 	//
 	// Remove any old fields
 	//
-	
+
 	// get the column description from the database
 	$result = db_query("SELECT table_name, column_name from information_schema.columns where TABLE_NAME = '$tablename'");
 	$columns = array();
 	foreach ($result as $record) {
 	  $columns[] = $record->column_name;
-	}	
+	}
 
 	foreach ($columns as $n) {
 		if (!array_key_exists($n,$new_schema[$tablename]['fields'])) {
-			if (db_field_exists($tablename, $n)) {	
+			if (db_field_exists($tablename, $n)) {
 				//debug('Removed field (1) ' . $n);
 				$response .= '<li>Removed field ' . $n . '</li>';
 				db_drop_field($tablename, $n);
 			}
-		}	
-	}	
-	
+		}
+	}
+
 	//debug($response);
-	
+
 	if ($response == '')
 	{
 		return;
 	}
-	
+
 	return '<ol>' . $response . '</ol>';
 }
 
