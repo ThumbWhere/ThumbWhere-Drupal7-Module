@@ -141,7 +141,7 @@ function _thumbwhere_handle_external_repository_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_externalrepository', 'Notification: \'create\' externalrepository $<a href="/admin/thumbwhere/externalrepositorys/externalrepository/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_externalrepository', 'Notification: \'create\' externalrepository $<a href="/admin/thumbwhere/thumbwhere_externalrepositorys/thumbwhere_externalrepository/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -288,7 +288,7 @@ function _thumbwhere_handle_external_repository_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_externalrepository', 'Notification: \'' . $notification_op . '\' externalrepository #<a href="/admin/thumbwhere/externalrepositorys/externalrepository/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_externalrepository', 'Notification: \'' . $notification_op . '\' externalrepository #<a href="/admin/thumbwhere/thumbwhere_externalrepositorys/thumbwhere_externalrepository/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -369,7 +369,7 @@ function _thumbwhere_handle_external_repository_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_externalrepository', 'Notification: \'update\' externalrepository $<a href="/admin/thumbwhere/externalrepositorys/externalrepository/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_externalrepository', 'Notification: \'update\' externalrepository $<a href="/admin/thumbwhere/thumbwhere_externalrepositorys/thumbwhere_externalrepository/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

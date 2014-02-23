@@ -141,7 +141,7 @@ function _thumbwhere_handle_host_provider_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostprovider', 'Notification: \'create\' hostprovider $<a href="/admin/thumbwhere/hostproviders/hostprovider/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostprovider', 'Notification: \'create\' hostprovider $<a href="/admin/thumbwhere/thumbwhere_hostproviders/thumbwhere_hostprovider/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -276,7 +276,7 @@ function _thumbwhere_handle_host_provider_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_hostprovider', 'Notification: \'' . $notification_op . '\' hostprovider #<a href="/admin/thumbwhere/hostproviders/hostprovider/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostprovider', 'Notification: \'' . $notification_op . '\' hostprovider #<a href="/admin/thumbwhere/thumbwhere_hostproviders/thumbwhere_hostprovider/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -357,7 +357,7 @@ function _thumbwhere_handle_host_provider_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostprovider', 'Notification: \'update\' hostprovider $<a href="/admin/thumbwhere/hostproviders/hostprovider/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostprovider', 'Notification: \'update\' hostprovider $<a href="/admin/thumbwhere/thumbwhere_hostproviders/thumbwhere_hostprovider/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

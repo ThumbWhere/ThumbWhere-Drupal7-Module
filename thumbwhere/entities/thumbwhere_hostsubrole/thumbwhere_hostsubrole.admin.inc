@@ -141,7 +141,7 @@ function _thumbwhere_handle_host_role_subrole_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostsubrole', 'Notification: \'create\' hostsubrole $<a href="/admin/thumbwhere/hostsubroles/hostsubrole/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostsubrole', 'Notification: \'create\' hostsubrole $<a href="/admin/thumbwhere/thumbwhere_hostsubroles/thumbwhere_hostsubrole/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -280,7 +280,7 @@ function _thumbwhere_handle_host_role_subrole_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_hostsubrole', 'Notification: \'' . $notification_op . '\' hostsubrole #<a href="/admin/thumbwhere/hostsubroles/hostsubrole/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostsubrole', 'Notification: \'' . $notification_op . '\' hostsubrole #<a href="/admin/thumbwhere/thumbwhere_hostsubroles/thumbwhere_hostsubrole/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -361,7 +361,7 @@ function _thumbwhere_handle_host_role_subrole_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostsubrole', 'Notification: \'update\' hostsubrole $<a href="/admin/thumbwhere/hostsubroles/hostsubrole/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostsubrole', 'Notification: \'update\' hostsubrole $<a href="/admin/thumbwhere/thumbwhere_hostsubroles/thumbwhere_hostsubrole/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

@@ -141,7 +141,7 @@ function _thumbwhere_handle_activity_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_activity', 'Notification: \'create\' activity $<a href="/admin/thumbwhere/activitys/activity/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_activity', 'Notification: \'create\' activity $<a href="/admin/thumbwhere/thumbwhere_activitys/thumbwhere_activity/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -288,7 +288,7 @@ function _thumbwhere_handle_activity_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_activity', 'Notification: \'' . $notification_op . '\' activity #<a href="/admin/thumbwhere/activitys/activity/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_activity', 'Notification: \'' . $notification_op . '\' activity #<a href="/admin/thumbwhere/thumbwhere_activitys/thumbwhere_activity/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -369,7 +369,7 @@ function _thumbwhere_handle_activity_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_activity', 'Notification: \'update\' activity $<a href="/admin/thumbwhere/activitys/activity/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_activity', 'Notification: \'update\' activity $<a href="/admin/thumbwhere/thumbwhere_activitys/thumbwhere_activity/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

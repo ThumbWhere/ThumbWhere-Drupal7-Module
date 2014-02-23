@@ -141,7 +141,7 @@ function _thumbwhere_handle_action_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_action', 'Notification: \'create\' action $<a href="/admin/thumbwhere/actions/action/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_action', 'Notification: \'create\' action $<a href="/admin/thumbwhere/thumbwhere_actions/thumbwhere_action/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -324,7 +324,7 @@ function _thumbwhere_handle_action_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_action', 'Notification: \'' . $notification_op . '\' action #<a href="/admin/thumbwhere/actions/action/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_action', 'Notification: \'' . $notification_op . '\' action #<a href="/admin/thumbwhere/thumbwhere_actions/thumbwhere_action/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -405,7 +405,7 @@ function _thumbwhere_handle_action_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_action', 'Notification: \'update\' action $<a href="/admin/thumbwhere/actions/action/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_action', 'Notification: \'update\' action $<a href="/admin/thumbwhere/thumbwhere_actions/thumbwhere_action/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

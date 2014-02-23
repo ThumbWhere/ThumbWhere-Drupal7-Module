@@ -141,7 +141,7 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_mediaitem', 'Notification: \'create\' mediaitem $<a href="/admin/thumbwhere/mediaitems/mediaitem/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_mediaitem', 'Notification: \'create\' mediaitem $<a href="/admin/thumbwhere/thumbwhere_mediaitems/thumbwhere_mediaitem/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -381,7 +381,7 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_mediaitem', 'Notification: \'' . $notification_op . '\' mediaitem #<a href="/admin/thumbwhere/mediaitems/mediaitem/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_mediaitem', 'Notification: \'' . $notification_op . '\' mediaitem #<a href="/admin/thumbwhere/thumbwhere_mediaitems/thumbwhere_mediaitem/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -462,7 +462,7 @@ function _thumbwhere_handle_mediaitem_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_mediaitem', 'Notification: \'update\' mediaitem $<a href="/admin/thumbwhere/mediaitems/mediaitem/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_mediaitem', 'Notification: \'update\' mediaitem $<a href="/admin/thumbwhere/thumbwhere_mediaitems/thumbwhere_mediaitem/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

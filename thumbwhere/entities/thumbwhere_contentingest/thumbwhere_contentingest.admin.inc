@@ -141,7 +141,7 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_contentingest', 'Notification: \'create\' contentingest $<a href="/admin/thumbwhere/contentingests/contentingest/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_contentingest', 'Notification: \'create\' contentingest $<a href="/admin/thumbwhere/thumbwhere_contentingests/thumbwhere_contentingest/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -366,7 +366,7 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_contentingest', 'Notification: \'' . $notification_op . '\' contentingest #<a href="/admin/thumbwhere/contentingests/contentingest/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_contentingest', 'Notification: \'' . $notification_op . '\' contentingest #<a href="/admin/thumbwhere/thumbwhere_contentingests/thumbwhere_contentingest/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -447,7 +447,7 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_contentingest', 'Notification: \'update\' contentingest $<a href="/admin/thumbwhere/contentingests/contentingest/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_contentingest', 'Notification: \'update\' contentingest $<a href="/admin/thumbwhere/thumbwhere_contentingests/thumbwhere_contentingest/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

@@ -141,7 +141,7 @@ function _thumbwhere_handle_host_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_host', 'Notification: \'create\' host $<a href="/admin/thumbwhere/hosts/host/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_host', 'Notification: \'create\' host $<a href="/admin/thumbwhere/thumbwhere_hosts/thumbwhere_host/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -293,7 +293,7 @@ function _thumbwhere_handle_host_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_host', 'Notification: \'' . $notification_op . '\' host #<a href="/admin/thumbwhere/hosts/host/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_host', 'Notification: \'' . $notification_op . '\' host #<a href="/admin/thumbwhere/thumbwhere_hosts/thumbwhere_host/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -374,7 +374,7 @@ function _thumbwhere_handle_host_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_host', 'Notification: \'update\' host $<a href="/admin/thumbwhere/hosts/host/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_host', 'Notification: \'update\' host $<a href="/admin/thumbwhere/thumbwhere_hosts/thumbwhere_host/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

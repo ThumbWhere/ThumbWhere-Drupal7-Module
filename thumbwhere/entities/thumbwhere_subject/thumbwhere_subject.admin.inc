@@ -141,7 +141,7 @@ function _thumbwhere_handle_subject_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_subject', 'Notification: \'create\' subject $<a href="/admin/thumbwhere/subjects/subject/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_subject', 'Notification: \'create\' subject $<a href="/admin/thumbwhere/thumbwhere_subjects/thumbwhere_subject/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -288,7 +288,7 @@ function _thumbwhere_handle_subject_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_subject', 'Notification: \'' . $notification_op . '\' subject #<a href="/admin/thumbwhere/subjects/subject/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_subject', 'Notification: \'' . $notification_op . '\' subject #<a href="/admin/thumbwhere/thumbwhere_subjects/thumbwhere_subject/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -369,7 +369,7 @@ function _thumbwhere_handle_subject_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_subject', 'Notification: \'update\' subject $<a href="/admin/thumbwhere/subjects/subject/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_subject', 'Notification: \'update\' subject $<a href="/admin/thumbwhere/thumbwhere_subjects/thumbwhere_subject/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

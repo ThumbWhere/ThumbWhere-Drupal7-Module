@@ -141,7 +141,7 @@ function _thumbwhere_handle_fan_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_fan', 'Notification: \'create\' fan $<a href="/admin/thumbwhere/fans/fan/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_fan', 'Notification: \'create\' fan $<a href="/admin/thumbwhere/thumbwhere_fans/thumbwhere_fan/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -288,7 +288,7 @@ function _thumbwhere_handle_fan_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_fan', 'Notification: \'' . $notification_op . '\' fan #<a href="/admin/thumbwhere/fans/fan/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_fan', 'Notification: \'' . $notification_op . '\' fan #<a href="/admin/thumbwhere/thumbwhere_fans/thumbwhere_fan/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -369,7 +369,7 @@ function _thumbwhere_handle_fan_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_fan', 'Notification: \'update\' fan $<a href="/admin/thumbwhere/fans/fan/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_fan', 'Notification: \'update\' fan $<a href="/admin/thumbwhere/thumbwhere_fans/thumbwhere_fan/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

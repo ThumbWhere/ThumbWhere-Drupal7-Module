@@ -141,7 +141,7 @@ function _thumbwhere_handle_program_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_program', 'Notification: \'create\' program $<a href="/admin/thumbwhere/programs/program/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_program', 'Notification: \'create\' program $<a href="/admin/thumbwhere/thumbwhere_programs/thumbwhere_program/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -276,7 +276,7 @@ function _thumbwhere_handle_program_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_program', 'Notification: \'' . $notification_op . '\' program #<a href="/admin/thumbwhere/programs/program/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_program', 'Notification: \'' . $notification_op . '\' program #<a href="/admin/thumbwhere/thumbwhere_programs/thumbwhere_program/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -357,7 +357,7 @@ function _thumbwhere_handle_program_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_program', 'Notification: \'update\' program $<a href="/admin/thumbwhere/programs/program/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_program', 'Notification: \'update\' program $<a href="/admin/thumbwhere/thumbwhere_programs/thumbwhere_program/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

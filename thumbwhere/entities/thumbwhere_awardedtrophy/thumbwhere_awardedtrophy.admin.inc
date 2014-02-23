@@ -141,7 +141,7 @@ function _thumbwhere_handle_awarded_trophy_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_awardedtrophy', 'Notification: \'create\' awardedtrophy $<a href="/admin/thumbwhere/awardedtrophys/awardedtrophy/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_awardedtrophy', 'Notification: \'create\' awardedtrophy $<a href="/admin/thumbwhere/thumbwhere_awardedtrophys/thumbwhere_awardedtrophy/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -288,7 +288,7 @@ function _thumbwhere_handle_awarded_trophy_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_awardedtrophy', 'Notification: \'' . $notification_op . '\' awardedtrophy #<a href="/admin/thumbwhere/awardedtrophys/awardedtrophy/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_awardedtrophy', 'Notification: \'' . $notification_op . '\' awardedtrophy #<a href="/admin/thumbwhere/thumbwhere_awardedtrophys/thumbwhere_awardedtrophy/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -369,7 +369,7 @@ function _thumbwhere_handle_awarded_trophy_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_awardedtrophy', 'Notification: \'update\' awardedtrophy $<a href="/admin/thumbwhere/awardedtrophys/awardedtrophy/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_awardedtrophy', 'Notification: \'update\' awardedtrophy $<a href="/admin/thumbwhere/thumbwhere_awardedtrophys/thumbwhere_awardedtrophy/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

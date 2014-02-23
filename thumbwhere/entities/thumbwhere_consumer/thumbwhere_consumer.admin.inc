@@ -141,7 +141,7 @@ function _thumbwhere_handle_consumer_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_consumer', 'Notification: \'create\' consumer $<a href="/admin/thumbwhere/consumers/consumer/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_consumer', 'Notification: \'create\' consumer $<a href="/admin/thumbwhere/thumbwhere_consumers/thumbwhere_consumer/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -288,7 +288,7 @@ function _thumbwhere_handle_consumer_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_consumer', 'Notification: \'' . $notification_op . '\' consumer #<a href="/admin/thumbwhere/consumers/consumer/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_consumer', 'Notification: \'' . $notification_op . '\' consumer #<a href="/admin/thumbwhere/thumbwhere_consumers/thumbwhere_consumer/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -369,7 +369,7 @@ function _thumbwhere_handle_consumer_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_consumer', 'Notification: \'update\' consumer $<a href="/admin/thumbwhere/consumers/consumer/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_consumer', 'Notification: \'update\' consumer $<a href="/admin/thumbwhere/thumbwhere_consumers/thumbwhere_consumer/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

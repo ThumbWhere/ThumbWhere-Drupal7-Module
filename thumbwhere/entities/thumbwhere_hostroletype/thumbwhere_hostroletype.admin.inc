@@ -141,7 +141,7 @@ function _thumbwhere_handle_host_role_type_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostroletype', 'Notification: \'create\' hostroletype $<a href="/admin/thumbwhere/hostroletypes/hostroletype/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostroletype', 'Notification: \'create\' hostroletype $<a href="/admin/thumbwhere/thumbwhere_hostroletypes/thumbwhere_hostroletype/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -280,7 +280,7 @@ function _thumbwhere_handle_host_role_type_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_hostroletype', 'Notification: \'' . $notification_op . '\' hostroletype #<a href="/admin/thumbwhere/hostroletypes/hostroletype/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostroletype', 'Notification: \'' . $notification_op . '\' hostroletype #<a href="/admin/thumbwhere/thumbwhere_hostroletypes/thumbwhere_hostroletype/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -361,7 +361,7 @@ function _thumbwhere_handle_host_role_type_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostroletype', 'Notification: \'update\' hostroletype $<a href="/admin/thumbwhere/hostroletypes/hostroletype/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostroletype', 'Notification: \'update\' hostroletype $<a href="/admin/thumbwhere/thumbwhere_hostroletypes/thumbwhere_hostroletype/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

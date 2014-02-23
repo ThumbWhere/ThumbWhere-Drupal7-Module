@@ -141,7 +141,7 @@ function _thumbwhere_handle_like_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_like', 'Notification: \'create\' like $<a href="/admin/thumbwhere/likes/like/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_like', 'Notification: \'create\' like $<a href="/admin/thumbwhere/thumbwhere_likes/thumbwhere_like/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -288,7 +288,7 @@ function _thumbwhere_handle_like_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_like', 'Notification: \'' . $notification_op . '\' like #<a href="/admin/thumbwhere/likes/like/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_like', 'Notification: \'' . $notification_op . '\' like #<a href="/admin/thumbwhere/thumbwhere_likes/thumbwhere_like/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -369,7 +369,7 @@ function _thumbwhere_handle_like_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_like', 'Notification: \'update\' like $<a href="/admin/thumbwhere/likes/like/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_like', 'Notification: \'update\' like $<a href="/admin/thumbwhere/thumbwhere_likes/thumbwhere_like/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

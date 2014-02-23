@@ -141,7 +141,7 @@ function _thumbwhere_handle_content_metadata_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_contentmetadata', 'Notification: \'create\' contentmetadata $<a href="/admin/thumbwhere/contentmetadatas/contentmetadata/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_contentmetadata', 'Notification: \'create\' contentmetadata $<a href="/admin/thumbwhere/thumbwhere_contentmetadatas/thumbwhere_contentmetadata/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -305,7 +305,7 @@ function _thumbwhere_handle_content_metadata_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_contentmetadata', 'Notification: \'' . $notification_op . '\' contentmetadata #<a href="/admin/thumbwhere/contentmetadatas/contentmetadata/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_contentmetadata', 'Notification: \'' . $notification_op . '\' contentmetadata #<a href="/admin/thumbwhere/thumbwhere_contentmetadatas/thumbwhere_contentmetadata/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -386,7 +386,7 @@ function _thumbwhere_handle_content_metadata_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_contentmetadata', 'Notification: \'update\' contentmetadata $<a href="/admin/thumbwhere/contentmetadatas/contentmetadata/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_contentmetadata', 'Notification: \'update\' contentmetadata $<a href="/admin/thumbwhere/thumbwhere_contentmetadatas/thumbwhere_contentmetadata/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

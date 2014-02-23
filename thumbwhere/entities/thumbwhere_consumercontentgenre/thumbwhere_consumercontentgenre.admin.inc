@@ -141,7 +141,7 @@ function _thumbwhere_handle_consumer_subscribed_contengenre_notify_xml($notifica
           }
         }
               
-        watchdog('thumbwhere_consumercontentgenre', 'Notification: \'create\' consumercontentgenre $<a href="/admin/thumbwhere/consumercontentgenres/consumercontentgenre/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_consumercontentgenre', 'Notification: \'create\' consumercontentgenre $<a href="/admin/thumbwhere/thumbwhere_consumercontentgenres/thumbwhere_consumercontentgenre/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -280,7 +280,7 @@ function _thumbwhere_handle_consumer_subscribed_contengenre_notify_xml($notifica
           }
         }
           
-        watchdog('thumbwhere_consumercontentgenre', 'Notification: \'' . $notification_op . '\' consumercontentgenre #<a href="/admin/thumbwhere/consumercontentgenres/consumercontentgenre/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_consumercontentgenre', 'Notification: \'' . $notification_op . '\' consumercontentgenre #<a href="/admin/thumbwhere/thumbwhere_consumercontentgenres/thumbwhere_consumercontentgenre/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -361,7 +361,7 @@ function _thumbwhere_handle_consumer_subscribed_contengenre_notify_xml($notifica
           }
         }
               
-        watchdog('thumbwhere_consumercontentgenre', 'Notification: \'update\' consumercontentgenre $<a href="/admin/thumbwhere/consumercontentgenres/consumercontentgenre/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_consumercontentgenre', 'Notification: \'update\' consumercontentgenre $<a href="/admin/thumbwhere/thumbwhere_consumercontentgenres/thumbwhere_consumercontentgenre/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

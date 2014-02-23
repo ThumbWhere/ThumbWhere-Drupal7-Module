@@ -141,7 +141,7 @@ function _thumbwhere_handle_trophy_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_trophy', 'Notification: \'create\' trophy $<a href="/admin/thumbwhere/trophys/trophy/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_trophy', 'Notification: \'create\' trophy $<a href="/admin/thumbwhere/thumbwhere_trophys/thumbwhere_trophy/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -285,7 +285,7 @@ function _thumbwhere_handle_trophy_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_trophy', 'Notification: \'' . $notification_op . '\' trophy #<a href="/admin/thumbwhere/trophys/trophy/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_trophy', 'Notification: \'' . $notification_op . '\' trophy #<a href="/admin/thumbwhere/thumbwhere_trophys/thumbwhere_trophy/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -366,7 +366,7 @@ function _thumbwhere_handle_trophy_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_trophy', 'Notification: \'update\' trophy $<a href="/admin/thumbwhere/trophys/trophy/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_trophy', 'Notification: \'update\' trophy $<a href="/admin/thumbwhere/thumbwhere_trophys/thumbwhere_trophy/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

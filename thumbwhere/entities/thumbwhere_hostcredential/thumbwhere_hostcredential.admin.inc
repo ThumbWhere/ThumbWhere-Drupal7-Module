@@ -141,7 +141,7 @@ function _thumbwhere_handle_host_credential_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostcredential', 'Notification: \'create\' hostcredential $<a href="/admin/thumbwhere/hostcredentials/hostcredential/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostcredential', 'Notification: \'create\' hostcredential $<a href="/admin/thumbwhere/thumbwhere_hostcredentials/thumbwhere_hostcredential/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -288,7 +288,7 @@ function _thumbwhere_handle_host_credential_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_hostcredential', 'Notification: \'' . $notification_op . '\' hostcredential #<a href="/admin/thumbwhere/hostcredentials/hostcredential/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostcredential', 'Notification: \'' . $notification_op . '\' hostcredential #<a href="/admin/thumbwhere/thumbwhere_hostcredentials/thumbwhere_hostcredential/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -369,7 +369,7 @@ function _thumbwhere_handle_host_credential_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostcredential', 'Notification: \'update\' hostcredential $<a href="/admin/thumbwhere/hostcredentials/hostcredential/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostcredential', 'Notification: \'update\' hostcredential $<a href="/admin/thumbwhere/thumbwhere_hostcredentials/thumbwhere_hostcredential/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

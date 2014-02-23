@@ -141,7 +141,7 @@ function _thumbwhere_handle_consumer_member_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_consumermember', 'Notification: \'create\' consumermember $<a href="/admin/thumbwhere/consumermembers/consumermember/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_consumermember', 'Notification: \'create\' consumermember $<a href="/admin/thumbwhere/thumbwhere_consumermembers/thumbwhere_consumermember/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -289,7 +289,7 @@ function _thumbwhere_handle_consumer_member_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_consumermember', 'Notification: \'' . $notification_op . '\' consumermember #<a href="/admin/thumbwhere/consumermembers/consumermember/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_consumermember', 'Notification: \'' . $notification_op . '\' consumermember #<a href="/admin/thumbwhere/thumbwhere_consumermembers/thumbwhere_consumermember/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -370,7 +370,7 @@ function _thumbwhere_handle_consumer_member_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_consumermember', 'Notification: \'update\' consumermember $<a href="/admin/thumbwhere/consumermembers/consumermember/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_consumermember', 'Notification: \'update\' consumermember $<a href="/admin/thumbwhere/thumbwhere_consumermembers/thumbwhere_consumermember/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

@@ -141,7 +141,7 @@ function _thumbwhere_handle_host_role_subrole_order_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostsubroleorder', 'Notification: \'create\' hostsubroleorder $<a href="/admin/thumbwhere/hostsubroleorders/hostsubroleorder/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostsubroleorder', 'Notification: \'create\' hostsubroleorder $<a href="/admin/thumbwhere/thumbwhere_hostsubroleorders/thumbwhere_hostsubroleorder/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -298,7 +298,7 @@ function _thumbwhere_handle_host_role_subrole_order_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_hostsubroleorder', 'Notification: \'' . $notification_op . '\' hostsubroleorder #<a href="/admin/thumbwhere/hostsubroleorders/hostsubroleorder/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostsubroleorder', 'Notification: \'' . $notification_op . '\' hostsubroleorder #<a href="/admin/thumbwhere/thumbwhere_hostsubroleorders/thumbwhere_hostsubroleorder/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -379,7 +379,7 @@ function _thumbwhere_handle_host_role_subrole_order_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostsubroleorder', 'Notification: \'update\' hostsubroleorder $<a href="/admin/thumbwhere/hostsubroleorders/hostsubroleorder/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostsubroleorder', 'Notification: \'update\' hostsubroleorder $<a href="/admin/thumbwhere/thumbwhere_hostsubroleorders/thumbwhere_hostsubroleorder/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

@@ -141,7 +141,7 @@ function _thumbwhere_handle_host_log_entry_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostlogentry', 'Notification: \'create\' hostlogentry $<a href="/admin/thumbwhere/hostlogentrys/hostlogentry/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostlogentry', 'Notification: \'create\' hostlogentry $<a href="/admin/thumbwhere/thumbwhere_hostlogentrys/thumbwhere_hostlogentry/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -280,7 +280,7 @@ function _thumbwhere_handle_host_log_entry_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_hostlogentry', 'Notification: \'' . $notification_op . '\' hostlogentry #<a href="/admin/thumbwhere/hostlogentrys/hostlogentry/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostlogentry', 'Notification: \'' . $notification_op . '\' hostlogentry #<a href="/admin/thumbwhere/thumbwhere_hostlogentrys/thumbwhere_hostlogentry/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -361,7 +361,7 @@ function _thumbwhere_handle_host_log_entry_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostlogentry', 'Notification: \'update\' hostlogentry $<a href="/admin/thumbwhere/hostlogentrys/hostlogentry/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostlogentry', 'Notification: \'update\' hostlogentry $<a href="/admin/thumbwhere/thumbwhere_hostlogentrys/thumbwhere_hostlogentry/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

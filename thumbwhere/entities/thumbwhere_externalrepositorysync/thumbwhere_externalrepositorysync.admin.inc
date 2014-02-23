@@ -141,7 +141,7 @@ function _thumbwhere_handle_external_repository_sync_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_externalrepositorysync', 'Notification: \'create\' externalrepositorysync $<a href="/admin/thumbwhere/externalrepositorysyncs/externalrepositorysync/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_externalrepositorysync', 'Notification: \'create\' externalrepositorysync $<a href="/admin/thumbwhere/thumbwhere_externalrepositorysyncs/thumbwhere_externalrepositorysync/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -293,7 +293,7 @@ function _thumbwhere_handle_external_repository_sync_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_externalrepositorysync', 'Notification: \'' . $notification_op . '\' externalrepositorysync #<a href="/admin/thumbwhere/externalrepositorysyncs/externalrepositorysync/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_externalrepositorysync', 'Notification: \'' . $notification_op . '\' externalrepositorysync #<a href="/admin/thumbwhere/thumbwhere_externalrepositorysyncs/thumbwhere_externalrepositorysync/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -374,7 +374,7 @@ function _thumbwhere_handle_external_repository_sync_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_externalrepositorysync', 'Notification: \'update\' externalrepositorysync $<a href="/admin/thumbwhere/externalrepositorysyncs/externalrepositorysync/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_externalrepositorysync', 'Notification: \'update\' externalrepositorysync $<a href="/admin/thumbwhere/thumbwhere_externalrepositorysyncs/thumbwhere_externalrepositorysync/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

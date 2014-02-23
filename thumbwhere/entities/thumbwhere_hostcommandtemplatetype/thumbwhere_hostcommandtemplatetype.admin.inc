@@ -141,7 +141,7 @@ function _thumbwhere_handle_host_command_template_type_notify_xml($notification)
           }
         }
               
-        watchdog('thumbwhere_hostcommandtemplatetype', 'Notification: \'create\' hostcommandtemplatetype $<a href="/admin/thumbwhere/hostcommandtemplatetypes/hostcommandtemplatetype/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostcommandtemplatetype', 'Notification: \'create\' hostcommandtemplatetype $<a href="/admin/thumbwhere/thumbwhere_hostcommandtemplatetypes/thumbwhere_hostcommandtemplatetype/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -276,7 +276,7 @@ function _thumbwhere_handle_host_command_template_type_notify_xml($notification)
           }
         }
           
-        watchdog('thumbwhere_hostcommandtemplatetype', 'Notification: \'' . $notification_op . '\' hostcommandtemplatetype #<a href="/admin/thumbwhere/hostcommandtemplatetypes/hostcommandtemplatetype/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostcommandtemplatetype', 'Notification: \'' . $notification_op . '\' hostcommandtemplatetype #<a href="/admin/thumbwhere/thumbwhere_hostcommandtemplatetypes/thumbwhere_hostcommandtemplatetype/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -357,7 +357,7 @@ function _thumbwhere_handle_host_command_template_type_notify_xml($notification)
           }
         }
               
-        watchdog('thumbwhere_hostcommandtemplatetype', 'Notification: \'update\' hostcommandtemplatetype $<a href="/admin/thumbwhere/hostcommandtemplatetypes/hostcommandtemplatetype/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostcommandtemplatetype', 'Notification: \'update\' hostcommandtemplatetype $<a href="/admin/thumbwhere/thumbwhere_hostcommandtemplatetypes/thumbwhere_hostcommandtemplatetype/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

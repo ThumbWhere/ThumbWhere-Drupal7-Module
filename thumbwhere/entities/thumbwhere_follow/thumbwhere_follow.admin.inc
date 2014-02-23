@@ -141,7 +141,7 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_follow', 'Notification: \'create\' follow $<a href="/admin/thumbwhere/follows/follow/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_follow', 'Notification: \'create\' follow $<a href="/admin/thumbwhere/thumbwhere_follows/thumbwhere_follow/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -288,7 +288,7 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_follow', 'Notification: \'' . $notification_op . '\' follow #<a href="/admin/thumbwhere/follows/follow/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_follow', 'Notification: \'' . $notification_op . '\' follow #<a href="/admin/thumbwhere/thumbwhere_follows/thumbwhere_follow/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -369,7 +369,7 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_follow', 'Notification: \'update\' follow $<a href="/admin/thumbwhere/follows/follow/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_follow', 'Notification: \'update\' follow $<a href="/admin/thumbwhere/thumbwhere_follows/thumbwhere_follow/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

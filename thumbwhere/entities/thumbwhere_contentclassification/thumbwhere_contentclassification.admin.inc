@@ -141,7 +141,7 @@ function _thumbwhere_handle_content_classification_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_contentclassification', 'Notification: \'create\' contentclassification $<a href="/admin/thumbwhere/contentclassifications/contentclassification/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_contentclassification', 'Notification: \'create\' contentclassification $<a href="/admin/thumbwhere/thumbwhere_contentclassifications/thumbwhere_contentclassification/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -276,7 +276,7 @@ function _thumbwhere_handle_content_classification_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_contentclassification', 'Notification: \'' . $notification_op . '\' contentclassification #<a href="/admin/thumbwhere/contentclassifications/contentclassification/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_contentclassification', 'Notification: \'' . $notification_op . '\' contentclassification #<a href="/admin/thumbwhere/thumbwhere_contentclassifications/thumbwhere_contentclassification/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -357,7 +357,7 @@ function _thumbwhere_handle_content_classification_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_contentclassification', 'Notification: \'update\' contentclassification $<a href="/admin/thumbwhere/contentclassifications/contentclassification/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_contentclassification', 'Notification: \'update\' contentclassification $<a href="/admin/thumbwhere/thumbwhere_contentclassifications/thumbwhere_contentclassification/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

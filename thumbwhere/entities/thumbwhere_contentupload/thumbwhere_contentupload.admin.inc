@@ -141,7 +141,7 @@ function _thumbwhere_handle_content_upload_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_contentupload', 'Notification: \'create\' contentupload $<a href="/admin/thumbwhere/contentuploads/contentupload/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_contentupload', 'Notification: \'create\' contentupload $<a href="/admin/thumbwhere/thumbwhere_contentuploads/thumbwhere_contentupload/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -362,7 +362,7 @@ function _thumbwhere_handle_content_upload_notify_xml($notification) {
           }
         }
           
-        watchdog('thumbwhere_contentupload', 'Notification: \'' . $notification_op . '\' contentupload #<a href="/admin/thumbwhere/contentuploads/contentupload/' . $id .  '"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_contentupload', 'Notification: \'' . $notification_op . '\' contentupload #<a href="/admin/thumbwhere/thumbwhere_contentuploads/thumbwhere_contentupload/' . $id .  '/edit"> \'' . $id .  '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
        
         //
         // Get the fields
@@ -443,7 +443,7 @@ function _thumbwhere_handle_content_upload_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_contentupload', 'Notification: \'update\' contentupload $<a href="/admin/thumbwhere/contentuploads/contentupload/' . $id .  '">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_contentupload', 'Notification: \'update\' contentupload $<a href="/admin/thumbwhere/thumbwhere_contentuploads/thumbwhere_contentupload/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
