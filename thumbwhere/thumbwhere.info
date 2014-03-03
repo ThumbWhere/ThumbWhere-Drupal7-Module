@@ -24,9 +24,9 @@ files[] = thumbwhere.integration.test
 
 
 ; And while we are developing
-dependencies[] = devel
-dependencies[] = devel_debug_log
-dependencies[] = coder
+;dependencies[] = devel
+;dependencies[] = devel_debug_log
+;dependencies[] = coder
 
 
 ; Uncomment these lines to set current version to be immune from upgrade scripts

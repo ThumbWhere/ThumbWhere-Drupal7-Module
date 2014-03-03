@@ -5,8 +5,8 @@ description = "Enabled Drupal to authenticate users with ThumbWhere."
 package = "ThumbWhere"
 core = 7.x
 
-dependencies[] = devel
-dependencies[] = devel_debug_log
+;dependencies[] = devel
+;dependencies[] = devel_debug_log
 dependencies[] = thumbwhere
 
 
