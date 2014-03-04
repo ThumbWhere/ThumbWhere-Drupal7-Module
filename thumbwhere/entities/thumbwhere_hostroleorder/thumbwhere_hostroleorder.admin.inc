@@ -141,7 +141,7 @@ function _thumbwhere_handle_host_role_order_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostroleorder', 'Notification: \'create\' hostroleorder $<a href="/admin/thumbwhere/thumbwhere_hostroleorders/thumbwhere_hostroleorder/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostroleorder', 'Notification: \'create\' hostroleorder #<a href="/admin/thumbwhere/thumbwhere_hostroleorders/thumbwhere_hostroleorder/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -379,7 +379,7 @@ function _thumbwhere_handle_host_role_order_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostroleorder', 'Notification: \'update\' hostroleorder $<a href="/admin/thumbwhere/thumbwhere_hostroleorders/thumbwhere_hostroleorder/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostroleorder', 'Notification: \'update\' hostroleorder #<a href="/admin/thumbwhere/thumbwhere_hostroleorders/thumbwhere_hostroleorder/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

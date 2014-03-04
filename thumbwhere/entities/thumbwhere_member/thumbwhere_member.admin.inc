@@ -141,7 +141,7 @@ function _thumbwhere_handle_member_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_member', 'Notification: \'create\' member $<a href="/admin/thumbwhere/thumbwhere_members/thumbwhere_member/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_member', 'Notification: \'create\' member #<a href="/admin/thumbwhere/thumbwhere_members/thumbwhere_member/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -385,7 +385,7 @@ function _thumbwhere_handle_member_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_member', 'Notification: \'update\' member $<a href="/admin/thumbwhere/thumbwhere_members/thumbwhere_member/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_member', 'Notification: \'update\' member #<a href="/admin/thumbwhere/thumbwhere_members/thumbwhere_member/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

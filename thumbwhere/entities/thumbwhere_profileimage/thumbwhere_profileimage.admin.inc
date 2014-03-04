@@ -141,7 +141,7 @@ function _thumbwhere_handle_profileimage_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_profileimage', 'Notification: \'create\' profileimage $<a href="/admin/thumbwhere/thumbwhere_profileimages/thumbwhere_profileimage/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_profileimage', 'Notification: \'create\' profileimage #<a href="/admin/thumbwhere/thumbwhere_profileimages/thumbwhere_profileimage/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -361,7 +361,7 @@ function _thumbwhere_handle_profileimage_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_profileimage', 'Notification: \'update\' profileimage $<a href="/admin/thumbwhere/thumbwhere_profileimages/thumbwhere_profileimage/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_profileimage', 'Notification: \'update\' profileimage #<a href="/admin/thumbwhere/thumbwhere_profileimages/thumbwhere_profileimage/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

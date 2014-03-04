@@ -141,7 +141,7 @@ function _thumbwhere_handle_host_role_subrole_type_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostsubroletype', 'Notification: \'create\' hostsubroletype $<a href="/admin/thumbwhere/thumbwhere_hostsubroletypes/thumbwhere_hostsubroletype/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostsubroletype', 'Notification: \'create\' hostsubroletype #<a href="/admin/thumbwhere/thumbwhere_hostsubroletypes/thumbwhere_hostsubroletype/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -361,7 +361,7 @@ function _thumbwhere_handle_host_role_subrole_type_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostsubroletype', 'Notification: \'update\' hostsubroletype $<a href="/admin/thumbwhere/thumbwhere_hostsubroletypes/thumbwhere_hostsubroletype/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostsubroletype', 'Notification: \'update\' hostsubroletype #<a href="/admin/thumbwhere/thumbwhere_hostsubroletypes/thumbwhere_hostsubroletype/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

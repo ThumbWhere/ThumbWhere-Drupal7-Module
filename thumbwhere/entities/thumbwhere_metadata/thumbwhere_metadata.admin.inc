@@ -141,7 +141,7 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_metadata', 'Notification: \'create\' metadata $<a href="/admin/thumbwhere/thumbwhere_metadatas/thumbwhere_metadata/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_metadata', 'Notification: \'create\' metadata #<a href="/admin/thumbwhere/thumbwhere_metadatas/thumbwhere_metadata/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -361,7 +361,7 @@ function _thumbwhere_handle_metadata_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_metadata', 'Notification: \'update\' metadata $<a href="/admin/thumbwhere/thumbwhere_metadatas/thumbwhere_metadata/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_metadata', 'Notification: \'update\' metadata #<a href="/admin/thumbwhere/thumbwhere_metadatas/thumbwhere_metadata/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

@@ -141,7 +141,7 @@ function _thumbwhere_handle_producer_member_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_producermember', 'Notification: \'create\' producermember $<a href="/admin/thumbwhere/thumbwhere_producermembers/thumbwhere_producermember/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_producermember', 'Notification: \'create\' producermember #<a href="/admin/thumbwhere/thumbwhere_producermembers/thumbwhere_producermember/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -370,7 +370,7 @@ function _thumbwhere_handle_producer_member_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_producermember', 'Notification: \'update\' producermember $<a href="/admin/thumbwhere/thumbwhere_producermembers/thumbwhere_producermember/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_producermember', 'Notification: \'update\' producermember #<a href="/admin/thumbwhere/thumbwhere_producermembers/thumbwhere_producermember/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

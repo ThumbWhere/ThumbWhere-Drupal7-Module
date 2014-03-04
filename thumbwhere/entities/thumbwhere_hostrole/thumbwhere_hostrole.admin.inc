@@ -141,7 +141,7 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostrole', 'Notification: \'create\' hostrole $<a href="/admin/thumbwhere/thumbwhere_hostroles/thumbwhere_hostrole/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostrole', 'Notification: \'create\' hostrole #<a href="/admin/thumbwhere/thumbwhere_hostroles/thumbwhere_hostrole/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -361,7 +361,7 @@ function _thumbwhere_handle_host_role_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostrole', 'Notification: \'update\' hostrole $<a href="/admin/thumbwhere/thumbwhere_hostroles/thumbwhere_hostrole/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostrole', 'Notification: \'update\' hostrole #<a href="/admin/thumbwhere/thumbwhere_hostroles/thumbwhere_hostrole/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

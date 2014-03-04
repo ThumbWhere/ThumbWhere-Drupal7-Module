@@ -141,7 +141,7 @@ function _thumbwhere_handle_bookmark_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_bookmark', 'Notification: \'create\' bookmark $<a href="/admin/thumbwhere/thumbwhere_bookmarks/thumbwhere_bookmark/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_bookmark', 'Notification: \'create\' bookmark #<a href="/admin/thumbwhere/thumbwhere_bookmarks/thumbwhere_bookmark/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -361,7 +361,7 @@ function _thumbwhere_handle_bookmark_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_bookmark', 'Notification: \'update\' bookmark $<a href="/admin/thumbwhere/thumbwhere_bookmarks/thumbwhere_bookmark/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_bookmark', 'Notification: \'update\' bookmark #<a href="/admin/thumbwhere/thumbwhere_bookmarks/thumbwhere_bookmark/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

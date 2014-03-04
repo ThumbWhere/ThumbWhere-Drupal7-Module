@@ -141,7 +141,7 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostorder', 'Notification: \'create\' hostorder $<a href="/admin/thumbwhere/thumbwhere_hostorders/thumbwhere_hostorder/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostorder', 'Notification: \'create\' hostorder #<a href="/admin/thumbwhere/thumbwhere_hostorders/thumbwhere_hostorder/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -383,7 +383,7 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostorder', 'Notification: \'update\' hostorder $<a href="/admin/thumbwhere/thumbwhere_hostorders/thumbwhere_hostorder/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostorder', 'Notification: \'update\' hostorder #<a href="/admin/thumbwhere/thumbwhere_hostorders/thumbwhere_hostorder/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

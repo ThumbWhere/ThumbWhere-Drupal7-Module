@@ -141,7 +141,7 @@ function _thumbwhere_handle_target_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_target', 'Notification: \'create\' target $<a href="/admin/thumbwhere/thumbwhere_targets/thumbwhere_target/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_target', 'Notification: \'create\' target #<a href="/admin/thumbwhere/thumbwhere_targets/thumbwhere_target/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -361,7 +361,7 @@ function _thumbwhere_handle_target_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_target', 'Notification: \'update\' target $<a href="/admin/thumbwhere/thumbwhere_targets/thumbwhere_target/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_target', 'Notification: \'update\' target #<a href="/admin/thumbwhere/thumbwhere_targets/thumbwhere_target/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

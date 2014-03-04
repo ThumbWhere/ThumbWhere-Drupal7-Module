@@ -141,7 +141,7 @@ function _thumbwhere_handle_external_repository_resource_subscription_notify_xml
           }
         }
               
-        watchdog('thumbwhere_externalsubscription', 'Notification: \'create\' externalsubscription $<a href="/admin/thumbwhere/thumbwhere_externalsubscriptions/thumbwhere_externalsubscription/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_externalsubscription', 'Notification: \'create\' externalsubscription #<a href="/admin/thumbwhere/thumbwhere_externalsubscriptions/thumbwhere_externalsubscription/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -370,7 +370,7 @@ function _thumbwhere_handle_external_repository_resource_subscription_notify_xml
           }
         }
               
-        watchdog('thumbwhere_externalsubscription', 'Notification: \'update\' externalsubscription $<a href="/admin/thumbwhere/thumbwhere_externalsubscriptions/thumbwhere_externalsubscription/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_externalsubscription', 'Notification: \'update\' externalsubscription #<a href="/admin/thumbwhere/thumbwhere_externalsubscriptions/thumbwhere_externalsubscription/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

@@ -141,7 +141,7 @@ function _thumbwhere_handle_track_metadata_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_trackmetadata', 'Notification: \'create\' trackmetadata $<a href="/admin/thumbwhere/thumbwhere_trackmetadatas/thumbwhere_trackmetadata/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_trackmetadata', 'Notification: \'create\' trackmetadata #<a href="/admin/thumbwhere/thumbwhere_trackmetadatas/thumbwhere_trackmetadata/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -377,7 +377,7 @@ function _thumbwhere_handle_track_metadata_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_trackmetadata', 'Notification: \'update\' trackmetadata $<a href="/admin/thumbwhere/thumbwhere_trackmetadatas/thumbwhere_trackmetadata/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_trackmetadata', 'Notification: \'update\' trackmetadata #<a href="/admin/thumbwhere/thumbwhere_trackmetadatas/thumbwhere_trackmetadata/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

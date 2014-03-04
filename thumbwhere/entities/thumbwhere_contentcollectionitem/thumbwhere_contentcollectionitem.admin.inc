@@ -141,7 +141,7 @@ function _thumbwhere_handle_content_collection_item_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_contentcollectionitem', 'Notification: \'create\' contentcollectionitem $<a href="/admin/thumbwhere/thumbwhere_contentcollectionitems/thumbwhere_contentcollectionitem/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_contentcollectionitem', 'Notification: \'create\' contentcollectionitem #<a href="/admin/thumbwhere/thumbwhere_contentcollectionitems/thumbwhere_contentcollectionitem/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -365,7 +365,7 @@ function _thumbwhere_handle_content_collection_item_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_contentcollectionitem', 'Notification: \'update\' contentcollectionitem $<a href="/admin/thumbwhere/thumbwhere_contentcollectionitems/thumbwhere_contentcollectionitem/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_contentcollectionitem', 'Notification: \'update\' contentcollectionitem #<a href="/admin/thumbwhere/thumbwhere_contentcollectionitems/thumbwhere_contentcollectionitem/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

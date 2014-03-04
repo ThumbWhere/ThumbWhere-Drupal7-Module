@@ -141,7 +141,7 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_identity', 'Notification: \'create\' identity $<a href="/admin/thumbwhere/thumbwhere_identitys/thumbwhere_identity/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_identity', 'Notification: \'create\' identity #<a href="/admin/thumbwhere/thumbwhere_identitys/thumbwhere_identity/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -397,7 +397,7 @@ function _thumbwhere_handle_identity_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_identity', 'Notification: \'update\' identity $<a href="/admin/thumbwhere/thumbwhere_identitys/thumbwhere_identity/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_identity', 'Notification: \'update\' identity #<a href="/admin/thumbwhere/thumbwhere_identitys/thumbwhere_identity/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

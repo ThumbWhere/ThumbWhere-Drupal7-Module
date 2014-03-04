@@ -141,7 +141,7 @@ function _thumbwhere_handle_produce_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_produce', 'Notification: \'create\' produce $<a href="/admin/thumbwhere/thumbwhere_produces/thumbwhere_produce/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_produce', 'Notification: \'create\' produce #<a href="/admin/thumbwhere/thumbwhere_produces/thumbwhere_produce/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -373,7 +373,7 @@ function _thumbwhere_handle_produce_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_produce', 'Notification: \'update\' produce $<a href="/admin/thumbwhere/thumbwhere_produces/thumbwhere_produce/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_produce', 'Notification: \'update\' produce #<a href="/admin/thumbwhere/thumbwhere_produces/thumbwhere_produce/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

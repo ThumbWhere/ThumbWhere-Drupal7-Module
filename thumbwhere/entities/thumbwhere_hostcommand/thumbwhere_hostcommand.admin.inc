@@ -141,7 +141,7 @@ function _thumbwhere_handle_host_command_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostcommand', 'Notification: \'create\' hostcommand $<a href="/admin/thumbwhere/thumbwhere_hostcommands/thumbwhere_hostcommand/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostcommand', 'Notification: \'create\' hostcommand #<a href="/admin/thumbwhere/thumbwhere_hostcommands/thumbwhere_hostcommand/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -383,7 +383,7 @@ function _thumbwhere_handle_host_command_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_hostcommand', 'Notification: \'update\' hostcommand $<a href="/admin/thumbwhere/thumbwhere_hostcommands/thumbwhere_hostcommand/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_hostcommand', 'Notification: \'update\' hostcommand #<a href="/admin/thumbwhere/thumbwhere_hostcommands/thumbwhere_hostcommand/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

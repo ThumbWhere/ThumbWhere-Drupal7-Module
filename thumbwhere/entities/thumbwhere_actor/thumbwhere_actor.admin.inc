@@ -141,7 +141,7 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_actor', 'Notification: \'create\' actor $<a href="/admin/thumbwhere/thumbwhere_actors/thumbwhere_actor/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_actor', 'Notification: \'create\' actor #<a href="/admin/thumbwhere/thumbwhere_actors/thumbwhere_actor/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -369,7 +369,7 @@ function _thumbwhere_handle_actor_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_actor', 'Notification: \'update\' actor $<a href="/admin/thumbwhere/thumbwhere_actors/thumbwhere_actor/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_actor', 'Notification: \'update\' actor #<a href="/admin/thumbwhere/thumbwhere_actors/thumbwhere_actor/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

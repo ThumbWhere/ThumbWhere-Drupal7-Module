@@ -141,7 +141,7 @@ function _thumbwhere_handle_external_repository_resource_notify_xml($notificatio
           }
         }
               
-        watchdog('thumbwhere_repositoryresource', 'Notification: \'create\' repositoryresource $<a href="/admin/thumbwhere/thumbwhere_repositoryresources/thumbwhere_repositoryresource/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_repositoryresource', 'Notification: \'create\' repositoryresource #<a href="/admin/thumbwhere/thumbwhere_repositoryresources/thumbwhere_repositoryresource/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -357,7 +357,7 @@ function _thumbwhere_handle_external_repository_resource_notify_xml($notificatio
           }
         }
               
-        watchdog('thumbwhere_repositoryresource', 'Notification: \'update\' repositoryresource $<a href="/admin/thumbwhere/thumbwhere_repositoryresources/thumbwhere_repositoryresource/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_repositoryresource', 'Notification: \'update\' repositoryresource #<a href="/admin/thumbwhere/thumbwhere_repositoryresources/thumbwhere_repositoryresource/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

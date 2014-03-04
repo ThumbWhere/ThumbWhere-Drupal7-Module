@@ -141,7 +141,7 @@ function _thumbwhere_handle_place_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_place', 'Notification: \'create\' place $<a href="/admin/thumbwhere/thumbwhere_places/thumbwhere_place/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_place', 'Notification: \'create\' place #<a href="/admin/thumbwhere/thumbwhere_places/thumbwhere_place/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -357,7 +357,7 @@ function _thumbwhere_handle_place_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_place', 'Notification: \'update\' place $<a href="/admin/thumbwhere/thumbwhere_places/thumbwhere_place/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_place', 'Notification: \'update\' place #<a href="/admin/thumbwhere/thumbwhere_places/thumbwhere_place/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields

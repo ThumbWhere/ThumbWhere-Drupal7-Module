@@ -141,7 +141,7 @@ function _thumbwhere_handle_content_genre_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_contentgenre', 'Notification: \'create\' contentgenre $<a href="/admin/thumbwhere/thumbwhere_contentgenres/thumbwhere_contentgenre/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_contentgenre', 'Notification: \'create\' contentgenre #<a href="/admin/thumbwhere/thumbwhere_contentgenres/thumbwhere_contentgenre/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
@@ -361,7 +361,7 @@ function _thumbwhere_handle_content_genre_notify_xml($notification) {
           }
         }
               
-        watchdog('thumbwhere_contentgenre', 'Notification: \'update\' contentgenre $<a href="/admin/thumbwhere/thumbwhere_contentgenres/thumbwhere_contentgenre/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
+        watchdog('thumbwhere_contentgenre', 'Notification: \'update\' contentgenre #<a href="/admin/thumbwhere/thumbwhere_contentgenres/thumbwhere_contentgenre/' . $id .  '/edit">\'' . $id . '\'</a>  origin=\'' . $origin . '\'.',array(), WATCHDOG_NOTICE);
       
         //
         // Get the fields
