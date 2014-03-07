@@ -91,13 +91,14 @@ function thumbwhere_hosttype_permission() {
   $permissions = array(
     'administer thumbwhere_hosttypes' => array(
       'title' => t('Administer thumbwhere_hosttypes'),
-      'description' => t('Edit and delete all thumbwhere_hosttypes'),
+      'description' => t('Administer all thumbwhere_hosttypes entities'),
+      //'restrict access' => TRUE,
     ),
   'send thumbwhere hosttype notifications' => array(
-          'title' => t('Send ThumbWhere Notifications'),
-          'description' => t('Allow the caller to call the ThumbWhere HostType Entity Notifications Endpoint.'),
-          //'restrict access' => TRUE,
-      ),    
+      'title' => t('Send ThumbWhere Notifications'),
+      'description' => t('Allow the caller to call the ThumbWhere HostType Entity Notifications Endpoint.'),
+      //'restrict access' => TRUE,
+    ),    
   );
 
   return $permissions;
@@ -120,12 +121,11 @@ function thumbwhere_hosttype_permission() {
  */
 function thumbwhere_hosttype_access($op, $thumbwhere_hosttype = NULL, $account = NULL) {
 
-  //if (user_access('administer thumbwhere_hosttypes', $account)) {
-  //  return TRUE;
- // }
-
-  //return FALSE;
-  return TRUE;
+  if (user_access('administer thumbwhere_hosttypes', $account)) {
+    return TRUE;
+  }
+ 
+  return FALSE;
 }
 
 
@@ -304,38 +304,13 @@ function thumbwhere_hosttype_entity_presave($entity, $entity_type) {
   // We only look after what we want...
   if ($entity_type == 'thumbwhere_hosttype')  {
   	
- 	/////////////////////////////////////////////////////
-    //
     // Should we not propagate this to ThumbWhere? 
-    //
     if (isset($entity->do_not_propagate)) {
       if ($entity->do_not_propagate) {
-        if (twCanDebug()) {
-          if ($entity->is_new) {
-            if (twCanDebug()){
-              debug("DO NOT PROPAGATE 'hosttype' presave *CREATE* not being sent to ThumbWhere server.");
-          	}
-          }
-          else {
-            if (twCanDebug()) {
-              debug("DO NOT PROPAGATE 'hosttype' presave *UPDATE* not being sent to ThumbWhere server.");
-            }
-          }
-        }
-
         // To cause an infinite loop of updates, comment out this line.
         return;
       }
-      else if (twCanDebug()) {
-        debug("OK PROAOGATE 'hosttype' presave to ThumbWhere server.");
-      }
     }
-    else if (twCanDebug()) {
-      debug("DO NOT PROPAGATE IS NOT SET");
-    }
-    //
-    //
-    ////////////////////////////////////////////////////////  	
 
   
     // .. then we create a new thumbwhere_hosttype entity...
@@ -343,9 +318,6 @@ function thumbwhere_hosttype_entity_presave($entity, $entity_type) {
 
     $twAdminAPI = new ThumbWhereAPIAdmin();
 
-    //if (twCanDebug()) debug($twContentAPI);
-
-    //if (twCanDebug()) debug($entity);
 
     //
     // Collate and validate our fields
@@ -391,19 +363,15 @@ function thumbwhere_hosttype_entity_presave($entity, $entity_type) {
                   'key' => variable_get('thumbwhere_api_key'),
                   'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
-            
-       if (twCanDebug()) debug($hosttype);
-
-      //if (twCanDebug()) debug($host_type);
 
       $attributes = $hosttype->body->host_type->attributes();
 
-      if (twCanDebug()) debug('newly created id = ' . $attributes['id']);
+      //if (twCanDebug()) debug('newly created id = ' . t($attributes['id']));
 
       // Assign new id.
       $entity->pk_hosttype = intval($attributes['id']);
 
-      if (twCanDebug()) debug('$entity->pk_hosttype = ' . $entity->pk_hosttype);
+      //if (twCanDebug()) debug(t('$entity->pk_hosttype = ' . $entity->pk_hosttype));
     }
     else
     {

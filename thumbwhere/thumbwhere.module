@@ -73,15 +73,14 @@ function twCanInfo() {
  *
  * @see SimpletestUnitTestExampleTestCase.
  */
-function twd($massage) {
+function twd($message) {
 
   if (!module_exists('devel_debug_log')) {
-    debug(date('Y-m-d\TH:i:s ') . 'DEBUG ' . $massag);
+    debug(date('Y-m-d\TH:i:s ') . 'DEBUG ' . $message);
     return;
   }
 
-  dd($massage, $label = date('Y-m-d\TH:i:s ') . 'DEBUG ');
-
+  dd($message, $label = date('Y-m-d\TH:i:s ') . 'DEBUG ');
 }
 
 /**

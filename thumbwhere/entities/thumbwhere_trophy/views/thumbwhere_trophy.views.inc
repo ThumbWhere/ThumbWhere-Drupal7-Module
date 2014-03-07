@@ -75,7 +75,8 @@ function thumbwhere_trophy_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Trophy';
   $handler->display->display_options['use_ajax'] = TRUE;
-  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administer thumbwhere_contentingests';  
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
@@ -291,8 +292,8 @@ function thumbwhere_trophy_views_default_views() {
 
     
     
-    
   /* Field: ThumbWhereTrophy: Link */
+  /*
   $handler->display->display_options['fields']['link_thumbwhere_trophy']['id'] = 'link_thumbwhere_trophy';
   $handler->display->display_options['fields']['link_thumbwhere_trophy']['table'] = 'thumbwhere_trophy';
   $handler->display->display_options['fields']['link_thumbwhere_trophy']['field'] = 'link_thumbwhere_trophy';
@@ -312,7 +313,7 @@ function thumbwhere_trophy_views_default_views() {
   $handler->display->display_options['fields']['link_thumbwhere_trophy']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['link_thumbwhere_trophy']['hide_empty'] = 0;
   $handler->display->display_options['fields']['link_thumbwhere_trophy']['empty_zero'] = 0;
-
+  */
 
   /* Field: ThumbWhereTrophy: Operations links */
   $handler->display->display_options['fields']['operations']['id'] = 'operations';

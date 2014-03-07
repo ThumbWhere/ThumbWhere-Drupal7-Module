@@ -75,7 +75,8 @@ function thumbwhere_hostcredential_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'HostCredential';
   $handler->display->display_options['use_ajax'] = TRUE;
-  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administer thumbwhere_contentingests';  
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
@@ -352,8 +353,8 @@ function thumbwhere_hostcredential_views_default_views() {
 
     
     
-    
   /* Field: ThumbWhereHostCredential: Link */
+  /*
   $handler->display->display_options['fields']['link_thumbwhere_hostcredential']['id'] = 'link_thumbwhere_hostcredential';
   $handler->display->display_options['fields']['link_thumbwhere_hostcredential']['table'] = 'thumbwhere_hostcredential';
   $handler->display->display_options['fields']['link_thumbwhere_hostcredential']['field'] = 'link_thumbwhere_hostcredential';
@@ -373,7 +374,7 @@ function thumbwhere_hostcredential_views_default_views() {
   $handler->display->display_options['fields']['link_thumbwhere_hostcredential']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['link_thumbwhere_hostcredential']['hide_empty'] = 0;
   $handler->display->display_options['fields']['link_thumbwhere_hostcredential']['empty_zero'] = 0;
-
+  */
 
   /* Field: ThumbWhereHostCredential: Operations links */
   $handler->display->display_options['fields']['operations']['id'] = 'operations';

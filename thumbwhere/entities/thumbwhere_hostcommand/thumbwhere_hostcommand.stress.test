@@ -128,7 +128,7 @@ function _thumbwhere_stresstest_create_HostCommand($uid,$test) {
         $_global_thumbwhere_stresstest_Host = _thumbwhere_stresstest_create_Host($uid,$test);
       }
       else {
-        debug('bailing - function \'_thumbwhere_stresstest_create_Host\' is not loaded yet.');
+        debug(t('bailing - function \'_thumbwhere_stresstest_create_Host\' is not loaded yet.'));
         return NULL;
       }
     }
@@ -138,7 +138,7 @@ function _thumbwhere_stresstest_create_HostCommand($uid,$test) {
         $_global_thumbwhere_stresstest_HostCommandTemplate = _thumbwhere_stresstest_create_HostCommandTemplate($uid,$test);
       }
       else {
-        debug('bailing - function \'_thumbwhere_stresstest_create_HostCommandTemplate\' is not loaded yet.');
+        debug(t('bailing - function \'_thumbwhere_stresstest_create_HostCommandTemplate\' is not loaded yet.'));
         return NULL;
       }
     }

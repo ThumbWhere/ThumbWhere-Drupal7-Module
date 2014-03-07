@@ -91,13 +91,14 @@ function thumbwhere_contentupload_permission() {
   $permissions = array(
     'administer thumbwhere_contentuploads' => array(
       'title' => t('Administer thumbwhere_contentuploads'),
-      'description' => t('Edit and delete all thumbwhere_contentuploads'),
+      'description' => t('Administer all thumbwhere_contentuploads entities'),
+      //'restrict access' => TRUE,
     ),
   'send thumbwhere contentupload notifications' => array(
-          'title' => t('Send ThumbWhere Notifications'),
-          'description' => t('Allow the caller to call the ThumbWhere ContentUpload Entity Notifications Endpoint.'),
-          //'restrict access' => TRUE,
-      ),    
+      'title' => t('Send ThumbWhere Notifications'),
+      'description' => t('Allow the caller to call the ThumbWhere ContentUpload Entity Notifications Endpoint.'),
+      //'restrict access' => TRUE,
+    ),    
   );
 
   return $permissions;
@@ -120,12 +121,11 @@ function thumbwhere_contentupload_permission() {
  */
 function thumbwhere_contentupload_access($op, $thumbwhere_contentupload = NULL, $account = NULL) {
 
-  //if (user_access('administer thumbwhere_contentuploads', $account)) {
-  //  return TRUE;
- // }
-
-  //return FALSE;
-  return TRUE;
+  if (user_access('administer thumbwhere_contentuploads', $account)) {
+    return TRUE;
+  }
+ 
+  return FALSE;
 }
 
 
@@ -304,38 +304,13 @@ function thumbwhere_contentupload_entity_presave($entity, $entity_type) {
   // We only look after what we want...
   if ($entity_type == 'thumbwhere_contentupload')  {
   	
- 	/////////////////////////////////////////////////////
-    //
     // Should we not propagate this to ThumbWhere? 
-    //
     if (isset($entity->do_not_propagate)) {
       if ($entity->do_not_propagate) {
-        if (twCanDebug()) {
-          if ($entity->is_new) {
-            if (twCanDebug()){
-              debug("DO NOT PROPAGATE 'contentupload' presave *CREATE* not being sent to ThumbWhere server.");
-          	}
-          }
-          else {
-            if (twCanDebug()) {
-              debug("DO NOT PROPAGATE 'contentupload' presave *UPDATE* not being sent to ThumbWhere server.");
-            }
-          }
-        }
-
         // To cause an infinite loop of updates, comment out this line.
         return;
       }
-      else if (twCanDebug()) {
-        debug("OK PROAOGATE 'contentupload' presave to ThumbWhere server.");
-      }
     }
-    else if (twCanDebug()) {
-      debug("DO NOT PROPAGATE IS NOT SET");
-    }
-    //
-    //
-    ////////////////////////////////////////////////////////  	
 
   
     // .. then we create a new thumbwhere_contentupload entity...
@@ -343,9 +318,6 @@ function thumbwhere_contentupload_entity_presave($entity, $entity_type) {
 
     $twContentAPI = new ThumbWhereAPIContent();
 
-    //if (twCanDebug()) debug($twContentAPI);
-
-    //if (twCanDebug()) debug($entity);
 
     //
     // Collate and validate our fields
@@ -479,19 +451,15 @@ function thumbwhere_contentupload_entity_presave($entity, $entity_type) {
                   'key' => variable_get('thumbwhere_api_key'),
                   'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
-            
-       if (twCanDebug()) debug($contentupload);
-
-      //if (twCanDebug()) debug($content_upload);
 
       $attributes = $contentupload->body->content_upload->attributes();
 
-      if (twCanDebug()) debug('newly created id = ' . $attributes['id']);
+      //if (twCanDebug()) debug('newly created id = ' . t($attributes['id']));
 
       // Assign new id.
       $entity->pk_contentupload = intval($attributes['id']);
 
-      if (twCanDebug()) debug('$entity->pk_contentupload = ' . $entity->pk_contentupload);
+      //if (twCanDebug()) debug(t('$entity->pk_contentupload = ' . $entity->pk_contentupload));
     }
     else
     {

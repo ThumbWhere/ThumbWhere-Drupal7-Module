@@ -128,7 +128,7 @@ function _thumbwhere_stresstest_create_Host($uid,$test) {
         $_global_thumbwhere_stresstest_HostType = _thumbwhere_stresstest_create_HostType($uid,$test);
       }
       else {
-        debug('bailing - function \'_thumbwhere_stresstest_create_HostType\' is not loaded yet.');
+        debug(t('bailing - function \'_thumbwhere_stresstest_create_HostType\' is not loaded yet.'));
         return NULL;
       }
     }
@@ -138,7 +138,7 @@ function _thumbwhere_stresstest_create_Host($uid,$test) {
         $_global_thumbwhere_stresstest_HostCredential = _thumbwhere_stresstest_create_HostCredential($uid,$test);
       }
       else {
-        debug('bailing - function \'_thumbwhere_stresstest_create_HostCredential\' is not loaded yet.');
+        debug(t('bailing - function \'_thumbwhere_stresstest_create_HostCredential\' is not loaded yet.'));
         return NULL;
       }
     }

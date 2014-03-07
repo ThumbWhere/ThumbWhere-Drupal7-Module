@@ -91,13 +91,14 @@ function thumbwhere_metadata_permission() {
   $permissions = array(
     'administer thumbwhere_metadatas' => array(
       'title' => t('Administer thumbwhere_metadatas'),
-      'description' => t('Edit and delete all thumbwhere_metadatas'),
+      'description' => t('Administer all thumbwhere_metadatas entities'),
+      //'restrict access' => TRUE,
     ),
   'send thumbwhere metadata notifications' => array(
-          'title' => t('Send ThumbWhere Notifications'),
-          'description' => t('Allow the caller to call the ThumbWhere Metadata Entity Notifications Endpoint.'),
-          //'restrict access' => TRUE,
-      ),    
+      'title' => t('Send ThumbWhere Notifications'),
+      'description' => t('Allow the caller to call the ThumbWhere Metadata Entity Notifications Endpoint.'),
+      //'restrict access' => TRUE,
+    ),    
   );
 
   return $permissions;
@@ -120,12 +121,11 @@ function thumbwhere_metadata_permission() {
  */
 function thumbwhere_metadata_access($op, $thumbwhere_metadata = NULL, $account = NULL) {
 
-  //if (user_access('administer thumbwhere_metadatas', $account)) {
-  //  return TRUE;
- // }
-
-  //return FALSE;
-  return TRUE;
+  if (user_access('administer thumbwhere_metadatas', $account)) {
+    return TRUE;
+  }
+ 
+  return FALSE;
 }
 
 
@@ -304,38 +304,13 @@ function thumbwhere_metadata_entity_presave($entity, $entity_type) {
   // We only look after what we want...
   if ($entity_type == 'thumbwhere_metadata')  {
   	
- 	/////////////////////////////////////////////////////
-    //
     // Should we not propagate this to ThumbWhere? 
-    //
     if (isset($entity->do_not_propagate)) {
       if ($entity->do_not_propagate) {
-        if (twCanDebug()) {
-          if ($entity->is_new) {
-            if (twCanDebug()){
-              debug("DO NOT PROPAGATE 'metadata' presave *CREATE* not being sent to ThumbWhere server.");
-          	}
-          }
-          else {
-            if (twCanDebug()) {
-              debug("DO NOT PROPAGATE 'metadata' presave *UPDATE* not being sent to ThumbWhere server.");
-            }
-          }
-        }
-
         // To cause an infinite loop of updates, comment out this line.
         return;
       }
-      else if (twCanDebug()) {
-        debug("OK PROAOGATE 'metadata' presave to ThumbWhere server.");
-      }
     }
-    else if (twCanDebug()) {
-      debug("DO NOT PROPAGATE IS NOT SET");
-    }
-    //
-    //
-    ////////////////////////////////////////////////////////  	
 
   
     // .. then we create a new thumbwhere_metadata entity...
@@ -343,9 +318,6 @@ function thumbwhere_metadata_entity_presave($entity, $entity_type) {
 
     $twContentAPI = new ThumbWhereAPIContent();
 
-    //if (twCanDebug()) debug($twContentAPI);
-
-    //if (twCanDebug()) debug($entity);
 
     //
     // Collate and validate our fields
@@ -394,19 +366,15 @@ function thumbwhere_metadata_entity_presave($entity, $entity_type) {
                   'key' => variable_get('thumbwhere_api_key'),
                   'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
-            
-       if (twCanDebug()) debug($metadata);
-
-      //if (twCanDebug()) debug($metadata);
 
       $attributes = $metadata->body->metadata->attributes();
 
-      if (twCanDebug()) debug('newly created id = ' . $attributes['id']);
+      //if (twCanDebug()) debug('newly created id = ' . t($attributes['id']));
 
       // Assign new id.
       $entity->pk_metadata = intval($attributes['id']);
 
-      if (twCanDebug()) debug('$entity->pk_metadata = ' . $entity->pk_metadata);
+      //if (twCanDebug()) debug(t('$entity->pk_metadata = ' . $entity->pk_metadata));
     }
     else
     {

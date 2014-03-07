@@ -75,7 +75,8 @@ function thumbwhere_consumer_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Consumer';
   $handler->display->display_options['use_ajax'] = TRUE;
-  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administer thumbwhere_contentingests';  
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
@@ -355,8 +356,8 @@ function thumbwhere_consumer_views_default_views() {
 
     
     
-    
   /* Field: ThumbWhereConsumer: Link */
+  /*
   $handler->display->display_options['fields']['link_thumbwhere_consumer']['id'] = 'link_thumbwhere_consumer';
   $handler->display->display_options['fields']['link_thumbwhere_consumer']['table'] = 'thumbwhere_consumer';
   $handler->display->display_options['fields']['link_thumbwhere_consumer']['field'] = 'link_thumbwhere_consumer';
@@ -376,7 +377,7 @@ function thumbwhere_consumer_views_default_views() {
   $handler->display->display_options['fields']['link_thumbwhere_consumer']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['link_thumbwhere_consumer']['hide_empty'] = 0;
   $handler->display->display_options['fields']['link_thumbwhere_consumer']['empty_zero'] = 0;
-
+  */
 
   /* Field: ThumbWhereConsumer: Operations links */
   $handler->display->display_options['fields']['operations']['id'] = 'operations';

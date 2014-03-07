@@ -75,7 +75,8 @@ function thumbwhere_activity_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Activity';
   $handler->display->display_options['use_ajax'] = TRUE;
-  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administer thumbwhere_contentingests';  
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
@@ -361,8 +362,8 @@ function thumbwhere_activity_views_default_views() {
   $handler->display->display_options['fields']['fk_place']['format_plural'] = 0;
     
     
-    
   /* Field: ThumbWhereActivity: Link */
+  /*
   $handler->display->display_options['fields']['link_thumbwhere_activity']['id'] = 'link_thumbwhere_activity';
   $handler->display->display_options['fields']['link_thumbwhere_activity']['table'] = 'thumbwhere_activity';
   $handler->display->display_options['fields']['link_thumbwhere_activity']['field'] = 'link_thumbwhere_activity';
@@ -382,7 +383,7 @@ function thumbwhere_activity_views_default_views() {
   $handler->display->display_options['fields']['link_thumbwhere_activity']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['link_thumbwhere_activity']['hide_empty'] = 0;
   $handler->display->display_options['fields']['link_thumbwhere_activity']['empty_zero'] = 0;
-
+  */
 
   /* Field: ThumbWhereActivity: Operations links */
   $handler->display->display_options['fields']['operations']['id'] = 'operations';

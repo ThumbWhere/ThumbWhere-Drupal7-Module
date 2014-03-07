@@ -128,7 +128,7 @@ function _thumbwhere_stresstest_create_Target($uid,$test) {
         $_global_thumbwhere_stresstest_Campaign = _thumbwhere_stresstest_create_Campaign($uid,$test);
       }
       else {
-        debug('bailing - function \'_thumbwhere_stresstest_create_Campaign\' is not loaded yet.');
+        debug(t('bailing - function \'_thumbwhere_stresstest_create_Campaign\' is not loaded yet.'));
         return NULL;
       }
     }

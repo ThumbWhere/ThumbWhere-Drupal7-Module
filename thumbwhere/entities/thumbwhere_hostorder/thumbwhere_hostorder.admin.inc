@@ -17,8 +17,8 @@
  */
 function _thumbwhere_handle_host_order_notify_xml($notification) {
 
-  if (twCanDebug()) debug('PROCESS NOTIFICATION');
-  if (twCanDebug()) debug($notification);
+  //if (twCanDebug()) debug('PROCESS NOTIFICATION');
+  //if (twCanDebug()) debug($notification);
 
   //
   // Get the operation
@@ -34,8 +34,8 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
 
   $op = $notification->attributes()->op;
 
-  if (twCanDebug()) debug('op');
-  if (twCanDebug()) debug($op);
+  //if (twCanDebug()) debug('op');
+  //if (twCanDebug()) debug($op);
 
   //
   // If this is a notification then $op should be 'notify'
@@ -51,8 +51,8 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
 
   $notification_op = $notification->attributes()->notification;
 
-  if (twCanDebug()) debug('notification');
-  if (twCanDebug()) debug($notification_op);
+  //if (twCanDebug()) debug('notification');
+  //if (twCanDebug()) debug($notification_op);
 
 
   //
@@ -108,11 +108,9 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         }
 
         $id = intval($notification->attributes()->id);
-		
 
-        if (twCanDebug()) debug('id');
-        if (twCanDebug()) debug($id);
-
+        //if (twCanDebug()) debug('id');
+        //if (twCanDebug()) debug(t($id));
 
         //
         // Get the origin
@@ -123,8 +121,8 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         if (isset($notification->attributes()->origin)) {        
           $origin = intval($notification->attributes()->origin);
 
-          if (twCanDebug()) debug('origin');
-          if (twCanDebug()) debug($origin);
+          //if (twCanDebug()) debug('origin');
+          //if (twCanDebug()) debug(t($origin));
 
           if ($origin == variable_get('thumbwhere_host_id',-1)) {
             $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'host_order\', Dropping this \'create\' notification.';
@@ -148,9 +146,6 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         //
           
         $entities = entity_load('thumbwhere_hostorder', array($id));
-
-        if (twCanDebug()) debug('$entities');
-        if (twCanDebug()) debug($entities);
 
         if (count($entities) != 0) {
           //drupal_add_http_header('Status', '409 Resource already exists.');
@@ -214,9 +209,7 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         }
 
         if (!isset($notification->attributes()->key)) {
-          if (twCanDebug()) debug('$entities');
-          if (twCanDebug()) debug($entities);
-        }
+                  }
 
         // We are being notified, so we do not want to ship this out again as a notification...
         // Finally write the entity.
@@ -271,8 +264,8 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         $id = intval($notification->attributes()->id);
 		
 
-        if (twCanDebug()) debug('id');
-        if (twCanDebug()) debug($id);
+        //if (twCanDebug()) debug('id');
+        //if (twCanDebug()) debug($id);
 
             
         //
@@ -284,8 +277,8 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         if (isset($notification->attributes()->origin)) {                
           $origin = intval($notification->attributes()->origin);
 
-          if (twCanDebug()) debug('origin');
-          if (twCanDebug()) debug($origin);
+          //if (twCanDebug()) debug('origin');
+          //if (twCanDebug()) debug($origin);
 
           if ($origin == variable_get('thumbwhere_host_id',-1)) {
             $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'host_order\', Dropping this \'update\' notification.';
@@ -309,9 +302,6 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         //
           
         $entities = entity_load('thumbwhere_hostorder', array($id));
-
-        if (twCanDebug()) debug('$entities');
-        if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
           //drupal_add_http_header('Status', '409 No such resource exists.');
@@ -350,11 +340,9 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         }
 
         $id = intval($notification->attributes()->id);
-		
 
-        if (twCanDebug()) debug('id');
-        if (twCanDebug()) debug($id);
-
+        //if (twCanDebug()) debug('id');
+        //if (twCanDebug()) debug(t($id));
 
         //
         // Get the origin
@@ -365,8 +353,8 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         if (isset($notification->attributes()->origin)) {        
           $origin = intval($notification->attributes()->origin);
 
-          if (twCanDebug()) debug('origin');
-          if (twCanDebug()) debug($origin);
+          //if (twCanDebug()) debug('origin');
+          //if (twCanDebug()) debug(t($origin));
 
           if ($origin == variable_get('thumbwhere_host_id',-1)) {
             $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'host_order\', Dropping this \'update\' notification.';
@@ -390,9 +378,6 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         //
           
         $entities = entity_load('thumbwhere_hostorder', array($id));
-
-        if (twCanDebug()) debug('$entities');
-        if (twCanDebug()) debug($entities);
 
         if (count($entities) != 0) {
           //drupal_add_http_header('Status', '409 Resource already exists.');
@@ -456,9 +441,7 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         }
 
         if (!isset($notification->attributes()->key)) {
-          if (twCanDebug()) debug('$entities');
-          if (twCanDebug()) debug($entities);
-        }
+                  }
 
         // We are being notified, so we do not want to ship this out again as a notification...
         // Finally write the entity.
@@ -527,9 +510,7 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
         }
 
         if (!isset($notification->attributes()->key)) {
-          if (twCanDebug()) debug('$entities');
-          if (twCanDebug()) debug($entities);
-        }
+                  }
 
         // We are being notified, so we do not want to ship this out again as a notification...
         $entity->do_not_propagate = TRUE;
@@ -569,44 +550,13 @@ function _thumbwhere_handle_host_order_notify_xml($notification) {
  */
 function _thumbwhere_host_order_notify() {
 
+  
   if (twCanDebug()) {
     watchdog('thumbwhere_host_order', 'incoming notification.');
   }
 
   $numargs = func_num_args();
   $arg_list = func_get_args();
-
-  
-	if (twCanDebug()) debug('$numargs  = ' . $numargs);
-	
-	if (twCanDebug()) debug('$arg_list = ' . $arg_list);
-	
-	if (twCanDebug()) debug('$_REQUEST');
-	if (twCanDebug()) debug($_REQUEST);
-	
-	if (twCanDebug()) debug('$_GET');
-	if (twCanDebug()) debug($_GET);
-	
-	if (twCanDebug()) debug('$_POST');
-	if (twCanDebug()) debug($_POST);
-	
-	//if (twCanDebug()) debug('$HTTP_RAW_POST_DATA');
-	//if (twCanDebug()) debug($HTTP_RAW_POST_DATA);
-	
-	if (twCanDebug()) debug('$_SERVER');
-	if (twCanDebug()) debug($_SERVER);
-	
-	//if (twCanDebug()) debug('$GLOBALS');
-	//if (twCanDebug()) debug($GLOBALS);
-
-  
-
-  if (variable_get('thumbwhere_api_log_debug', 0) == 1) {
-    foreach ($arg_list as $arg) {
-      if (twCanDebug()) debug('$arg  = ' . $arg);
-    }
-  }
-
 
   //////////////////////////////////////////////////
   //
@@ -622,12 +572,7 @@ function _thumbwhere_host_order_notify() {
             // Get the POST data as XML
             //
 
-            $post_xml = new SimpleXMLElement('php://input', null, true);
-            if (twCanDebug()) debug('$post_xml');
-            if (twCanDebug()) debug($post_xml);
-
-            if (twCanDebug()) debug('$post_xml->getName()');
-            if (twCanDebug()) debug($post_xml->getName());
+            $post_xml = new SimpleXMLElement('php://input', LIBXML_NOWARNING | (defined('LIBXML_COMPACT') ? LIBXML_COMPACT : 0), true);
 
             // We expect 'action' as the root element. TODO: I would rather this was the more generic 'request'
             if ($post_xml->getName() != 'action') {
@@ -746,7 +691,7 @@ class ThumbWhereHostOrderUIController extends EntityDefaultUIController {
 
     $items[$this->path] = array(
       'title' => 'HostOrder',
-      'description' => 'Add edit and update thumbwhere_hostorders.',
+      'description' => 'Add edit and update thumbwhere_hostorders entities.',
       'page callback' => 'system_admin_menu_block_page',
       'access arguments' => array('access administration pages'),
       'file path' => drupal_get_path('module', 'system'),
@@ -770,33 +715,6 @@ class ThumbWhereHostOrderUIController extends EntityDefaultUIController {
     );
 
 
-/*
-    // Change the add page menu to multiple types of entities
-    $items[$this->path . '/add'] = array(
-      //'title' => 'Add a HostOrder',
-      'title' => 'Add',
-	  'description' => 'Add a new HostOrder',
-      'page callback'  => 'thumbwhere_hostorder_add_page',
-      'access callback'  => 'thumbwhere_hostorder_access',
-      'access arguments' => array('edit'),
-      'type' => MENU_NORMAL_ITEM,
-      'weight' => 20,
-      'file' => 'thumbwhere_hostorder.admin.inc',
-      'file path' => drupal_get_path('module', $this->entityInfo['module'])
-
-    );
-*/    
-/*
-    $items[$this->path . '/add/' . 'thumbwhere_hostorder'] = array(
-      'title' => 'Add ' . 'ThumbWhereHostOrder',
-      'page callback' => 'thumbwhere_hostorder_form_wrapper',
-      'page arguments' => array(thumbwhere_hostorder_create(array('type' => 'thumbwhere_hostorder'))),
-      'access callback' => 'thumbwhere_hostorder_access',
-      'access arguments' => array('edit', 'edit ' . 'thumbwhere_hostorder'),
-      'file' => 'thumbwhere_hostorder.admin.inc',
-      'file path' => drupal_get_path('module', $this->entityInfo['module'])
-    );
-*/
     // Loading and editing thumbwhere_hostorder entities
     $items[$this->path . '/thumbwhere_hostorder/' . $wildcard] = array(
       'page callback' => 'thumbwhere_hostorder_form_wrapper',
@@ -808,7 +726,11 @@ class ThumbWhereHostOrderUIController extends EntityDefaultUIController {
       'file' => 'thumbwhere_hostorder.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
+    
     $items[$this->path . '/thumbwhere_hostorder/' . $wildcard . '/edit'] = array(
+      'title' => 'Edit',
+      'access callback' => 'thumbwhere_hostorder_access',
+      'access arguments' => array('edit', $id_count + 1),      
       'title' => 'Edit',
       'type' => MENU_DEFAULT_LOCAL_TASK,
       'weight' => -10,
@@ -829,6 +751,7 @@ class ThumbWhereHostOrderUIController extends EntityDefaultUIController {
     );
 
     // Menu item for viewing thumbwhere_hostorders
+    /*
     $items['thumbwhere_hostorder/' . $wildcard] = array(
       //'title' => 'Title',
       'title callback' => 'thumbwhere_hostorder_page_title',
@@ -839,6 +762,7 @@ class ThumbWhereHostOrderUIController extends EntityDefaultUIController {
       'access arguments' => array('view', 1),
       'type' => MENU_CALLBACK,
     );
+    */
     return $items;
   }
 
@@ -1008,9 +932,6 @@ function thumbwhere_hostorder_edit_form($form, &$form_state, $thumbwhere_hostord
  * Form API validate callback for the thumbwhere_hostorder form
  */
 function thumbwhere_hostorder_edit_form_validate(&$form, &$form_state) {
-   
-  //if (twCanDebug()) debug($form);   
-  //if (twCanDebug()) debug($form_state);
 
 
   // No validation for pk
@@ -1023,8 +944,8 @@ function thumbwhere_hostorder_edit_form_validate(&$form, &$form_state) {
     $value = entity_autocomplete_get_id($value);
     form_set_value($form['fk_hostcredential'], $value,$form_state);
   }
-  //if (twCanDebug()) debug($form['fk_hostcredential']);
-   if (twCanDebug()) debug('fk_hostcredential = ' . $value);
+  //if (twCanDebug()) debug(t($form['fk_hostcredential']));
+   //if (twCanDebug()) debug(t('fk_hostcredential = ' . $value));
   // Validate fk fk_hostcredential
   if (empty($value)) {
     form_set_error('fk_hostcredential', t('Validation error, \'fk_hostcredential\' is mandatory1.'));
@@ -1038,8 +959,8 @@ function thumbwhere_hostorder_edit_form_validate(&$form, &$form_state) {
     $value = entity_autocomplete_get_id($value);
     form_set_value($form['fk_host'], $value,$form_state);
   }
-  //if (twCanDebug()) debug($form['fk_host']);
-   if (twCanDebug()) debug('fk_host = ' . $value);
+  //if (twCanDebug()) debug(t($form['fk_host']));
+   //if (twCanDebug()) debug(t('fk_host = ' . $value));
   // Validate fk fk_host
 
 
@@ -1097,7 +1018,7 @@ function thumbwhere_hostorder_edit_form_submit(&$form, &$form_state) {
 
   $thumbwhere_hostorder->changed = time();
 
-  $thumbwhere_hostorder->save($transaction);
+  $thumbwhere_hostorder->save();
   $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_hostorders';
 }
 

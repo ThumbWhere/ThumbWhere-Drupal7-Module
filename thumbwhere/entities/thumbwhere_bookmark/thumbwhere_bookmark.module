@@ -91,13 +91,14 @@ function thumbwhere_bookmark_permission() {
   $permissions = array(
     'administer thumbwhere_bookmarks' => array(
       'title' => t('Administer thumbwhere_bookmarks'),
-      'description' => t('Edit and delete all thumbwhere_bookmarks'),
+      'description' => t('Administer all thumbwhere_bookmarks entities'),
+      //'restrict access' => TRUE,
     ),
   'send thumbwhere bookmark notifications' => array(
-          'title' => t('Send ThumbWhere Notifications'),
-          'description' => t('Allow the caller to call the ThumbWhere Bookmark Entity Notifications Endpoint.'),
-          //'restrict access' => TRUE,
-      ),    
+      'title' => t('Send ThumbWhere Notifications'),
+      'description' => t('Allow the caller to call the ThumbWhere Bookmark Entity Notifications Endpoint.'),
+      //'restrict access' => TRUE,
+    ),    
   );
 
   return $permissions;
@@ -120,12 +121,11 @@ function thumbwhere_bookmark_permission() {
  */
 function thumbwhere_bookmark_access($op, $thumbwhere_bookmark = NULL, $account = NULL) {
 
-  //if (user_access('administer thumbwhere_bookmarks', $account)) {
-  //  return TRUE;
- // }
-
-  //return FALSE;
-  return TRUE;
+  if (user_access('administer thumbwhere_bookmarks', $account)) {
+    return TRUE;
+  }
+ 
+  return FALSE;
 }
 
 
@@ -304,38 +304,13 @@ function thumbwhere_bookmark_entity_presave($entity, $entity_type) {
   // We only look after what we want...
   if ($entity_type == 'thumbwhere_bookmark')  {
   	
- 	/////////////////////////////////////////////////////
-    //
     // Should we not propagate this to ThumbWhere? 
-    //
     if (isset($entity->do_not_propagate)) {
       if ($entity->do_not_propagate) {
-        if (twCanDebug()) {
-          if ($entity->is_new) {
-            if (twCanDebug()){
-              debug("DO NOT PROPAGATE 'bookmark' presave *CREATE* not being sent to ThumbWhere server.");
-          	}
-          }
-          else {
-            if (twCanDebug()) {
-              debug("DO NOT PROPAGATE 'bookmark' presave *UPDATE* not being sent to ThumbWhere server.");
-            }
-          }
-        }
-
         // To cause an infinite loop of updates, comment out this line.
         return;
       }
-      else if (twCanDebug()) {
-        debug("OK PROAOGATE 'bookmark' presave to ThumbWhere server.");
-      }
     }
-    else if (twCanDebug()) {
-      debug("DO NOT PROPAGATE IS NOT SET");
-    }
-    //
-    //
-    ////////////////////////////////////////////////////////  	
 
   
     // .. then we create a new thumbwhere_bookmark entity...
@@ -343,9 +318,6 @@ function thumbwhere_bookmark_entity_presave($entity, $entity_type) {
 
     $twContentAPI = new ThumbWhereAPIContent();
 
-    //if (twCanDebug()) debug($twContentAPI);
-
-    //if (twCanDebug()) debug($entity);
 
     //
     // Collate and validate our fields
@@ -399,19 +371,15 @@ function thumbwhere_bookmark_entity_presave($entity, $entity_type) {
                   'origin' => variable_get('thumbwhere_host_id'),
                   'member' => thumbwhere_get_membertoken($entity, $entity_type),
           ), $fields);
-            
-       if (twCanDebug()) debug($bookmark);
-
-      //if (twCanDebug()) debug($bookmark);
 
       $attributes = $bookmark->body->bookmark->attributes();
 
-      if (twCanDebug()) debug('newly created id = ' . $attributes['id']);
+      //if (twCanDebug()) debug('newly created id = ' . t($attributes['id']));
 
       // Assign new id.
       $entity->pk_bookmark = intval($attributes['id']);
 
-      if (twCanDebug()) debug('$entity->pk_bookmark = ' . $entity->pk_bookmark);
+      //if (twCanDebug()) debug(t('$entity->pk_bookmark = ' . $entity->pk_bookmark));
     }
     else
     {

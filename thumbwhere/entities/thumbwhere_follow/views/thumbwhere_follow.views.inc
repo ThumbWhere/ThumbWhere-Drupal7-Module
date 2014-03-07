@@ -75,7 +75,8 @@ function thumbwhere_follow_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Follow';
   $handler->display->display_options['use_ajax'] = TRUE;
-  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administer thumbwhere_contentingests';  
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
@@ -358,8 +359,8 @@ function thumbwhere_follow_views_default_views() {
 
     
     
-    
   /* Field: ThumbWhereFollow: Link */
+  /*
   $handler->display->display_options['fields']['link_thumbwhere_follow']['id'] = 'link_thumbwhere_follow';
   $handler->display->display_options['fields']['link_thumbwhere_follow']['table'] = 'thumbwhere_follow';
   $handler->display->display_options['fields']['link_thumbwhere_follow']['field'] = 'link_thumbwhere_follow';
@@ -379,7 +380,7 @@ function thumbwhere_follow_views_default_views() {
   $handler->display->display_options['fields']['link_thumbwhere_follow']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['link_thumbwhere_follow']['hide_empty'] = 0;
   $handler->display->display_options['fields']['link_thumbwhere_follow']['empty_zero'] = 0;
-
+  */
 
   /* Field: ThumbWhereFollow: Operations links */
   $handler->display->display_options['fields']['operations']['id'] = 'operations';

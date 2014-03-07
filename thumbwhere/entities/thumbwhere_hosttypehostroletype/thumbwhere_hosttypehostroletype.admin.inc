@@ -17,8 +17,8 @@
  */
 function _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($notification) {
 
-  if (twCanDebug()) debug('PROCESS NOTIFICATION');
-  if (twCanDebug()) debug($notification);
+  //if (twCanDebug()) debug('PROCESS NOTIFICATION');
+  //if (twCanDebug()) debug($notification);
 
   //
   // Get the operation
@@ -34,8 +34,8 @@ function _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($noti
 
   $op = $notification->attributes()->op;
 
-  if (twCanDebug()) debug('op');
-  if (twCanDebug()) debug($op);
+  //if (twCanDebug()) debug('op');
+  //if (twCanDebug()) debug($op);
 
   //
   // If this is a notification then $op should be 'notify'
@@ -51,8 +51,8 @@ function _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($noti
 
   $notification_op = $notification->attributes()->notification;
 
-  if (twCanDebug()) debug('notification');
-  if (twCanDebug()) debug($notification_op);
+  //if (twCanDebug()) debug('notification');
+  //if (twCanDebug()) debug($notification_op);
 
 
   //
@@ -108,11 +108,9 @@ function _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($noti
         }
 
         $id = intval($notification->attributes()->id);
-		
 
-        if (twCanDebug()) debug('id');
-        if (twCanDebug()) debug($id);
-
+        //if (twCanDebug()) debug('id');
+        //if (twCanDebug()) debug(t($id));
 
         //
         // Get the origin
@@ -123,8 +121,8 @@ function _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($noti
         if (isset($notification->attributes()->origin)) {        
           $origin = intval($notification->attributes()->origin);
 
-          if (twCanDebug()) debug('origin');
-          if (twCanDebug()) debug($origin);
+          //if (twCanDebug()) debug('origin');
+          //if (twCanDebug()) debug(t($origin));
 
           if ($origin == variable_get('thumbwhere_host_id',-1)) {
             $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'host_type_capable_of_host_role_type\', Dropping this \'create\' notification.';
@@ -148,9 +146,6 @@ function _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($noti
         //
           
         $entities = entity_load('thumbwhere_hosttypehostroletype', array($id));
-
-        if (twCanDebug()) debug('$entities');
-        if (twCanDebug()) debug($entities);
 
         if (count($entities) != 0) {
           //drupal_add_http_header('Status', '409 Resource already exists.');
@@ -192,9 +187,7 @@ function _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($noti
         }
 
         if (!isset($notification->attributes()->key)) {
-          if (twCanDebug()) debug('$entities');
-          if (twCanDebug()) debug($entities);
-        }
+                  }
 
         // We are being notified, so we do not want to ship this out again as a notification...
         // Finally write the entity.
@@ -249,8 +242,8 @@ function _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($noti
         $id = intval($notification->attributes()->id);
 		
 
-        if (twCanDebug()) debug('id');
-        if (twCanDebug()) debug($id);
+        //if (twCanDebug()) debug('id');
+        //if (twCanDebug()) debug($id);
 
             
         //
@@ -262,8 +255,8 @@ function _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($noti
         if (isset($notification->attributes()->origin)) {                
           $origin = intval($notification->attributes()->origin);
 
-          if (twCanDebug()) debug('origin');
-          if (twCanDebug()) debug($origin);
+          //if (twCanDebug()) debug('origin');
+          //if (twCanDebug()) debug($origin);
 
           if ($origin == variable_get('thumbwhere_host_id',-1)) {
             $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'host_type_capable_of_host_role_type\', Dropping this \'update\' notification.';
@@ -287,9 +280,6 @@ function _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($noti
         //
           
         $entities = entity_load('thumbwhere_hosttypehostroletype', array($id));
-
-        if (twCanDebug()) debug('$entities');
-        if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
           //drupal_add_http_header('Status', '409 No such resource exists.');
@@ -328,11 +318,9 @@ function _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($noti
         }
 
         $id = intval($notification->attributes()->id);
-		
 
-        if (twCanDebug()) debug('id');
-        if (twCanDebug()) debug($id);
-
+        //if (twCanDebug()) debug('id');
+        //if (twCanDebug()) debug(t($id));
 
         //
         // Get the origin
@@ -343,8 +331,8 @@ function _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($noti
         if (isset($notification->attributes()->origin)) {        
           $origin = intval($notification->attributes()->origin);
 
-          if (twCanDebug()) debug('origin');
-          if (twCanDebug()) debug($origin);
+          //if (twCanDebug()) debug('origin');
+          //if (twCanDebug()) debug(t($origin));
 
           if ($origin == variable_get('thumbwhere_host_id',-1)) {
             $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'host_type_capable_of_host_role_type\', Dropping this \'update\' notification.';
@@ -368,9 +356,6 @@ function _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($noti
         //
           
         $entities = entity_load('thumbwhere_hosttypehostroletype', array($id));
-
-        if (twCanDebug()) debug('$entities');
-        if (twCanDebug()) debug($entities);
 
         if (count($entities) != 0) {
           //drupal_add_http_header('Status', '409 Resource already exists.');
@@ -412,9 +397,7 @@ function _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($noti
         }
 
         if (!isset($notification->attributes()->key)) {
-          if (twCanDebug()) debug('$entities');
-          if (twCanDebug()) debug($entities);
-        }
+                  }
 
         // We are being notified, so we do not want to ship this out again as a notification...
         // Finally write the entity.
@@ -461,9 +444,7 @@ function _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($noti
         }
 
         if (!isset($notification->attributes()->key)) {
-          if (twCanDebug()) debug('$entities');
-          if (twCanDebug()) debug($entities);
-        }
+                  }
 
         // We are being notified, so we do not want to ship this out again as a notification...
         $entity->do_not_propagate = TRUE;
@@ -503,44 +484,13 @@ function _thumbwhere_handle_host_type_capable_of_host_role_type_notify_xml($noti
  */
 function _thumbwhere_host_type_capable_of_host_role_type_notify() {
 
+  
   if (twCanDebug()) {
     watchdog('thumbwhere_host_type_capable_of_host_role_type', 'incoming notification.');
   }
 
   $numargs = func_num_args();
   $arg_list = func_get_args();
-
-  
-	if (twCanDebug()) debug('$numargs  = ' . $numargs);
-	
-	if (twCanDebug()) debug('$arg_list = ' . $arg_list);
-	
-	if (twCanDebug()) debug('$_REQUEST');
-	if (twCanDebug()) debug($_REQUEST);
-	
-	if (twCanDebug()) debug('$_GET');
-	if (twCanDebug()) debug($_GET);
-	
-	if (twCanDebug()) debug('$_POST');
-	if (twCanDebug()) debug($_POST);
-	
-	//if (twCanDebug()) debug('$HTTP_RAW_POST_DATA');
-	//if (twCanDebug()) debug($HTTP_RAW_POST_DATA);
-	
-	if (twCanDebug()) debug('$_SERVER');
-	if (twCanDebug()) debug($_SERVER);
-	
-	//if (twCanDebug()) debug('$GLOBALS');
-	//if (twCanDebug()) debug($GLOBALS);
-
-  
-
-  if (variable_get('thumbwhere_api_log_debug', 0) == 1) {
-    foreach ($arg_list as $arg) {
-      if (twCanDebug()) debug('$arg  = ' . $arg);
-    }
-  }
-
 
   //////////////////////////////////////////////////
   //
@@ -556,12 +506,7 @@ function _thumbwhere_host_type_capable_of_host_role_type_notify() {
             // Get the POST data as XML
             //
 
-            $post_xml = new SimpleXMLElement('php://input', null, true);
-            if (twCanDebug()) debug('$post_xml');
-            if (twCanDebug()) debug($post_xml);
-
-            if (twCanDebug()) debug('$post_xml->getName()');
-            if (twCanDebug()) debug($post_xml->getName());
+            $post_xml = new SimpleXMLElement('php://input', LIBXML_NOWARNING | (defined('LIBXML_COMPACT') ? LIBXML_COMPACT : 0), true);
 
             // We expect 'action' as the root element. TODO: I would rather this was the more generic 'request'
             if ($post_xml->getName() != 'action') {
@@ -680,7 +625,7 @@ class ThumbWhereHostTypeHostRoleTypeUIController extends EntityDefaultUIControll
 
     $items[$this->path] = array(
       'title' => 'HostTypeHostRoleType',
-      'description' => 'Add edit and update thumbwhere_hosttypehostroletypes.',
+      'description' => 'Add edit and update thumbwhere_hosttypehostroletypes entities.',
       'page callback' => 'system_admin_menu_block_page',
       'access arguments' => array('access administration pages'),
       'file path' => drupal_get_path('module', 'system'),
@@ -704,33 +649,6 @@ class ThumbWhereHostTypeHostRoleTypeUIController extends EntityDefaultUIControll
     );
 
 
-/*
-    // Change the add page menu to multiple types of entities
-    $items[$this->path . '/add'] = array(
-      //'title' => 'Add a HostTypeHostRoleType',
-      'title' => 'Add',
-	  'description' => 'Add a new HostTypeHostRoleType',
-      'page callback'  => 'thumbwhere_hosttypehostroletype_add_page',
-      'access callback'  => 'thumbwhere_hosttypehostroletype_access',
-      'access arguments' => array('edit'),
-      'type' => MENU_NORMAL_ITEM,
-      'weight' => 20,
-      'file' => 'thumbwhere_hosttypehostroletype.admin.inc',
-      'file path' => drupal_get_path('module', $this->entityInfo['module'])
-
-    );
-*/    
-/*
-    $items[$this->path . '/add/' . 'thumbwhere_hosttypehostroletype'] = array(
-      'title' => 'Add ' . 'ThumbWhereHostTypeHostRoleType',
-      'page callback' => 'thumbwhere_hosttypehostroletype_form_wrapper',
-      'page arguments' => array(thumbwhere_hosttypehostroletype_create(array('type' => 'thumbwhere_hosttypehostroletype'))),
-      'access callback' => 'thumbwhere_hosttypehostroletype_access',
-      'access arguments' => array('edit', 'edit ' . 'thumbwhere_hosttypehostroletype'),
-      'file' => 'thumbwhere_hosttypehostroletype.admin.inc',
-      'file path' => drupal_get_path('module', $this->entityInfo['module'])
-    );
-*/
     // Loading and editing thumbwhere_hosttypehostroletype entities
     $items[$this->path . '/thumbwhere_hosttypehostroletype/' . $wildcard] = array(
       'page callback' => 'thumbwhere_hosttypehostroletype_form_wrapper',
@@ -742,7 +660,11 @@ class ThumbWhereHostTypeHostRoleTypeUIController extends EntityDefaultUIControll
       'file' => 'thumbwhere_hosttypehostroletype.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
+    
     $items[$this->path . '/thumbwhere_hosttypehostroletype/' . $wildcard . '/edit'] = array(
+      'title' => 'Edit',
+      'access callback' => 'thumbwhere_hosttypehostroletype_access',
+      'access arguments' => array('edit', $id_count + 1),      
       'title' => 'Edit',
       'type' => MENU_DEFAULT_LOCAL_TASK,
       'weight' => -10,
@@ -763,6 +685,7 @@ class ThumbWhereHostTypeHostRoleTypeUIController extends EntityDefaultUIControll
     );
 
     // Menu item for viewing thumbwhere_hosttypehostroletypes
+    /*
     $items['thumbwhere_hosttypehostroletype/' . $wildcard] = array(
       //'title' => 'Title',
       'title callback' => 'thumbwhere_hosttypehostroletype_page_title',
@@ -773,6 +696,7 @@ class ThumbWhereHostTypeHostRoleTypeUIController extends EntityDefaultUIControll
       'access arguments' => array('view', 1),
       'type' => MENU_CALLBACK,
     );
+    */
     return $items;
   }
 
@@ -915,9 +839,6 @@ function thumbwhere_hosttypehostroletype_edit_form($form, &$form_state, $thumbwh
  * Form API validate callback for the thumbwhere_hosttypehostroletype form
  */
 function thumbwhere_hosttypehostroletype_edit_form_validate(&$form, &$form_state) {
-   
-  //if (twCanDebug()) debug($form);   
-  //if (twCanDebug()) debug($form_state);
 
 
   // No validation for pk
@@ -930,8 +851,8 @@ function thumbwhere_hosttypehostroletype_edit_form_validate(&$form, &$form_state
     $value = entity_autocomplete_get_id($value);
     form_set_value($form['fk_hosttype'], $value,$form_state);
   }
-  //if (twCanDebug()) debug($form['fk_hosttype']);
-   if (twCanDebug()) debug('fk_hosttype = ' . $value);
+  //if (twCanDebug()) debug(t($form['fk_hosttype']));
+   //if (twCanDebug()) debug(t('fk_hosttype = ' . $value));
   // Validate fk fk_hosttype
   if (empty($value)) {
     form_set_error('fk_hosttype', t('Validation error, \'fk_hosttype\' is mandatory1.'));
@@ -945,8 +866,8 @@ function thumbwhere_hosttypehostroletype_edit_form_validate(&$form, &$form_state
     $value = entity_autocomplete_get_id($value);
     form_set_value($form['fk_hostroletype'], $value,$form_state);
   }
-  //if (twCanDebug()) debug($form['fk_hostroletype']);
-   if (twCanDebug()) debug('fk_hostroletype = ' . $value);
+  //if (twCanDebug()) debug(t($form['fk_hostroletype']));
+   //if (twCanDebug()) debug(t('fk_hostroletype = ' . $value));
   // Validate fk fk_hostroletype
   if (empty($value)) {
     form_set_error('fk_hostroletype', t('Validation error, \'fk_hostroletype\' is mandatory1.'));
@@ -986,7 +907,7 @@ function thumbwhere_hosttypehostroletype_edit_form_submit(&$form, &$form_state) 
 
   $thumbwhere_hosttypehostroletype->changed = time();
 
-  $thumbwhere_hosttypehostroletype->save($transaction);
+  $thumbwhere_hosttypehostroletype->save();
   $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_hosttypehostroletypes';
 }
 

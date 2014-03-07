@@ -75,7 +75,8 @@ function thumbwhere_fan_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Fan';
   $handler->display->display_options['use_ajax'] = TRUE;
-  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administer thumbwhere_contentingests';  
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
@@ -358,8 +359,8 @@ function thumbwhere_fan_views_default_views() {
 
     
     
-    
   /* Field: ThumbWhereFan: Link */
+  /*
   $handler->display->display_options['fields']['link_thumbwhere_fan']['id'] = 'link_thumbwhere_fan';
   $handler->display->display_options['fields']['link_thumbwhere_fan']['table'] = 'thumbwhere_fan';
   $handler->display->display_options['fields']['link_thumbwhere_fan']['field'] = 'link_thumbwhere_fan';
@@ -379,7 +380,7 @@ function thumbwhere_fan_views_default_views() {
   $handler->display->display_options['fields']['link_thumbwhere_fan']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['link_thumbwhere_fan']['hide_empty'] = 0;
   $handler->display->display_options['fields']['link_thumbwhere_fan']['empty_zero'] = 0;
-
+  */
 
   /* Field: ThumbWhereFan: Operations links */
   $handler->display->display_options['fields']['operations']['id'] = 'operations';

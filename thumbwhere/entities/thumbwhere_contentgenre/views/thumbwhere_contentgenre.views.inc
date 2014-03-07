@@ -75,7 +75,8 @@ function thumbwhere_contentgenre_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'ContentGenre';
   $handler->display->display_options['use_ajax'] = TRUE;
-  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administer thumbwhere_contentingests';  
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
@@ -291,8 +292,8 @@ function thumbwhere_contentgenre_views_default_views() {
 
     
     
-    
   /* Field: ThumbWhereContentGenre: Link */
+  /*
   $handler->display->display_options['fields']['link_thumbwhere_contentgenre']['id'] = 'link_thumbwhere_contentgenre';
   $handler->display->display_options['fields']['link_thumbwhere_contentgenre']['table'] = 'thumbwhere_contentgenre';
   $handler->display->display_options['fields']['link_thumbwhere_contentgenre']['field'] = 'link_thumbwhere_contentgenre';
@@ -312,7 +313,7 @@ function thumbwhere_contentgenre_views_default_views() {
   $handler->display->display_options['fields']['link_thumbwhere_contentgenre']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['link_thumbwhere_contentgenre']['hide_empty'] = 0;
   $handler->display->display_options['fields']['link_thumbwhere_contentgenre']['empty_zero'] = 0;
-
+  */
 
   /* Field: ThumbWhereContentGenre: Operations links */
   $handler->display->display_options['fields']['operations']['id'] = 'operations';

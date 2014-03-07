@@ -17,8 +17,8 @@
  */
 function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
-  if (twCanDebug()) debug('PROCESS NOTIFICATION');
-  if (twCanDebug()) debug($notification);
+  //if (twCanDebug()) debug('PROCESS NOTIFICATION');
+  //if (twCanDebug()) debug($notification);
 
   //
   // Get the operation
@@ -34,8 +34,8 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
   $op = $notification->attributes()->op;
 
-  if (twCanDebug()) debug('op');
-  if (twCanDebug()) debug($op);
+  //if (twCanDebug()) debug('op');
+  //if (twCanDebug()) debug($op);
 
   //
   // If this is a notification then $op should be 'notify'
@@ -51,8 +51,8 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
 
   $notification_op = $notification->attributes()->notification;
 
-  if (twCanDebug()) debug('notification');
-  if (twCanDebug()) debug($notification_op);
+  //if (twCanDebug()) debug('notification');
+  //if (twCanDebug()) debug($notification_op);
 
 
   //
@@ -108,11 +108,9 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         }
 
         $id = intval($notification->attributes()->id);
-		
 
-        if (twCanDebug()) debug('id');
-        if (twCanDebug()) debug($id);
-
+        //if (twCanDebug()) debug('id');
+        //if (twCanDebug()) debug(t($id));
 
         //
         // Get the origin
@@ -123,8 +121,8 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         if (isset($notification->attributes()->origin)) {        
           $origin = intval($notification->attributes()->origin);
 
-          if (twCanDebug()) debug('origin');
-          if (twCanDebug()) debug($origin);
+          //if (twCanDebug()) debug('origin');
+          //if (twCanDebug()) debug(t($origin));
 
           if ($origin == variable_get('thumbwhere_host_id',-1)) {
             $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'content_ingest\', Dropping this \'create\' notification.';
@@ -148,9 +146,6 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         //
           
         $entities = entity_load('thumbwhere_contentingest', array($id));
-
-        if (twCanDebug()) debug('$entities');
-        if (twCanDebug()) debug($entities);
 
         if (count($entities) != 0) {
           //drupal_add_http_header('Status', '409 Resource already exists.');
@@ -278,9 +273,7 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         }
 
         if (!isset($notification->attributes()->key)) {
-          if (twCanDebug()) debug('$entities');
-          if (twCanDebug()) debug($entities);
-        }
+                  }
 
         // We are being notified, so we do not want to ship this out again as a notification...
         // Finally write the entity.
@@ -335,8 +328,8 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         $id = intval($notification->attributes()->id);
 		
 
-        if (twCanDebug()) debug('id');
-        if (twCanDebug()) debug($id);
+        //if (twCanDebug()) debug('id');
+        //if (twCanDebug()) debug($id);
 
             
         //
@@ -348,8 +341,8 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         if (isset($notification->attributes()->origin)) {                
           $origin = intval($notification->attributes()->origin);
 
-          if (twCanDebug()) debug('origin');
-          if (twCanDebug()) debug($origin);
+          //if (twCanDebug()) debug('origin');
+          //if (twCanDebug()) debug($origin);
 
           if ($origin == variable_get('thumbwhere_host_id',-1)) {
             $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'content_ingest\', Dropping this \'update\' notification.';
@@ -373,9 +366,6 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         //
           
         $entities = entity_load('thumbwhere_contentingest', array($id));
-
-        if (twCanDebug()) debug('$entities');
-        if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
           //drupal_add_http_header('Status', '409 No such resource exists.');
@@ -414,11 +404,9 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         }
 
         $id = intval($notification->attributes()->id);
-		
 
-        if (twCanDebug()) debug('id');
-        if (twCanDebug()) debug($id);
-
+        //if (twCanDebug()) debug('id');
+        //if (twCanDebug()) debug(t($id));
 
         //
         // Get the origin
@@ -429,8 +417,8 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         if (isset($notification->attributes()->origin)) {        
           $origin = intval($notification->attributes()->origin);
 
-          if (twCanDebug()) debug('origin');
-          if (twCanDebug()) debug($origin);
+          //if (twCanDebug()) debug('origin');
+          //if (twCanDebug()) debug(t($origin));
 
           if ($origin == variable_get('thumbwhere_host_id',-1)) {
             $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'content_ingest\', Dropping this \'update\' notification.';
@@ -454,9 +442,6 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         //
           
         $entities = entity_load('thumbwhere_contentingest', array($id));
-
-        if (twCanDebug()) debug('$entities');
-        if (twCanDebug()) debug($entities);
 
         if (count($entities) != 0) {
           //drupal_add_http_header('Status', '409 Resource already exists.');
@@ -584,9 +569,7 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         }
 
         if (!isset($notification->attributes()->key)) {
-          if (twCanDebug()) debug('$entities');
-          if (twCanDebug()) debug($entities);
-        }
+                  }
 
         // We are being notified, so we do not want to ship this out again as a notification...
         // Finally write the entity.
@@ -719,9 +702,7 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
         }
 
         if (!isset($notification->attributes()->key)) {
-          if (twCanDebug()) debug('$entities');
-          if (twCanDebug()) debug($entities);
-        }
+                  }
 
         // We are being notified, so we do not want to ship this out again as a notification...
         $entity->do_not_propagate = TRUE;
@@ -761,44 +742,13 @@ function _thumbwhere_handle_content_ingest_notify_xml($notification) {
  */
 function _thumbwhere_content_ingest_notify() {
 
+  
   if (twCanDebug()) {
     watchdog('thumbwhere_content_ingest', 'incoming notification.');
   }
 
   $numargs = func_num_args();
   $arg_list = func_get_args();
-
-  
-	if (twCanDebug()) debug('$numargs  = ' . $numargs);
-	
-	if (twCanDebug()) debug('$arg_list = ' . $arg_list);
-	
-	if (twCanDebug()) debug('$_REQUEST');
-	if (twCanDebug()) debug($_REQUEST);
-	
-	if (twCanDebug()) debug('$_GET');
-	if (twCanDebug()) debug($_GET);
-	
-	if (twCanDebug()) debug('$_POST');
-	if (twCanDebug()) debug($_POST);
-	
-	//if (twCanDebug()) debug('$HTTP_RAW_POST_DATA');
-	//if (twCanDebug()) debug($HTTP_RAW_POST_DATA);
-	
-	if (twCanDebug()) debug('$_SERVER');
-	if (twCanDebug()) debug($_SERVER);
-	
-	//if (twCanDebug()) debug('$GLOBALS');
-	//if (twCanDebug()) debug($GLOBALS);
-
-  
-
-  if (variable_get('thumbwhere_api_log_debug', 0) == 1) {
-    foreach ($arg_list as $arg) {
-      if (twCanDebug()) debug('$arg  = ' . $arg);
-    }
-  }
-
 
   //////////////////////////////////////////////////
   //
@@ -814,12 +764,7 @@ function _thumbwhere_content_ingest_notify() {
             // Get the POST data as XML
             //
 
-            $post_xml = new SimpleXMLElement('php://input', null, true);
-            if (twCanDebug()) debug('$post_xml');
-            if (twCanDebug()) debug($post_xml);
-
-            if (twCanDebug()) debug('$post_xml->getName()');
-            if (twCanDebug()) debug($post_xml->getName());
+            $post_xml = new SimpleXMLElement('php://input', LIBXML_NOWARNING | (defined('LIBXML_COMPACT') ? LIBXML_COMPACT : 0), true);
 
             // We expect 'action' as the root element. TODO: I would rather this was the more generic 'request'
             if ($post_xml->getName() != 'action') {
@@ -938,7 +883,7 @@ class ThumbWhereContentIngestUIController extends EntityDefaultUIController {
 
     $items[$this->path] = array(
       'title' => 'ContentIngest',
-      'description' => 'Add edit and update thumbwhere_contentingests.',
+      'description' => 'Add edit and update thumbwhere_contentingests entities.',
       'page callback' => 'system_admin_menu_block_page',
       'access arguments' => array('access administration pages'),
       'file path' => drupal_get_path('module', 'system'),
@@ -962,33 +907,6 @@ class ThumbWhereContentIngestUIController extends EntityDefaultUIController {
     );
 
 
-/*
-    // Change the add page menu to multiple types of entities
-    $items[$this->path . '/add'] = array(
-      //'title' => 'Add a ContentIngest',
-      'title' => 'Add',
-	  'description' => 'Add a new ContentIngest',
-      'page callback'  => 'thumbwhere_contentingest_add_page',
-      'access callback'  => 'thumbwhere_contentingest_access',
-      'access arguments' => array('edit'),
-      'type' => MENU_NORMAL_ITEM,
-      'weight' => 20,
-      'file' => 'thumbwhere_contentingest.admin.inc',
-      'file path' => drupal_get_path('module', $this->entityInfo['module'])
-
-    );
-*/    
-/*
-    $items[$this->path . '/add/' . 'thumbwhere_contentingest'] = array(
-      'title' => 'Add ' . 'ThumbWhereContentIngest',
-      'page callback' => 'thumbwhere_contentingest_form_wrapper',
-      'page arguments' => array(thumbwhere_contentingest_create(array('type' => 'thumbwhere_contentingest'))),
-      'access callback' => 'thumbwhere_contentingest_access',
-      'access arguments' => array('edit', 'edit ' . 'thumbwhere_contentingest'),
-      'file' => 'thumbwhere_contentingest.admin.inc',
-      'file path' => drupal_get_path('module', $this->entityInfo['module'])
-    );
-*/
     // Loading and editing thumbwhere_contentingest entities
     $items[$this->path . '/thumbwhere_contentingest/' . $wildcard] = array(
       'page callback' => 'thumbwhere_contentingest_form_wrapper',
@@ -1000,7 +918,11 @@ class ThumbWhereContentIngestUIController extends EntityDefaultUIController {
       'file' => 'thumbwhere_contentingest.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
+    
     $items[$this->path . '/thumbwhere_contentingest/' . $wildcard . '/edit'] = array(
+      'title' => 'Edit',
+      'access callback' => 'thumbwhere_contentingest_access',
+      'access arguments' => array('edit', $id_count + 1),      
       'title' => 'Edit',
       'type' => MENU_DEFAULT_LOCAL_TASK,
       'weight' => -10,
@@ -1021,6 +943,7 @@ class ThumbWhereContentIngestUIController extends EntityDefaultUIController {
     );
 
     // Menu item for viewing thumbwhere_contentingests
+    /*
     $items['thumbwhere_contentingest/' . $wildcard] = array(
       //'title' => 'Title',
       'title callback' => 'thumbwhere_contentingest_page_title',
@@ -1031,6 +954,7 @@ class ThumbWhereContentIngestUIController extends EntityDefaultUIController {
       'access arguments' => array('view', 1),
       'type' => MENU_CALLBACK,
     );
+    */
     return $items;
   }
 
@@ -1304,9 +1228,6 @@ function thumbwhere_contentingest_edit_form($form, &$form_state, $thumbwhere_con
  * Form API validate callback for the thumbwhere_contentingest form
  */
 function thumbwhere_contentingest_edit_form_validate(&$form, &$form_state) {
-   
-  //if (twCanDebug()) debug($form);   
-  //if (twCanDebug()) debug($form_state);
 
 
   // No validation for pk
@@ -1319,8 +1240,8 @@ function thumbwhere_contentingest_edit_form_validate(&$form, &$form_state) {
     $value = entity_autocomplete_get_id($value);
     form_set_value($form['fk_mediaitem'], $value,$form_state);
   }
-  //if (twCanDebug()) debug($form['fk_mediaitem']);
-   if (twCanDebug()) debug('fk_mediaitem = ' . $value);
+  //if (twCanDebug()) debug(t($form['fk_mediaitem']));
+   //if (twCanDebug()) debug(t('fk_mediaitem = ' . $value));
   // Validate fk fk_mediaitem
 
 
@@ -1331,8 +1252,8 @@ function thumbwhere_contentingest_edit_form_validate(&$form, &$form_state) {
     $value = entity_autocomplete_get_id($value);
     form_set_value($form['fk_content'], $value,$form_state);
   }
-  //if (twCanDebug()) debug($form['fk_content']);
-   if (twCanDebug()) debug('fk_content = ' . $value);
+  //if (twCanDebug()) debug(t($form['fk_content']));
+   //if (twCanDebug()) debug(t('fk_content = ' . $value));
   // Validate fk fk_content
 
 
@@ -1343,8 +1264,8 @@ function thumbwhere_contentingest_edit_form_validate(&$form, &$form_state) {
     $value = entity_autocomplete_get_id($value);
     form_set_value($form['fk_member'], $value,$form_state);
   }
-  //if (twCanDebug()) debug($form['fk_member']);
-   if (twCanDebug()) debug('fk_member = ' . $value);
+  //if (twCanDebug()) debug(t($form['fk_member']));
+   //if (twCanDebug()) debug(t('fk_member = ' . $value));
   // Validate fk fk_member
 
 
@@ -1355,8 +1276,8 @@ function thumbwhere_contentingest_edit_form_validate(&$form, &$form_state) {
     $value = entity_autocomplete_get_id($value);
     form_set_value($form['fk_identity'], $value,$form_state);
   }
-  //if (twCanDebug()) debug($form['fk_identity']);
-   if (twCanDebug()) debug('fk_identity = ' . $value);
+  //if (twCanDebug()) debug(t($form['fk_identity']));
+   //if (twCanDebug()) debug(t('fk_identity = ' . $value));
   // Validate fk fk_identity
 
 
@@ -1367,8 +1288,8 @@ function thumbwhere_contentingest_edit_form_validate(&$form, &$form_state) {
     $value = entity_autocomplete_get_id($value);
     form_set_value($form['fk_producer'], $value,$form_state);
   }
-  //if (twCanDebug()) debug($form['fk_producer']);
-   if (twCanDebug()) debug('fk_producer = ' . $value);
+  //if (twCanDebug()) debug(t($form['fk_producer']));
+   //if (twCanDebug()) debug(t('fk_producer = ' . $value));
   // Validate fk fk_producer
 
 
@@ -1379,8 +1300,8 @@ function thumbwhere_contentingest_edit_form_validate(&$form, &$form_state) {
     $value = entity_autocomplete_get_id($value);
     form_set_value($form['fk_consumer'], $value,$form_state);
   }
-  //if (twCanDebug()) debug($form['fk_consumer']);
-   if (twCanDebug()) debug('fk_consumer = ' . $value);
+  //if (twCanDebug()) debug(t($form['fk_consumer']));
+   //if (twCanDebug()) debug(t('fk_consumer = ' . $value));
   // Validate fk fk_consumer
 
 
@@ -1391,8 +1312,8 @@ function thumbwhere_contentingest_edit_form_validate(&$form, &$form_state) {
     $value = entity_autocomplete_get_id($value);
     form_set_value($form['fk_target'], $value,$form_state);
   }
-  //if (twCanDebug()) debug($form['fk_target']);
-   if (twCanDebug()) debug('fk_target = ' . $value);
+  //if (twCanDebug()) debug(t($form['fk_target']));
+   //if (twCanDebug()) debug(t('fk_target = ' . $value));
   // Validate fk fk_target
 
 
@@ -1477,7 +1398,7 @@ function thumbwhere_contentingest_edit_form_submit(&$form, &$form_state) {
 
   $thumbwhere_contentingest->changed = time();
 
-  $thumbwhere_contentingest->save($transaction);
+  $thumbwhere_contentingest->save();
   $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_contentingests';
 }
 

@@ -75,7 +75,8 @@ function thumbwhere_place_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Place';
   $handler->display->display_options['use_ajax'] = TRUE;
-  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administer thumbwhere_contentingests';  
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
@@ -265,8 +266,8 @@ function thumbwhere_place_views_default_views() {
   $handler->display->display_options['fields']['fk_location']['format_plural'] = 0;
     
     
-    
   /* Field: ThumbWherePlace: Link */
+  /*
   $handler->display->display_options['fields']['link_thumbwhere_place']['id'] = 'link_thumbwhere_place';
   $handler->display->display_options['fields']['link_thumbwhere_place']['table'] = 'thumbwhere_place';
   $handler->display->display_options['fields']['link_thumbwhere_place']['field'] = 'link_thumbwhere_place';
@@ -286,7 +287,7 @@ function thumbwhere_place_views_default_views() {
   $handler->display->display_options['fields']['link_thumbwhere_place']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['link_thumbwhere_place']['hide_empty'] = 0;
   $handler->display->display_options['fields']['link_thumbwhere_place']['empty_zero'] = 0;
-
+  */
 
   /* Field: ThumbWherePlace: Operations links */
   $handler->display->display_options['fields']['operations']['id'] = 'operations';

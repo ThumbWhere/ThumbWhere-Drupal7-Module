@@ -75,7 +75,8 @@ function thumbwhere_externalsubscription_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'ExternalSubscription';
   $handler->display->display_options['use_ajax'] = TRUE;
-  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administer thumbwhere_contentingests';  
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
@@ -326,8 +327,8 @@ function thumbwhere_externalsubscription_views_default_views() {
 
     
     
-    
   /* Field: ThumbWhereExternalSubscription: Link */
+  /*
   $handler->display->display_options['fields']['link_thumbwhere_externalsubscription']['id'] = 'link_thumbwhere_externalsubscription';
   $handler->display->display_options['fields']['link_thumbwhere_externalsubscription']['table'] = 'thumbwhere_externalsubscription';
   $handler->display->display_options['fields']['link_thumbwhere_externalsubscription']['field'] = 'link_thumbwhere_externalsubscription';
@@ -347,7 +348,7 @@ function thumbwhere_externalsubscription_views_default_views() {
   $handler->display->display_options['fields']['link_thumbwhere_externalsubscription']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['link_thumbwhere_externalsubscription']['hide_empty'] = 0;
   $handler->display->display_options['fields']['link_thumbwhere_externalsubscription']['empty_zero'] = 0;
-
+  */
 
   /* Field: ThumbWhereExternalSubscription: Operations links */
   $handler->display->display_options['fields']['operations']['id'] = 'operations';

@@ -128,7 +128,7 @@ function _thumbwhere_stresstest_create_Consume($uid,$test) {
         $_global_thumbwhere_stresstest_Actor = _thumbwhere_stresstest_create_Actor($uid,$test);
       }
       else {
-        debug('bailing - function \'_thumbwhere_stresstest_create_Actor\' is not loaded yet.');
+        debug(t('bailing - function \'_thumbwhere_stresstest_create_Actor\' is not loaded yet.'));
         return NULL;
       }
     }
@@ -138,7 +138,7 @@ function _thumbwhere_stresstest_create_Consume($uid,$test) {
         $_global_thumbwhere_stresstest_Thing = _thumbwhere_stresstest_create_Thing($uid,$test);
       }
       else {
-        debug('bailing - function \'_thumbwhere_stresstest_create_Thing\' is not loaded yet.');
+        debug(t('bailing - function \'_thumbwhere_stresstest_create_Thing\' is not loaded yet.'));
         return NULL;
       }
     }

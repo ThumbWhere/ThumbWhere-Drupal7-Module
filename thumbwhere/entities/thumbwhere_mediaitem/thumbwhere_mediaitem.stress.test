@@ -128,7 +128,7 @@ function _thumbwhere_stresstest_create_MediaItem($uid,$test) {
         $_global_thumbwhere_stresstest_Code = _thumbwhere_stresstest_create_Code($uid,$test);
       }
       else {
-        debug('bailing - function \'_thumbwhere_stresstest_create_Code\' is not loaded yet.');
+        debug(t('bailing - function \'_thumbwhere_stresstest_create_Code\' is not loaded yet.'));
         return NULL;
       }
     }
@@ -138,7 +138,7 @@ function _thumbwhere_stresstest_create_MediaItem($uid,$test) {
         $_global_thumbwhere_stresstest_Identity = _thumbwhere_stresstest_create_Identity($uid,$test);
       }
       else {
-        debug('bailing - function \'_thumbwhere_stresstest_create_Identity\' is not loaded yet.');
+        debug(t('bailing - function \'_thumbwhere_stresstest_create_Identity\' is not loaded yet.'));
         return NULL;
       }
     }
@@ -148,7 +148,7 @@ function _thumbwhere_stresstest_create_MediaItem($uid,$test) {
         $_global_thumbwhere_stresstest_Format = _thumbwhere_stresstest_create_Format($uid,$test);
       }
       else {
-        debug('bailing - function \'_thumbwhere_stresstest_create_Format\' is not loaded yet.');
+        debug(t('bailing - function \'_thumbwhere_stresstest_create_Format\' is not loaded yet.'));
         return NULL;
       }
     }
@@ -158,7 +158,7 @@ function _thumbwhere_stresstest_create_MediaItem($uid,$test) {
         $_global_thumbwhere_stresstest_Server = _thumbwhere_stresstest_create_Server($uid,$test);
       }
       else {
-        debug('bailing - function \'_thumbwhere_stresstest_create_Server\' is not loaded yet.');
+        debug(t('bailing - function \'_thumbwhere_stresstest_create_Server\' is not loaded yet.'));
         return NULL;
       }
     }

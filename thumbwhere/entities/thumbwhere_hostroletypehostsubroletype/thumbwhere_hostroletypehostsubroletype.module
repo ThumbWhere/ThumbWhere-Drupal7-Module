@@ -91,13 +91,14 @@ function thumbwhere_hostroletypehostsubroletype_permission() {
   $permissions = array(
     'administer thumbwhere_hostroletypehostsubroletypes' => array(
       'title' => t('Administer thumbwhere_hostroletypehostsubroletypes'),
-      'description' => t('Edit and delete all thumbwhere_hostroletypehostsubroletypes'),
+      'description' => t('Administer all thumbwhere_hostroletypehostsubroletypes entities'),
+      //'restrict access' => TRUE,
     ),
   'send thumbwhere hostroletypehostsubroletype notifications' => array(
-          'title' => t('Send ThumbWhere Notifications'),
-          'description' => t('Allow the caller to call the ThumbWhere HostRoleTypeHostSubRoleType Entity Notifications Endpoint.'),
-          //'restrict access' => TRUE,
-      ),    
+      'title' => t('Send ThumbWhere Notifications'),
+      'description' => t('Allow the caller to call the ThumbWhere HostRoleTypeHostSubRoleType Entity Notifications Endpoint.'),
+      //'restrict access' => TRUE,
+    ),    
   );
 
   return $permissions;
@@ -120,12 +121,11 @@ function thumbwhere_hostroletypehostsubroletype_permission() {
  */
 function thumbwhere_hostroletypehostsubroletype_access($op, $thumbwhere_hostroletypehostsubroletype = NULL, $account = NULL) {
 
-  //if (user_access('administer thumbwhere_hostroletypehostsubroletypes', $account)) {
-  //  return TRUE;
- // }
-
-  //return FALSE;
-  return TRUE;
+  if (user_access('administer thumbwhere_hostroletypehostsubroletypes', $account)) {
+    return TRUE;
+  }
+ 
+  return FALSE;
 }
 
 
@@ -304,38 +304,13 @@ function thumbwhere_hostroletypehostsubroletype_entity_presave($entity, $entity_
   // We only look after what we want...
   if ($entity_type == 'thumbwhere_hostroletypehostsubroletype')  {
   	
- 	/////////////////////////////////////////////////////
-    //
     // Should we not propagate this to ThumbWhere? 
-    //
     if (isset($entity->do_not_propagate)) {
       if ($entity->do_not_propagate) {
-        if (twCanDebug()) {
-          if ($entity->is_new) {
-            if (twCanDebug()){
-              debug("DO NOT PROPAGATE 'hostroletypehostsubroletype' presave *CREATE* not being sent to ThumbWhere server.");
-          	}
-          }
-          else {
-            if (twCanDebug()) {
-              debug("DO NOT PROPAGATE 'hostroletypehostsubroletype' presave *UPDATE* not being sent to ThumbWhere server.");
-            }
-          }
-        }
-
         // To cause an infinite loop of updates, comment out this line.
         return;
       }
-      else if (twCanDebug()) {
-        debug("OK PROAOGATE 'hostroletypehostsubroletype' presave to ThumbWhere server.");
-      }
     }
-    else if (twCanDebug()) {
-      debug("DO NOT PROPAGATE IS NOT SET");
-    }
-    //
-    //
-    ////////////////////////////////////////////////////////  	
 
   
     // .. then we create a new thumbwhere_hostroletypehostsubroletype entity...
@@ -343,9 +318,6 @@ function thumbwhere_hostroletypehostsubroletype_entity_presave($entity, $entity_
 
     $twAdminAPI = new ThumbWhereAPIAdmin();
 
-    //if (twCanDebug()) debug($twContentAPI);
-
-    //if (twCanDebug()) debug($entity);
 
     //
     // Collate and validate our fields
@@ -398,19 +370,15 @@ function thumbwhere_hostroletypehostsubroletype_entity_presave($entity, $entity_
                   'key' => variable_get('thumbwhere_api_key'),
                   'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
-            
-       if (twCanDebug()) debug($hostroletypehostsubroletype);
-
-      //if (twCanDebug()) debug($host_role_type_capable_of_host_role_subrole_type);
 
       $attributes = $hostroletypehostsubroletype->body->host_role_type_capable_of_host_role_subrole_type->attributes();
 
-      if (twCanDebug()) debug('newly created id = ' . $attributes['id']);
+      //if (twCanDebug()) debug('newly created id = ' . t($attributes['id']));
 
       // Assign new id.
       $entity->pk_hostroletypehostsubroletype = intval($attributes['id']);
 
-      if (twCanDebug()) debug('$entity->pk_hostroletypehostsubroletype = ' . $entity->pk_hostroletypehostsubroletype);
+      //if (twCanDebug()) debug(t('$entity->pk_hostroletypehostsubroletype = ' . $entity->pk_hostroletypehostsubroletype));
     }
     else
     {

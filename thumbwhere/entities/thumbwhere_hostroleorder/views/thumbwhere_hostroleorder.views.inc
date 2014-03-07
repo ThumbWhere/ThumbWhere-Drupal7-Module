@@ -75,7 +75,8 @@ function thumbwhere_hostroleorder_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'HostRoleOrder';
   $handler->display->display_options['use_ajax'] = TRUE;
-  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administer thumbwhere_contentingests';  
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
@@ -355,8 +356,8 @@ function thumbwhere_hostroleorder_views_default_views() {
 
     
     
-    
   /* Field: ThumbWhereHostRoleOrder: Link */
+  /*
   $handler->display->display_options['fields']['link_thumbwhere_hostroleorder']['id'] = 'link_thumbwhere_hostroleorder';
   $handler->display->display_options['fields']['link_thumbwhere_hostroleorder']['table'] = 'thumbwhere_hostroleorder';
   $handler->display->display_options['fields']['link_thumbwhere_hostroleorder']['field'] = 'link_thumbwhere_hostroleorder';
@@ -376,7 +377,7 @@ function thumbwhere_hostroleorder_views_default_views() {
   $handler->display->display_options['fields']['link_thumbwhere_hostroleorder']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['link_thumbwhere_hostroleorder']['hide_empty'] = 0;
   $handler->display->display_options['fields']['link_thumbwhere_hostroleorder']['empty_zero'] = 0;
-
+  */
 
   /* Field: ThumbWhereHostRoleOrder: Operations links */
   $handler->display->display_options['fields']['operations']['id'] = 'operations';

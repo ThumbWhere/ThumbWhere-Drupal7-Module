@@ -17,8 +17,8 @@
  */
 function _thumbwhere_handle_follow_notify_xml($notification) {
 
-  if (twCanDebug()) debug('PROCESS NOTIFICATION');
-  if (twCanDebug()) debug($notification);
+  //if (twCanDebug()) debug('PROCESS NOTIFICATION');
+  //if (twCanDebug()) debug($notification);
 
   //
   // Get the operation
@@ -34,8 +34,8 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
 
   $op = $notification->attributes()->op;
 
-  if (twCanDebug()) debug('op');
-  if (twCanDebug()) debug($op);
+  //if (twCanDebug()) debug('op');
+  //if (twCanDebug()) debug($op);
 
   //
   // If this is a notification then $op should be 'notify'
@@ -51,8 +51,8 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
 
   $notification_op = $notification->attributes()->notification;
 
-  if (twCanDebug()) debug('notification');
-  if (twCanDebug()) debug($notification_op);
+  //if (twCanDebug()) debug('notification');
+  //if (twCanDebug()) debug($notification_op);
 
 
   //
@@ -108,11 +108,9 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
         }
 
         $id = intval($notification->attributes()->id);
-		
 
-        if (twCanDebug()) debug('id');
-        if (twCanDebug()) debug($id);
-
+        //if (twCanDebug()) debug('id');
+        //if (twCanDebug()) debug(t($id));
 
         //
         // Get the origin
@@ -123,8 +121,8 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
         if (isset($notification->attributes()->origin)) {        
           $origin = intval($notification->attributes()->origin);
 
-          if (twCanDebug()) debug('origin');
-          if (twCanDebug()) debug($origin);
+          //if (twCanDebug()) debug('origin');
+          //if (twCanDebug()) debug(t($origin));
 
           if ($origin == variable_get('thumbwhere_host_id',-1)) {
             $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'follow\', Dropping this \'create\' notification.';
@@ -148,9 +146,6 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
         //
           
         $entities = entity_load('thumbwhere_follow', array($id));
-
-        if (twCanDebug()) debug('$entities');
-        if (twCanDebug()) debug($entities);
 
         if (count($entities) != 0) {
           //drupal_add_http_header('Status', '409 Resource already exists.');
@@ -200,9 +195,7 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
         }
 
         if (!isset($notification->attributes()->key)) {
-          if (twCanDebug()) debug('$entities');
-          if (twCanDebug()) debug($entities);
-        }
+                  }
 
         // We are being notified, so we do not want to ship this out again as a notification...
         // Finally write the entity.
@@ -257,8 +250,8 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
         $id = intval($notification->attributes()->id);
 		
 
-        if (twCanDebug()) debug('id');
-        if (twCanDebug()) debug($id);
+        //if (twCanDebug()) debug('id');
+        //if (twCanDebug()) debug($id);
 
             
         //
@@ -270,8 +263,8 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
         if (isset($notification->attributes()->origin)) {                
           $origin = intval($notification->attributes()->origin);
 
-          if (twCanDebug()) debug('origin');
-          if (twCanDebug()) debug($origin);
+          //if (twCanDebug()) debug('origin');
+          //if (twCanDebug()) debug($origin);
 
           if ($origin == variable_get('thumbwhere_host_id',-1)) {
             $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'follow\', Dropping this \'update\' notification.';
@@ -295,9 +288,6 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
         //
           
         $entities = entity_load('thumbwhere_follow', array($id));
-
-        if (twCanDebug()) debug('$entities');
-        if (twCanDebug()) debug($entities);
 
         if (count($entities) == 0) {
           //drupal_add_http_header('Status', '409 No such resource exists.');
@@ -336,11 +326,9 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
         }
 
         $id = intval($notification->attributes()->id);
-		
 
-        if (twCanDebug()) debug('id');
-        if (twCanDebug()) debug($id);
-
+        //if (twCanDebug()) debug('id');
+        //if (twCanDebug()) debug(t($id));
 
         //
         // Get the origin
@@ -351,8 +339,8 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
         if (isset($notification->attributes()->origin)) {        
           $origin = intval($notification->attributes()->origin);
 
-          if (twCanDebug()) debug('origin');
-          if (twCanDebug()) debug($origin);
+          //if (twCanDebug()) debug('origin');
+          //if (twCanDebug()) debug(t($origin));
 
           if ($origin == variable_get('thumbwhere_host_id',-1)) {
             $err = 'Origin of this notification ' . $origin  . ' is the same as this host. \'follow\', Dropping this \'update\' notification.';
@@ -376,9 +364,6 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
         //
           
         $entities = entity_load('thumbwhere_follow', array($id));
-
-        if (twCanDebug()) debug('$entities');
-        if (twCanDebug()) debug($entities);
 
         if (count($entities) != 0) {
           //drupal_add_http_header('Status', '409 Resource already exists.');
@@ -428,9 +413,7 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
         }
 
         if (!isset($notification->attributes()->key)) {
-          if (twCanDebug()) debug('$entities');
-          if (twCanDebug()) debug($entities);
-        }
+                  }
 
         // We are being notified, so we do not want to ship this out again as a notification...
         // Finally write the entity.
@@ -485,9 +468,7 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
         }
 
         if (!isset($notification->attributes()->key)) {
-          if (twCanDebug()) debug('$entities');
-          if (twCanDebug()) debug($entities);
-        }
+                  }
 
         // We are being notified, so we do not want to ship this out again as a notification...
         $entity->do_not_propagate = TRUE;
@@ -527,44 +508,13 @@ function _thumbwhere_handle_follow_notify_xml($notification) {
  */
 function _thumbwhere_follow_notify() {
 
+  
   if (twCanDebug()) {
     watchdog('thumbwhere_follow', 'incoming notification.');
   }
 
   $numargs = func_num_args();
   $arg_list = func_get_args();
-
-  
-	if (twCanDebug()) debug('$numargs  = ' . $numargs);
-	
-	if (twCanDebug()) debug('$arg_list = ' . $arg_list);
-	
-	if (twCanDebug()) debug('$_REQUEST');
-	if (twCanDebug()) debug($_REQUEST);
-	
-	if (twCanDebug()) debug('$_GET');
-	if (twCanDebug()) debug($_GET);
-	
-	if (twCanDebug()) debug('$_POST');
-	if (twCanDebug()) debug($_POST);
-	
-	//if (twCanDebug()) debug('$HTTP_RAW_POST_DATA');
-	//if (twCanDebug()) debug($HTTP_RAW_POST_DATA);
-	
-	if (twCanDebug()) debug('$_SERVER');
-	if (twCanDebug()) debug($_SERVER);
-	
-	//if (twCanDebug()) debug('$GLOBALS');
-	//if (twCanDebug()) debug($GLOBALS);
-
-  
-
-  if (variable_get('thumbwhere_api_log_debug', 0) == 1) {
-    foreach ($arg_list as $arg) {
-      if (twCanDebug()) debug('$arg  = ' . $arg);
-    }
-  }
-
 
   //////////////////////////////////////////////////
   //
@@ -580,12 +530,7 @@ function _thumbwhere_follow_notify() {
             // Get the POST data as XML
             //
 
-            $post_xml = new SimpleXMLElement('php://input', null, true);
-            if (twCanDebug()) debug('$post_xml');
-            if (twCanDebug()) debug($post_xml);
-
-            if (twCanDebug()) debug('$post_xml->getName()');
-            if (twCanDebug()) debug($post_xml->getName());
+            $post_xml = new SimpleXMLElement('php://input', LIBXML_NOWARNING | (defined('LIBXML_COMPACT') ? LIBXML_COMPACT : 0), true);
 
             // We expect 'action' as the root element. TODO: I would rather this was the more generic 'request'
             if ($post_xml->getName() != 'action') {
@@ -704,7 +649,7 @@ class ThumbWhereFollowUIController extends EntityDefaultUIController {
 
     $items[$this->path] = array(
       'title' => 'Follow',
-      'description' => 'Add edit and update thumbwhere_follows.',
+      'description' => 'Add edit and update thumbwhere_follows entities.',
       'page callback' => 'system_admin_menu_block_page',
       'access arguments' => array('access administration pages'),
       'file path' => drupal_get_path('module', 'system'),
@@ -728,33 +673,6 @@ class ThumbWhereFollowUIController extends EntityDefaultUIController {
     );
 
 
-/*
-    // Change the add page menu to multiple types of entities
-    $items[$this->path . '/add'] = array(
-      //'title' => 'Add a Follow',
-      'title' => 'Add',
-	  'description' => 'Add a new Follow',
-      'page callback'  => 'thumbwhere_follow_add_page',
-      'access callback'  => 'thumbwhere_follow_access',
-      'access arguments' => array('edit'),
-      'type' => MENU_NORMAL_ITEM,
-      'weight' => 20,
-      'file' => 'thumbwhere_follow.admin.inc',
-      'file path' => drupal_get_path('module', $this->entityInfo['module'])
-
-    );
-*/    
-/*
-    $items[$this->path . '/add/' . 'thumbwhere_follow'] = array(
-      'title' => 'Add ' . 'ThumbWhereFollow',
-      'page callback' => 'thumbwhere_follow_form_wrapper',
-      'page arguments' => array(thumbwhere_follow_create(array('type' => 'thumbwhere_follow'))),
-      'access callback' => 'thumbwhere_follow_access',
-      'access arguments' => array('edit', 'edit ' . 'thumbwhere_follow'),
-      'file' => 'thumbwhere_follow.admin.inc',
-      'file path' => drupal_get_path('module', $this->entityInfo['module'])
-    );
-*/
     // Loading and editing thumbwhere_follow entities
     $items[$this->path . '/thumbwhere_follow/' . $wildcard] = array(
       'page callback' => 'thumbwhere_follow_form_wrapper',
@@ -766,7 +684,11 @@ class ThumbWhereFollowUIController extends EntityDefaultUIController {
       'file' => 'thumbwhere_follow.admin.inc',
       'file path' => drupal_get_path('module', $this->entityInfo['module'])
     );
+    
     $items[$this->path . '/thumbwhere_follow/' . $wildcard . '/edit'] = array(
+      'title' => 'Edit',
+      'access callback' => 'thumbwhere_follow_access',
+      'access arguments' => array('edit', $id_count + 1),      
       'title' => 'Edit',
       'type' => MENU_DEFAULT_LOCAL_TASK,
       'weight' => -10,
@@ -787,6 +709,7 @@ class ThumbWhereFollowUIController extends EntityDefaultUIController {
     );
 
     // Menu item for viewing thumbwhere_follows
+    /*
     $items['thumbwhere_follow/' . $wildcard] = array(
       //'title' => 'Title',
       'title callback' => 'thumbwhere_follow_page_title',
@@ -797,6 +720,7 @@ class ThumbWhereFollowUIController extends EntityDefaultUIController {
       'access arguments' => array('view', 1),
       'type' => MENU_CALLBACK,
     );
+    */
     return $items;
   }
 
@@ -958,9 +882,6 @@ function thumbwhere_follow_edit_form($form, &$form_state, $thumbwhere_follow) {
  * Form API validate callback for the thumbwhere_follow form
  */
 function thumbwhere_follow_edit_form_validate(&$form, &$form_state) {
-   
-  //if (twCanDebug()) debug($form);   
-  //if (twCanDebug()) debug($form_state);
 
 
   // No validation for pk
@@ -973,8 +894,8 @@ function thumbwhere_follow_edit_form_validate(&$form, &$form_state) {
     $value = entity_autocomplete_get_id($value);
     form_set_value($form['fk_actor'], $value,$form_state);
   }
-  //if (twCanDebug()) debug($form['fk_actor']);
-   if (twCanDebug()) debug('fk_actor = ' . $value);
+  //if (twCanDebug()) debug(t($form['fk_actor']));
+   //if (twCanDebug()) debug(t('fk_actor = ' . $value));
   // Validate fk fk_actor
   if (empty($value)) {
     form_set_error('fk_actor', t('Validation error, \'fk_actor\' is mandatory1.'));
@@ -988,8 +909,8 @@ function thumbwhere_follow_edit_form_validate(&$form, &$form_state) {
     $value = entity_autocomplete_get_id($value);
     form_set_value($form['fk_thing'], $value,$form_state);
   }
-  //if (twCanDebug()) debug($form['fk_thing']);
-   if (twCanDebug()) debug('fk_thing = ' . $value);
+  //if (twCanDebug()) debug(t($form['fk_thing']));
+   //if (twCanDebug()) debug(t('fk_thing = ' . $value));
   // Validate fk fk_thing
   if (empty($value)) {
     form_set_error('fk_thing', t('Validation error, \'fk_thing\' is mandatory1.'));
@@ -1003,8 +924,8 @@ function thumbwhere_follow_edit_form_validate(&$form, &$form_state) {
     $value = entity_autocomplete_get_id($value);
     form_set_value($form['fk_place'], $value,$form_state);
   }
-  //if (twCanDebug()) debug($form['fk_place']);
-   if (twCanDebug()) debug('fk_place = ' . $value);
+  //if (twCanDebug()) debug(t($form['fk_place']));
+   //if (twCanDebug()) debug(t('fk_place = ' . $value));
   // Validate fk fk_place
 
 
@@ -1049,7 +970,7 @@ function thumbwhere_follow_edit_form_submit(&$form, &$form_state) {
 
   $thumbwhere_follow->changed = time();
 
-  $thumbwhere_follow->save($transaction);
+  $thumbwhere_follow->save();
   $form_state['redirect'] = 'admin/thumbwhere/thumbwhere_follows';
 }
 

@@ -75,7 +75,8 @@ function thumbwhere_hostproviderhosttype_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'HostProviderHostType';
   $handler->display->display_options['use_ajax'] = TRUE;
-  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administer thumbwhere_contentingests';  
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
@@ -297,8 +298,8 @@ function thumbwhere_hostproviderhosttype_views_default_views() {
   $handler->display->display_options['fields']['fk_hosttype']['format_plural'] = 0;
     
     
-    
   /* Field: ThumbWhereHostProviderHostType: Link */
+  /*
   $handler->display->display_options['fields']['link_thumbwhere_hostproviderhosttype']['id'] = 'link_thumbwhere_hostproviderhosttype';
   $handler->display->display_options['fields']['link_thumbwhere_hostproviderhosttype']['table'] = 'thumbwhere_hostproviderhosttype';
   $handler->display->display_options['fields']['link_thumbwhere_hostproviderhosttype']['field'] = 'link_thumbwhere_hostproviderhosttype';
@@ -318,7 +319,7 @@ function thumbwhere_hostproviderhosttype_views_default_views() {
   $handler->display->display_options['fields']['link_thumbwhere_hostproviderhosttype']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['link_thumbwhere_hostproviderhosttype']['hide_empty'] = 0;
   $handler->display->display_options['fields']['link_thumbwhere_hostproviderhosttype']['empty_zero'] = 0;
-
+  */
 
   /* Field: ThumbWhereHostProviderHostType: Operations links */
   $handler->display->display_options['fields']['operations']['id'] = 'operations';

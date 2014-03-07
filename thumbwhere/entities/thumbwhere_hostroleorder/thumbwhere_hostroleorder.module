@@ -91,13 +91,14 @@ function thumbwhere_hostroleorder_permission() {
   $permissions = array(
     'administer thumbwhere_hostroleorders' => array(
       'title' => t('Administer thumbwhere_hostroleorders'),
-      'description' => t('Edit and delete all thumbwhere_hostroleorders'),
+      'description' => t('Administer all thumbwhere_hostroleorders entities'),
+      //'restrict access' => TRUE,
     ),
   'send thumbwhere hostroleorder notifications' => array(
-          'title' => t('Send ThumbWhere Notifications'),
-          'description' => t('Allow the caller to call the ThumbWhere HostRoleOrder Entity Notifications Endpoint.'),
-          //'restrict access' => TRUE,
-      ),    
+      'title' => t('Send ThumbWhere Notifications'),
+      'description' => t('Allow the caller to call the ThumbWhere HostRoleOrder Entity Notifications Endpoint.'),
+      //'restrict access' => TRUE,
+    ),    
   );
 
   return $permissions;
@@ -120,12 +121,11 @@ function thumbwhere_hostroleorder_permission() {
  */
 function thumbwhere_hostroleorder_access($op, $thumbwhere_hostroleorder = NULL, $account = NULL) {
 
-  //if (user_access('administer thumbwhere_hostroleorders', $account)) {
-  //  return TRUE;
- // }
-
-  //return FALSE;
-  return TRUE;
+  if (user_access('administer thumbwhere_hostroleorders', $account)) {
+    return TRUE;
+  }
+ 
+  return FALSE;
 }
 
 
@@ -304,38 +304,13 @@ function thumbwhere_hostroleorder_entity_presave($entity, $entity_type) {
   // We only look after what we want...
   if ($entity_type == 'thumbwhere_hostroleorder')  {
   	
- 	/////////////////////////////////////////////////////
-    //
     // Should we not propagate this to ThumbWhere? 
-    //
     if (isset($entity->do_not_propagate)) {
       if ($entity->do_not_propagate) {
-        if (twCanDebug()) {
-          if ($entity->is_new) {
-            if (twCanDebug()){
-              debug("DO NOT PROPAGATE 'hostroleorder' presave *CREATE* not being sent to ThumbWhere server.");
-          	}
-          }
-          else {
-            if (twCanDebug()) {
-              debug("DO NOT PROPAGATE 'hostroleorder' presave *UPDATE* not being sent to ThumbWhere server.");
-            }
-          }
-        }
-
         // To cause an infinite loop of updates, comment out this line.
         return;
       }
-      else if (twCanDebug()) {
-        debug("OK PROAOGATE 'hostroleorder' presave to ThumbWhere server.");
-      }
     }
-    else if (twCanDebug()) {
-      debug("DO NOT PROPAGATE IS NOT SET");
-    }
-    //
-    //
-    ////////////////////////////////////////////////////////  	
 
   
     // .. then we create a new thumbwhere_hostroleorder entity...
@@ -343,9 +318,6 @@ function thumbwhere_hostroleorder_entity_presave($entity, $entity_type) {
 
     $twAdminAPI = new ThumbWhereAPIAdmin();
 
-    //if (twCanDebug()) debug($twContentAPI);
-
-    //if (twCanDebug()) debug($entity);
 
     //
     // Collate and validate our fields
@@ -408,19 +380,15 @@ function thumbwhere_hostroleorder_entity_presave($entity, $entity_type) {
                   'key' => variable_get('thumbwhere_api_key'),
                   'origin' => variable_get('thumbwhere_host_id'),
           ), $fields);
-            
-       if (twCanDebug()) debug($hostroleorder);
-
-      //if (twCanDebug()) debug($host_role_order);
 
       $attributes = $hostroleorder->body->host_role_order->attributes();
 
-      if (twCanDebug()) debug('newly created id = ' . $attributes['id']);
+      //if (twCanDebug()) debug('newly created id = ' . t($attributes['id']));
 
       // Assign new id.
       $entity->pk_hostroleorder = intval($attributes['id']);
 
-      if (twCanDebug()) debug('$entity->pk_hostroleorder = ' . $entity->pk_hostroleorder);
+      //if (twCanDebug()) debug(t('$entity->pk_hostroleorder = ' . $entity->pk_hostroleorder));
     }
     else
     {

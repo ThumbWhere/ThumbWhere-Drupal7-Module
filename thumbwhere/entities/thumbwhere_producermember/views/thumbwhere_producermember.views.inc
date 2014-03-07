@@ -75,7 +75,8 @@ function thumbwhere_producermember_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'ProducerMember';
   $handler->display->display_options['use_ajax'] = TRUE;
-  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administer thumbwhere_contentingests';  
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
@@ -326,8 +327,8 @@ function thumbwhere_producermember_views_default_views() {
 
     
     
-    
   /* Field: ThumbWhereProducerMember: Link */
+  /*
   $handler->display->display_options['fields']['link_thumbwhere_producermember']['id'] = 'link_thumbwhere_producermember';
   $handler->display->display_options['fields']['link_thumbwhere_producermember']['table'] = 'thumbwhere_producermember';
   $handler->display->display_options['fields']['link_thumbwhere_producermember']['field'] = 'link_thumbwhere_producermember';
@@ -347,7 +348,7 @@ function thumbwhere_producermember_views_default_views() {
   $handler->display->display_options['fields']['link_thumbwhere_producermember']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['link_thumbwhere_producermember']['hide_empty'] = 0;
   $handler->display->display_options['fields']['link_thumbwhere_producermember']['empty_zero'] = 0;
-
+  */
 
   /* Field: ThumbWhereProducerMember: Operations links */
   $handler->display->display_options['fields']['operations']['id'] = 'operations';

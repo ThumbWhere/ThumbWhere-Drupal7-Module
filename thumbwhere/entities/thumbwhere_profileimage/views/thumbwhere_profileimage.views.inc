@@ -75,7 +75,8 @@ function thumbwhere_profileimage_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'ProfileImage';
   $handler->display->display_options['use_ajax'] = TRUE;
-  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administer thumbwhere_contentingests';  
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
@@ -297,8 +298,8 @@ function thumbwhere_profileimage_views_default_views() {
   $handler->display->display_options['fields']['fk_mediaitem']['format_plural'] = 0;
     
     
-    
   /* Field: ThumbWhereProfileImage: Link */
+  /*
   $handler->display->display_options['fields']['link_thumbwhere_profileimage']['id'] = 'link_thumbwhere_profileimage';
   $handler->display->display_options['fields']['link_thumbwhere_profileimage']['table'] = 'thumbwhere_profileimage';
   $handler->display->display_options['fields']['link_thumbwhere_profileimage']['field'] = 'link_thumbwhere_profileimage';
@@ -318,7 +319,7 @@ function thumbwhere_profileimage_views_default_views() {
   $handler->display->display_options['fields']['link_thumbwhere_profileimage']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['link_thumbwhere_profileimage']['hide_empty'] = 0;
   $handler->display->display_options['fields']['link_thumbwhere_profileimage']['empty_zero'] = 0;
-
+  */
 
   /* Field: ThumbWhereProfileImage: Operations links */
   $handler->display->display_options['fields']['operations']['id'] = 'operations';

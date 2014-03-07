@@ -128,7 +128,7 @@ function _thumbwhere_stresstest_create_ContentUpload($uid,$test) {
         $_global_thumbwhere_stresstest_MediaItemUploadPush = _thumbwhere_stresstest_create_MediaItemUploadPush($uid,$test);
       }
       else {
-        debug('bailing - function \'_thumbwhere_stresstest_create_MediaItemUploadPush\' is not loaded yet.');
+        debug(t('bailing - function \'_thumbwhere_stresstest_create_MediaItemUploadPush\' is not loaded yet.'));
         return NULL;
       }
     }
